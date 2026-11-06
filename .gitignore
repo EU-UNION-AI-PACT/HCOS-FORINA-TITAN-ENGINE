@@ -9,3 +9,11 @@ __pycache__/
 config/.api_key
 config/.secrets_vault*
 config/.vault_salt*
+# Exclude uploaded raw media and screenshots (User Privacy & Anti-Leak)
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.webp
+*Bilder*
+*.zip.extracted

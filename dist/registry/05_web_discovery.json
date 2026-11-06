@@ -1,0 +1,19 @@
+{
+  "id": "05_web_discovery",
+  "name": "Web Discovery Engine",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 5,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "mendableai/firecrawl", "url": "https://github.com/mendableai/firecrawl"},
+    {"name": "unclecode/crawl4ai", "url": "https://github.com/unclecode/crawl4ai"},
+    {"name": "scrapy/scrapy", "url": "https://github.com/scrapy/scrapy"}
+  ],
+  "features": [
+    "Webseiten erfassen, strukturieren und versionieren",
+    "Fail-Closed Domain-Sicherheitsprüfung für vertrauenswürdige Quellen",
+    "Offline Snapshotting und Text-Extraktion",
+    "Deterministische Snap-IDs und Topic-Erkennung"
+  ]
+}

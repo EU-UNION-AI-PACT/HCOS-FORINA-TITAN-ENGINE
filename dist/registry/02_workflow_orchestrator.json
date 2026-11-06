@@ -1,0 +1,19 @@
+{
+  "id": "02_workflow_orchestrator",
+  "name": "Workflow Orchestrator",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 2,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "temporalio/temporal", "url": "https://github.com/temporalio/temporal"},
+    {"name": "prefecthq/prefect", "url": "https://github.com/PrefectHQ/prefect"},
+    {"name": "langchain-ai/langgraph", "url": "https://github.com/langchain-ai/langgraph"}
+  ],
+  "features": [
+    "Mehrstufige DAG-Workflows koordinieren",
+    "Branching, Fehlerbehandlung und deterministische Schritte",
+    "Automatische Ausführung von Sovereign Release & Indexing Pipelines",
+    "Vollständige Überwachung jedes Einzelschritts"
+  ]
+}

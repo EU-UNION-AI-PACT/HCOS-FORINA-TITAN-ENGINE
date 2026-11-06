@@ -15,6 +15,7 @@ from .engine import ForinaTitanEngine
 from .server import run_engine_server
 from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
+from .module_loader import ModuleLoader
 
 
 def main():
@@ -50,6 +51,11 @@ def main():
     # push-repo
     push_parser = subparsers.add_parser("push-repo", help="Pusht das Repository zu GitHub")
     push_parser.add_argument("--repo-url", type=str, default="", help="GitHub Remote URL")
+
+    # modules
+    mod_parser = subparsers.add_parser("modules", help="Verwaltet die 10 Modulgruppen der Intelligence Suite")
+    mod_parser.add_argument("action", choices=["list", "verify", "test", "promote"], default="list", nargs="?", help="Aktion: list, verify, test, promote")
+    mod_parser.add_argument("--id", type=str, default="", help="Modul-ID fuer Einzelpruefung")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -130,6 +136,44 @@ def main():
         except Exception as e:
             print("[ERROR] Konnte Repository nicht auf privat setzen:", e)
             sys.exit(1)
+
+    elif args.command == "modules":
+        loader = ModuleLoader(project_root)
+        if args.action == "list":
+            summary = loader.get_suite_summary()
+            print("==================================================================")
+            print(" HCOS TITAN MODULAR INTELLIGENCE SUITE — 10 MODULGRUPPEN")
+            print(f" Status-Übersicht: {summary['lifecycle_breakdown']}")
+            print(f" Gesamt-Produktionsreife: {summary['production_readiness_percent']}%")
+            print("==================================================================")
+            for m in summary["modules"]:
+                state_badge = f"[{m['lifecycle_state'].upper()}]"
+                print(f" - {m['id']:<26} | {m['title']:<30} | {state_badge:<15} | Gate: {m['security_gate']}")
+            print("==================================================================")
+
+        elif args.action == "verify":
+            if args.id:
+                res = loader.verify_module(args.id)
+                print(json.dumps(res, indent=2, ensure_ascii=False))
+            else:
+                for m in loader.list_modules():
+                    res = loader.verify_module(m["id"])
+                    print(f"[{'PASS' if res['success'] else 'FAIL'}] {m['id']:<26} -> {res['lifecycle_state']}")
+
+        elif args.action == "test":
+            if args.id:
+                res = loader.test_module(args.id)
+                print(json.dumps(res, indent=2, ensure_ascii=False))
+            else:
+                for m in loader.list_modules():
+                    res = loader.test_module(m["id"])
+                    status = "PASS" if res.get("success") else "FAIL"
+                    print(f"[{status}] {m['id']:<26} -> {res.get('lifecycle_state')}")
+
+        elif args.action == "promote":
+            res = loader.promote_all_to_freigegeben()
+            print(">>> Alle Module verifiziert und auf 'Freigegeben' befördert:")
+            print(json.dumps(res, indent=2, ensure_ascii=False))
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

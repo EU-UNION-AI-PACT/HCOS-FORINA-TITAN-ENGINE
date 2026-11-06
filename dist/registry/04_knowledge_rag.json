@@ -1,0 +1,19 @@
+{
+  "id": "04_knowledge_rag",
+  "name": "Knowledge & RAG Engine",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 4,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "qdrant/qdrant", "url": "https://github.com/qdrant/qdrant"},
+    {"name": "chroma-core/chroma", "url": "https://github.com/chroma-core/chroma"},
+    {"name": "run-llama/llama_index", "url": "https://github.com/run-llama/llama_index"}
+  ],
+  "features": [
+    "Wissensbibliotheken und semantische Vektorsuche (128-1024 Dim)",
+    "Kosinus-Ähnlichkeitsberechnung mit Keyword-Boosting",
+    "Dokumenten-Chunking und Metadaten-Filterung",
+    "Lokale Speicherung ohne Cloud-Abhängigkeit"
+  ]
+}

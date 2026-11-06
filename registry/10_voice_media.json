@@ -1,0 +1,19 @@
+{
+  "id": "10_voice_media",
+  "name": "Voice & Media Studio",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 10,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "openai/whisper", "url": "https://github.com/openai/whisper"},
+    {"name": "coqui-ai/TTS", "url": "https://github.com/coqui-ai/TTS"},
+    {"name": "ffmpegwasm/ffmpeg.wasm", "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"}
+  ],
+  "features": [
+    "Sprachverarbeitung, Spracherkennung (STT) und Synthese (TTS)",
+    "HTML5 Medien-Clipper für Promo- und Video-Streams",
+    "Lokale Audio-Transkription und Voice-Befehle",
+    "Realisierung multimodaler KI-Interaktionen im Cockpit"
+  ]
+}

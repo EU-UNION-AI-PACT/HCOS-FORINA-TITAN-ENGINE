@@ -1,0 +1,20 @@
+{
+  "01_agent_studio": "Freigegeben",
+  "02_workflow_orchestrator": "Freigegeben",
+  "03_connector_marketplace": "Freigegeben",
+  "04_knowledge_rag": "Freigegeben",
+  "05_web_discovery": "Freigegeben",
+  "06_secrets_identity": "Freigegeben",
+  "07_trust_compliance": "Freigegeben",
+  "08_evidence_audit": "Freigegeben",
+  "09_monitoring_studio": "Freigegeben",
+  "10_voice_media": "Freigegeben",
+  "ai_media": "Freigegeben",
+  "app_engine": "Freigegeben",
+  "compliance_jmap": "Freigegeben",
+  "iam_auth_otp": "Freigegeben",
+  "interface_editor": "Freigegeben",
+  "network_dns": "Freigegeben",
+  "telemetry_calendar": "Freigegeben",
+  "ui_inszenierung": "Freigegeben"
+}

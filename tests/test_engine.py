@@ -13,6 +13,7 @@ from forina_engine.agent_orchestrator import AgentOrchestrator
 from forina_engine.mcp_gateway import MCPGateway
 from forina_engine.knowledge_base import KnowledgeBase
 from forina_engine.secrets_manager import SecretsManager
+from forina_engine.module_loader import ModuleLoader, ModuleSecurityViolation
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -70,6 +71,41 @@ class TestForinaTitanEngine(unittest.TestCase):
         for mod in result["modules"]:
             self.assertEqual(mod["spec_score"], 100)
             self.assertEqual(mod["light_state"], "blink-green")
+
+    def test_module_loader_and_10_modulgruppen(self):
+        loader = ModuleLoader(self.root)
+        modules = loader.list_modules()
+        self.assertGreaterEqual(len(modules), 10, "Muss mindestens die 10 Modulgruppen laden")
+
+        # Verify all 10 module IDs are present
+        expected_10 = [
+            "01_agent_studio", "02_workflow_orchestrator", "03_connector_marketplace",
+            "04_knowledge_rag", "05_web_discovery", "06_secrets_identity",
+            "07_trust_compliance", "08_evidence_audit", "09_monitoring_studio",
+            "10_voice_media"
+        ]
+        found_ids = [m["id"] for m in modules]
+        for em in expected_10:
+            self.assertIn(em, found_ids, f"Modul {em} muss in der Registry vorhanden sein")
+
+        # Test verification and testing of 01_agent_studio
+        v_res = loader.verify_module("01_agent_studio")
+        self.assertTrue(v_res["success"])
+        t_res = loader.test_module("01_agent_studio")
+        self.assertTrue(t_res["success"])
+        self.assertEqual(t_res["test_result"]["status"], "PASS")
+
+        # Test execution router
+        exec_res = loader.execute_module("01_agent_studio", "list_agents", {})
+        self.assertEqual(exec_res["status"], "SUCCESS")
+        self.assertTrue(len(exec_res["agents"]) >= 3)
+
+        # Test promote all
+        promoted = loader.promote_all_to_freigegeben()
+        self.assertEqual(promoted["01_agent_studio"], "Freigegeben")
+        summary = loader.get_suite_summary()
+        self.assertEqual(summary["lifecycle_breakdown"]["Freigegeben"], len(modules))
+        self.assertEqual(summary["production_readiness_percent"], 100.0)
 
     def test_pipeline_build(self):
         engine = ForinaTitanEngine(self.root)

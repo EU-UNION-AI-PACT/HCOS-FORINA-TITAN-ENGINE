@@ -17,6 +17,7 @@ from urllib.parse import urlparse, parse_qs
 from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
 from .agent_orchestrator import AgentOrchestrator
+from .module_loader import ModuleLoader, ModuleSecurityViolation
 
 CURRENT_VERSION = "1.2.0"
 
@@ -122,7 +123,27 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload).encode("utf-8"))
             return
 
-        # 5. MODULE LOADER
+        # 5. MODULE LOADER & CATALOG ENDPOINTS
+        loader = ModuleLoader(self.project_root)
+        if parsed.path == "/api/modules/catalog":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(loader.get_suite_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/modules/verify":
+            mid = query.get("id", ["01_agent_studio"])[0]
+            res = loader.verify_module(mid)
+            self._set_json_headers(200 if res.get("success") else 400)
+            self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/modules/test":
+            mid = query.get("id", ["01_agent_studio"])[0]
+            res = loader.test_module(mid)
+            self._set_json_headers(200 if res.get("success") else 400)
+            self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         if parsed.path == "/api/modules/load":
             mod_name = query.get("name", ["app_engine"])[0]
             safe_name = os.path.basename(mod_name)
@@ -251,6 +272,35 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             result = orch.kb.index_website_simulation(url, page_limit=data.get("page_limit", 10))
             self._set_json_headers(201)
             self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 10. MODULE EXECUTION & FAIL-CLOSED GATEWAY
+        if parsed.path == "/api/modules/execute":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+            data = json.loads(body)
+            mid = data.get("module_id", "01_agent_studio")
+            action = data.get("action", "self_test")
+            params = data.get("params", {})
+            loader = ModuleLoader(self.project_root)
+            try:
+                res = loader.execute_module(mid, action, params)
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            except ModuleSecurityViolation as sv:
+                self._set_json_headers(403)
+                self.wfile.write(json.dumps({"error": "SecurityGateViolation", "message": str(sv)}).encode("utf-8"))
+            except Exception as ex:
+                self._set_json_headers(500)
+                self.wfile.write(json.dumps({"error": "ExecutionError", "message": str(ex)}).encode("utf-8"))
+            return
+
+        # 11. PROMOTE ALL MODULES
+        if parsed.path == "/api/modules/promote-all":
+            loader = ModuleLoader(self.project_root)
+            results = loader.promote_all_to_freigegeben()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(results, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         self._set_json_headers(404)

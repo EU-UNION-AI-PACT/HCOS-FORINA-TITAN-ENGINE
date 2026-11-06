@@ -1,0 +1,19 @@
+{
+  "id": "01_agent_studio",
+  "name": "Agent Studio",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 1,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "mistralai/mistral-agents", "url": "https://github.com/mistralai/mistral-agents"},
+    {"name": "microsoft/autogen", "url": "https://github.com/microsoft/autogen"},
+    {"name": "crewAIInc/crewAI", "url": "https://github.com/crewAIInc/crewAI"}
+  ],
+  "features": [
+    "KI-Agenten erstellen, konfigurieren und orchestrieren",
+    "Mistral Agents SDK kompatible Rollen & Prompts",
+    "Failover Routing zwischen lokalen Modellen und Sovereign Gateway",
+    "Deterministische System-Prompts mit Governance-Filterung"
+  ]
+}

@@ -281,6 +281,181 @@
         </div>
       </section>
 
+      <!-- =========================================================================
+           🌟 HCOS TITAN MODULAR INTELLIGENCE SUITE — 10 MODULGRUPPEN (MISTRAL STUDIO ALIGNMENT)
+           ========================================================================= -->
+      <section class="module-card" style="border:2px solid var(--gold); background:linear-gradient(135deg, #0e1524 0%, #151d30 50%, #0a0f1c 100%); box-shadow:0 0 30px rgba(255,215,0,0.2);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:10px;">
+          <div>
+            <h2 style="color:var(--gold); border:none; padding:0; font-size:1.18rem; display:inline-flex; align-items:center; gap:8px;">
+              <span class="blink-dot green"></span>
+              ✦ HCOS TITAN MODULAR INTELLIGENCE SUITE (10 MODULGRUPPEN) ✦
+            </h2>
+            <p style="font-size:0.78rem; color:#cbd5e0; margin-top:2px;">
+              Architektur nach Vorbild moderner AI Studios & Mistral SDK · 5-Stufen Lifecycle: 
+              <span class="state-pill entwurf">Entwurf</span> ➔ 
+              <span class="state-pill implementiert">Implementiert</span> ➔ 
+              <span class="state-pill getestet">Getestet</span> ➔ 
+              <span class="state-pill verifiziert">Verifiziert</span> ➔ 
+              <span class="state-pill freigegeben">Freigegeben</span>
+            </p>
+          </div>
+          <div style="display:flex; gap:8px; align-items:center;">
+            <button class="titan-btn" style="border-color:var(--neon-green); color:#fff;" onclick="promoteAllSuiteModules()">
+              ⚡ Alle 10 Module Freigeben
+            </button>
+            <button class="titan-btn" onclick="loadModularSuiteCatalog()">
+              ↻ Neu laden
+            </button>
+          </div>
+        </div>
+
+        <!-- 10 Modulgruppen Grid Container -->
+        <div class="suite-card-grid" id="suite-modules-container">
+          <!-- Dynamisch via loadModularSuiteCatalog() oder statischer PWA Fallback -->
+          <div class="suite-mod-card" id="card-mod-01_agent_studio">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">01. Agent Studio</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">KI-Agenten erstellen, konfigurieren und verwalten (Mistral SDK kompatibel).</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('01_agent_studio')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('01_agent_studio')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-02_workflow_orchestrator">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">02. Workflow Orchestrator</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Mehrstufige Aufgaben & Agenten koordinieren (deterministische DAG-Pipelines).</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('02_workflow_orchestrator')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('02_workflow_orchestrator')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-03_connector_marketplace">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">03. Connector Marketplace</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">GitHub, MCP v1.0, Cloudflare & APIs sicher anbinden.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('03_connector_marketplace')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('03_connector_marketplace')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-04_knowledge_rag">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">04. Knowledge & RAG Engine</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Wissensbibliotheken, Embeddings & semantische Suche (128-1024 Dim).</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('04_knowledge_rag')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('04_knowledge_rag')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-05_web_discovery">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">05. Web Discovery Engine</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Webseiten erfassen, kategorisieren und versionieren mit Domain-Guardrails.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('05_web_discovery')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('05_web_discovery')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-06_secrets_identity">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">06. Secrets & Identity Manager</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">AES-256-GCM Vault, Berechtigungen (RBAC), Passkeys & OTP-Generierung.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('06_secrets_identity')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('06_secrets_identity')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-07_trust_compliance">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">07. Trust & Compliance Engine</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Sicherheitskontrollen, Fail-Closed Guardrails, EU AI Act & NATO Alignment.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('07_trust_compliance')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('07_trust_compliance')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-08_evidence_audit">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">08. Evidence & Audit Engine</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Prüfnachweise, Merkle-Root Hashes und Ed25519-Sovereign-Signaturen.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('08_evidence_audit')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('08_evidence_audit')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-09_monitoring_studio">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">09. Monitoring Studio</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Echtzeit-Telemetrie, Latenzmessung, Trace-Bäume & Fehlergrenzen.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('09_monitoring_studio')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('09_monitoring_studio')">Audit</button>
+            </div>
+          </div>
+
+          <div class="suite-mod-card" id="card-mod-10_voice_media">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:var(--gold); font-size:0.85rem;">10. Voice & Media Studio</strong>
+                <span class="state-pill freigegeben"><span class="blink-dot green"></span> Freigegeben</span>
+              </div>
+              <p style="font-size:0.74rem; color:#a0aec0; margin:6px 0;">Sprachverarbeitung (STT/TTS), Audio-Befehle & HTML5-Videoclipper.</p>
+            </div>
+            <div style="display:flex; gap:6px; margin-top:8px;">
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem;" onclick="testSingleModule('10_voice_media')">Selbsttest</button>
+              <button class="titan-btn" style="flex:1; padding:3px 6px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="verifySingleModule('10_voice_media')">Audit</button>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
       <!-- ==================== MODUL-RASTER ==================== -->
       <section class="grid-dashboard">
 

@@ -72,6 +72,37 @@ flowchart LR
 
 ---
 
+## 🤖 HCOS TITAN Modular Intelligence Suite (10 Modulgruppen)
+Inspiriert von **Mistral AI Studio**, autonomen Multi-Agenten-Architekturen und dem Model Context Protocol (MCP):
+
+| # | Modulgruppe | Kernfunktion | Lifecycle-Status | Open-Source-Referenzen |
+|---|---|---|---|---|
+| **01** | **Agent Studio** | KI-Agenten erstellen, konfigurieren & orchestrieren | `Freigegeben` | `mistralai/mistral-agents`, `autogen`, `crewAI` |
+| **02** | **Workflow Orchestrator** | Mehrstufige DAG-Pipelines koordinieren | `Freigegeben` | `temporal`, `prefect`, `langgraph` |
+| **03** | **Connector Marketplace** | MCP v1.0, GitHub, Cloudflare, Sentry, n8n | `Freigegeben` | `modelcontextprotocol/servers`, `n8n` |
+| **04** | **Knowledge & RAG Engine** | Vektorsuche (128-1024 Dim) & Kosinus-Ähnlichkeit | `Freigegeben` | `qdrant`, `chroma`, `llama_index` |
+| **05** | **Web Discovery Engine** | Webseiten erfassen, strukturieren & filtern | `Freigegeben` | `firecrawl`, `crawl4ai`, `scrapy` |
+| **06** | **Secrets & Identity** | AES-256-GCM Vault, RBAC, Passkeys & OTP | `Freigegeben` | `hashicorp/vault`, `infisical`, `pocket-id` |
+| **07** | **Trust & Compliance** | Fail-Closed Guardrails, EU AI Act, NATO Alignment | `Freigegeben` | `guardrails-ai`, `deepeval`, `opa` |
+| **08** | **Evidence & Audit** | Merkle-Tree Hashes, Ed25519-Signaturen & Audit-Trail | `Freigegeben` | `sigstore/cosign`, `in-toto`, `trillian` |
+| **09** | **Monitoring Studio** | Echtzeit-Telemetrie, Latenz, Traces & Fehlergrenzen | `Freigegeben` | `opentelemetry`, `prometheus`, `phoenix` |
+| **10** | **Voice & Media Studio** | Spracheingabe/-ausgabe (STT/TTS), Media-Clipper | `Freigegeben` | `openai/whisper`, `coqui-ai/TTS`, `ffmpeg.wasm` |
+
+### 🛡 Zentraler Module-Loader & Fail-Closed Gate
+Alle Module durchlaufen einen strikten 5-Stufen-Lifecycle:
+`Entwurf` ➔ `Implementiert` ➔ `Getestet` ➔ `Verifiziert` ➔ `Freigegeben`
+- **Fail-Closed Sicherheitsgate:** Module ohne bestandenen kryptografischen SHA-256-Hash und Testlauf können in der Produktions-Engine nicht ausgeführt werden.
+- **CLI-Steuerung:**
+  ```bash
+  python3 forina.py modules list
+  python3 forina.py modules test --id 01_agent_studio
+  python3 forina.py modules verify --id 01_agent_studio
+  python3 forina.py modules promote
+  ```
+
+
+---
+
 ## 🚀 Schnellstart & CLI-Bedienung
 
 Die Engine benötigt **keine externen Abhängigkeiten** und läuft autark mit Python 3.10+ (Standardbibliothek) und modernen Web-Standards:

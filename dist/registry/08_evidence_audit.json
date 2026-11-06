@@ -1,0 +1,19 @@
+{
+  "id": "08_evidence_audit",
+  "name": "Evidence & Audit Engine",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 8,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "sigstore/cosign", "url": "https://github.com/sigstore/cosign"},
+    {"name": "in-toto/in-toto", "url": "https://github.com/in-toto/in-toto"},
+    {"name": "google/trillian", "url": "https://github.com/google/trillian"}
+  ],
+  "features": [
+    "Manipulationssichere Nachweise, Hashes und Ed25519-Signaturen",
+    "Merkle-Tree Integritätsbaum für Quellcode und Release-Artefakte",
+    "Unwiderruflicher Audit-Log-Puffer für Systemereignisse",
+    "Sovereign Certificate Attestierungs-Empfänger"
+  ]
+}
