@@ -116,9 +116,15 @@
           <span style="color:#a0aec0;">Delta: <strong style="color:#fff;" id="zc-delta-display">+0 µs</strong></span>
           <span style="color:#a0aec0;">Block: <strong style="color:var(--neon-blue); font-family:monospace;" id="zc-hash-display">init...</strong></span>
         </div>
-        <div style="display:flex; align-items:center; gap:8px;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
           <span style="color:var(--neon-green); font-weight:700;">NaTZa CFS: <span id="zc-natza-display">TMR 3/3 ACTIVE</span></span>
           <span style="color:var(--neon-pink); border-left:1px solid rgba(255,255,255,0.1); padding-left:8px;">GPU Velvet 60 FPS</span>
+          <div style="display:inline-flex; align-items:center; gap:4px; border-left:1px solid rgba(255,255,255,0.1); padding-left:8px;">
+            <span style="color:var(--gold); font-size:0.68rem;">⏳ Focus:</span>
+            <span id="focus-timer-display" style="font-family:monospace; color:#fff; font-weight:700; background:rgba(0,0,0,0.5); padding:1px 6px; border-radius:4px; border:1px solid rgba(255,215,0,0.3);">25:00</span>
+            <button class="titan-btn" id="focus-timer-toggle-btn" style="padding:1px 6px; font-size:0.65rem;" onclick="toggleFocusTimer()">▶ Start</button>
+            <button class="titan-btn" style="padding:1px 6px; font-size:0.65rem;" onclick="resetFocusTimer()">↺</button>
+          </div>
           <button class="titan-btn" style="padding:2px 8px; font-size:0.65rem;" onclick="triggerZeroClockTick()">+ Tick</button>
         </div>
       </div>
@@ -392,6 +398,22 @@
               <button class="titan-btn" style="padding:2px 8px; font-size:0.7rem; border-color:var(--neon-green);" onclick="loadConceptStandards()">Normen & ISO</button>
             </div>
           </div>
+          <!-- Kategorien-Filter Chips -->
+          <div id="concepts-category-chips" style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:8px;">
+            <button class="concept-filter-chip active" onclick="filterConceptCategory('', this)">Alle</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Strategie', this)">Strategie</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Architektur', this)">Architektur</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Automatisierung', this)">IA & KI</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Design', this)">XD / UI</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Sicherheit', this)">Zero-Trust</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Kryptografie', this)">Krypto & KMS</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Web3', this)">Web3 & DLT</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Finanzen', this)">Finance</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Compliance', this)">Compliance</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Continuous Assurance', this)">Assurance & Audit</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Betrieb', this)">Betrieb & BCP</button>
+            <button class="concept-filter-chip" onclick="filterConceptCategory('Glossar', this)">Glossar</button>
+          </div>
           <!-- Normen-Banner -->
           <div id="standards-badges-banner" style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:8px; font-size:0.62rem;">
             <span style="background:rgba(255,215,0,0.1); border:1px solid var(--gold); color:var(--gold); padding:1px 6px; border-radius:4px;">ISO 27001</span>
@@ -402,7 +424,7 @@
             <span style="background:rgba(255,255,255,0.06); border:1px solid #94a3b8; color:#cbd5e1; padding:1px 6px; border-radius:4px;">NIS2 & DORA</span>
             <span style="background:rgba(255,255,255,0.06); border:1px solid #94a3b8; color:#cbd5e1; padding:1px 6px; border-radius:4px;">MiCA (Crypto)</span>
           </div>
-          <div id="concepts-catalog-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px; max-height:260px; overflow-y:auto; padding-right:4px;">
+          <div id="concepts-catalog-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px; max-height:300px; overflow-y:auto; padding-right:4px;">
             <!-- Dynamisch via loadConceptPapers() -->
           </div>
         </div>
@@ -416,10 +438,22 @@
                 Plan ➔ Build ➔ Test ➔ Audit ➔ Certify ➔ Release ➔ Monitor ➔ Improve ➔ Loop!
               </p>
             </div>
-            <div style="display:flex; gap:6px;">
-              <button class="titan-btn" style="padding:4px 12px; font-size:0.75rem; border-color:var(--neon-pink); background:rgba(255,0,85,0.15);" onclick="runHarnessLoopIteration()">▶ Loop-Zyklus starten</button>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="titan-btn" style="padding:4px 12px; font-size:0.75rem; border-color:var(--neon-pink); background:rgba(255,0,85,0.15);" onclick="runHarnessLoopIteration()">▶ Vollständigen Zyklus starten</button>
               <button class="titan-btn" style="padding:4px 8px; font-size:0.75rem;" onclick="loadHarnessLoopStatus()">↻ Status</button>
             </div>
+          </div>
+          <!-- Single Stage Stepper Control -->
+          <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.08); border-radius:6px; padding:6px 10px; margin-bottom:8px; display:flex; align-items:center; gap:6px; flex-wrap:wrap; font-size:0.7rem;">
+            <span style="color:var(--gold); font-weight:700;">Einzelschritt-Steuerung:</span>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('PLAN')">1. PLAN</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('BUILD')">2. BUILD</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('TEST')">3. TEST</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('AUDIT')">4. AUDIT</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('CERTIFY')">5. CERTIFY</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('RELEASE')">6. RELEASE</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('MONITOR')">7. MONITOR</button>
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.65rem;" onclick="runSingleHarnessStage('IMPROVE')">8. IMPROVE</button>
           </div>
           <div id="harness-stages-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px; margin-top:8px;">
             <!-- Dynamisch via loadHarnessLoopStatus() -->
@@ -813,6 +847,27 @@ Exclusive property of:
 Version: PILOT-2026-EU-NATO-CLASSIFIED
 Effective Date: January 1, 2024 | Last Modified: Januar 6. November, 2026
       </pre>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       📜 CONCEPT PAPER DETAIL MODAL (34 PAPERS VIEWER)
+       ========================================================================= -->
+  <div id="concept-paper-modal" class="titan-modal-backdrop" style="display:none;" onclick="if(event.target===this) closeConceptPaperModal()">
+    <div class="titan-modal-content" style="max-width:860px; width:92%; max-height:88vh; background:#0c101b; border:1px solid var(--gold); border-radius:10px; box-shadow:0 0 35px rgba(255,215,0,0.3); display:flex; flex-direction:column; overflow:hidden; animation: fadeInScale 0.25s cubic-bezier(0.16, 1, 0.3, 1);">
+      <div style="display:flex; justify-content:space-between; align-items:center; padding:12px 18px; border-bottom:1px solid rgba(255,215,0,0.25); background:linear-gradient(90deg, #131929 0%, #1e1b2e 100%);">
+        <div style="display:flex; align-items:center; gap:10px;">
+          <span id="modal-paper-badge" style="background:rgba(255,215,0,0.15); border:1px solid var(--gold); color:var(--gold); font-size:0.75rem; font-weight:700; padding:2px 8px; border-radius:4px;">A4 #01</span>
+          <h3 id="modal-paper-title" style="margin:0; font-size:1.02rem; color:#fff;">Concept Paper</h3>
+        </div>
+        <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="closeConceptPaperModal()">✕ Schließen</button>
+      </div>
+      <div id="modal-paper-meta" style="display:flex; gap:12px; flex-wrap:wrap; padding:8px 18px; background:rgba(0,0,0,0.4); font-size:0.68rem; border-bottom:1px solid rgba(255,255,255,0.06);">
+        <!-- Populated dynamically -->
+      </div>
+      <div id="modal-paper-body" style="padding:18px; overflow-y:auto; font-size:0.76rem; line-height:1.6; color:#cbd5e1;">
+        <!-- Markdown rendered here -->
+      </div>
     </div>
   </div>
 

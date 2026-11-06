@@ -71,13 +71,15 @@ def main():
 
     # concepts (34 Concept Papers Suite)
     concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite & Normenabdeckung v2.0")
-    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "standards"], default="list", nargs="?", help="Aktion: list, summary, inspect, standards")
+    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "read", "standards"], default="list", nargs="?", help="Aktion: list, summary, inspect, read, standards")
     concept_parser.add_argument("--nr", type=int, default=1, help="Papier-Nummer (1-34)")
     concept_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Concept Papers")
+    concept_parser.add_argument("--full", action="store_true", help="Gibt das vollständige Markdown-Dokument aus")
 
     # harness (Automated Harness Loop)
     harness_parser = subparsers.add_parser("harness", help="Automatisierter 8-Stufen Harness-Loop")
-    harness_parser.add_argument("action", choices=["status", "run", "stages"], default="status", nargs="?", help="Aktion: status, run, stages")
+    harness_parser.add_argument("action", choices=["status", "run", "stage", "stages"], default="status", nargs="?", help="Aktion: status, run, stage, stages")
+    harness_parser.add_argument("--stage", type=str, default="PLAN", help="Stufe für Einzelausführung (PLAN, BUILD, TEST, AUDIT, CERTIFY, RELEASE, MONITOR, IMPROVE)")
 
     # zeroclock (Act Pack Zero Clock & NaTZa CFS)
     zc_parser = subparsers.add_parser("zeroclock", help="Act Pack Zero Clock (APZC) & NaTZa CFS Telemetrie")
@@ -299,21 +301,35 @@ def main():
                 print(f"   * {cat:<32}: {count:2d} Papiere")
             print("==================================================================")
 
-        elif args.action == "inspect":
-            paper = suite.get_paper(args.nr)
-            if not paper:
-                print(f"[!] Concept Paper #{args.nr} nicht gefunden.")
-                return
-            print("==================================================================")
-            print(f" CONCEPT PAPER #{paper['nr']:02d}: {paper['title']}")
-            print("==================================================================")
-            print(f" Kürzel / Codes:       {paper['code']}")
-            print(f" Kategorie:            {paper['category']}")
-            print(f" Relevante Module:     {', '.join(paper['modules'])}")
-            print(f" Normen & Standards:   {', '.join(paper['standards'])}")
-            print("------------------------------------------------------------------")
-            print(f" Zusammenfassung:\n {paper['summary']}")
-            print("==================================================================")
+        elif args.action in ("inspect", "read"):
+            if args.action == "read" or getattr(args, "full", False):
+                paper = suite.get_paper_content(args.nr)
+                if not paper:
+                    print(f"[!] Concept Paper #{args.nr} nicht gefunden.")
+                    return
+                print("==================================================================")
+                print(f" CONCEPT PAPER #{paper['nr']:02d}: {paper['title']}")
+                print(f" Datei: {paper.get('file')} | Gefunden: {paper.get('file_found')}")
+                print("==================================================================")
+                print(paper.get("content", ""))
+                print("==================================================================")
+            else:
+                paper = suite.get_paper(args.nr)
+                if not paper:
+                    print(f"[!] Concept Paper #{args.nr} nicht gefunden.")
+                    return
+                print("==================================================================")
+                print(f" CONCEPT PAPER #{paper['nr']:02d}: {paper['title']}")
+                print("==================================================================")
+                print(f" Kürzel / Codes:       {paper['code']}")
+                print(f" Kategorie:            {paper['category']}")
+                print(f" Relevante Module:     {', '.join(paper['modules'])}")
+                print(f" Normen & Standards:   {', '.join(paper['standards'])}")
+                print("------------------------------------------------------------------")
+                print(f" Zusammenfassung:\n {paper['summary']}")
+                print("------------------------------------------------------------------")
+                print(f" [Tipp] Volltext anzeigen mit: python3 forina.py concepts read --nr {paper['nr']}")
+                print("==================================================================")
 
         elif args.action == "standards":
             print("==================================================================")
@@ -335,7 +351,7 @@ def main():
             for p in papers:
                 print(f" #{p['nr']:02d} | {p['title']:<42} | [{p['code']:<14}] | {p['category']}")
             print("==================================================================")
-            print(f" [Tipp] Detailansicht mit: python3 forina.py concepts inspect --nr <1-34>")
+            print(f" [Tipp] Volltext lesen mit: python3 forina.py concepts read --nr <1-34>")
 
     elif args.command == "harness":
         harness = HarnessLoopEngine(project_root)
@@ -347,9 +363,28 @@ def main():
             print(f" HARNESS-LOOP ZYKLUS #{state['cycle_id']-1} ERFOLGREICH ABGESCHLOSSEN")
             print("==================================================================")
             for s_id, s_res in state['stage_results'].items():
-                print(f" Stufe {s_id:<8} : [{s_res.get('status')}] {s_res.get('details', s_res.get('message', 'OK'))}")
+                status_str = s_res if isinstance(s_res, str) else s_res.get('status', 'PASS')
+                msg_str = "OK"
+                if isinstance(s_res, dict):
+                    msg_str = s_res.get('details', s_res.get('message', 'OK'))
+                print(f" Stufe {s_id:<8} : [{status_str}] {msg_str}")
             print("==================================================================")
             print(f" Status: {state['status']} -> Neuer Zielzustand: {state['current_stage']}")
+
+        elif args.action == "stage":
+            stage_to_run = getattr(args, "stage", "PLAN")
+            print(f">>> Führe einzelne Harness-Loop Stufe '{stage_to_run}' aus...")
+            try:
+                res = harness.run_single_stage(stage_to_run)
+                print("==================================================================")
+                print(f" HARNESS-LOOP STUFE {res['stage_id']} ERGEBNIS")
+                print("==================================================================")
+                print(f" Status:       [{res['result'].get('status', 'PASS')}]")
+                print(f" Details:      {res['result']}")
+                print(f" Nächste Stufe: {res['updated_state'].get('current_stage')}")
+                print("==================================================================")
+            except Exception as e:
+                print(f"[!] Fehler bei Stufenausführung: {e}")
 
         elif args.action == "stages":
             stages = harness.get_stages()

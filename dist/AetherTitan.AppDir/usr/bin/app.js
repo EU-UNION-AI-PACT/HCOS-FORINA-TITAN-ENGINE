@@ -1136,6 +1136,17 @@ function filterReposByZone(zone) {
   loadRepositoriesCatalog(zone);
 }
 
+let _activeConceptCategory = '';
+
+function filterConceptCategory(category, chipEl) {
+  _activeConceptCategory = category;
+  document.querySelectorAll('.concept-filter-chip').forEach(c => c.classList.remove('active'));
+  if (chipEl) chipEl.classList.add('active');
+  const searchInput = document.getElementById('concepts-search-input');
+  const searchVal = searchInput ? searchInput.value.trim() : '';
+  loadConceptPapers(_activeConceptCategory, searchVal);
+}
+
 async function loadConceptPapers(category = '', search = '') {
   const container = document.getElementById('concepts-catalog-container');
   if (!container) return;
@@ -1166,7 +1177,7 @@ async function loadConceptPapers(category = '', search = '') {
       const safeStandards = escapeHtml((p.standards || []).join(' · '));
 
       return `
-        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.2); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
+        <div class="concept-card" onclick="openConceptPaperModal(${p.nr})" style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.22); border-radius:6px; padding:9px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between; cursor:pointer;">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
               <span style="color:var(--gold); font-weight:700;">A4 #${String(p.nr).padStart(2, '0')}</span>
@@ -1174,7 +1185,7 @@ async function loadConceptPapers(category = '', search = '') {
                 ${safeCode}
               </span>
             </div>
-            <div style="margin-top:4px; font-weight:700; color:#fff; font-size:0.75rem;">
+            <div style="margin-top:4px; font-weight:700; color:#fff; font-size:0.76rem;">
               ${safeTitle}
             </div>
             <div style="color:var(--gold); font-size:0.62rem; margin-top:2px;">
@@ -1184,9 +1195,12 @@ async function loadConceptPapers(category = '', search = '') {
               ${safeSummary}
             </div>
           </div>
-          <div style="margin-top:6px; padding-top:4px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.60rem; color:#94a3b8;">
-            <div><strong style="color:var(--neon-pink);">Module:</strong> ${safeModules}</div>
-            <div style="margin-top:2px;"><strong style="color:var(--neon-green);">Normen:</strong> ${safeStandards}</div>
+          <div style="margin-top:8px; padding-top:4px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.60rem; color:#94a3b8; display:flex; justify-content:space-between; align-items:flex-end;">
+            <div>
+              <div><strong style="color:var(--neon-pink);">Module:</strong> ${safeModules}</div>
+              <div style="margin-top:2px;"><strong style="color:var(--neon-green);">Normen:</strong> ${safeStandards}</div>
+            </div>
+            <span style="color:var(--gold); font-weight:700; font-size:0.65rem; border:1px solid rgba(255,215,0,0.4); padding:2px 6px; border-radius:4px; background:rgba(255,215,0,0.1);">Volltext ➔</span>
           </div>
         </div>
       `;
@@ -1196,11 +1210,190 @@ async function loadConceptPapers(category = '', search = '') {
   }
 }
 
+function renderSimpleMarkdown(md) {
+  if (!md) return '';
+  const lines = md.split('\n');
+  let html = '';
+  let inCodeBlock = false;
+  let codeBuffer = [];
+  let inTable = false;
+  let tableHeaderParsed = false;
+
+  for (let i = 0; i < lines.length; i++) {
+    let line = lines[i];
+
+    
+    if (line.trim().startsWith('```')) {
+      if (inCodeBlock) {
+        html += `<pre style="background:#070a13; border:1px solid rgba(0,240,255,0.25); border-radius:6px; padding:10px; overflow-x:auto; font-family:monospace; font-size:0.72rem; color:#38bdf8; margin:8px 0;"><code>${escapeHtml(codeBuffer.join('\n'))}</code></pre>`;
+        codeBuffer = [];
+        inCodeBlock = false;
+      } else {
+        inCodeBlock = true;
+      }
+      continue;
+    }
+    if (inCodeBlock) {
+      codeBuffer.push(line);
+      continue;
+    }
+
+    
+    if (/^---+\s*$/.test(line.trim())) {
+      if (inTable) { html += '</table>'; inTable = false; tableHeaderParsed = false; }
+      html += '<hr style="border:none; border-top:1px solid rgba(255,215,0,0.25); margin:12px 0;" />';
+      continue;
+    }
+
+    
+    if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
+      if (!inTable) {
+        inTable = true;
+        tableHeaderParsed = false;
+        html += '<table style="width:100%; border-collapse:collapse; margin:8px 0; font-size:0.72rem; border:1px solid rgba(255,255,255,0.1);">';
+      }
+      if (line.includes('---')) {
+        
+        tableHeaderParsed = true;
+        continue;
+      }
+      const cells = line.split('|').slice(1, -1).map(c => c.trim());
+      if (!tableHeaderParsed) {
+        html += '<tr style="background:rgba(255,215,0,0.12); color:var(--gold); border-bottom:1px solid rgba(255,215,0,0.3);">';
+        cells.forEach(c => { html += `<th style="padding:6px 8px; text-align:left; border:1px solid rgba(255,255,255,0.08);">${renderInlineMarkdown(c)}</th>`; });
+        html += '</tr>';
+      } else {
+        html += '<tr style="border-bottom:1px solid rgba(255,255,255,0.05);">';
+        cells.forEach(c => { html += `<td style="padding:5px 8px; border:1px solid rgba(255,255,255,0.05); color:#cbd5e1;">${renderInlineMarkdown(c)}</td>`; });
+        html += '</tr>';
+      }
+      continue;
+    } else {
+      if (inTable) {
+        html += '</table>';
+        inTable = false;
+        tableHeaderParsed = false;
+      }
+    }
+
+    
+    if (line.startsWith('#### ')) {
+      html += `<h4 style="color:var(--neon-blue); font-size:0.85rem; margin:10px 0 4px 0;">${renderInlineMarkdown(line.slice(5))}</h4>`;
+      continue;
+    }
+    if (line.startsWith('### ')) {
+      html += `<h3 style="color:var(--gold); font-size:0.95rem; margin:14px 0 6px 0; border-bottom:1px solid rgba(255,215,0,0.2); padding-bottom:3px;">${renderInlineMarkdown(line.slice(4))}</h3>`;
+      continue;
+    }
+    if (line.startsWith('## ')) {
+      html += `<h2 style="color:#fff; font-size:1.05rem; margin:16px 0 8px 0;">${renderInlineMarkdown(line.slice(3))}</h2>`;
+      continue;
+    }
+    if (line.startsWith('# ')) {
+      html += `<h1 style="color:var(--gold); font-size:1.15rem; margin:10px 0 6px 0;">${renderInlineMarkdown(line.slice(2))}</h1>`;
+      continue;
+    }
+
+    
+    if (line.startsWith('> ')) {
+      html += `<blockquote style="border-left:3px solid var(--neon-pink); padding-left:10px; margin:6px 0; color:#e2e8f0; font-style:italic;">${renderInlineMarkdown(line.slice(2))}</blockquote>`;
+      continue;
+    }
+
+    
+    if (line.trim().startsWith('- ') || line.trim().startsWith('* ')) {
+      html += `<div style="margin:2px 0 2px 14px; color:#cbd5e1;">• ${renderInlineMarkdown(line.trim().slice(2))}</div>`;
+      continue;
+    }
+
+    
+    if (/^\d+\.\s/.test(line.trim())) {
+      const match = line.trim().match(/^(\d+)\.\s(.*)$/);
+      if (match) {
+        html += `<div style="margin:2px 0 2px 14px; color:#cbd5e1;"><strong>${match[1]}.</strong> ${renderInlineMarkdown(match[2])}</div>`;
+        continue;
+      }
+    }
+
+    
+    if (line.trim().length > 0) {
+      html += `<p style="margin:6px 0; line-height:1.5;">${renderInlineMarkdown(line)}</p>`;
+    }
+  }
+
+  if (inTable) html += '</table>';
+  return html;
+}
+
+function renderInlineMarkdown(str) {
+  if (!str) return '';
+  let out = escapeHtml(str);
+  
+  out = out.replace(/\*\*(.*?)\*\*/g, '<strong style="color:#fff;">$1</strong>');
+  
+  out = out.replace(/`([^`]+)`/g, '<code style="background:rgba(0,240,255,0.12); color:var(--neon-blue); padding:1px 4px; border-radius:3px; font-family:monospace; font-size:0.7rem;">$1</code>');
+  
+  out = out.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+  
+  out = out.replace(/\[([^\]]+)\]\(([^)]+)\)/g, (match, txt, url) => {
+    const safeUrl = sanitizeGitHubUrl(url);
+    if (safeUrl !== '#') {
+      return `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); text-decoration:underline;">${txt}</a>`;
+    }
+    return `<span style="color:#94a3b8;">${txt}</span>`;
+  });
+  return out;
+}
+
+async function openConceptPaperModal(nr) {
+  const modal = document.getElementById('concept-paper-modal');
+  const badgeEl = document.getElementById('modal-paper-badge');
+  const titleEl = document.getElementById('modal-paper-title');
+  const metaEl = document.getElementById('modal-paper-meta');
+  const bodyEl = document.getElementById('modal-paper-body');
+  if (!modal || !bodyEl) return;
+
+  modal.style.display = 'flex';
+  bodyEl.innerHTML = '<div style="color:var(--silver); font-size:0.8rem; padding:20px 0;">Lade Concept Paper Volltext...</div>';
+
+  try {
+    const res = await fetch(`/api/concepts/paper?nr=${nr}`);
+    const paper = await res.json();
+
+    if (badgeEl) badgeEl.textContent = `A4 #${String(paper.nr).padStart(2, '0')}`;
+    if (titleEl) titleEl.textContent = paper.title || `Concept Paper #${paper.nr}`;
+
+    if (metaEl) {
+      metaEl.innerHTML = `
+        <div><strong style="color:var(--gold);">Code:</strong> <span style="color:var(--neon-blue); border:1px solid var(--neon-blue); padding:0 4px; border-radius:3px;">${escapeHtml(paper.code)}</span></div>
+        <div><strong style="color:var(--gold);">Kategorie:</strong> ${escapeHtml(paper.category)}</div>
+        <div><strong style="color:var(--neon-pink);">Module:</strong> ${escapeHtml((paper.modules || []).join(', '))}</div>
+        <div><strong style="color:var(--neon-green);">Normen:</strong> ${escapeHtml((paper.standards || []).join(' · '))}</div>
+        <div><strong style="color:var(--gold);">Status:</strong> <span style="color:var(--neon-green);">Sovereign Verified</span></div>
+      `;
+    }
+
+    bodyEl.innerHTML = renderSimpleMarkdown(paper.content || paper.summary);
+  } catch (e) {
+    bodyEl.innerHTML = `<div style="color:#ef4444;">Fehler beim Laden des Dokuments: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+function closeConceptPaperModal() {
+  const modal = document.getElementById('concept-paper-modal');
+  if (modal) modal.style.display = 'none';
+}
+
+
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape') closeConceptPaperModal();
+});
+
 let _conceptsSearchDebounce = null;
 function searchConceptPapers(q) {
   clearTimeout(_conceptsSearchDebounce);
   _conceptsSearchDebounce = setTimeout(() => {
-    loadConceptPapers('', q);
+    loadConceptPapers(_activeConceptCategory, q);
   }, 250);
 }
 
@@ -1330,4 +1523,76 @@ async function triggerZeroClockTick() {
     const data = await res.json();
     loadZeroClockTelemetry();
   } catch (e) {}
+}
+
+async function runSingleHarnessStage(stageId) {
+  const feedbackEl = document.getElementById('harness-live-feedback');
+  if (feedbackEl) {
+    feedbackEl.style.display = 'block';
+    feedbackEl.innerHTML = `>>> Führe einzelne Stufe <strong>${escapeHtml(stageId)}</strong> aus...`;
+  }
+  try {
+    const res = await fetch('/api/harness/stage', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ stage: stageId })
+    });
+    const data = await res.json();
+    if (feedbackEl) {
+      if (data.result && (data.result.status === 'PASS' || data.result.status === 'SUCCESS')) {
+        feedbackEl.innerHTML = `<span style="color:var(--neon-green); font-weight:700;">✓ Stufe ${escapeHtml(data.stage_id)} erfolgreich!</span> Nächste Stufe: ${escapeHtml(data.updated_state?.current_stage || '')}`;
+      } else {
+        feedbackEl.innerHTML = `<span style="color:var(--gold); font-weight:700;">Stufe ${escapeHtml(data.stage_id || stageId)} Status: ${escapeHtml(data.result?.status || 'DONE')}</span>`;
+      }
+    }
+    loadHarnessLoopStatus();
+  } catch (e) {
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `<span style="color:#ef4444;">Fehler bei Stufe ${escapeHtml(stageId)}: ${escapeHtml(e.message)}</span>`;
+    }
+  }
+}
+
+let _focusSecondsLeft = 25 * 60;
+let _focusTimerInterval = null;
+let _focusTimerRunning = false;
+
+function formatFocusTime(sec) {
+  const m = Math.floor(sec / 60);
+  const s = sec % 60;
+  return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+}
+
+function toggleFocusTimer() {
+  const btn = document.getElementById('focus-timer-toggle-btn');
+  const display = document.getElementById('focus-timer-display');
+  if (_focusTimerRunning) {
+    clearInterval(_focusTimerInterval);
+    _focusTimerRunning = false;
+    if (btn) btn.textContent = '▶ Start';
+  } else {
+    _focusTimerRunning = true;
+    if (btn) btn.textContent = '⏸ Pause';
+    _focusTimerInterval = setInterval(() => {
+      if (_focusSecondsLeft > 0) {
+        _focusSecondsLeft--;
+        if (display) display.textContent = formatFocusTime(_focusSecondsLeft);
+      } else {
+        clearInterval(_focusTimerInterval);
+        _focusTimerRunning = false;
+        if (btn) btn.textContent = '✔ Fertig';
+        if (display) display.textContent = '00:00';
+      }
+    }, 1000);
+  }
+}
+
+function resetFocusTimer() {
+  clearInterval(_focusTimerInterval);
+  _focusTimerRunning = false;
+  _focusSecondsLeft = 25 * 60;
+  const btn = document.getElementById('focus-timer-toggle-btn');
+  const display = document.getElementById('focus-timer-display');
+  if (btn) btn.textContent = '▶ Start';
+  if (display) display.textContent = '25:00';
 }

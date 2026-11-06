@@ -340,6 +340,13 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(summary["total_papers"], 34)
         self.assertEqual(summary["total_standards"], 14)
 
+        # Check all 34 concept papers have verified markdown files
+        for nr in range(1, 35):
+            p = suite.get_paper_content(nr)
+            self.assertIsNotNone(p, f"Paper #{nr} muss geladen werden können")
+            self.assertTrue(p.get("file_found", False), f"Paper #{nr} Datei muss auf Disk existieren ({p.get('file')})")
+            self.assertGreater(len(p.get("content", "")), 500, f"Paper #{nr} muss substantiellen Inhalt haben")
+
         # Check Papers #4 (IA) and #5 (XD)
         p4 = suite.get_paper(4)
         self.assertIn("Intelligent Automation", p4["title"])
@@ -347,6 +354,11 @@ class TestForinaTitanEngine(unittest.TestCase):
         p5 = suite.get_paper(5)
         self.assertIn("eXperience Design", p5["title"])
         self.assertEqual(p5["code"], "XD, UX, UI")
+
+        # Check Paper #34 (Anhang Glossar)
+        p34 = suite.get_paper_content(34)
+        self.assertIn("33+ Schlüssel-Abkürzungen", p34["content"])
+        self.assertIn("33+ Kern-Keywords", p34["content"])
 
         # Check search functionality
         search_res = suite.search_papers("Zero-Trust")
@@ -360,6 +372,12 @@ class TestForinaTitanEngine(unittest.TestCase):
         stage_ids = [s["id"] for s in stages]
         expected_ids = ["PLAN", "BUILD", "TEST", "AUDIT", "CERTIFY", "RELEASE", "MONITOR", "IMPROVE"]
         self.assertEqual(stage_ids, expected_ids)
+
+        # Test single stage execution
+        res_plan = harness.run_single_stage("PLAN")
+        self.assertEqual(res_plan["stage_id"], "PLAN")
+        self.assertEqual(res_plan["result"]["status"], "PASS")
+        self.assertEqual(res_plan["updated_state"]["current_stage"], "BUILD")
 
         state = harness.get_state()
         self.assertIn("cycle_id", state)

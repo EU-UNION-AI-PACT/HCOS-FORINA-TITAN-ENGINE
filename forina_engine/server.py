@@ -259,6 +259,26 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             return
 
         # 11. 34 CONCEPT PAPERS SUITE & STANDARDS
+        if parsed.path.startswith("/api/concepts/paper"):
+            suite = ConceptPaperSuite(self.project_root)
+            nr_str = query.get("nr", [""])[0]
+            if not nr_str:
+                parts = parsed.path.strip("/").split("/")
+                if len(parts) >= 4 and parts[3].isdigit():
+                    nr_str = parts[3]
+            try:
+                nr = int(nr_str)
+            except (ValueError, TypeError):
+                nr = 1
+            paper_data = suite.get_paper_content(nr)
+            if not paper_data:
+                self._set_json_headers(404)
+                self.wfile.write(json.dumps({"error": f"Concept Paper #{nr} not found"}, ensure_ascii=False).encode("utf-8"))
+                return
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(paper_data, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         if parsed.path == "/api/concepts/papers":
             suite = ConceptPaperSuite(self.project_root)
             cat_filter = query.get("category", [""])[0]
@@ -319,6 +339,22 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             result = engine.run_cycle_iteration()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # HARNESS LOOP SINGLE STAGE
+        if parsed.path == "/api/harness/stage":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            stage = req_data.get("stage", "PLAN")
+            engine = HarnessLoopEngine(self.project_root)
+            try:
+                result = engine.run_single_stage(stage)
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e), "success": False}, ensure_ascii=False).encode("utf-8"))
             return
 
         # ACT PACK ZERO CLOCK TICK
