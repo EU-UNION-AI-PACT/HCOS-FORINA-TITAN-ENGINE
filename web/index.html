@@ -361,9 +361,12 @@
   <!-- Legal & Copyright Modal -->
   <div id="legal-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10002; display:none; align-items:center; justify-content:center; padding:20px;">
     <div class="spec-modal-card" style="max-width:750px;">
-      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--gold); padding-bottom:0.5rem;">
-        <h3 style="color:var(--gold); font-size:1.2rem;">🌟 HCOS - COPYRIGHT & CERTIFICATIONS</h3>
-        <button class="titan-btn" style="padding:4px 10px;" onclick="hideLegalModal()">✕ Schliessen</button>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--gold); padding-bottom:0.5rem; flex-wrap:wrap; gap:8px;">
+        <h3 style="color:var(--gold); font-size:1.2rem;">🌟 HCOS - SOUVERÄNITÄTS-ZERTIFIKAT</h3>
+        <div style="display:flex; gap:6px;">
+          <button class="titan-btn" style="padding:4px 10px; border-color:var(--neon-green);" onclick="downloadOfficialCertificate()">📥 Zertifikat Exportieren</button>
+          <button class="titan-btn" style="padding:4px 10px;" onclick="hideLegalModal()">✕ Schliessen</button>
+        </div>
       </div>
       <pre style="font-family:monospace; font-size:0.75rem; color:#e2e8f0; white-space:pre-wrap; max-height:65vh; overflow-y:auto; line-height:1.45;">
 Legal name: Daniel Pohl | Trademark: Hnoss / PrisMaTHarIOn

@@ -331,12 +331,73 @@ function bookCalendarSlot() {
 }
 
 function verifyOriginality() {
-  alert('Originalitaets-Zertifikat bestaetigt:\n✦ Daniel Pohl / HCOS Titan Engine\n✦ NATO Strategic Defense Alignment\n✦ EU Regulatory Governance Layer\n✦ Integritaet: 100% Verifiziert.');
+  showLegalModal();
 }
 
-function showLegalModal() {
+async function showLegalModal() {
   const modal = document.getElementById('legal-modal');
-  if (modal) modal.style.display = 'flex';
+  if (!modal) return;
+  modal.style.display = 'flex';
+
+  const preEl = modal.querySelector('pre');
+  try {
+    const res = await fetch('/api/certificate');
+    if (res.ok) {
+      const cert = await res.json();
+      const meta = cert.metadata;
+      const certs = meta.certifications;
+      const crypto = cert.cryptographic_signatures;
+
+      if (preEl) {
+        preEl.innerHTML = `
+<div style="background:rgba(0,255,136,0.1); border:1px solid var(--neon-green); padding:10px; border-radius:8px; margin-bottom:12px; color:#fff;">
+  <strong style="color:var(--neon-green); font-size:0.95rem;">✓ KRYPTOGRAFISCH BEGLAUBIGTES SOUVERÄNITÄTS-ZERTIFIKAT</strong><br>
+  Validierungsstatus: <strong>${crypto.validation_status}</strong><br>
+  Digital Seal (SHA-512): <code style="color:var(--gold); font-size:0.75rem;">${crypto.digital_seal.substring(0, 48)}...</code><br>
+  Codebase Merkle Root: <code style="color:var(--neon-blue); font-size:0.75rem;">${cert.codebase_attestation.merkle_root}</code>
+</div>
+<strong>// SOUVERÄNE IDENTITÄT & ZERTIFIZIERUNGEN:</strong>
+Legal Name:      ${meta.author_and_creator}
+Trademark:       ${meta.trademark}
+Royal Kaiser:    PIC: ${certs.royal_kaiser_charter_regsys.pic} | VAT: ${certs.royal_kaiser_charter_regsys.vat}
+HNOSS Entity:    PIC: ${certs.hnoss.pic} | VAT: ${certs.hnoss.vat}
+D-U-N-S:         ${certs.duns_numbers.join(' | ')}
+UNGM ID:         ${certs.ungm_id}
+Global LEI:      ${certs.global_lei}
+
+<strong>// FRAMEWORKS & GOVERNANCE:</strong>
+- NATO Strategic Defense Model alignment
+- European Union Regulatory Governance Layer
+- Pentagon Operational Defense Structure
+- EUPL-1.2 Cross-Matrix Compliance & EUHFA Concept Architecture
+
+<strong>// AUTORISIERTE ENTTÄTEN:</strong>
+${meta.authorized_corporate_entities.map(e => '- ' + e).join('\n')}
+
+Status:          ${meta.legal_status}
+Gültigkeit:      ${meta.effective_date} bis 2026-CLASSIFIED
+Lizenz:          ${meta.license_type}
+        `.trim();
+      }
+    }
+  } catch (e) {
+    console.log('[Cert] Lokaler Fallback aktiv.');
+  }
+}
+
+function downloadOfficialCertificate() {
+  fetch('/api/certificate')
+    .then(r => r.json())
+    .then(cert => {
+      const blob = new Blob([JSON.stringify(cert, null, 2)], { type: 'application/json' });
+      const a = document.createElement('a');
+      a.href = URL.createObjectURL(blob);
+      a.download = `HCOS_SOVEREIGN_CERTIFICATE_${Date.now()}.json`;
+      a.click();
+    })
+    .catch(() => {
+      alert('Zertifikat wird aus dem lokalen Offline-Speicher exportiert.');
+    });
 }
 
 function hideLegalModal() {

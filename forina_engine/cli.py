@@ -14,6 +14,7 @@ from pathlib import Path
 from .engine import ForinaTitanEngine
 from .server import run_engine_server
 from .spec_sync import SpecSyncEngine
+from .certification import SovereignCertifier
 
 
 def main():
@@ -31,6 +32,9 @@ def main():
 
     # verify-spec
     subparsers.add_parser("verify-spec", help="Verifiziert alle Module live gegen die Spezifikation")
+
+    # certify
+    subparsers.add_parser("certify", help="Generiert das kryptografische Souveraenitaets-Zertifikat")
 
     # sync-live
     subparsers.add_parser("sync-live", help="Gibt den aktuellen Live-Sync Status als JSON aus")
@@ -75,6 +79,24 @@ def main():
             status_sym = "[x] REALISIERT" if m["realized"] else "[ ] AUSSTEHEND"
             print(f" - {m['name']:<45} | {status_sym} | Score: {m['score']}% | Light: {m['light_state']}")
         print("==================================================================")
+
+    elif args.command == "certify":
+        certifier = SovereignCertifier(project_root)
+        cert = certifier.generate_certificate()
+        print("🌟 ============================================================================= 🌟")
+        print("   HCOS - SOVEREIGN DIGITAL SYSTEM CERTIFICATION")
+        print("   Copyright (c) 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.")
+        print("===================================================================================")
+        print(f" Inhaber / Trademark:    {cert['metadata']['author_and_creator']} ({cert['metadata']['trademark']})")
+        print(f" Royal Kaiser Charter:   PIC: {cert['metadata']['certifications']['royal_kaiser_charter_regsys']['pic']} | VAT: {cert['metadata']['certifications']['royal_kaiser_charter_regsys']['vat']}")
+        print(f" D-U-N-S / LEI:          {cert['metadata']['certifications']['duns_numbers']} | LEI: {cert['metadata']['certifications']['global_lei']}")
+        print(f" UNGM Identifier:        {cert['metadata']['certifications']['ungm_id']}")
+        print(f" Codebase Merkle Root:   {cert['codebase_attestation']['merkle_root']}")
+        print(f" Sovereign Digital Seal: {cert['cryptographic_signatures']['digital_seal'][:64]}...")
+        print(f" Validierungsstatus:     {cert['cryptographic_signatures']['validation_status']}")
+        print("===================================================================================")
+        print(f" [OK] Zertifikat erfolgreich erstellt unter: {project_root / 'certificates/CERTIFICATION.md'}")
+        print("===================================================================================")
 
     elif args.command == "sync-live":
         sync = SpecSyncEngine(project_root)

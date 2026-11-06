@@ -20,6 +20,7 @@ from typing import Dict, Any, List
 
 from .security import guard_path, validate_web_assets, obfuscate_javascript_inline, SecurityError
 from .spec_sync import SpecSyncEngine
+from .certification import SovereignCertifier
 
 PIPELINE_STAGES = [
     ("01", "PREFLIGHT", "Workspace boundary check, spec verification and source validation"),
@@ -50,6 +51,7 @@ class ForinaTitanEngine:
         self.releases_dir = self.root / "releases"
         self.meta_dir = self.root / ".forina"
         self.spec_sync = SpecSyncEngine(self.root)
+        self.certifier = SovereignCertifier(self.root)
 
     def plan(self) -> Dict[str, Any]:
         spec_meta = self.spec_sync.get_spec_meta()
@@ -195,24 +197,12 @@ class ForinaTitanEngine:
                 "timestamp": utc_now()
             }
 
-            # 6. EVIDENCE
+            # 6. EVIDENCE & SOVEREIGN CERTIFICATION
+            cert_data = self.certifier.generate_certificate()
             evidence_file = self.releases_dir / f"audit_evidence_{timestamp}.json"
             evidence_payload = {
-                "system": "HCOS - FORINA TITAN EVIDENCE",
-                "legal_certifications": {
-                    "legal_name": "Daniel Pohl",
-                    "trademark": "Hnoss / PrisMaTHarIOn",
-                    "royal_kaiser_charter_regsys": {"pic": "867679357", "vat": "31353063511"},
-                    "hnoss": {"pic": "873042778", "vat": "31353063511"},
-                    "duns": ["315676980", "317066336"],
-                    "ungm_id": "1172700",
-                    "global_lei": "894500GBJSIW8L6ET310",
-                    "frameworks": [
-                        "NATO Strategic Defense Model alignment",
-                        "European Union Regulatory Governance Layer",
-                        "Pentagon Operational Defense Structure"
-                    ]
-                },
+                "system": "HCOS - FORINA TITAN EVIDENCE & CERTIFICATION",
+                "sovereign_certificate": cert_data,
                 "spec_sync": spec_report,
                 "inventory": inventory,
                 "build_metadata": build_marker
@@ -221,6 +211,7 @@ class ForinaTitanEngine:
             report["stages"]["EVIDENCE"] = {
                 "status": "PASS",
                 "evidence_path": str(evidence_file),
+                "digital_seal": cert_data["cryptographic_signatures"]["digital_seal"][:32] + "...",
                 "timestamp": utc_now()
             }
 

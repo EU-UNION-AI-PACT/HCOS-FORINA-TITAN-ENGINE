@@ -11,6 +11,7 @@ from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
 from .spec_sync import SpecSyncEngine
+from .certification import SovereignCertifier
 
 API_MASTER_KEY = os.environ.get("FORINA_API_KEY", "FORINA-TITAN-2026-SECRET")
 CURRENT_VERSION = "1.2.0"
@@ -47,6 +48,14 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             report = sync_engine.verify_all_modules()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 1b. SOVEREIGN CERTIFICATION ENDPOINT
+        if parsed.path == "/api/certificate":
+            certifier = SovereignCertifier(self.project_root)
+            cert = certifier.generate_certificate()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(cert, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         # 2. OTA VERSION ENDPOINT

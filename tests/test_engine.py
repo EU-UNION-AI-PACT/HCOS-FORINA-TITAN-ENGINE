@@ -8,11 +8,22 @@ import json
 from pathlib import Path
 from forina_engine.spec_sync import SpecSyncEngine
 from forina_engine.engine import ForinaTitanEngine
+from forina_engine.certification import SovereignCertifier
 
 
 class TestForinaTitanEngine(unittest.TestCase):
     def setUp(self):
         self.root = Path(__file__).parent.parent
+
+    def test_sovereign_certification(self):
+        certifier = SovereignCertifier(self.root)
+        cert = certifier.generate_certificate()
+        self.assertEqual(cert["metadata"]["author_and_creator"], "Daniel Pohl")
+        self.assertEqual(cert["metadata"]["certifications"]["royal_kaiser_charter_regsys"]["pic"], "867679357")
+        self.assertEqual(cert["metadata"]["certifications"]["global_lei"], "894500GBJSIW8L6ET310")
+        self.assertTrue(len(cert["cryptographic_signatures"]["digital_seal"]) >= 64)
+        self.assertTrue((self.root / "certificates" / "CERTIFICATE.json").exists())
+        self.assertTrue((self.root / "certificates" / "CERTIFICATION.md").exists())
 
     def test_spec_sync_engine(self):
         sync = SpecSyncEngine(self.root)
