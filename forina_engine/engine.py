@@ -92,14 +92,24 @@ class ForinaTitanEngine:
                 "timestamp": utc_now()
             }
 
-            # 2. BACKUP
+            # 2. BACKUP (Mit striktem Secret- & Key-Ausschlussfilter)
+            def _clean_backup_filter(tarinfo):
+                name = tarinfo.name
+                forbidden = [
+                    ".key", "signing_key", ".api_key", ".secrets_vault",
+                    "__pycache__", ".DS_Store"
+                ]
+                if any(f in name for f in forbidden):
+                    return None
+                return tarinfo
+
             backup_filename = f"backup_hcos_titan_{timestamp}.tar.gz"
             backup_path = self.backups_dir / backup_filename
             with tarfile.open(backup_path, "w:gz") as tar:
                 for folder in ["web", "registry", "config", "scripts", "forina_engine", "modules", "skills"]:
                     folder_path = self.root / folder
                     if folder_path.exists():
-                        tar.add(str(folder_path), arcname=folder)
+                        tar.add(str(folder_path), arcname=folder, filter=_clean_backup_filter)
             report["stages"]["BACKUP"] = {
                 "status": "PASS",
                 "archive": backup_filename,

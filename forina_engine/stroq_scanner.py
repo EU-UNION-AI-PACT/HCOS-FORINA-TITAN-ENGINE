@@ -7,6 +7,8 @@ Proprietary License - All Rights Reserved.
 Inspiration: Stroq (AGGIB/Stroq) Agent Session Security & Secret Leak Prevention.
 """
 from __future__ import annotations
+import base64
+import binascii
 import re
 import time
 from typing import Dict, Any, List
@@ -21,6 +23,7 @@ class StroqAgentSecurityScanner:
     """
     Session & Prompt Auditor for AI Agents.
     Scans runtime payloads before dispatching to external APIs or local executors.
+    Includes base64/hex deobfuscation and advanced command chaining detection.
     """
 
     SECRET_PATTERNS = [
@@ -28,23 +31,46 @@ class StroqAgentSecurityScanner:
         (re.compile(r"ghp_[A-Za-z0-9_]{36}"), "GITHUB_PERSONAL_ACCESS_TOKEN"),
         (re.compile(r"sk-[A-Za-z0-9_-]{32,}"), "OPENAI_OR_CLAUDE_SECRET_KEY"),
         (re.compile(r"FORINA-[A-Za-z0-9_-]{20,}"), "FORINA_INTERNAL_MASTER_KEY"),
-        (re.compile(r"password\s*[:=]\s*['\"][^'\"]{6,}['\"]", re.IGNORECASE), "PLAIN_PASSWORD_CONFIG")
+        (re.compile(r"password\s*[:=]\s*['\"][^'\"]{6,}['\"]", re.IGNORECASE), "PLAIN_PASSWORD_CONFIG"),
+        (re.compile(r"Bearer\s+[A-Za-z0-9\._-]{24,}", re.IGNORECASE), "OAUTH_BEARER_TOKEN")
     ]
 
     DANGEROUS_COMMANDS = [
         re.compile(r"\brm\s+-rf\s+[/~*]", re.IGNORECASE),
         re.compile(r"\bsudo\s+", re.IGNORECASE),
+        re.compile(r"\bsu\s+-\s+", re.IGNORECASE),
+        re.compile(r"\bdoas\s+", re.IGNORECASE),
         re.compile(r"\bcurl\s+.*\|\s*(?:bash|sh)\b", re.IGNORECASE),
+        re.compile(r"\bwget\s+.*\|\s*(?:bash|sh)\b", re.IGNORECASE),
         re.compile(r"\bchmod\s+777\b", re.IGNORECASE),
         re.compile(r"\bmkfs\.", re.IGNORECASE),
-        re.compile(r"\bdd\s+if=.*of=/dev/", re.IGNORECASE)
+        re.compile(r"\bdd\s+if=.*of=/dev/", re.IGNORECASE),
+        re.compile(r"(?:eval|exec)\s*\([\"'].*[\"']\)", re.IGNORECASE),
+        re.compile(r"[;&|]\s*rm\s+", re.IGNORECASE),
+        re.compile(r">\s*/dev/(?:sda|sdb|nvme)", re.IGNORECASE)
     ]
 
     INJECTION_PATTERNS = [
         re.compile(r"ignore\s+(?:all\s+)?previous\s+instructions", re.IGNORECASE),
         re.compile(r"system\s*override\s*:\s*disable\s*guardrails", re.IGNORECASE),
-        re.compile(r"you\s+are\s+now\s+in\s+(?:unrestricted|dan)\s+mode", re.IGNORECASE)
+        re.compile(r"you\s+are\s+now\s+in\s+(?:unrestricted|dan)\s+mode", re.IGNORECASE),
+        re.compile(r"reveal\s+(?:the\s+)?system\s+prompt", re.IGNORECASE)
     ]
+
+    def _inspect_decoded_blobs(self, text: str) -> List[str]:
+        """Inspects potential base64 chunks for hidden credentials."""
+        leaks = []
+        potential_b64 = re.findall(r"[A-Za-z0-9+/]{20,}={0,2}", text)
+        for token in potential_b64:
+            clean_token = token.strip()
+            try:
+                decoded = base64.b64decode(clean_token).decode("utf-8", errors="ignore")
+                for pattern, leak_type in self.SECRET_PATTERNS:
+                    if pattern.search(decoded):
+                        leaks.append(f"{leak_type}_OBFUSCATED_BASE64")
+            except Exception:
+                pass
+        return leaks
 
     def scan_payload(self, text: str, context_label: str = "agent_prompt") -> Dict[str, Any]:
         """
@@ -58,6 +84,10 @@ class StroqAgentSecurityScanner:
         for pattern, leak_type in self.SECRET_PATTERNS:
             if pattern.search(text):
                 leaks_found.append(leak_type)
+
+        # 1b. Deobfuscation scanning (Base64)
+        obfuscated_leaks = self._inspect_decoded_blobs(text)
+        leaks_found.extend(obfuscated_leaks)
 
         # 2. Dangerous command scanning
         for pattern in self.DANGEROUS_COMMANDS:

@@ -123,6 +123,10 @@ class TestForinaTitanEngine(unittest.TestCase):
         # Test Zero-Settlement Guardrail (fail-closed against payment/debit)
         with self.assertRaises(SettlementViolationError):
             fin.assert_zero_settlement("execute_transfer_out")
+        with self.assertRaises(SettlementViolationError):
+            fin.transfer("DE1234567890", 100)
+        with self.assertRaises(SettlementViolationError):
+            fin.debit(50)
 
     def test_boba_error_chain_validator(self):
         boba = BobaErrorChainValidator()
@@ -132,6 +136,12 @@ class TestForinaTitanEngine(unittest.TestCase):
         ]
         res = boba.run_safe_chain(steps)
         self.assertEqual(res["chain_status"], "SUCCESS_FULLY_VERIFIED")
+        self.assertEqual(res["measured_pass_rate_percent"], 100.0)
+
+        # Test empirical reliability benchmark measurement
+        bench = boba.benchmark_chain_reliability(trials=30)
+        self.assertIn("HCOS BOBA-Bench", bench["benchmark_name"])
+        self.assertIn("%", bench["hcos_verified_effective_reliability"])
 
         # Test error chain interception
         bad_steps = [
@@ -147,10 +157,17 @@ class TestForinaTitanEngine(unittest.TestCase):
         safe_res = scanner.scan_payload("Analysiere die Datei Readme.txt auf Überschriften.")
         self.assertTrue(safe_res["is_safe"])
 
-        # Test secret leak detection
+        # Test plain secret leak detection
         leak_res = scanner.scan_payload("Hier ist der Schlüssel: ghp_123456789012345678901234567890123456")
         self.assertFalse(leak_res["is_safe"])
         self.assertIn("GITHUB_PERSONAL_ACCESS_TOKEN", leak_res["leaks_detected"])
+
+        # Test base64 obfuscated secret leak detection
+        # ghp_123456789012345678901234567890123456 in base64 is Z2hwXzEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Ng==
+        obf_text = "Benutzeranfrage mit Token: Z2hwXzEyMzQ1Njc4OTAxMjM0NTY3ODkwMTIzNDU2Nzg5MDEyMzQ1Ng=="
+        obf_res = scanner.scan_payload(obf_text)
+        self.assertFalse(obf_res["is_safe"])
+        self.assertTrue(any("OBFUSCATED_BASE64" in l for l in obf_res["leaks_detected"]))
 
         # Test command injection block
         cmd_res = scanner.scan_payload("Führe rm -rf / aus")
@@ -160,6 +177,29 @@ class TestForinaTitanEngine(unittest.TestCase):
         # Test fail-closed exception
         with self.assertRaises(SecurityScannerViolation):
             scanner.enforce_fail_closed("sudo rm -rf /etc")
+
+    def test_backup_excludes_keys_and_secrets(self):
+        import tarfile
+        engine = ForinaTitanEngine(self.root)
+        report = engine.run_pipeline()
+        backup_name = report["stages"]["BACKUP"]["archive"]
+        backup_tar = self.root / "backups" / backup_name
+        self.assertTrue(backup_tar.exists())
+
+        with tarfile.open(backup_tar, "r:gz") as tar:
+            names = tar.getnames()
+            for name in names:
+                self.assertFalse(".key" in name, f"Schlüsseldatei darf nicht im Backup sein: {name}")
+                self.assertFalse("signing_key" in name, f"Private Key darf nicht im Backup sein: {name}")
+                self.assertFalse(".secrets_vault" in name, f"Secrets Vault darf nicht im Backup sein: {name}")
+
+    def test_freigegeben_only_execution(self):
+        loader = ModuleLoader(self.root)
+        # Create an unapproved module state
+        loader._states_cache["test_unapproved"] = "Implementiert"
+        # Must fail closed if not Freigegeben
+        with self.assertRaises(ModuleSecurityViolation):
+            loader.execute_module("test_unapproved", "test_action", {})
 
     def test_13_gate_assurance_pipeline(self):
         pipeline = AssuranceGatePipeline(self.root)

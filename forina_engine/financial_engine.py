@@ -9,6 +9,7 @@ Inspiration: Claude Personal Finance & Plaid Open Banking Analysis.
 from __future__ import annotations
 import json
 import time
+from types import MappingProxyType
 from typing import Dict, Any, List, Optional
 from datetime import datetime, timedelta
 
@@ -18,10 +19,26 @@ class SettlementViolationError(Exception):
     pass
 
 
+class ReadOnlyTransactionScope:
+    """Immutable view over financial transaction data, enforcing read-only boundary."""
+    def __init__(self, tx_dict: Dict[str, Any]):
+        self._proxy = MappingProxyType(dict(tx_dict))
+
+    def __getitem__(self, item):
+        return self._proxy[item]
+
+    def get(self, item, default=None):
+        return self._proxy.get(item, default)
+
+    def to_dict(self) -> Dict[str, Any]:
+        return dict(self._proxy)
+
+
 class FinancialIntelligenceEngine:
     """
     Read-Only Financial Intelligence & Money Leak Detector.
     Strictly isolated from payment gateways, settlement networks, and write-APIs.
+    Possesses NO private banking write keys or disbursement credentials.
     """
 
     def __init__(self):
@@ -141,3 +158,12 @@ class FinancialIntelligenceEngine:
             raise SettlementViolationError(
                 f"Fail-Closed Gate: Aktion '{action}' verletzt Zero-Settlement-Vorgabe. Keine Geldbewegung autorisiert."
             )
+
+    def debit(self, *args, **kwargs):
+        raise SettlementViolationError("Write-Method 'debit' ist in der Read-Only Financial Intelligence Engine technisch gesperrt.")
+
+    def transfer(self, *args, **kwargs):
+        raise SettlementViolationError("Write-Method 'transfer' ist in der Read-Only Financial Intelligence Engine technisch gesperrt.")
+
+    def pay(self, *args, **kwargs):
+        raise SettlementViolationError("Write-Method 'pay' ist in der Read-Only Financial Intelligence Engine technisch gesperrt.")
