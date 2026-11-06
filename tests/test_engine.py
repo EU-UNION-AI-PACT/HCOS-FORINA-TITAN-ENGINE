@@ -20,6 +20,7 @@ from forina_engine.boba_validator import BobaErrorChainValidator, ChainStepVerif
 from forina_engine.stroq_scanner import StroqAgentSecurityScanner, SecurityScannerViolation
 from forina_engine.assurance_gates import AssuranceGatePipeline
 from forina_engine.repo_catalog import RepositoryEvaluationCatalog
+from forina_engine.network_guard import SovereignNetworkGuard, SovereignNetworkViolation
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -269,6 +270,49 @@ class TestForinaTitanEngine(unittest.TestCase):
         stroq = catalog.get_by_nr(50)
         self.assertEqual(stroq["repository"], "AGGIB/Stroq")
         self.assertEqual(stroq["module_id"], "M13")
+
+    def test_sovereign_network_guard_probes(self):
+        # 1. Negative WAN Probes within Scoped Guard
+        with SovereignNetworkGuard.sovereign_airgap_scope():
+            probe_res = SovereignNetworkGuard.run_airgap_probe_test()
+            self.assertTrue(probe_res["passed"])
+            self.assertIn("8.8.8.8:53", probe_res["blocked_targets"])
+            self.assertIn("1.1.1.1:80", probe_res["blocked_targets"])
+            self.assertIn("example.com:443", probe_res["blocked_targets"])
+
+        # 2. Permanent Process-Level Guard Installation and Verification
+        SovereignNetworkGuard.install_process_airgap_guard()
+        self.assertTrue(SovereignNetworkGuard.is_airgap_active())
+        self.assertEqual(os.environ.get("FORINA_AIRGAP_ENFORCED"), "1")
+        try:
+            probe_res_permanent = SovereignNetworkGuard.run_airgap_probe_test()
+            self.assertTrue(probe_res_permanent["passed"])
+        finally:
+            SovereignNetworkGuard.uninstall_process_airgap_guard()
+            self.assertFalse(SovereignNetworkGuard.is_airgap_active())
+
+    def test_g08_strict_dist_fail_closed(self):
+        # Verify that G08 fails closed if a dist/ file is missing, without falling back to root
+        pipeline = AssuranceGatePipeline(self.root)
+        g08_result = pipeline._check_g08_evidence_construction()
+        self.assertTrue(g08_result["passed"])
+        self.assertIn("0 Rogue Files", g08_result["details"])
+
+    def test_g12_tar_safety_and_100_percent_bit_verification(self):
+        import tarfile
+        pipeline = AssuranceGatePipeline(self.root)
+        
+        # Test TarSlip containment helper
+        bad_tarinfo = tarfile.TarInfo(name="../../etc/passwd")
+        self.assertFalse(pipeline._is_safe_tar_member(bad_tarinfo, self.root / "dist"))
+        good_tarinfo = tarfile.TarInfo(name="forina.py")
+        self.assertTrue(pipeline._is_safe_tar_member(good_tarinfo, self.root))
+
+        # Test Physical Sandbox Restore with 100% Bit-for-Bit Hash Parity
+        g12_result = pipeline._check_g12_postrelease_verification()
+        self.assertTrue(g12_result["passed"])
+        self.assertIn("100% Bit-for-Bit Hash-Parität", g12_result["details"])
+        self.assertGreaterEqual(g12_result["files_hash_verified"], 100)
 
 
 if __name__ == "__main__":

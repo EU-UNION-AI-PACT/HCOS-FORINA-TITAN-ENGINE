@@ -161,25 +161,22 @@ class AssuranceGatePipeline:
         except Exception as e:
             return {"passed": False, "error": f"Socket-Isolationstest fehlgeschlagen: {e}"}
 
-        # 3. Active Sovereign Egress Air-Gap Enforcement Test
+        # 3. Active Sovereign Egress Air-Gap Enforcement & Adversarial Negative Probes
         try:
             with SovereignNetworkGuard.sovereign_airgap_scope():
-                wan_probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-                try:
-                    wan_probe.connect(("8.8.8.8", 53))
-                    wan_probe.close()
-                    return {"passed": False, "error": "Fail-Closed Verletzung: Ausgehende WAN-Verbindung wurde nicht blockiert!"}
-                except SovereignNetworkViolation:
-                    # Expected: Egress to WAN was successfully intercepted and blocked
-                    pass
-                finally:
-                    wan_probe.close()
+                probe_res = SovereignNetworkGuard.run_airgap_probe_test()
+                if not probe_res.get("passed"):
+                    return {
+                        "passed": False,
+                        "error": f"Air-Gap Negativtest fehlgeschlagen: {probe_res.get('error')}"
+                    }
         except Exception as e:
             return {"passed": False, "error": f"Sovereign Air-Gap Guard Probe fehlgeschlagen: {e}"}
 
+        blocked_str = ", ".join(probe_res.get("blocked_targets", []))
         return {
             "passed": True,
-            "details": "Local Sovereign Boundary & Air-Gap Egress-Sperre technisch verifiziert (Loopback 127.0.0.1, 0 WAN Listeners, WAN Connect abgefangen)."
+            "details": f"Local Sovereign Boundary & Air-Gap Egress-Sperre technisch verifiziert (Loopback 127.0.0.1, 0 WAN Listeners, WAN Egress Probes [{blocked_str}] blockiert)."
         }
 
     def _check_g04_clean_snapshot(self) -> Dict[str, Any]:
@@ -309,10 +306,10 @@ class AssuranceGatePipeline:
 
             target_path = self.dist_dir / rel_path
             if not target_path.exists():
-                target_path = self.root / rel_path
-
-            if not target_path.exists():
-                return {"passed": False, "error": f"Inventardatei fehlt auf Festplatte: {rel_path}"}
+                return {
+                    "passed": False,
+                    "error": f"Inventardatei fehlt in dist/: {rel_path} (Strenger Fail-Closed Modus: Kein Root-Fallback erlaubt)."
+                }
 
             live_hash = hashlib.sha256(target_path.read_bytes()).hexdigest()
             if live_hash != expected_hash:
@@ -374,21 +371,29 @@ class AssuranceGatePipeline:
         return {"passed": True, "details": f"Release-Pakete validiert ({len(appimages)} AppImage, {len(zips)} ZIPs, {size_kb} KB)."}
 
     def _is_safe_tar_member(self, member: tarfile.TarInfo, target_dir: Path) -> bool:
-        """TarSlip and Path Traversal Protection: Validates member path and node type."""
+        """TarSlip and Path Traversal Protection: Validates member path and node type using strict is_relative_to()."""
         # 1. Disallow absolute paths
         if os.path.isabs(member.name):
             return False
-        # 2. Disallow path traversal (..)
-        target_path = (target_dir / member.name).resolve()
-        if not str(target_path).startswith(str(target_dir.resolve())):
+        # 2. Disallow path traversal (..) with strict Path.resolve().is_relative_to()
+        resolved_sandbox = target_dir.resolve()
+        try:
+            target_path = (target_dir / member.name).resolve()
+            if not target_path.is_relative_to(resolved_sandbox):
+                return False
+        except (ValueError, RuntimeError):
             return False
+
         # 3. Disallow block devices, character devices, FIFOs
         if member.isdev() or member.isfifo():
             return False
         # 4. Disallow symlinks or hardlinks pointing outside the sandbox
         if member.issym() or member.islnk():
-            link_target = (target_path.parent / member.linkname).resolve()
-            if not str(link_target).startswith(str(target_dir.resolve())):
+            try:
+                link_target = (target_path.parent / member.linkname).resolve()
+                if not link_target.is_relative_to(resolved_sandbox):
+                    return False
+            except (ValueError, RuntimeError):
                 return False
         return True
 
@@ -396,9 +401,10 @@ class AssuranceGatePipeline:
         """
         G12: REAL Physical Sandbox Restore & Rollback Test.
         Extracts the latest backup archive into an isolated temporary directory with:
-        1. Strict TarSlip / Path Traversal validation of every TarInfo member.
-        2. Comprehensive verification of critical files against source checksums.
-        3. Zero private keys, secrets or credential leakage verification across all files.
+        1. Strict TarSlip / Path Traversal validation of every TarInfo member via is_relative_to().
+        2. Safe Extraction restricted strictly to validated safe_members (zero unfiltered fallback).
+        3. 100% Comprehensive Bit-for-Bit Hash Verification of ALL extracted files against project sources.
+        4. Zero private keys, secrets or credential leakage verification across all files.
         """
         backups_dir = self.root / "backups"
         archives = list(backups_dir.glob("*.tar.gz"))
@@ -416,56 +422,94 @@ class AssuranceGatePipeline:
                         return {"passed": False, "error": f"Archiv ist leer: {latest.name}"}
 
                     # TarSlip / Traversal Pre-Extraction Validation
+                    safe_members = []
                     for m in members:
                         if not self._is_safe_tar_member(m, sandbox_path):
                             return {
                                 "passed": False,
                                 "error": f"Sicherheitsverletzung (TarSlip/Traversal) in Archiv {latest.name}: Member '{m.name}'"
                             }
+                        safe_members.append(m)
 
-                    # Safe Extraction
+                    if len(safe_members) != len(members):
+                        return {
+                            "passed": False,
+                            "error": f"Sicherheitsverletzung: {len(members) - len(safe_members)} unsichere Archivmitglieder in {latest.name}."
+                        }
+
+                    # Safe Extraction strictly using validated safe_members (no unfiltered fallback)
                     try:
-                        tar.extractall(path=sandbox_dir, filter='data')
+                        tar.extractall(path=sandbox_dir, members=safe_members, filter='data')
                     except TypeError:
-                        # Python < 3.12 without filter arg
-                        tar.extractall(path=sandbox_dir)
+                        # Python < 3.12 without filter argument
+                        tar.extractall(path=sandbox_dir, members=safe_members)
 
-                # Comprehensive Extracted Files Parity & Integrity Check
+                # 100% Comprehensive Bit-for-Bit Hash Verification of ALL Extracted Files against Project Sources
+                verified_files_count = 0
+                checked_regular_files = []
+
+                for root_dir, _, files in os.walk(sandbox_dir):
+                    for fname in files:
+                        full_extracted_path = Path(root_dir) / fname
+                        rel_path = full_extracted_path.relative_to(sandbox_path)
+                        rel_str = str(rel_path)
+
+                        # Credential / Key leak check across entire extracted archive
+                        if (
+                            fname.endswith(".key")
+                            or "signing_key" in fname
+                            or ".secrets_vault" in fname
+                            or fname.endswith(".api_key")
+                        ):
+                            return {
+                                "passed": False,
+                                "error": f"Credential-Leak in wiederhergestelltem Archiv: {rel_str}"
+                            }
+
+                        # Bit-for-bit parity check against source file in project root
+                        source_file = self.root / rel_path
+                        if not source_file.exists():
+                            return {
+                                "passed": False,
+                                "error": f"Wiederhergestellte Datei {rel_str} existiert nicht in Quell-Projektstruktur."
+                            }
+
+                        source_hash = hashlib.sha256(source_file.read_bytes()).hexdigest()
+                        extracted_hash = hashlib.sha256(full_extracted_path.read_bytes()).hexdigest()
+
+                        if source_hash != extracted_hash:
+                            return {
+                                "passed": False,
+                                "error": f"Bit-for-Bit Hash-Mismatch bei wiederhergestellter Datei {rel_str} (Quelle: {source_hash[:12]}..., Archiv: {extracted_hash[:12]}...)"
+                            }
+
+                        verified_files_count += 1
+                        checked_regular_files.append(rel_str)
+
+                # Mandatory confirmation that core components exist
                 critical_files = [
                     "forina_engine/engine.py",
                     "forina_engine/server.py",
+                    "forina_engine/network_guard.py",
                     "web/index.html",
                     "web/app.js",
                     "web/styles.css",
-                    "forina.py"
+                    "forina.py",
+                    "COPYRIGHT.md"
                 ]
                 for cf in critical_files:
-                    restored_file = sandbox_path / cf
-                    if not restored_file.exists():
-                        return {"passed": False, "error": f"Wiederhergestelltes Archiv unvollständig: {cf} fehlt."}
-                    orig_file = self.root / cf
-                    if orig_file.exists():
-                        orig_hash = hashlib.sha256(orig_file.read_bytes()).hexdigest()
-                        rest_hash = hashlib.sha256(restored_file.read_bytes()).hexdigest()
-                        if orig_hash != rest_hash:
-                            return {"passed": False, "error": f"Integritätsabweichung bei wiederhergestellter Datei {cf}."}
-
-                # Full Sandbox Scan: Confirm 0 credentials or private keys
-                total_extracted = 0
-                for root_dir, _, files in os.walk(sandbox_dir):
-                    for fname in files:
-                        total_extracted += 1
-                        if fname.endswith(".key") or "signing_key" in fname or ".secrets_vault" in fname:
-                            return {"passed": False, "error": f"Credential-Leak in wiederhergestelltem Archiv: {fname}"}
+                    if cf not in checked_regular_files:
+                        return {"passed": False, "error": f"Wiederhergestelltes Archiv unvollständig: Kernkomponente {cf} fehlt."}
 
             except Exception as e:
                 return {"passed": False, "error": f"Physischer Restore-Test fehlgeschlagen: {e}"}
 
         return {
             "passed": True,
-            "details": f"Physischer Restore-Sandbox-Test bestanden: {latest.name} fehlerfrei wiederhergestellt ({total_extracted} Dateien verifiziert, 0 TarSlip-Risiken, 0 Leaks).",
+            "details": f"Physischer Restore-Sandbox-Test bestanden: {latest.name} fehlerfrei wiederhergestellt (100% Bit-for-Bit Hash-Parität: {verified_files_count}/{verified_files_count} Dateien verifiziert, 0 TarSlip-Risiken, 0 Leaks).",
             "tested_archive": latest.name,
-            "files_restored": total_extracted
+            "files_restored": verified_files_count,
+            "files_hash_verified": verified_files_count
         }
 
     def audit_all_gates(self) -> Dict[str, Any]:
