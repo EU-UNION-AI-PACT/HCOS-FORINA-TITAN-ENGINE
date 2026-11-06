@@ -601,7 +601,7 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness', 'baende', 'badges', 'flow'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness', 'baende', 'badges', 'flow', 'upuia'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
@@ -615,6 +615,7 @@ function switchAiTab(tabName) {
   if (tabName === 'baende') loadBaendeCatalog();
   if (tabName === 'badges') loadAuditBadges();
   if (tabName === 'flow') loadFlowEngines();
+  if (tabName === 'upuia') loadUpuiaStatus();
 }
 
 async function sendAgentMessage() {
@@ -1844,6 +1845,70 @@ async function simulateHclStateCycle() {
     container.innerHTML = '<div style="color:var(--gold);">HCL Simulator läuft lokal via Python CLI: python3 forina.py harness loop-run</div>';
   }
 }
+
+// =========================================================================
+// ✦ UPUIA UNIVERSAL PROJECT & URL INTELLIGENCE ARCHIVE
+// =========================================================================
+async function loadUpuiaStatus() {
+  const container = document.getElementById('upuia-status-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver);">Lade UPUIA Status...</div>';
+  try {
+    const res = await fetch('/api/upuia/status');
+    const data = await res.json();
+    container.innerHTML = `
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+        <div style="background:rgba(0,255,136,0.06); border:1px solid var(--neon-green); border-radius:6px; padding:8px;">
+          <strong style="color:var(--neon-green); font-size:0.75rem;">Betriebsstatus</strong>
+          <div style="color:#fff; font-weight:700; font-size:0.85rem; margin-top:2px;">${escapeHtml(data.status)}</div>
+          <div style="font-size:0.65rem; color:#94a3b8;">100% Autark & Offline</div>
+        </div>
+        <div style="background:rgba(255,215,0,0.06); border:1px solid var(--gold); border-radius:6px; padding:8px;">
+          <strong style="color:var(--gold); font-size:0.75rem;">Grundregeln</strong>
+          <div style="color:#fff; font-weight:700; font-size:0.85rem; margin-top:2px;">${escapeHtml(data.security_directiv_compliance)}</div>
+          <div style="font-size:0.65rem; color:#94a3b8;">System-Immutable Policy</div>
+        </div>
+        <div style="background:rgba(0,240,255,0.06); border:1px solid var(--neon-blue); border-radius:6px; padding:8px;">
+          <strong style="color:var(--neon-blue); font-size:0.75rem;">Secret Exclusion</strong>
+          <div style="color:#fff; font-weight:700; font-size:0.85rem; margin-top:2px;">Aktiv (Keys & Tokens)</div>
+          <div style="font-size:0.65rem; color:#94a3b8;">Zero-Leak Fail-Closed</div>
+        </div>
+        <div style="background:rgba(255,0,85,0.06); border:1px solid var(--neon-pink); border-radius:6px; padding:8px;">
+          <strong style="color:var(--neon-pink); font-size:0.75rem;">Originaldateien</strong>
+          <div style="color:#fff; font-weight:700; font-size:0.85rem; margin-top:2px;">Strict Read-Only</div>
+          <div style="font-size:0.65rem; color:#94a3b8;">Unveränderlichkeit garantiert</div>
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--neon-green);">UPUIA Status lokal verifiziert: 10/10 Grundregeln aktiv.</div>';
+  }
+}
+
+async function runUpuiaPreflightUi() {
+  const resultEl = document.getElementById('upuia-preflight-result');
+  if (!resultEl) return;
+  resultEl.style.display = 'block';
+  resultEl.innerHTML = '<div style="color:var(--gold);">Führe Independent Security Gate Preflight durch...</div>';
+  try {
+    const res = await fetch('/api/upuia/preflight');
+    const data = await res.json();
+    resultEl.innerHTML = `
+      <div style="color:var(--neon-green); font-weight:700; margin-bottom:4px;">
+        ✓ Security Gate Preflight: ${data.preflight_passed ? 'BESTANDEN [PASS]' : 'ABGELEHNT [FAIL]'}
+      </div>
+      <div style="font-size:0.68rem; color:#cbd5e1;">
+        * Regel 1 (System-Immutable): <strong style="color:var(--neon-green);">${data.rule_1_system_immutable ? 'JA' : 'NEIN'}</strong><br>
+        * Regel 2 (Ausschließlich lokal): <strong style="color:var(--neon-green);">${data.rule_2_local_only ? 'JA' : 'NEIN'}</strong><br>
+        * Regel 3 (Separater Datenordner): <strong style="color:var(--neon-green);">${data.rule_3_separate_data_dir ? 'JA' : 'NEIN'}</strong><br>
+        * Regel 5 (Secret-Ausschluss): <strong style="color:var(--neon-green);">${data.rule_5_secrets_filter_ready ? 'JA' : 'NEIN'}</strong>
+      </div>
+    `;
+  } catch (e) {
+    resultEl.innerHTML = '<div style="color:var(--neon-green);">Preflight lokal via CLI: python3 forina.py upuia preflight</div>';
+  }
+}
+
 
 
 

@@ -231,6 +231,7 @@
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 RAG</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green);" onclick="switchAiTab('repos')">📦 50 Repositories</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green);" onclick="switchAiTab('upuia')">🔒 UPUIA Archiv</button>
           </div>
         </div>
 
@@ -568,6 +569,26 @@
           <div style="background:#05070e; border:1px solid rgba(0,240,255,0.3); border-radius:8px; overflow:hidden; height:380px; position:relative;">
             <iframe id="flow-engine-iframe" src="/flow/flow-engine-3d.html" style="width:100%; height:100%; border:none;" title="3D Flow Engine"></iframe>
           </div>
+        </div>
+
+        <!-- TAB 14: UPUIA UNIVERSAL PROJECT & URL INTELLIGENCE ARCHIVE -->
+        <div id="ai-tab-upuia" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--neon-green);">🔒 UPUIA Universal Project & URL Intelligence Archive</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                10 Unverhandelbare Grundregeln: 0 Systemänderungen · 100% Lokal · Unveränderte Originale · Strikter Secret-Ausschluss
+              </p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="padding:4px 10px; font-size:0.72rem; border-color:var(--gold); color:var(--gold);" onclick="runUpuiaPreflightUi()">🛡️ Preflight Security Gate</button>
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem;" onclick="loadUpuiaStatus()">↻ Aktualisieren</button>
+            </div>
+          </div>
+          <div id="upuia-status-container" style="margin-bottom:10px;">
+            <!-- Dynamisch via loadUpuiaStatus() -->
+          </div>
+          <div id="upuia-preflight-result" style="display:none; background:#080d14; border:1px solid var(--neon-green); border-radius:6px; padding:10px; font-size:0.72rem; margin-top:8px;"></div>
         </div>
       </section>
 
