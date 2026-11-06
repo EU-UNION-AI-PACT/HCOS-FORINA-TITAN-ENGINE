@@ -25,6 +25,7 @@ from .assurance_gates import AssuranceGatePipeline
 from .repo_catalog import RepositoryEvaluationCatalog
 from .concept_suite import ConceptPaperSuite
 from .harness_loop import HarnessLoopEngine
+from .actpack_zeroclock import ActPackZeroClock, NaTZaFaultToleranceViolation
 
 CURRENT_VERSION = "1.2.0"
 
@@ -297,6 +298,14 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 13. ACT PACK ZERO CLOCK & NATZA STATUS
+        if parsed.path == "/api/zeroclock/status":
+            apzc = ActPackZeroClock(self.project_root)
+            status = apzc.get_status()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(status, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
@@ -310,6 +319,32 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             result = engine.run_cycle_iteration()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # ACT PACK ZERO CLOCK TICK
+        if parsed.path == "/api/zeroclock/tick":
+            apzc = ActPackZeroClock(self.project_root)
+            tick = apzc.get_zero_clock_tick()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(tick, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # NATZA TMR VOTE
+        if parsed.path == "/api/zeroclock/tmr-vote":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            v_a = req_data.get("a", "PASS")
+            v_b = req_data.get("b", "PASS")
+            v_c = req_data.get("c", "PASS")
+            apzc = ActPackZeroClock(self.project_root)
+            try:
+                consensus = apzc.verify_tmr_consensus(v_a, v_b, v_c, context="UI_VOTER")
+                resp = {"consensus": consensus, "status": "TMR_CONSENSUS_REACHED", "success": True}
+            except NaTZaFaultToleranceViolation as e:
+                resp = {"error": str(e), "status": "NATZA_DIVERGENCE_BLOCKED", "success": False}
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(resp, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         # 6. JMAP PARTNER INQUIRY (Redacted Logging for Privacy & GDPR)

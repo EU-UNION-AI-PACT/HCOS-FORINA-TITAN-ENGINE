@@ -18,6 +18,7 @@ from .certification import SovereignCertifier
 from .module_loader import ModuleLoader
 from .concept_suite import ConceptPaperSuite
 from .harness_loop import HarnessLoopEngine
+from .actpack_zeroclock import ActPackZeroClock, NaTZaFaultToleranceViolation
 
 
 def main():
@@ -77,6 +78,11 @@ def main():
     # harness (Automated Harness Loop)
     harness_parser = subparsers.add_parser("harness", help="Automatisierter 8-Stufen Harness-Loop")
     harness_parser.add_argument("action", choices=["status", "run", "stages"], default="status", nargs="?", help="Aktion: status, run, stages")
+
+    # zeroclock (Act Pack Zero Clock & NaTZa CFS)
+    zc_parser = subparsers.add_parser("zeroclock", help="Act Pack Zero Clock (APZC) & NaTZa CFS Telemetrie")
+    zc_parser.add_argument("action", choices=["status", "tick", "tmr", "spawn"], default="status", nargs="?", help="Aktion: status, tick, tmr, spawn")
+    zc_parser.add_argument("--subtask", type=str, default="microtask_audit", help="Subtask Name fuer spawn")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -364,6 +370,63 @@ def main():
             print(f" Abgeschlossene Zyklen gesamt: {st.get('history_cycles_completed', 0)}")
             print("------------------------------------------------------------------")
             print(" [Tipp] Ausführen mit: python3 forina.py harness run")
+            print("==================================================================")
+
+    elif args.command == "zeroclock":
+        apzc = ActPackZeroClock(project_root)
+
+        if args.action == "tick":
+            t = apzc.get_zero_clock_tick()
+            print("==================================================================")
+            print(" HCOS ACT PACK ZERO CLOCK — DETERMINISTISCHER TICK")
+            print("==================================================================")
+            print(f" Tick Sequenz:         #{t['tick']}")
+            print(f" UTC Zeitstempel:      {t['iso_timestamp']}")
+            print(f" Epoch Delta:          +{t['zero_clock_delta_micros']} µs")
+            print(f" State Block Hash:     {t['block_hash']}")
+            print(f" Status:               {t['synchronization_status']}")
+            print("==================================================================")
+
+        elif args.action == "tmr":
+            print("==================================================================")
+            print(" HCOS NATZA CORE FLIGHT SYSTEM — TMR KONSENSUS PRÜFUNG")
+            print("==================================================================")
+            # Test 1: Consensus
+            v1 = apzc.verify_tmr_consensus("PAYLOAD_PASS", "PAYLOAD_PASS", "PAYLOAD_FAIL", context="CLI_DIAGNOSTIC")
+            print(f" [PASS] 2/3 Mehrheit erzielt: {v1}")
+            # Test 2: Full divergence fail-closed
+            try:
+                apzc.verify_tmr_consensus("BRANCH_A", "BRANCH_B", "BRANCH_C", context="DIVERGENCE_TEST")
+                print(" [FAIL] Divergenz wurde nicht blockiert!")
+            except NaTZaFaultToleranceViolation as e:
+                print(f" [PASS] Divergenz Fail-Closed abgefangen: {e}")
+            print("==================================================================")
+
+        elif args.action == "spawn":
+            task = apzc.spawn_subagent_task("master_agent", args.subtask, {"mode": "deterministic", "sandbox": "qemu_kvm"})
+            print("==================================================================")
+            print(" HCOS DEVIN AI — SUB-AGENT GESPAWNT (WHYTRACE TELEMETRIE)")
+            print("==================================================================")
+            print(f" Sub-Agent ID:         {task['subagent_id']}")
+            print(f" Parent Agent:         {task['parent_agent_id']}")
+            print(f" Subtask:              {task['task_name']}")
+            print(f" WhyTrace ID:          {task['trace_id']}")
+            print(f" Erstellt bei Tick:    #{task['created_tick']}")
+            print(f" Status:               {task['status']}")
+            print("==================================================================")
+
+        else: # status
+            st = apzc.get_status()
+            print("==================================================================")
+            print(" HCOS ACT PACK ZERO CLOCK & NATZA CFS TELEMETRIE STATUS")
+            print("==================================================================")
+            print(f" Aktueller Tick:       #{st['current_tick']}")
+            print(f" Letzter Block Hash:   {st['last_state_hash']}")
+            print(f" NaTZa CFS Heartbeat:  {st['natza_cfs_heartbeat']}")
+            print(f" Microsecond Delta:    +{st['delta_microseconds']} µs")
+            print(f" Active Traces Count:  {st['active_traces_count']}")
+            print(f" UI Sliding Engine:    {st['ui_sliding_engine']} ({st['fps_target']} FPS)")
+            print(f" Engine Status:        {st['engine_state']}")
             print("==================================================================")
 
     elif args.command == "push-repo":

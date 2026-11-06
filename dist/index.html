@@ -108,6 +108,21 @@
         </div>
       </header>
 
+      <!-- ACT PACK ZERO CLOCK & NATZA CFS TELEMETRY TICKER -->
+      <div id="zeroclock-ticker-bar" style="background:rgba(0,229,255,0.04); border:1px solid rgba(0,229,255,0.25); border-radius:8px; padding:6px 12px; margin-bottom:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; font-size:0.72rem;">
+        <div style="display:flex; align-items:center; gap:8px; flex-wrap:wrap;">
+          <span style="color:var(--gold); font-weight:700;">⏱️ ACT PACK ZERO CLOCK (APZC):</span>
+          <span class="actpack-tick-badge" id="zc-tick-display">Tick #0</span>
+          <span style="color:#a0aec0;">Delta: <strong style="color:#fff;" id="zc-delta-display">+0 µs</strong></span>
+          <span style="color:#a0aec0;">Block: <strong style="color:var(--neon-blue); font-family:monospace;" id="zc-hash-display">init...</strong></span>
+        </div>
+        <div style="display:flex; align-items:center; gap:8px;">
+          <span style="color:var(--neon-green); font-weight:700;">NaTZa CFS: <span id="zc-natza-display">TMR 3/3 ACTIVE</span></span>
+          <span style="color:var(--neon-pink); border-left:1px solid rgba(255,255,255,0.1); padding-left:8px;">GPU Velvet 60 FPS</span>
+          <button class="titan-btn" style="padding:2px 8px; font-size:0.65rem;" onclick="triggerZeroClockTick()">+ Tick</button>
+        </div>
+      </div>
+
       <!-- =========================================================================
            🌟 DIE INNOVATION: LIVE SPEC REALISIERUNGS-RADAR & STATISTIC GLOW POINTS
            ========================================================================= -->

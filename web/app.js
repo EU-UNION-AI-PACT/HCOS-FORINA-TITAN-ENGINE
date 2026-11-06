@@ -79,9 +79,11 @@ window.addEventListener('DOMContentLoaded', () => {
     }
   }, 350);
 
-  // Initialer Spec-Sync & Module Suite
+  // Initialer Spec-Sync, Module Suite & Act Pack Zero Clock Telemetrie
   triggerLiveSpecSync();
   loadModularSuiteCatalog();
+  loadZeroClockTelemetry();
+  setInterval(loadZeroClockTelemetry, 4000);
 });
 
 // =========================================================================
@@ -1312,6 +1314,31 @@ async function runHarnessLoopIteration() {
       feedbackEl.innerHTML = `<span style="color:#ef4444;">Fehler bei Harness-Loop Ausführung: ${escapeHtml(e.message)}</span>`;
     }
   }
+}
+
+async function loadZeroClockTelemetry() {
+  try {
+    const res = await fetch('/api/zeroclock/status');
+    const data = await res.json();
+    const tickEl = document.getElementById('zc-tick-display');
+    const deltaEl = document.getElementById('zc-delta-display');
+    const hashEl = document.getElementById('zc-hash-display');
+    const natzaEl = document.getElementById('zc-natza-display');
+    if (tickEl) tickEl.textContent = `Tick #${data.current_tick || 0}`;
+    if (deltaEl) deltaEl.textContent = `+${Number(data.delta_microseconds || 0).toLocaleString()} µs`;
+    if (hashEl) hashEl.textContent = `${(data.last_state_hash || '').substring(0, 14)}...`;
+    if (natzaEl) natzaEl.textContent = `${data.natza_cfs_heartbeat || 'NOMINAL'}`;
+  } catch (e) {
+    // Offline / fallback
+  }
+}
+
+async function triggerZeroClockTick() {
+  try {
+    const res = await fetch('/api/zeroclock/tick', { method: 'POST' });
+    const data = await res.json();
+    loadZeroClockTelemetry();
+  } catch (e) {}
 }
 
 
