@@ -1,0 +1,16 @@
+{
+  "id": "m12_independent_assurance",
+  "name": "M12: Independent Assurance & BOBA Validator",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 12,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "amazon-agi/BOBA-bench", "url": "https://github.com/amazon-agi/BOBA-bench"}
+  ],
+  "features": [
+    "BOBA-Bench Fehlerketten-Bremse für Multi-Agenten-Pipelines",
+    "Unabhängige Verifikation von Zwischenschritten vor Weitergabe",
+    "Automatischer Abbruch bei unbestätigten Vorgängerergebnissen"
+  ]
+}

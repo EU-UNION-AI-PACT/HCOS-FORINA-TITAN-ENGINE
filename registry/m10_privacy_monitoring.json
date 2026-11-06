@@ -1,0 +1,17 @@
+{
+  "id": "m10_privacy_monitoring",
+  "name": "M10: Privacy-Respecting Monitoring",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 10,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "umami-software/umami", "url": "https://github.com/umami-software/umami"},
+    {"name": "plausible/analytics", "url": "https://github.com/plausible/analytics"}
+  ],
+  "features": [
+    "Anonymisierte Session-IDs und aggregierte Kennzahlen",
+    "Strikter Ausschluss sensibler Text- und Scaninhalte aus Logs",
+    "Netzwerksperre unterbindet ungewollte Egress-Telemetrie"
+  ]
+}

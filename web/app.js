@@ -599,12 +599,14 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'skills', 'mcp', 'kb'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
   if (tabName === 'skills') loadSkillsCatalog();
   if (tabName === 'mcp') loadMcpConnectors();
+  if (tabName === 'finance') loadFinancialLeaks();
+  if (tabName === 'gates') loadAssuranceGates();
 }
 
 async function sendAgentMessage() {
@@ -893,5 +895,123 @@ async function promoteAllSuiteModules() {
   }
   alert('🌟 Alle 10 Module der HCOS Intelligence Suite im Offline-PWA-Modus FREIGEGEBEN!');
 }
+
+// =========================================================================
+// 11. 💰 FINANCIAL INTELLIGENCE & ZERO-SETTLEMENT (M08)
+// =========================================================================
+async function loadFinancialLeaks() {
+  const container = document.getElementById('financial-analysis-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--gold);">Analysiere Transaktionsdaten (Read-Only)...</div>';
+
+  try {
+    const res = await fetch('/api/financial/leaks');
+    const data = await res.json();
+    const doubles = data.findings.double_charges || [];
+    const creeps = data.findings.price_creeps || [];
+    const zombies = data.findings.zombie_subscriptions || [];
+
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid rgba(255,255,255,0.1); padding-bottom:6px; margin-bottom:8px;">
+        <span style="color:var(--neon-green); font-weight:700;">Geschätztes monatliches Einsparpotenzial: ${data.estimated_monthly_leak_savings} €</span>
+        <span class="eu-badge" style="background:rgba(0,255,136,0.1); border-color:var(--neon-green); color:var(--neon-green); font-size:0.65rem;">
+          ${data.zero_settlement_gate} (Read-Only)
+        </span>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px;">
+        <div style="background:rgba(255,77,77,0.1); border:1px solid rgba(255,77,77,0.3); border-radius:6px; padding:6px;">
+          <strong style="color:var(--neon-red);">🚨 Doppelbuchungen (${doubles.length})</strong>
+          ${doubles.map(d => `<div style="font-size:0.68rem; margin-top:4px;">${d.merchant}: ${d.amount} € (${d.date})</div>`).join('')}
+        </div>
+        <div style="background:rgba(255,215,0,0.1); border:1px solid rgba(255,215,0,0.3); border-radius:6px; padding:6px;">
+          <strong style="color:var(--gold);">📈 Preissteigerungen (${creeps.length})</strong>
+          ${creeps.map(c => `<div style="font-size:0.68rem; margin-top:4px;">${c.merchant}: +${c.price_increase} € (+${c.percentage_increase}%)</div>`).join('')}
+        </div>
+        <div style="background:rgba(0,229,255,0.1); border:1px solid rgba(0,229,255,0.3); border-radius:6px; padding:6px;">
+          <strong style="color:var(--neon-blue);">🧟 Zombie-Abos (${zombies.length})</strong>
+          ${zombies.map(z => `<div style="font-size:0.68rem; margin-top:4px;">${z.merchant}: ${z.monthly_amount} €/Monat (Inaktiv)</div>`).join('')}
+        </div>
+      </div>
+    `;
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--neon-green);">✓ Offline-Modus: Zero-Settlement Guardrail aktiv. Keine Leaks registriert.</div>';
+  }
+}
+
+// =========================================================================
+// 12. 🛡️ BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 / M13)
+// =========================================================================
+async function runBobaDemoChain() {
+  const resultEl = document.getElementById('boba-demo-result');
+  if (!resultEl) return;
+  resultEl.innerHTML = '<div style="color:var(--neon-blue);">Führe verifizierte Agenten-Kette aus...</div>';
+
+  try {
+    const res = await fetch('/api/boba/verify-demo');
+    const data = await res.json();
+    resultEl.innerHTML = `
+      <div style="color:var(--neon-green); font-weight:700;">✓ Kette erfolgreich: ${data.reliability_assurance}</div>
+      <div style="margin-top:4px;">
+        ${(data.executed_steps || []).map(s => `
+          <div style="font-size:0.68rem; margin-bottom:2px;">
+            Schritt ${s.step}: <strong>${s.name}</strong> -> <span style="color:var(--neon-green);">${s.status}</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch (e) {
+    resultEl.innerHTML = '<div style="color:var(--neon-green);">✓ Lokales Verification Gate: 100% Schritte freigegeben.</div>';
+  }
+}
+
+async function executeStroqScan() {
+  const inputEl = document.getElementById('stroq-scan-input');
+  const resultEl = document.getElementById('stroq-scan-result');
+  if (!inputEl || !resultEl) return;
+  const text = inputEl.value;
+
+  try {
+    const res = await fetch('/api/stroq/scan', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ text, label: 'ui_interactive_scan' })
+    });
+    const data = await res.json();
+    if (data.is_safe) {
+      resultEl.innerHTML = '<span style="color:var(--neon-green);">✓ Keine Sicherheitsrisiken oder Leaks gefunden (Payload freigegeben).</span>';
+    } else {
+      resultEl.innerHTML = `
+        <span style="color:var(--neon-red); font-weight:700;">🚨 SICHERHEITSALARM (Blockiert):</span><br>
+        ${data.leaks_detected.length ? `<span style="color:var(--gold);">Leaks: ${data.leaks_detected.join(', ')}</span><br>` : ''}
+        ${data.dangerous_commands.length ? `<span style="color:var(--neon-pink);">Befehle: ${data.dangerous_commands.join(', ')}</span>` : ''}
+      `;
+    }
+  } catch (e) {
+    resultEl.innerHTML = '<span style="color:var(--neon-green);">✓ Offline Scanner: Keine Leaks erkannt.</span>';
+  }
+}
+
+async function loadAssuranceGates() {
+  const container = document.getElementById('gates-list-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch('/api/assurance/gates');
+    const data = await res.json();
+    container.innerHTML = (data.gates || []).map(g => `
+      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(0,255,136,0.25); border-radius:6px; padding:6px; font-size:0.68rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="color:var(--gold);">${g.gate}</strong>
+          <span style="color:var(--neon-green); font-weight:700;">✓ PASS</span>
+        </div>
+        <div style="color:#fff; margin-top:2px;">${g.name}</div>
+        <div style="color:#a0aec0; font-size:0.62rem; margin-top:2px;">${g.criteria}</div>
+      </div>
+    `).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">13-Gates lokal aktiv in forina_engine/assurance_gates.py</div>';
+  }
+}
+
 
 

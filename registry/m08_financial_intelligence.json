@@ -1,0 +1,18 @@
+{
+  "id": "m08_financial_intelligence",
+  "name": "M08: Financial Intelligence & Money Leak Detector",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 8,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "pubkey/rxdb", "url": "https://github.com/pubkey/rxdb"},
+    {"name": "plaid/plaid-python", "url": "https://github.com/plaid/plaid-python"}
+  ],
+  "features": [
+    "Read-Only Transaktionsanalyse & Erkennung von Kostenfressern",
+    "Doppelbuchungs-Erkennung (Double-Charge Heuristik)",
+    "Subscription Price-Creep & Zombie-Abo Detektor",
+    "Strikte Zero-Settlement Guardrail (Keine Abbuchungs-/Überweisungsrechte)"
+  ]
+}

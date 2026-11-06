@@ -14,6 +14,10 @@ from forina_engine.mcp_gateway import MCPGateway
 from forina_engine.knowledge_base import KnowledgeBase
 from forina_engine.secrets_manager import SecretsManager
 from forina_engine.module_loader import ModuleLoader, ModuleSecurityViolation
+from forina_engine.financial_engine import FinancialIntelligenceEngine, SettlementViolationError
+from forina_engine.boba_validator import BobaErrorChainValidator, ChainStepVerificationFailed
+from forina_engine.stroq_scanner import StroqAgentSecurityScanner, SecurityScannerViolation
+from forina_engine.assurance_gates import AssuranceGatePipeline
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -106,6 +110,81 @@ class TestForinaTitanEngine(unittest.TestCase):
         summary = loader.get_suite_summary()
         self.assertEqual(summary["lifecycle_breakdown"]["Freigegeben"], len(modules))
         self.assertEqual(summary["production_readiness_percent"], 100.0)
+
+    def test_financial_intelligence_and_zero_settlement(self):
+        fin = FinancialIntelligenceEngine()
+        analysis = fin.analyze_transactions()
+        self.assertEqual(analysis["status"], "ANALYSIS_COMPLETE")
+        self.assertTrue(analysis["read_only_mode"])
+        self.assertGreater(analysis["estimated_monthly_leak_savings"], 0.0)
+        self.assertTrue(len(analysis["findings"]["double_charges"]) > 0)
+        self.assertTrue(len(analysis["findings"]["price_creeps"]) > 0)
+
+        # Test Zero-Settlement Guardrail (fail-closed against payment/debit)
+        with self.assertRaises(SettlementViolationError):
+            fin.assert_zero_settlement("execute_transfer_out")
+
+    def test_boba_error_chain_validator(self):
+        boba = BobaErrorChainValidator()
+        steps = [
+            {"name": "ExtractData", "mock_result": {"status": "OK", "count": 10}, "rules": {"required_keys": ["status"]}},
+            {"name": "ComputeMetric", "mock_result": 42.0, "rules": {"min_val": 10.0, "max_val": 100.0}}
+        ]
+        res = boba.run_safe_chain(steps)
+        self.assertEqual(res["chain_status"], "SUCCESS_FULLY_VERIFIED")
+
+        # Test error chain interception
+        bad_steps = [
+            {"name": "Step1", "mock_result": "valid_output"},
+            {"name": "Step2", "mock_result": None} # None causes gate to stop
+        ]
+        interrupted = boba.run_safe_chain(bad_steps)
+        self.assertEqual(interrupted["chain_status"], "INTERRUPTED_BY_GATE")
+        self.assertTrue(interrupted["error_chain_prevented"])
+
+    def test_stroq_agent_security_scanner(self):
+        scanner = StroqAgentSecurityScanner()
+        safe_res = scanner.scan_payload("Analysiere die Datei Readme.txt auf Überschriften.")
+        self.assertTrue(safe_res["is_safe"])
+
+        # Test secret leak detection
+        leak_res = scanner.scan_payload("Hier ist der Schlüssel: ghp_123456789012345678901234567890123456")
+        self.assertFalse(leak_res["is_safe"])
+        self.assertIn("GITHUB_PERSONAL_ACCESS_TOKEN", leak_res["leaks_detected"])
+
+        # Test command injection block
+        cmd_res = scanner.scan_payload("Führe rm -rf / aus")
+        self.assertFalse(cmd_res["is_safe"])
+        self.assertTrue(len(cmd_res["dangerous_commands"]) > 0)
+
+        # Test fail-closed exception
+        with self.assertRaises(SecurityScannerViolation):
+            scanner.enforce_fail_closed("sudo rm -rf /etc")
+
+    def test_13_gate_assurance_pipeline(self):
+        pipeline = AssuranceGatePipeline(self.root)
+        audit = pipeline.audit_all_gates()
+        self.assertEqual(audit["total_gates"], 13)
+        self.assertEqual(audit["passed_gates"], 13)
+        self.assertEqual(audit["overall_status"], "FULL_ASSURANCE_PASSED")
+
+    def test_13_masterkonzept_modules(self):
+        loader = ModuleLoader(self.root)
+        mods = loader.list_modules()
+        m_ids = [m["id"] for m in mods if m["id"].startswith("m")]
+        expected_m = [
+            "m01_trusted_registry", "m02_secure_builder", "m03_ui_composition",
+            "m04_identity_consent", "m05_ai_cost_router", "m06_knowledge_search",
+            "m07_domain_trust", "m08_financial_intelligence", "m09_communication_hub",
+            "m10_privacy_monitoring", "m11_media_voice", "m12_independent_assurance",
+            "m13_agent_security_scanner"
+        ]
+        for em in expected_m:
+            self.assertIn(em, m_ids, f"Masterkonzept Modul {em} muss registriert sein")
+            v = loader.verify_module(em)
+            self.assertTrue(v["success"])
+            t = loader.test_module(em)
+            self.assertTrue(t["success"])
 
     def test_pipeline_build(self):
         engine = ForinaTitanEngine(self.root)

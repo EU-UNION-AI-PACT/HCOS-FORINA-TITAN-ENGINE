@@ -16,5 +16,18 @@
   "interface_editor": "Freigegeben",
   "network_dns": "Freigegeben",
   "telemetry_calendar": "Freigegeben",
-  "ui_inszenierung": "Freigegeben"
+  "ui_inszenierung": "Freigegeben",
+  "m01_trusted_registry": "Freigegeben",
+  "m02_secure_builder": "Freigegeben",
+  "m03_ui_composition": "Freigegeben",
+  "m04_identity_consent": "Freigegeben",
+  "m05_ai_cost_router": "Freigegeben",
+  "m06_knowledge_search": "Freigegeben",
+  "m07_domain_trust": "Freigegeben",
+  "m08_financial_intelligence": "Freigegeben",
+  "m09_communication_hub": "Freigegeben",
+  "m10_privacy_monitoring": "Freigegeben",
+  "m11_media_voice": "Freigegeben",
+  "m12_independent_assurance": "Freigegeben",
+  "m13_agent_security_scanner": "Freigegeben"
 }

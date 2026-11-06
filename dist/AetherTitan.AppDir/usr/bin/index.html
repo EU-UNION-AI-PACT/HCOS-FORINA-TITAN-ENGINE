@@ -180,6 +180,61 @@
             </div>
           </div>
         </div>
+
+        <!-- TAB 5: FINANCIAL INTELLIGENCE & MONEY LEAKS (M08) -->
+        <div id="ai-tab-finance" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--gold);">💰 Financial Intelligence & Money Leak Radar (M08)</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Plaid Read-Only Modus · Doppelbuchungen · Abo-Preisanstieg · Zombie-Abos · <span style="color:var(--neon-green);">Zero-Settlement Guardrail Aktiv</span>
+              </p>
+            </div>
+            <button class="titan-btn" style="border-color:var(--neon-green); font-size:0.75rem; padding:4px 10px;" onclick="loadFinancialLeaks()">
+              ⚡ Transaktionen analysieren
+            </button>
+          </div>
+          <div id="financial-analysis-container" style="margin-top:10px; background:#080c14; border:1px solid rgba(255,215,0,0.3); border-radius:8px; padding:10px; font-size:0.75rem;">
+            <div style="color:#a0aec0;">Klicke auf "Transaktionen analysieren", um die Heuristik zu starten...</div>
+          </div>
+        </div>
+
+        <!-- TAB 6: BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 & M13) -->
+        <div id="ai-tab-boba" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <!-- Linke Spalte: BOBA Error-Chain Validator -->
+            <div style="background:#090d14; border:1px solid var(--neon-blue); border-radius:8px; padding:10px;">
+              <strong style="color:var(--neon-blue); font-size:0.82rem;">🛡️ BOBA-Bench Error-Chain Validator (M12)</strong>
+              <p style="font-size:0.7rem; color:#a0aec0; margin:4px 0;">Amazon AGI Benchmark: Einzelaufgabe 95% -> Kette 51%. HCOS Verification Gates sichern die Kette auf 99%.</p>
+              <button class="titan-btn" style="width:100%; margin-top:6px; font-size:0.72rem; padding:4px;" onclick="runBobaDemoChain()">
+                ⚡ Multi-Agent Kette mit Gates testen
+              </button>
+              <div id="boba-demo-result" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto; color:var(--silver);"></div>
+            </div>
+
+            <!-- Rechte Spalte: Stroq Security Scanner -->
+            <div style="background:#090d14; border:1px solid var(--neon-pink); border-radius:8px; padding:10px;">
+              <strong style="color:var(--neon-pink); font-size:0.82rem;">🔒 Stroq Agent Security Scanner (M13)</strong>
+              <p style="font-size:0.7rem; color:#a0aec0; margin:4px 0;">Scant Prompts, Payloads und Befehle auf Credential-Leaks, rm -rf, sudo & Injection vor LLM-Versand.</p>
+              <div style="display:flex; gap:4px; margin-top:6px;">
+                <input type="text" id="stroq-scan-input" placeholder="Prompt oder Befehl eingeben..." value="rm -rf / && ghp_test123456789012345678901234567890" style="font-size:0.7rem; padding:4px 8px;" />
+                <button class="titan-btn" style="font-size:0.72rem; padding:4px 8px; border-color:var(--neon-pink);" onclick="executeStroqScan()">Scannen</button>
+              </div>
+              <div id="stroq-scan-result" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto; color:var(--silver);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7: 13-GATE ASSURANCE PIPELINE (G00 - G12) -->
+        <div id="ai-tab-gates" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="font-size:0.82rem; color:var(--neon-green);">🏛️ HCOS FORINA TITAN 13-Gate Assurance Pipeline (G00 - G12)</strong>
+            <button class="titan-btn" style="padding:2px 8px; font-size:0.72rem;" onclick="loadAssuranceGates()">↻ Gates prüfen</button>
+          </div>
+          <div id="gates-list-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:6px; max-height:220px; overflow-y:auto;">
+            <!-- Dynamisch via loadAssuranceGates() -->
+          </div>
+        </div>
       </section>
 
       <!-- =========================================================================
@@ -196,11 +251,14 @@
               MCP Tools · Skills Framework (`SKILL.md`) · Semantic RAG (128-1024 Dim) · Voice Assistant (STT/TTS)
             </p>
           </div>
-          <div style="display:flex; gap:6px;">
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('chat')">💬 Agenten-Chat</button>
-            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('skills')">📚 Skills (`SKILL.md`)</button>
-            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP Debugger</button>
-            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 Knowledge RAG</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('finance')">💰 Money Leaks (M08)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('boba')">🛡️ BOBA & Stroq (M12/M13)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('gates')">🏛 13-Gates (G00-G12)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('skills')">📚 Skills</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 RAG</button>
           </div>
         </div>
 
@@ -277,6 +335,61 @@
                 Bereit zum Crawlen autorisierter Dokumentations- und Compliance-Quellen.
               </div>
             </div>
+          </div>
+        </div>
+
+        <!-- TAB 5: FINANCIAL INTELLIGENCE & MONEY LEAKS (M08) -->
+        <div id="ai-tab-finance" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--gold);">💰 Financial Intelligence & Money Leak Radar (M08)</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Plaid Read-Only Modus · Doppelbuchungen · Abo-Preisanstieg · Zombie-Abos · <span style="color:var(--neon-green);">Zero-Settlement Guardrail Aktiv</span>
+              </p>
+            </div>
+            <button class="titan-btn" style="border-color:var(--neon-green); font-size:0.75rem; padding:4px 10px;" onclick="loadFinancialLeaks()">
+              ⚡ Transaktionen analysieren
+            </button>
+          </div>
+          <div id="financial-analysis-container" style="margin-top:10px; background:#080c14; border:1px solid rgba(255,215,0,0.3); border-radius:8px; padding:10px; font-size:0.75rem;">
+            <div style="color:#a0aec0;">Klicke auf "Transaktionen analysieren", um die Heuristik zu starten...</div>
+          </div>
+        </div>
+
+        <!-- TAB 6: BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 & M13) -->
+        <div id="ai-tab-boba" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <!-- Linke Spalte: BOBA Error-Chain Validator -->
+            <div style="background:#090d14; border:1px solid var(--neon-blue); border-radius:8px; padding:10px;">
+              <strong style="color:var(--neon-blue); font-size:0.82rem;">🛡️ BOBA-Bench Error-Chain Validator (M12)</strong>
+              <p style="font-size:0.7rem; color:#a0aec0; margin:4px 0;">Amazon AGI Benchmark: Einzelaufgabe 95% -> Kette 51%. HCOS Verification Gates sichern die Kette auf 99%.</p>
+              <button class="titan-btn" style="width:100%; margin-top:6px; font-size:0.72rem; padding:4px;" onclick="runBobaDemoChain()">
+                ⚡ Multi-Agent Kette mit Gates testen
+              </button>
+              <div id="boba-demo-result" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto; color:var(--silver);"></div>
+            </div>
+
+            <!-- Rechte Spalte: Stroq Security Scanner -->
+            <div style="background:#090d14; border:1px solid var(--neon-pink); border-radius:8px; padding:10px;">
+              <strong style="color:var(--neon-pink); font-size:0.82rem;">🔒 Stroq Agent Security Scanner (M13)</strong>
+              <p style="font-size:0.7rem; color:#a0aec0; margin:4px 0;">Scant Prompts, Payloads und Befehle auf Credential-Leaks, rm -rf, sudo & Injection vor LLM-Versand.</p>
+              <div style="display:flex; gap:4px; margin-top:6px;">
+                <input type="text" id="stroq-scan-input" placeholder="Prompt oder Befehl eingeben..." value="rm -rf / && ghp_test123456789012345678901234567890" style="font-size:0.7rem; padding:4px 8px;" />
+                <button class="titan-btn" style="font-size:0.72rem; padding:4px 8px; border-color:var(--neon-pink);" onclick="executeStroqScan()">Scannen</button>
+              </div>
+              <div id="stroq-scan-result" style="margin-top:8px; font-size:0.72rem; max-height:120px; overflow-y:auto; color:var(--silver);"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 7: 13-GATE ASSURANCE PIPELINE (G00 - G12) -->
+        <div id="ai-tab-gates" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="font-size:0.82rem; color:var(--neon-green);">🏛️ HCOS FORINA TITAN 13-Gate Assurance Pipeline (G00 - G12)</strong>
+            <button class="titan-btn" style="padding:2px 8px; font-size:0.72rem;" onclick="loadAssuranceGates()">↻ Gates prüfen</button>
+          </div>
+          <div id="gates-list-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(210px, 1fr)); gap:6px; max-height:220px; overflow-y:auto;">
+            <!-- Dynamisch via loadAssuranceGates() -->
           </div>
         </div>
       </section>

@@ -1,0 +1,18 @@
+{
+  "id": "m06_knowledge_search",
+  "name": "M06: Knowledge, Search & Local Data",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 6,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "pubkey/rxdb", "url": "https://github.com/pubkey/rxdb"},
+    {"name": "qdrant/qdrant", "url": "https://github.com/qdrant/qdrant"},
+    {"name": "chroma-core/chroma", "url": "https://github.com/chroma-core/chroma"}
+  ],
+  "features": [
+    "RxDB Offline-First lokale Datenbankhaltung",
+    "Quellen- und Ingest-Zeitstempelung mit Dokumenten-Hash",
+    "Lokale RAG-Vektorsuche ohne Cloud-Synchronisation"
+  ]
+}

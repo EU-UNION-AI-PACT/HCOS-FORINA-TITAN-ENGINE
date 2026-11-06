@@ -1,0 +1,18 @@
+{
+  "id": "m11_media_voice",
+  "name": "M11: Media & Voice Studio",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 11,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "ffmpegwasm/ffmpeg.wasm", "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"},
+    {"name": "videojs/video.js", "url": "https://github.com/videojs/video.js"},
+    {"name": "goldfire/howler.js", "url": "https://github.com/goldfire/howler.js"}
+  ],
+  "features": [
+    "30-Sekunden-Promo-Bühne & HTML5 Video-Clipper",
+    "Web-Audio 528 Hz 3-Sekunden-Glocke (3% Lautstärke)",
+    "Keine ungewollte Audioaufnahme / Mikrofon-Opt-In Zwang"
+  ]
+}

@@ -18,6 +18,10 @@ from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
 from .agent_orchestrator import AgentOrchestrator
 from .module_loader import ModuleLoader, ModuleSecurityViolation
+from .financial_engine import FinancialIntelligenceEngine, SettlementViolationError
+from .boba_validator import BobaErrorChainValidator
+from .stroq_scanner import StroqAgentSecurityScanner
+from .assurance_gates import AssuranceGatePipeline
 
 CURRENT_VERSION = "1.2.0"
 
@@ -203,6 +207,35 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(orch.secrets.get_vault_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 7. FINANCIAL INTELLIGENCE & MONEY LEAKS (M08)
+        if parsed.path == "/api/financial/leaks":
+            fin_engine = FinancialIntelligenceEngine()
+            report = fin_engine.analyze_transactions()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 8. BOBA-BENCH ERROR CHAIN VALIDATOR (M12)
+        if parsed.path == "/api/boba/verify-demo":
+            boba = BobaErrorChainValidator()
+            demo_steps = [
+                {"name": "01_IntakeAnalysis", "mock_result": {"status": "SUCCESS", "records": 42}, "rules": {"required_keys": ["status"]}},
+                {"name": "02_CalculateSum", "mock_result": 142.50, "rules": {"min_val": 10.0, "max_val": 1000.0}},
+                {"name": "03_SecurityAudit", "mock_result": {"safe": True, "gate": "PASSED"}, "rules": {"required_keys": ["safe"]}}
+            ]
+            demo_res = boba.run_safe_chain(demo_steps)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(demo_res, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 9. 13-GATE ASSURANCE PIPELINE (G00 - G12)
+        if parsed.path == "/api/assurance/gates":
+            pipeline = AssuranceGatePipeline(self.project_root)
+            audit = pipeline.audit_all_gates()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(audit, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
@@ -301,6 +334,19 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             results = loader.promote_all_to_freigegeben()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(results, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 12. STROQ AGENT SECURITY SCANNER (M13)
+        if parsed.path == "/api/stroq/scan":
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length).decode("utf-8") if length > 0 else "{}"
+            data = json.loads(body)
+            scanner = StroqAgentSecurityScanner()
+            text = data.get("text", "")
+            label = data.get("label", "agent_payload")
+            result = scanner.scan_payload(text, label)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         self._set_json_headers(404)

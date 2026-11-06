@@ -1,0 +1,17 @@
+{
+  "id": "m13_agent_security_scanner",
+  "name": "M13: Agent Security & Stroq Leak Scanner",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 13,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "AGGIB/Stroq", "url": "https://github.com/AGGIB/Stroq"},
+    {"name": "borgbackup/borg", "url": "https://github.com/borgbackup/borg"}
+  ],
+  "features": [
+    "Stroq Secret-Leak Detection vor externer Weiterleitung",
+    "Gefährliche Befehle (rm -rf, sudo, curl|sh) blockieren",
+    "Ausschluss von privaten Schlüsseln und Zugangsdaten"
+  ]
+}

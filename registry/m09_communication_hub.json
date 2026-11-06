@@ -1,0 +1,19 @@
+{
+  "id": "m09_communication_hub",
+  "name": "M09: JMAP, Messaging & Calendar Hub",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 9,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "linagora/jmap-client-ts", "url": "https://github.com/linagora/jmap-client-ts"},
+    {"name": "stalwartlabs/mail-server", "url": "https://github.com/stalwartlabs/mail-server"},
+    {"name": "calcom/cal.com", "url": "https://github.com/calcom/cal.com"},
+    {"name": "johannesjo/super-productivity", "url": "https://github.com/johannesjo/super-productivity"}
+  ],
+  "features": [
+    "JMAP-Partnerschaftsversand an autorisierte IONOS-Postfächer",
+    "Stalwart Mail-Server E-Mail-Relay & Audit-Protokoll",
+    "Termin- und Ressourcenbuchung mit Widerruf-Möglichkeit"
+  ]
+}

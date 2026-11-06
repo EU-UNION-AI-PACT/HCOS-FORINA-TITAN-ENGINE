@@ -1,0 +1,19 @@
+{
+  "id": "m04_identity_consent",
+  "name": "M04: Identity, Consent & Role Engine",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 4,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "pocket-id/pocket-id", "url": "https://github.com/pocket-id/pocket-id"},
+    {"name": "authelia/authelia", "url": "https://github.com/authelia/authelia"},
+    {"name": "yeojz/otplib", "url": "https://github.com/yeojz/otplib"},
+    {"name": "orestbida/cookieconsent", "url": "https://github.com/orestbida/cookieconsent"}
+  ],
+  "features": [
+    "Pocket ID Passkey-Forwarding ohne Passwortzwang",
+    "QR-Code TOTP & SMS-OTP Mobilfunk-Authentifizierung",
+    "DSGVO-CookieConsent & Opt-in Standortfreigabe mit Widerruf"
+  ]
+}

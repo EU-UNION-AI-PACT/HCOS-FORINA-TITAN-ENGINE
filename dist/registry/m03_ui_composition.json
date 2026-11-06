@@ -1,0 +1,19 @@
+{
+  "id": "m03_ui_composition",
+  "name": "M03: UI/UX Composition Studio",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 3,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "greensock/GSAP", "url": "https://github.com/greensock/GSAP"},
+    {"name": "mrdoob/three.js", "url": "https://github.com/mrdoob/three.js"},
+    {"name": "ueberdosis/tiptap", "url": "https://github.com/ueberdosis/tiptap"},
+    {"name": "catdad/canvas-confetti", "url": "https://github.com/catdad/canvas-confetti"}
+  ],
+  "features": [
+    "Theatervorhang-Inszenierung & Blitz-Effekt",
+    "4-Sekunden-Scheibenwischer & Redaktions-Editor",
+    "Barrierefreie Tastaturnavigation & Sound-Opt-In"
+  ]
+}

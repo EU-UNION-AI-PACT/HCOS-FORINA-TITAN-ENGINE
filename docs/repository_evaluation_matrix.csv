@@ -1,0 +1,51 @@
+Nr,PDF,PDF-Seite,Repository,URL,Geplante_Rolle,Integrationsentscheid,Herkunft,Lizenzpruefung,Sicherheitspruefung
+1,Tool Build Processing,5,tauri-apps/tauri,https://github.com/tauri-apps/tauri,Desktop Shell,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+2,Tool Build Processing,5,AppImage/AppImageKit,https://github.com/AppImage/AppImageKit,AppImage format/runtime,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+3,Tool Build Processing,5,javascript-obfuscator/javascript-obfuscator,https://github.com/javascript-obfuscator/javascript-obfuscator,JS-Obfuskation,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+4,Tool Build Processing,5,borgbackup/borg,https://github.com/borgbackup/borg,Backup,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+5,Tool Build Processing,5,caddyserver/caddy,https://github.com/caddyserver/caddy,Reverse Proxy,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+6,Tool Build Processing,5,nginx/nginx,https://github.com/nginx/nginx,Reverse Proxy alternative,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+7,Tool Build Processing,5,cunnie/sslip.io,https://github.com/cunnie/sslip.io,DNS development routing,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+8,Tool Build Processing,5,exentriquesolutions/nip.io,https://github.com/exentriquesolutions/nip.io,DNS development routing alternative,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+9,Tool Build Processing,5,greensock/GSAP,https://github.com/greensock/GSAP,UI animation,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+10,Tool Build Processing,5,mrdoob/three.js,https://github.com/mrdoob/three.js,3D interface,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+11,Tool Build Processing,5,catdad/canvas-confetti,https://github.com/catdad/canvas-confetti,Decorative effects,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+12,Tool Build Processing,5,goldfire/howler.js,https://github.com/goldfire/howler.js,Audio UI,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+13,Tool Build Processing,5,react-grid-layout/react-grid-layout,https://github.com/react-grid-layout/react-grid-layout,Dashboard layout,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+14,Tool Build Processing,5,ueberdosis/tiptap,https://github.com/ueberdosis/tiptap,Rich text editor,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+15,Tool Build Processing,5,codex-team/editor.js,https://github.com/codex-team/editor.js,Block editor alternative,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+16,Tool Build Processing,5,framer/motion,https://github.com/framer/motion,UI motion,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+17,Tool Build Processing,5,pocket-id/pocket-id,https://github.com/pocket-id/pocket-id,Passkey OIDC provider,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+18,Tool Build Processing,5,authelia/authelia,https://github.com/authelia/authelia,Access proxy/MFA,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+19,Tool Build Processing,6,yeojz/otplib,https://github.com/yeojz/otplib,TOTP helper,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+20,Tool Build Processing,6,soldair/node-qrcode,https://github.com/soldair/node-qrcode,QR codes,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+21,Tool Build Processing,6,orestbida/cookieconsent,https://github.com/orestbida/cookieconsent,Consent UI,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+22,Tool Build Processing,6,langgenius/dify,https://github.com/langgenius/dify,Agent/RAG platform,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+23,Tool Build Processing,6,vercel/ai,https://github.com/vercel/ai,LLM frontend adapter,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+24,Tool Build Processing,6,ffmpegwasm/ffmpeg.wasm,https://github.com/ffmpegwasm/ffmpeg.wasm,Video processing in browser,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+25,Tool Build Processing,6,videojs/video.js,https://github.com/videojs/video.js,Video player,Optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+26,Tool Build Processing,6,johannesjo/super-productivity,https://github.com/johannesjo/super-productivity,Personal task management,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+27,Tool Build Processing,6,open-policy-agent/opa,https://github.com/open-policy-agent/opa,Policy-as-code,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+28,Tool Build Processing,6,audreyt/jmap-client-ts,https://github.com/linagora/jmap-client-ts,JMAP adapter,Optional,"Korrektur: Im PDF nur Google-Suche; hier ein recherchiertes JMAP-TypeScript-Repository, NICHT identisch mit audreyt/jmap-client-ts.",OFFEN,OFFEN
+29,Tool Build Processing,6,stalwartlabs/mail-server,https://github.com/stalwartlabs/mail-server,JMAP email server,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+30,Tool Build Processing,6,umami-software/umami,https://github.com/umami-software/umami,Web analytics,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+31,Tool Build Processing,6,plausible/analytics,https://github.com/plausible/analytics,Web analytics alternative,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+32,Tool Build Processing,6,calcom/cal.com,https://github.com/calcom/cal.com,Booking/calendar service,Online optional,Direkt im PDF verlinkt,OFFEN,OFFEN
+33,Tool Build Processing,19,AppImageCommunity/AppImageUpdate,https://github.com/AppImageCommunity/AppImageUpdate,AppImage update utility,Deferred,Direkt im PDF verlinkt,OFFEN,OFFEN
+34,Tool Build Processing,19,tauri-apps/plugins-workspace,https://github.com/tauri-apps/plugins-workspace,Tauri plugins,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+35,Tool Build Processing,19,Cap-go/capacitor-updater,https://github.com/Cap-go/capacitor-updater,Mobile OTA optional,Deferred,Direkt im PDF verlinkt,OFFEN,OFFEN
+36,Tool Build Processing,19,electron-userland/electron-builder,https://github.com/electron-userland/electron-builder,Electron packaging alternative,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+37,Tool Build Processing,19,module-federation/core,https://github.com/module-federation/core,Microfrontend federation,Deferred,Direkt im PDF verlinkt,OFFEN,OFFEN
+38,Tool Build Processing,19,originjs/vite-plugin-federation,https://github.com/originjs/vite-plugin-federation,Vite federation option,Deferred,Direkt im PDF verlinkt,OFFEN,OFFEN
+39,Tool Build Processing,19,single-spa/single-spa,https://github.com/single-spa/single-spa,Microfrontend app orchestration,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+40,Tool Build Processing,19,systemjs/systemjs,https://github.com/systemjs/systemjs,Dynamic JS module loader,Avoid for trusted core,Direkt im PDF verlinkt,OFFEN,OFFEN
+41,Tool Build Processing,19,GoogleChrome/workbox,https://github.com/GoogleChrome/workbox,PWA cache strategy,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+42,Tool Build Processing,19,vite-pwa/vite-plugin-pwa,https://github.com/vite-pwa/vite-plugin-pwa,PWA packaging,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+43,Tool Build Processing,19,pwa-builder/PWABuilder,https://github.com/pwa-builder/PWABuilder,PWA packaging toolkit,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+44,Tool Build Processing,19,ionic-team/capacitor,https://github.com/ionic-team/capacitor,Mobile bridge,Deferred,Direkt im PDF verlinkt,OFFEN,OFFEN
+45,Tool Build Processing,19,tw93/Pake,https://github.com/tw93/Pake,Desktop wrapper alternative,Reference only,Direkt im PDF verlinkt,OFFEN,OFFEN
+46,Tool Build Processing,19,pubkey/rxdb,https://github.com/pubkey/rxdb,Local-first database,Pilot,Direkt im PDF verlinkt,OFFEN,OFFEN
+47,Claude Finds Your Money Leaks,11,amazon-agi/BOBA-bench,https://github.com/amazon-agi/BOBA-bench,Agent-chain benchmark,Pilot,Aus dem verlinkten BOBA-Forschungspapier; keine direkte GitHub-URL im Newsletter,OFFEN,OFFEN
+48,Claude Finds Your Money Leaks,12,off-grid-ai/OGAM,https://github.com/off-grid-ai/OGAM,Offline mobile AI reference,Reference only,Recherchierter offizieller Off Grid AI Mobile-Code,OFFEN,OFFEN
+49,Claude Finds Your Money Leaks,12,off-grid-ai/OGAD,https://github.com/off-grid-ai/OGAD,Offline desktop AI reference,Evaluate,Recherchierter offizieller Off Grid AI Desktop-Code,OFFEN,OFFEN
+50,Claude Finds Your Money Leaks,12,AGGIB/Stroq,https://github.com/AGGIB/Stroq,Agent session security,Synthetic test only,Recherchierter offizieller Stroq-Quellcode,OFFEN,OFFEN
