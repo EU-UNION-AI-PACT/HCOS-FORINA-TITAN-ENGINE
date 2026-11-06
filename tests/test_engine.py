@@ -498,6 +498,16 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(summ["status"], "OPERATIONAL_OFFLINE")
         self.assertIn("10/10 Grundregeln", summ["security_directiv_compliance"])
 
+    def test_wish_studio_repository_catalog(self):
+        from forina_engine.repo_catalog import RepositoryEvaluationCatalog
+        cat = RepositoryEvaluationCatalog(self.root)
+        wish = cat.get_wish_studio_catalog()
+        self.assertEqual(len(wish), 18, "Muss exakt 18 Wish Studio Repositories laden")
+        fider = next((r for r in wish if r["projekt"] == "Fider"), None)
+        self.assertIsNotNone(fider)
+        self.assertEqual(fider["repository"], "getfider/fider")
+        self.assertEqual(fider["bereich"], "Wunschportal & Support")
+
 
 if __name__ == "__main__":
     unittest.main()

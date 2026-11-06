@@ -1,0 +1,19 @@
+Nr;Bereich;Projekt;Repository;Kategorie;Rolle;Lizenz
+1;Wunschportal & Support;Fider;getfider/fider;Feedback & Feature Requests;Bürger- & Community-Wünsche sammeln;AGPL-3.0
+2;Wunschportal & Support;Chatwoot;chatwoot/chatwoot;Omnichannel Messaging;Live-Support & Kommunikations-Hub;MIT
+3;Wunschportal & Support;Zammad;zammad/zammad;Helpdesk & Ticketing;Strukturiertes Ticket- & Audit-Management;AGPL-3.0
+4;Wunschportal & Support;Huly;hcengineering/platform;Projekt- & Teammanagement;Entwicklerkoordination & Task-Backlog;Elastic-2.0
+5;Wunschportal & Support;Twenty;twentyhq/twenty;Modernes Open-Source CRM;Partner- & Ehrenamts-Beziehungsmanagement;AGPL-3.0
+6;Wunschportal & Support;Teable;teableio/teable;Echtzeit-Datenbank & Grid;Strukturierte Skill-Pass Datentabellen;AGPL-3.0
+7;Wunschportal & Support;Listmonk;knadh/listmonk;Newsletter & Mailing;Datensouveräne Community-Benachrichtigung;AGPL-3.0
+8;Verträge & Signaturen;Documenso;documenso/documenso;Digitale Signatur;Rechtskonforme Vereinbarungen & Nachweise;AGPL-3.0
+9;Verträge & Signaturen;DocuSeal;docusealco/docuseal;Dokumentensignatur & Workflows;Vereinfachtes Onboarding & Gemeinwohl-Pakte;AGPL-3.0
+10;Hosting & Cloud;Akash Network;akash-network/node;Dezentraler Compute Marketplace;Zensurresistente Server-Bereitstellung;Apache-2.0
+11;Hosting & Cloud;RunOnFlux;RunOnFlux/flux;Verteiltes Cloud-Betriebssystem;Redundante globale Knoten-Orchestrierung;MIT
+12;Hosting & Cloud;Mirantis;Mirantis;Enterprise Cloud & Kubernetes;Unabhängige Container-Infrastruktur;Apache-2.0
+13;Hosting & Cloud;k0s Kubernetes;k0sproject/k0s;Zero-Friction Kubernetes;Leichtgewichtiges Single-Binary-Cluster;Apache-2.0
+14;Dezentraler Code;Gitopia;gitopia/gitopia;DLT Git & IBC Föderation;Blockchain-gestützte Quellcode-Souveränität;MIT
+15;Dezentraler Code;Tangled;tangled.org/core;Föderiertes Git-Netzwerk;Peer-to-Peer Codekollaboration;MIT
+16;Dezentraler Code;ngit;DanConwayDev/ngit-cli;Nostr-basierte Git-Werkzeuge;Dezentrale Issues, PRs & Code-Reviews;MIT
+17;Dezentraler Code;GRASP;gitgrasp/grasp;Git Remote Protocol Erweiterung;Souveräne Push/Pull Übertragungsprotokolle;GPL-3.0
+18;Dezentraler Code;Pijul;pijul/pijul;Patch-theoretisches VCS;Mathematisch fundierte Konfliktlösung;GPL-2.0

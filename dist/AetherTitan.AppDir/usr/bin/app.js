@@ -1140,6 +1140,53 @@ function filterReposByZone(zone) {
   loadRepositoriesCatalog(zone);
 }
 
+async function loadWishStudioRepos() {
+  const container = document.getElementById('repos-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--neon-pink); font-size:0.75rem;">Lade Wish Studio & Gemeinwohl Repositories...</div>';
+
+  try {
+    const res = await fetch('/api/repos/wish-studio');
+    const data = await res.json();
+    const repos = data.repositories || [];
+
+    container.innerHTML = repos.map(r => {
+      const safeProject = escapeHtml(r.projekt);
+      const safeRepo = escapeHtml(r.repository);
+      const safeBereich = escapeHtml(r.bereich);
+      const safeCat = escapeHtml(r.kategorie);
+      const safeRole = escapeHtml(r.rolle);
+      const safeLicense = escapeHtml(r.lizenz);
+      const safeUrl = sanitizeGitHubUrl(`https:
+
+      return `
+        <div style="background:rgba(255,0,85,0.04); border:1px solid rgba(255,0,85,0.25); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+              <span style="color:var(--neon-pink); font-weight:700;">#${String(r.nr).padStart(2, '0')} · ${safeProject}</span>
+              <span style="font-size:0.6rem; color:var(--gold); border:1px solid var(--gold); padding:1px 4px; border-radius:3px;">
+                ${safeBereich}
+              </span>
+            </div>
+            <div style="margin-top:4px;">
+              <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">${safeRepo} ↗</a>
+            </div>
+            <div style="color:#e2e8f0; font-size:0.68rem; margin-top:3px;">
+              <strong style="color:var(--neon-green);">${safeCat}:</strong> ${safeRole}
+            </div>
+          </div>
+          <div style="margin-top:6px; pt-2; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; color:#a0aec0;">
+            <span style="color:var(--gold);">Lizenz: <strong>${safeLicense}</strong></span>
+            <span style="color:#94a3b8;">Wish Studio / Skill-Pass</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">18 Wish Studio Repositories in docs/catalogs/WISH_STUDIO_18_REPOS.csv</div>';
+  }
+}
+
 let _activeConceptCategory = '';
 
 function filterConceptCategory(category, chipEl) {

@@ -258,6 +258,19 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 10b. WISH STUDIO 18-REPOSITORY FEDERATION CATALOG
+        if parsed.path == "/api/repos/wish-studio":
+            catalog = RepositoryEvaluationCatalog(self.project_root)
+            items = catalog.get_wish_studio_catalog()
+            payload = {
+                "ecosystem": "Wish Studio & Gemeinwohl Digitaler Skill Pass",
+                "count": len(items),
+                "repositories": items
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 11. 34 CONCEPT PAPERS SUITE & STANDARDS
         if parsed.path.startswith("/api/concepts/paper"):
             suite = ConceptPaperSuite(self.project_root)

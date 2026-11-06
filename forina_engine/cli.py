@@ -64,8 +64,8 @@ def main():
     mod_parser.add_argument("--id", type=str, default="", help="Modul-ID fuer Einzelpruefung")
 
     # repos (50 Repositories Explorer)
-    repo_parser = subparsers.add_parser("repos", help="Erforscht die 50 Open-Source Repositories der Spezifikation")
-    repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect")
+    repo_parser = subparsers.add_parser("repos", help="Erforscht die 50 Open-Source Repositories & Wish Studio Ökosystem")
+    repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect", "wish-studio"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect, wish-studio")
     repo_parser.add_argument("--zone", type=str, default="", help="Zone Filter: sovereign, dev, federation")
     repo_parser.add_argument("--nr", type=int, default=1, help="Repository Nummer fuer inspect (1-50)")
 
@@ -299,6 +299,15 @@ def main():
             print("==================================================================")
             for r in filtered:
                 print(f" #{r['nr']:02d} | {r['repository']:<38} | {r['module_id']:<4} | [{r['integration_decision']:<15}]")
+            print("==================================================================")
+
+        elif args.action == "wish-studio":
+            wish_repos = catalog.get_wish_studio_catalog()
+            print("==================================================================")
+            print(f" WISH STUDIO & GEMEINWOHL ÖKOSYSTEM ({len(wish_repos)} REPOSITORIES)")
+            print("==================================================================")
+            for r in wish_repos:
+                print(f" #{r['nr']:02d} | {r['projekt']:<12} | {r['repository']:<24} | {r['kategorie']:<30} | [{r['lizenz']}]")
             print("==================================================================")
 
         else: # list

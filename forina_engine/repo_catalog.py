@@ -206,3 +206,23 @@ class RepositoryEvaluationCatalog:
             "development_count": zones.get("Development & Research Zone", 0),
             "federation_count": zones.get("Federation & Integration Zone", 0)
         }
+
+    def get_wish_studio_catalog(self) -> List[Dict[str, Any]]:
+        csv_path = self.root / "docs" / "catalogs" / "WISH_STUDIO_18_REPOS.csv"
+        if not csv_path.exists():
+            return []
+        items = []
+        with open(csv_path, mode="r", encoding="utf-8") as f:
+            reader = csv.DictReader(f, delimiter=";")
+            for r in reader:
+                items.append({
+                    "nr": int(r.get("Nr", 0)),
+                    "bereich": r.get("Bereich", ""),
+                    "projekt": r.get("Projekt", ""),
+                    "repository": r.get("Repository", ""),
+                    "kategorie": r.get("Kategorie", ""),
+                    "rolle": r.get("Rolle", ""),
+                    "lizenz": r.get("Lizenz", ""),
+                    "zone": "Wish Studio & Gemeinwohl Federation"
+                })
+        return items
