@@ -16,6 +16,7 @@ from urllib.parse import urlparse, parse_qs
 
 from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
+from .agent_orchestrator import AgentOrchestrator
 
 CURRENT_VERSION = "1.2.0"
 
@@ -134,6 +135,53 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(registry_file.read_bytes())
             return
 
+        # 6. AI STUDIO & AGENTS ENDPOINTS
+        orch = AgentOrchestrator(self.project_root)
+        if parsed.path == "/api/agents/list":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(orch.list_agents(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/skills/list":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(orch.list_skills(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/skills/get":
+            skill_name = query.get("name", ["forina-domain-trust"])[0]
+            content = orch.get_skill_content(os.path.basename(skill_name))
+            if content is None:
+                self._set_json_headers(404)
+                self.wfile.write(json.dumps({"error": "Skill nicht gefunden"}).encode("utf-8"))
+                return
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"skill": skill_name, "markdown": content}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/mcp/connectors":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(orch.mcp.list_connectors(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/mcp/debug":
+            cid = query.get("id", ["github"])[0]
+            diag = orch.mcp.debug_connector(cid)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(diag, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/knowledge/search":
+            q = query.get("q", ["Compliance"])[0]
+            results = orch.kb.search(q, top_k=3)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(results, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/secrets/status":
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(orch.secrets.get_vault_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
@@ -178,6 +226,31 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             target_file.write_text(json.dumps(data, indent=2, ensure_ascii=False), encoding="utf-8")
             self._set_json_headers(201)
             self.wfile.write(json.dumps({"status": "registered", "slug": slug}).encode("utf-8"))
+            return
+
+        # 8. AI MULTI-AGENT CHAT QUERY
+        if parsed.path == "/api/agents/chat":
+            orch = AgentOrchestrator(self.project_root)
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length).decode("utf-8")
+            data = json.loads(body)
+            agent_id = data.get("agent_id", "compliance")
+            prompt = data.get("prompt", "Status abfragen")
+            result = orch.query_agent(agent_id, prompt)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 9. KNOWLEDGE BASE WEBSITE INDEXING SIMULATION
+        if parsed.path == "/api/knowledge/index":
+            orch = AgentOrchestrator(self.project_root)
+            length = int(self.headers.get("Content-Length", 0))
+            body = self.rfile.read(length).decode("utf-8")
+            data = json.loads(body)
+            url = data.get("url", "https://europa.eu")
+            result = orch.kb.index_website_simulation(url, page_limit=data.get("page_limit", 10))
+            self._set_json_headers(201)
+            self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         self._set_json_headers(404)

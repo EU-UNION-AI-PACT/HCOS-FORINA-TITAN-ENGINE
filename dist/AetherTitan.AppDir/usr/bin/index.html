@@ -182,6 +182,105 @@
         </div>
       </section>
 
+      <!-- =========================================================================
+           🤖 AI STUDIO & MULTI-AGENT ORCHESTRATION COCKPIT (MISTRAL/MCP INTEGRATION)
+           ========================================================================= -->
+      <section class="module-card" style="border:2px solid var(--neon-blue); background:linear-gradient(145deg, #0d1a2d 0%, #17283c 60%, #0a1320 100%); box-shadow:0 0 25px rgba(0,229,255,0.25);">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px; border-bottom:1px solid rgba(0,229,255,0.25); padding-bottom:10px;">
+          <div>
+            <h2 style="color:var(--neon-blue); border:none; padding:0; font-size:1.15rem; display:inline-flex; align-items:center; gap:8px;">
+              <span class="blink-dot" style="background:var(--neon-blue); box-shadow:0 0 10px var(--neon-blue);"></span>
+              ✦ HCOS AI STUDIO & MULTI-AGENT ORCHESTRATOR ✦
+            </h2>
+            <p style="font-size:0.78rem; color:#a0aec0; margin-top:2px;">
+              MCP Tools · Skills Framework (`SKILL.md`) · Semantic RAG (128-1024 Dim) · Voice Assistant (STT/TTS)
+            </p>
+          </div>
+          <div style="display:flex; gap:6px;">
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('chat')">💬 Agenten-Chat</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('skills')">📚 Skills (`SKILL.md`)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP Debugger</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 Knowledge RAG</button>
+          </div>
+        </div>
+
+        <!-- TAB 1: AGENTEN-CHAT & VOICE COCKPIT -->
+        <div id="ai-tab-chat" class="ai-tab-content">
+          <div style="display:flex; gap:10px; margin-top:10px; flex-wrap:wrap; align-items:center;">
+            <label style="font-size:0.8rem; color:var(--gold); font-weight:700;">Agent wählen:</label>
+            <select id="active-agent-select" style="max-width:280px; padding:6px 10px;">
+              <option value="domain_trust">🌐 Domain Trust & DNS Agent</option>
+              <option value="compliance" selected>⚖️ EU-Compliance & AI Act Agent</option>
+              <option value="code_defense">🛡️ Code Defense & Obfuscation Agent</option>
+              <option value="evidence">🔐 Evidence & Merkle-Root Auditor</option>
+              <option value="voice_assistant">🎙️ Voice Navigator & Speech Agent</option>
+            </select>
+            <span class="eu-badge" id="ai-vault-badge" style="background:rgba(0,255,136,0.1); border-color:var(--neon-green); color:var(--neon-green);">
+              🔒 Vault: AES-256-GCM Lokal Isoliert
+            </span>
+          </div>
+
+          <div id="ai-chat-history" style="background:#090d14; border:1px solid rgba(255,255,255,0.1); border-radius:8px; padding:12px; margin-top:10px; min-height:90px; max-height:220px; overflow-y:auto; font-size:0.82rem; line-height:1.5;">
+            <div style="color:var(--gold);">✦ <strong>HCOS Multi-Agent System bereit:</strong> Wähle einen Agenten und stelle deine Frage oder starte die Spracheingabe per Mikrofon.</div>
+          </div>
+
+          <div style="display:flex; gap:6px; margin-top:8px;">
+            <input type="text" id="ai-user-prompt" placeholder="Befehl oder Frage an den ausgewählten Agenten..." onkeydown="if(event.key==='Enter') sendAgentMessage();" />
+            <button class="titan-btn" onclick="toggleVoiceInput()" id="mic-btn" title="Spracheingabe (STT)">🎤 Mic</button>
+            <button class="titan-btn" onclick="speakLastResponse()" id="speaker-btn" title="Sprachausgabe (TTS)">🔊 Vorlesen</button>
+            <button class="titan-btn" style="border-color:var(--neon-blue);" onclick="sendAgentMessage()">Senden</button>
+          </div>
+        </div>
+
+        <!-- TAB 2: SKILLS BROWSER -->
+        <div id="ai-tab-skills" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="font-size:0.82rem; color:var(--gold);">Verfügbare FORINA TITAN Skills (`SKILL.md`):</strong>
+            <button class="titan-btn" style="padding:2px 8px; font-size:0.72rem;" onclick="loadSkillsCatalog()">↻ Neu laden</button>
+          </div>
+          <div id="skills-list-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:8px;">
+            <!-- Dynamisch via loadSkillsCatalog() -->
+          </div>
+          <div id="skill-markdown-view" style="display:none; margin-top:10px; background:#080c14; border:1px solid var(--gold); border-radius:8px; padding:12px; font-family:monospace; font-size:0.75rem; white-space:pre-wrap; max-height:200px; overflow-y:auto;"></div>
+        </div>
+
+        <!-- TAB 3: MCP CONNECTOR DEBUGGER -->
+        <div id="ai-tab-mcp" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;">
+            <strong style="font-size:0.82rem; color:var(--neon-blue);">Model Context Protocol (MCP) Konnektoren & Tools:</strong>
+            <span style="font-size:0.72rem; color:#a0aec0;">Protokoll: MCP v1.0 Standard</span>
+          </div>
+          <div id="mcp-connectors-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(240px, 1fr)); gap:8px;">
+            <!-- Dynamisch via loadMcpConnectors() -->
+          </div>
+          <div id="mcp-diagnostic-result" style="display:none; margin-top:8px; background:#080c14; border:1px solid var(--neon-green); border-radius:8px; padding:10px; font-size:0.75rem; color:var(--silver);"></div>
+        </div>
+
+        <!-- TAB 4: KNOWLEDGE BASE & WEBSITE INDEXER -->
+        <div id="ai-tab-kb" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+            <div>
+              <strong style="font-size:0.82rem; color:var(--gold);">Semantische Vektorsuche (128-1024 Dim):</strong>
+              <div style="display:flex; gap:6px; margin-top:6px;">
+                <input type="text" id="kb-search-input" placeholder="Suchbegriff (z.B. Governance, Merkle, Caddy)..." />
+                <button class="titan-btn" onclick="executeKnowledgeSearch()">Suchen</button>
+              </div>
+              <div id="kb-search-results" style="margin-top:8px; font-size:0.75rem; max-height:140px; overflow-y:auto;"></div>
+            </div>
+            <div>
+              <strong style="font-size:0.82rem; color:var(--neon-blue);">Website-Crawler & Indexer (wie Mistral Studio):</strong>
+              <div style="display:flex; gap:6px; margin-top:6px;">
+                <input type="url" id="crawler-url-input" placeholder="https://europa.eu/compliance..." value="https://eur-lex.europa.eu" />
+                <button class="titan-btn" onclick="triggerWebsiteIndexing()">Indizieren</button>
+              </div>
+              <div id="crawler-result-status" style="margin-top:8px; font-size:0.75rem; color:#a0aec0;">
+                Bereit zum Crawlen autorisierter Dokumentations- und Compliance-Quellen.
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <!-- ==================== MODUL-RASTER ==================== -->
       <section class="grid-dashboard">
 

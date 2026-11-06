@@ -7,3 +7,5 @@ __pycache__/
 *signing_key*
 *.key
 config/.api_key
+config/.secrets_vault*
+config/.vault_salt*

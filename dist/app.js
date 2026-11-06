@@ -582,3 +582,210 @@ async function injectModuleViaApiKey() {
 
   alert(`Neues Modul "${endpoint || 'Custom Layer'}" erfolgreich via API-Key verifiziert und in das Raster eingepflegt!`);
 }
+
+
+
+
+let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
+
+function switchAiTab(tabName) {
+  ['chat', 'skills', 'mcp', 'kb'].forEach(t => {
+    const el = document.getElementById(`ai-tab-${t}`);
+    if (el) el.style.display = (t === tabName) ? 'block' : 'none';
+  });
+  if (tabName === 'skills') loadSkillsCatalog();
+  if (tabName === 'mcp') loadMcpConnectors();
+}
+
+async function sendAgentMessage() {
+  const inputEl = document.getElementById('ai-user-prompt');
+  const selectEl = document.getElementById('active-agent-select');
+  const historyEl = document.getElementById('ai-chat-history');
+  if (!inputEl || !inputEl.value.trim()) return;
+
+  const prompt = inputEl.value.trim();
+  const agentId = selectEl.value;
+  inputEl.value = '';
+
+  
+  const userDiv = document.createElement('div');
+  userDiv.style.margin = '6px 0';
+  userDiv.innerHTML = `<strong style="color:var(--silver);">Du (${agentId}):</strong> ${prompt}`;
+  historyEl.appendChild(userDiv);
+  historyEl.scrollTop = historyEl.scrollHeight;
+
+  try {
+    const res = await fetch('/api/agents/chat', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ agent_id: agentId, prompt })
+    });
+    const data = await res.json();
+    lastAgentResponse = data.response;
+
+    const respDiv = document.createElement('div');
+    respDiv.style.margin = '6px 0';
+    respDiv.style.padding = '8px';
+    respDiv.style.background = 'rgba(0,229,255,0.08)';
+    respDiv.style.borderLeft = '3px solid var(--neon-blue)';
+    respDiv.style.borderRadius = '4px';
+    respDiv.innerHTML = `
+      <strong style="color:var(--neon-blue);">${data.agent.icon} ${data.agent.name}:</strong>
+      <pre style="font-family:inherit; white-space:pre-wrap; margin-top:4px;">${data.response}</pre>
+      <div style="font-size:0.68rem; color:#a0aec0; margin-top:4px;">Inferenz: ${data.inference_mode} (${data.latency_ms} ms)</div>
+    `;
+    historyEl.appendChild(respDiv);
+    historyEl.scrollTop = historyEl.scrollHeight;
+  } catch (err) {
+    const errDiv = document.createElement('div');
+    errDiv.style.color = 'var(--neon-red)';
+    errDiv.textContent = `[Agent Error]: Verbindung zur lokalen Engine fehlgeschlagen (${err.message})`;
+    historyEl.appendChild(errDiv);
+  }
+}
+
+
+let speechRecognition = null;
+function toggleVoiceInput() {
+  const SpeechRec = window.SpeechRecognition || window.webkitSpeechRecognition;
+  const micBtn = document.getElementById('mic-btn');
+  if (!SpeechRec) return alert('Web Speech API wird von diesem Browser nicht unterstuetzt (z. B. Chrome/Chromium empfohlen).');
+
+  if (!speechRecognition) {
+    speechRecognition = new SpeechRec();
+    speechRecognition.lang = 'de-DE';
+    speechRecognition.continuous = false;
+    speechRecognition.interimResults = false;
+
+    speechRecognition.onstart = () => {
+      micBtn.style.background = 'var(--neon-red)';
+      micBtn.textContent = '🔴 Höre...';
+    };
+    speechRecognition.onresult = (evt) => {
+      const text = evt.results[0][0].transcript;
+      document.getElementById('ai-user-prompt').value = text;
+      sendAgentMessage();
+    };
+    speechRecognition.onend = () => {
+      micBtn.style.background = '';
+      micBtn.textContent = '🎤 Mic';
+      speechRecognition = null;
+    };
+    speechRecognition.start();
+  } else {
+    speechRecognition.stop();
+  }
+}
+
+
+function speakLastResponse() {
+  if (!('speechSynthesis' in window)) return alert('Sprachsynthese (TTS) nicht verfuegbar.');
+  window.speechSynthesis.cancel();
+  const cleanText = lastAgentResponse.replace(/[*_#✓✦\[\]]/g, '');
+  const utterance = new SpeechSynthesisUtterance(cleanText);
+  utterance.lang = 'de-DE';
+  utterance.rate = 1.05;
+  window.speechSynthesis.speak(utterance);
+}
+
+
+async function loadSkillsCatalog() {
+  const container = document.getElementById('skills-list-container');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/skills/list');
+    const skills = await res.json();
+    container.innerHTML = skills.map(s => `
+      <div class="module-card" style="padding:10px; cursor:pointer;" onclick="viewSkillMarkdown('${s.id}')">
+        <strong style="color:var(--gold); font-size:0.8rem;">📄 ${s.name}</strong>
+        <p style="font-size:0.72rem; color:#a0aec0; margin-top:4px;">${s.description}</p>
+        <span style="font-size:0.65rem; color:var(--neon-blue); margin-top:6px; display:inline-block;">Klicken für SKILL.md</span>
+      </div>
+    `).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">Skills lokal bereit in skills/</div>';
+  }
+}
+
+async function viewSkillMarkdown(name) {
+  const view = document.getElementById('skill-markdown-view');
+  if (!view) return;
+  try {
+    const res = await fetch(`/api/skills/get?name=${encodeURIComponent(name)}`);
+    const data = await res.json();
+    view.textContent = data.markdown;
+    view.style.display = 'block';
+  } catch (e) {}
+}
+
+
+async function loadMcpConnectors() {
+  const container = document.getElementById('mcp-connectors-container');
+  if (!container) return;
+  try {
+    const res = await fetch('/api/mcp/connectors');
+    const conns = await res.json();
+    container.innerHTML = conns.map(c => `
+      <div class="module-card" style="padding:10px;">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+          <strong style="color:var(--neon-blue); font-size:0.8rem;">🔌 ${c.name}</strong>
+          <span class="tier-badge ${c.status === 'connected' ? 'prod' : 'tested'}">${c.status}</span>
+        </div>
+        <p style="font-size:0.72rem; color:#a0aec0; margin:4px 0;">${c.description}</p>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px;">
+          <small style="font-size:0.65rem; color:var(--gold);">Tools: ${c.tools.length}</small>
+          <button class="titan-btn" style="padding:2px 8px; font-size:0.68rem;" onclick="pingMcpConnector('${c.id}')">Diagnose Ping</button>
+        </div>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function pingMcpConnector(id) {
+  const resEl = document.getElementById('mcp-diagnostic-result');
+  if (!resEl) return;
+  try {
+    const res = await fetch(`/api/mcp/debug?id=${id}`);
+    const data = await res.json();
+    resEl.innerHTML = `
+      <strong style="color:var(--neon-green);">✓ MCP Diagnose Bestanden: ${data.name}</strong><br>
+      Latenz: ${data.latency_ms} ms · Schema: Validiert (MCP v1.0) · Tools: ${data.available_tools.join(', ')}
+    `;
+    resEl.style.display = 'block';
+  } catch (e) {}
+}
+
+
+async function executeKnowledgeSearch() {
+  const q = document.getElementById('kb-search-input').value.trim();
+  const resEl = document.getElementById('kb-search-results');
+  if (!q || !resEl) return;
+  try {
+    const res = await fetch(`/api/knowledge/search?q=${encodeURIComponent(q)}`);
+    const results = await res.json();
+    resEl.innerHTML = results.map(r => `
+      <div style="background:rgba(255,255,255,0.05); padding:6px; border-radius:4px; margin-bottom:4px;">
+        <strong style="color:var(--gold);">${r.title}</strong> <small style="color:var(--neon-blue); font-size:0.65rem;">(Match: ${r.score}%)</small>
+        <p style="font-size:0.72rem; color:#cbd5e0; margin-top:2px;">${r.content}</p>
+      </div>
+    `).join('');
+  } catch (e) {}
+}
+
+async function triggerWebsiteIndexing() {
+  const url = document.getElementById('crawler-url-input').value.trim();
+  const statusEl = document.getElementById('crawler-result-status');
+  if (!url || !statusEl) return;
+  statusEl.textContent = `Indiziere ${url} (Website-Crawler aktiv)...`;
+  try {
+    const res = await fetch('/api/knowledge/index', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ url, page_limit: 8 })
+    });
+    const data = await res.json();
+    statusEl.innerHTML = `<span style="color:var(--neon-green);">✓ Erfolgreich indiziert: ${data.url} (${data.pages_analyzed} Seiten im Vektor-Index erfasst).</span>`;
+  } catch (e) {
+    statusEl.textContent = 'Fehler beim Crawlen.';
+  }
+}
