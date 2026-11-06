@@ -20,10 +20,25 @@
 Die **HCOS FORINA TITAN ENGINE** ist eine deterministische Release- und Build-Pipeline sowie eine autarke Governance- und Modul-Suite. Sie basiert auf dem 27-seitigen Anforderungs- und Sicherheitsmanifest:
 **`Tool Build Processing - Securty - So Baut man.txt`**
 
-### 💡 Das Live-Spec Realisierungs-Radar
+### 💡 Das Live-Spec Realisierungs-Radar (4-Tier Production Assurance)
 Die Engine verfügt über ein **integriertes Live-Sync Radar**, das in Echtzeit prüft, ob die in der Spezifikation geforderten Mechanismen und Module im Code tatsächlich realisiert wurden:
-- **Interactive Light Blink Buttons:** Für jedes der 8 Kern-Module signalisiert ein pulsierender LED-Indikator (Grün = 100% Realisiert, Gelb = Syncing, Rot = Alert) den Live-Zustand. Ein Klick auf den Button öffnet ein detailliertes Audit-Inspektionsfenster mit Spezifikations-Zitaten und Quellcode-Nachweisen.
-- **Statistic Light Glow Points:** 8 dynamisch leuchtende Statistik-Punkte spiegeln den Gesamtrealisierungsgrad (100%), die Integritäts-Hashes und den System-Heartbeat wider.
+- **Interactive Light Blink Buttons:** Für jedes der 8 Kern-Module signalisiert ein pulsierender LED-Indikator den Zustand. Ein Klick auf den Button öffnet ein detailliertes Audit-Inspektionsfenster mit Spezifikations-Zitaten und Quellcode-Nachweisen.
+- **4-Stufen Production Assurance:**
+  - `[PROD-READY]` (Tier-4): Produktionsgehärtet, asymmetrisch signiert & offline-fähig.
+  - `[CONFIG-TESTED]` (Tier-3): Vollständig konfiguriert & syntaxgeprüft.
+  - `[AGENT-READY]` (Tier-2): Code & lokale Logik implementiert.
+  - `[MOCK-SIMULATION]` (Tier-1): Simulation externer Provider (z. B. SMS-Mobilfunkgate).
+- **Statistic Light Glow Points:** 8 dynamisch leuchtende Statistik-Punkte spiegeln den Gesamtrealisierungsgrad und den System-Heartbeat wider.
+
+### 🔐 Asymmetrische Ed25519-Signatur & Merkle-Root
+Das System beglaubigt sich nicht nur über einfache Hashwerte, sondern über ein **echtes asymmetrisches Ed25519-Signaturverfahren** (RFC 8032). Der zugehörige öffentliche Schlüssel liegt unter [`certificates/sovereign_pubkey_ed25519.pem`](certificates/sovereign_pubkey_ed25519.pem) bereit, sodass jeder Dritte die Echtheit des Codebase-Merkle-Roots unabhängig verifizieren kann:
+```bash
+python3 forina.py certify
+```
+
+### 📦 Fertiges Linux-AppImage
+Die Pipeline erzeugt direkt ein ausführbares, portables Linux-Binary:
+`releases/ForinaTitan-1.2.0-x86_64.AppImage` (943 KB)
 
 ---
 
@@ -100,7 +115,12 @@ python3 forina.py serve --port 4000
 
 ---
 
-## ⚖️ Urheberrecht & Eigentumsrechte
+## ⚖️ Urheberrecht, Sichtbarkeit & Governance-Modell
+
+Das Repository wird als **Source-Available Open-Audit Repository** geführt, um staatlichen Institutionen, Partnern und Auditoren die transparente Überprüfung von Integrität, Hashwerten und Spezifikation zu ermöglichen:
+* **Prüf- und Audit-Rechte:** Das Einsehen und kryptografische Validieren des Codes ist autorisiert.
+* **Nutzungs-, Klon- und Verwertungsrechte:** Bleiben Daniel Pohl und den autorisierten Entitäten (HNOSS Enterprises, PRISMANTHARION Corporation, SHINEHEALTHCARE GmbH, STARLIGHTMOVEMENTS AG) exklusiv vorbehalten.
+* **Privat-Umschaltung:** Über `python3 forina.py make-private` kann das Repository bei Bedarf jederzeit mit einem Klick auf privat gestellt werden.
 
 ```text
 COPYRIGHT NOTICE:

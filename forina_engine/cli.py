@@ -40,8 +40,12 @@ def main():
     subparsers.add_parser("sync-live", help="Gibt den aktuellen Live-Sync Status als JSON aus")
 
     # serve
-    serve_parser = subparsers.add_parser("serve", help="Startet den lokalen Engine- und Live-Sync-Server")
+    serve_parser = subparsers.add_parser("serve", help="Startet den lokalen Engine- und Live-Sync-Server (gehaertet)")
+    serve_parser.add_argument("--host", type=str, default="127.0.0.1", help="Host-Adresse fuer Server-Binding (Standard: 127.0.0.1)")
     serve_parser.add_argument("--port", type=int, default=4000, help="Port fuer den Server (Standard: 4000)")
+
+    # make-private
+    subparsers.add_parser("make-private", help="Setzt das GitHub-Repository ueber die API auf privat")
 
     # push-repo
     push_parser = subparsers.add_parser("push-repo", help="Pusht das Repository zu GitHub")
@@ -77,7 +81,7 @@ def main():
         print("==================================================================")
         for m in res["modules"]:
             status_sym = "[x] REALISIERT" if m["realized"] else "[ ] AUSSTEHEND"
-            print(f" - {m['name']:<45} | {status_sym} | Score: {m['score']}% | Light: {m['light_state']}")
+            print(f" - {m['name']:<45} | {status_sym} | Spec: {m['spec_score']}% | PRL: {m['readiness_score']}% [{m['tier_badge']:<17}] | Light: {m['light_state']}")
         print("==================================================================")
 
     elif args.command == "certify":
@@ -92,7 +96,8 @@ def main():
         print(f" D-U-N-S / LEI:          {cert['metadata']['certifications']['duns_numbers']} | LEI: {cert['metadata']['certifications']['global_lei']}")
         print(f" UNGM Identifier:        {cert['metadata']['certifications']['ungm_id']}")
         print(f" Codebase Merkle Root:   {cert['codebase_attestation']['merkle_root']}")
-        print(f" Sovereign Digital Seal: {cert['cryptographic_signatures']['digital_seal'][:64]}...")
+        print(f" Ed25519 Signature:      {cert['cryptographic_signatures']['ed25519_signature_hex'][:64]}...")
+        print(f" Algorithmus:            {cert['cryptographic_signatures']['algorithm']}")
         print(f" Validierungsstatus:     {cert['cryptographic_signatures']['validation_status']}")
         print("===================================================================================")
         print(f" [OK] Zertifikat erfolgreich erstellt unter: {project_root / 'certificates/CERTIFICATION.md'}")
@@ -103,7 +108,28 @@ def main():
         print(json.dumps(sync.verify_all_modules(), indent=2, ensure_ascii=False))
 
     elif args.command == "serve":
-        run_engine_server(port=args.port, project_root=project_root)
+        run_engine_server(host=args.host, port=args.port, project_root=project_root)
+
+    elif args.command == "make-private":
+        import urllib.request
+        token_path = Path("/home/shinehealthcare/Schreibtisch/API TOKENs/GitHub Token/Admin Org. - GitHub")
+        if not token_path.exists():
+            print("[ERROR] Kein GitHub Token gefunden unter:", token_path)
+            sys.exit(1)
+        token = token_path.read_text().strip().split()[-1]
+        req = urllib.request.Request(
+            "https://api.github.com/repos/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE",
+            data=json.dumps({"private": True}).encode("utf-8"),
+            headers={"Authorization": f"token {token}", "User-Agent": "HCOS-Engine", "Content-Type": "application/json"},
+            method="PATCH"
+        )
+        try:
+            with urllib.request.urlopen(req) as resp:
+                data = json.loads(resp.read().decode())
+                print(f"[SUCCESS] Repository '{data.get('full_name')}' ist jetzt PRIVAT (private: {data.get('private')})!")
+        except Exception as e:
+            print("[ERROR] Konnte Repository nicht auf privat setzen:", e)
+            sys.exit(1)
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

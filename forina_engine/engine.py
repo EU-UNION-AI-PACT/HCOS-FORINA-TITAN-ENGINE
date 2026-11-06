@@ -211,7 +211,7 @@ class ForinaTitanEngine:
             report["stages"]["EVIDENCE"] = {
                 "status": "PASS",
                 "evidence_path": str(evidence_file),
-                "digital_seal": cert_data["cryptographic_signatures"]["digital_seal"][:32] + "...",
+                "ed25519_signature": cert_data["cryptographic_signatures"]["ed25519_signature_hex"][:32] + "...",
                 "timestamp": utc_now()
             }
 
@@ -246,10 +246,24 @@ class ForinaTitanEngine:
                 encoding="utf-8"
             )
 
-            # Copy web into appdir
+            # Copy web into appdir & icons
             for f in self.dist_dir.glob("*"):
                 if f.is_file():
                     shutil.copy2(f, appdir_usr / f.name)
+            if (self.web_dir / "icon.svg").exists():
+                shutil.copy2(self.web_dir / "icon.svg", appdir / "hcos-titan.svg")
+
+            # Build true Linux .AppImage binary if appimagetool is available
+            appimage_path = self.releases_dir / f"ForinaTitan-1.2.0-x86_64.AppImage"
+            appimagetool_bin = shutil.which("appimagetool") or os.path.expanduser("~/.local/bin/appimagetool")
+            if os.path.exists(appimagetool_bin) and os.access(appimagetool_bin, os.X_OK):
+                try:
+                    import subprocess
+                    env = os.environ.copy()
+                    env["ARCH"] = "x86_64"
+                    subprocess.run([appimagetool_bin, str(appdir), str(appimage_path)], env=env, check=True, capture_output=True)
+                except Exception as ex:
+                    print(f"[WARN] AppImage build notice: {ex}")
 
             # Create release zip
             release_zip = self.releases_dir / f"hcos-forina-titan-pwa-{timestamp}.zip"
@@ -264,6 +278,8 @@ class ForinaTitanEngine:
                 "status": "PASS",
                 "release_zip": str(release_zip),
                 "zip_size_bytes": release_zip.stat().st_size,
+                "appimage_binary": str(appimage_path) if appimage_path.exists() else None,
+                "appimage_size_bytes": appimage_path.stat().st_size if appimage_path.exists() else 0,
                 "timestamp": utc_now()
             }
 

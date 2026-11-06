@@ -408,6 +408,21 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 18px var(--neon-green);
 }
 
+/* 4-Tier Production Assurance Badges */
+.tier-badge {
+  font-size: 0.62rem;
+  font-weight: 800;
+  padding: 2px 7px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  border: 1px solid currentColor;
+}
+.tier-badge.prod { color: var(--neon-green); background: rgba(0,255,136,0.15); border-color: var(--neon-green); }
+.tier-badge.tested { color: var(--neon-blue); background: rgba(0,229,255,0.15); border-color: var(--neon-blue); }
+.tier-badge.impl { color: var(--gold); background: rgba(255,215,0,0.15); border-color: var(--gold); }
+.tier-badge.mock { color: var(--neon-pink); background: rgba(255,42,133,0.15); border-color: var(--neon-pink); }
+
 /* Statistic Light Glow Points Grid */
 .glow-points-grid {
   display: grid;

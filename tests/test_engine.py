@@ -21,7 +21,8 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(cert["metadata"]["author_and_creator"], "Daniel Pohl")
         self.assertEqual(cert["metadata"]["certifications"]["royal_kaiser_charter_regsys"]["pic"], "867679357")
         self.assertEqual(cert["metadata"]["certifications"]["global_lei"], "894500GBJSIW8L6ET310")
-        self.assertTrue(len(cert["cryptographic_signatures"]["digital_seal"]) >= 64)
+        self.assertTrue(len(cert["cryptographic_signatures"]["ed25519_signature_hex"]) >= 64)
+        self.assertTrue(certifier.verify_certificate(cert), "Ed25519 Signatur muss mathematisch verifiziert werden")
         self.assertTrue((self.root / "certificates" / "CERTIFICATE.json").exists())
         self.assertTrue((self.root / "certificates" / "CERTIFICATION.md").exists())
 
@@ -33,7 +34,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(result["overall_percentage"], 100)
         self.assertEqual(len(result["modules"]), 8)
         for mod in result["modules"]:
-            self.assertEqual(mod["score"], 100)
+            self.assertEqual(mod["spec_score"], 100)
             self.assertEqual(mod["light_state"], "blink-green")
 
     def test_pipeline_build(self):

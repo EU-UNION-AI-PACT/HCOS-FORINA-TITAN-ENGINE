@@ -1,20 +1,46 @@
 """
 HCOS - HNOSS CONTROL OPERATING SYSTEM
-FORINA TITAN UNIFIED ENGINE SERVER & LIVE-SYNC GATEWAY
+FORINA TITAN HARDENED ENGINE SERVER & LIVE-SYNC GATEWAY
 Copyright (c) 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.
 """
 from __future__ import annotations
+import hashlib
 import json
 import os
+import secrets
+import stat
 import time
 from http.server import HTTPServer, SimpleHTTPRequestHandler
 from pathlib import Path
 from urllib.parse import urlparse, parse_qs
+
 from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
 
-API_MASTER_KEY = os.environ.get("FORINA_API_KEY", "FORINA-TITAN-2026-SECRET")
 CURRENT_VERSION = "1.2.0"
+
+
+def _load_or_generate_api_key(root: Path) -> str:
+    """Loads secure API key from environment or creates a cryptographically random secret."""
+    env_key = os.environ.get("FORINA_API_KEY")
+    if env_key:
+        return env_key
+
+    key_file = root / "config" / ".api_key"
+    if key_file.exists():
+        try:
+            return key_file.read_text(encoding="utf-8").strip()
+        except Exception:
+            pass
+
+    key_file.parent.mkdir(parents=True, exist_ok=True)
+    generated = "FORINA-" + secrets.token_urlsafe(24)
+    key_file.write_text(generated, encoding="utf-8")
+    try:
+        os.chmod(key_file, stat.S_IRUSR | stat.S_IWUSR)
+    except Exception:
+        pass
+    return generated
 
 
 class ForinaEngineHandler(SimpleHTTPRequestHandler):
@@ -42,7 +68,7 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
         parsed = urlparse(self.path)
         query = parse_qs(parsed.query)
 
-        # 1. LIVE-SYNC & SPEC STATUS (Light Blink Buttons & Statistic Glow Points)
+        # 1. LIVE-SYNC & SPEC STATUS (Light Blink Buttons & 4-Tier Statistic Glow Points)
         if parsed.path in ("/api/spec-status", "/api/live-sync"):
             sync_engine = SpecSyncEngine(self.project_root)
             report = sync_engine.verify_all_modules()
@@ -50,7 +76,7 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(report, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
-        # 1b. SOVEREIGN CERTIFICATION ENDPOINT
+        # 2. SOVEREIGN CERTIFICATION & ED25519 ENDPOINT
         if parsed.path == "/api/certificate":
             certifier = SovereignCertifier(self.project_root)
             cert = certifier.generate_certificate()
@@ -58,20 +84,32 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(cert, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
-        # 2. OTA VERSION ENDPOINT
+        # 2b. CERTIFICATE VERIFY ENDPOINT
+        if parsed.path == "/api/certificate/verify":
+            certifier = SovereignCertifier(self.project_root)
+            is_valid = certifier.verify_certificate()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({
+                "verified": is_valid,
+                "algorithm": "Ed25519",
+                "status": "VALID_AND_AUTHENTIC" if is_valid else "VERIFICATION_FAILED"
+            }, indent=2).encode("utf-8"))
+            return
+
+        # 3. OTA VERSION ENDPOINT
         if parsed.path == "/api/ota/version":
             response = {
                 "system": "HCOS - FORINA TITAN ENGINE",
                 "latest_version": CURRENT_VERSION,
                 "timestamp": int(time.time()),
                 "ota_ready": True,
-                "changelog": "Live Spec Realisierungs-Radar, Statistic Light Glow Points & Full Engine Integration."
+                "changelog": "Ed25519 Asymmetric Signature, 4-Tier Production Assurance & Server Hardening."
             }
             self._set_json_headers(200)
             self.wfile.write(json.dumps(response, indent=2).encode("utf-8"))
             return
 
-        # 3. ATOMIC CLOCK ENDPOINT
+        # 4. ATOMIC CLOCK ENDPOINT
         if parsed.path == "/api/atomclock":
             payload = {
                 "utc": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
@@ -83,7 +121,7 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload).encode("utf-8"))
             return
 
-        # 4. MODULE LOADER
+        # 5. MODULE LOADER
         if parsed.path == "/api/modules/load":
             mod_name = query.get("name", ["app_engine"])[0]
             safe_name = os.path.basename(mod_name)
@@ -101,31 +139,35 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
 
     def do_POST(self):
         parsed = urlparse(self.path)
+        master_api_key = _load_or_generate_api_key(self.project_root)
 
-        # 5. JMAP PARTNER INQUIRY
+        # 6. JMAP PARTNER INQUIRY (Redacted Logging for Privacy & GDPR)
         if parsed.path == "/api/jmap/partner-inquiry":
             length = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(length).decode("utf-8")
             target_email = "world.banks.eyes.aether@globedynamicz.statesflowwishes.eu"
-            print(f"[JMAP-RELAY] Partnerschafts-Anfrage erhalten -> Weiterleitung an IONOS ({target_email})")
-            print(f"[JMAP-RELAY] Payload: {body}")
+            body_digest = hashlib.sha256(body.encode("utf-8")).hexdigest()[:16]
+            print(f"[JMAP-RELAY] Partnerschaftsanfrage erhalten [Bytes: {length}, Digest: {body_digest}] -> Relay zu IONOS ({target_email})")
+
             response = {
                 "success": True,
                 "relay": "JMAP Client TS -> Stalwart -> IONOS",
                 "target": target_email,
+                "digest": body_digest,
                 "received_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime())
             }
             self._set_json_headers(200)
             self.wfile.write(json.dumps(response).encode("utf-8"))
             return
 
-        # 6. DYNAMIC MODULE REGISTRATION
+        # 7. DYNAMIC MODULE REGISTRATION (Protected via Master API Key)
         if parsed.path == "/api/modules/register":
             client_key = self.headers.get("X-Forina-API-Key", "")
-            if client_key != API_MASTER_KEY:
+            if not client_key or not secrets.compare_digest(client_key, master_api_key):
                 self._set_json_headers(403)
-                self.wfile.write(json.dumps({"error": "Ungueltiger API-Key"}).encode("utf-8"))
+                self.wfile.write(json.dumps({"error": "Ungueltiger oder fehlender API-Key"}).encode("utf-8"))
                 return
+
             length = int(self.headers.get("Content-Length", 0))
             body = self.rfile.read(length).decode("utf-8")
             data = json.loads(body)
@@ -142,17 +184,23 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
         self.wfile.write(json.dumps({"error": "Unbekannter Endpunkt"}).encode("utf-8"))
 
 
-def run_engine_server(port: int = 4000, project_root: Path | None = None):
+def run_engine_server(host: str = "127.0.0.1", port: int = 4000, project_root: Path | None = None):
     if project_root:
         os.environ["FORINA_PROJECT_ROOT"] = str(project_root)
-    server_address = ("0.0.0.0", port)
+    else:
+        project_root = Path(os.environ.get("FORINA_PROJECT_ROOT", Path(__file__).parent.parent))
+
+    api_key = _load_or_generate_api_key(project_root)
+    server_address = (host, port)
     httpd = HTTPServer(server_address, ForinaEngineHandler)
     print(f"==================================================================")
-    print(f" HCOS FORINA TITAN ENGINE SERVER LÄUFT:")
-    print(f" -> Portal UI & Live Radar:   http://localhost:{port}")
-    print(f" -> Live-Sync & Spec Radar:   http://localhost:{port}/api/live-sync")
-    print(f" -> OTA Versions-Check:       http://localhost:{port}/api/ota/version")
-    print(f" -> Atomuhr Synchronisation:  http://localhost:{port}/api/atomclock")
+    print(f" HCOS FORINA TITAN ENGINE SERVER (GEHÄRTET):")
+    print(f" -> Host-Binding:             {host} (Localhost Safe)")
+    print(f" -> Portal UI & Live Radar:   http://{host}:{port}")
+    print(f" -> Live-Sync & Spec Radar:   http://{host}:{port}/api/live-sync")
+    print(f" -> Ed25519 Zertifikat:       http://{host}:{port}/api/certificate")
+    print(f" -> OTA Versions-Check:       http://{host}:{port}/api/ota/version")
+    print(f" -> Aktiver API-Key (gehärtet): {api_key[:12]}...")
     print(f"==================================================================")
     try:
         httpd.serve_forever()

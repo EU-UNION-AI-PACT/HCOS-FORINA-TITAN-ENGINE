@@ -1,11 +1,12 @@
 {
   "certificate_title": "SOVEREIGN CERTIFICATE OF SYSTEM AUTHENTICITY & INTEGRITY",
+  "certificate_id": "HCOS-CERT-2026-EU-NATO-DP-001",
   "metadata": {
     "system_name": "HCOS - HNOSS CONTROL OPERATING SYSTEM",
     "project_name": "FORINA TITAN PIPELINE ENGINE",
     "version": "1.2.0-PILOT-2026-EU-NATO-CLASSIFIED",
     "effective_date": "January 1, 2024",
-    "certification_date": "2026-11-06T06:00:00Z",
+    "certification_date": "2026-11-06T06:15:00Z",
     "author_and_creator": "Daniel Pohl",
     "trademark": "Hnoss / PrisMaTHarIOn",
     "certifications": {
@@ -26,7 +27,7 @@
       "ungm_id": "1172700",
       "global_lei": "894500GBJSIW8L6ET310"
     },
-    "frameworks": [
+    "framework_alignments": [
       "NATO Strategic Defense Model alignment",
       "European Union Regulatory Governance Layer",
       "Pentagon Operational Defense Structure",
@@ -39,36 +40,41 @@
       "SHINEHEALTHCARE GmbH",
       "STARLIGHTMOVEMENTS AG"
     ],
-    "legal_status": "PILOT PROJECT - NOT FOR PUBLIC DISTRIBUTION - CLASSIFIED",
+    "legal_status": "PILOT PROJECT - SOURCE-AVAILABLE AUDIT - PROPRIETARY RESTRICTIONS",
     "license_type": "PROPRIETARY LICENSE - ALL RIGHTS RESERVED"
   },
   "codebase_attestation": {
-    "merkle_root": "59cdf69f246ab5b38c953f8044b02b321825d484ca0f3f28ec95e183e6b3bcfd",
+    "merkle_root": "10d15d5f051137fb7ccfa4dac571948b99ac5307abc309d0512ae3b15feaa0d5",
     "file_hashes": {
       "Tool-Build-Processing-Security-Spec.txt": "975af43e05306318b3b48d2d9cc8c9a3f9bce9f7eb0ef806d8cd6105c9c64597",
       "config/pipeline.json": "21372155405d95519a1b17a97d4efce0454a73e9fd90481120a100e02ac61472",
       "forina.py": "68b5a595b39d7247c85b4a7b5e408f27a3e290be3dede5a3d025c522392dd308",
-      "forina_engine/engine.py": "2f5b106d5c2cb549f0686a41c40fb937402ff1a7d39db2ea26c6d6abda7b713c",
+      "forina_engine/certification.py": "782b4a2c1dbcae1ce3b2cb4386d2e2735e9d5fc87134bfb92bdf59c2a4b4efc9",
+      "forina_engine/engine.py": "8443cb30a6c90605c40cbe362dbe636c09b3e2c565ecd6ce6893037cb20d3d5d",
       "forina_engine/security.py": "f5fc51e21ead8b6397c1e6fc890a362cdd4649748a5f225d77b40c31f0f45d88",
-      "forina_engine/server.py": "c66703965c1c6540e2e0d9092b592c726209017db5e77c3dd2f24a1a5242dd0e",
-      "forina_engine/spec_sync.py": "a4f77c05ad56fc0e89f2499e4d20e91d753003afd7f999a4e2ce7e8e2ad6830e",
-      "web/app.js": "0d9381f984caecc3487aba40e477ca113210da16ced9c71ae63ec2e0b5ba7ab2",
+      "forina_engine/server.py": "1f32972986fa3c0525b4dcd9388c82305ec7c62c6c158ea7847287694f363190",
+      "forina_engine/spec_sync.py": "57bbb0e3257d30e8de91bf1719dbca6ef3998de0fb4b81582521d304871db3b6",
+      "web/app.js": "7e226c72d5b728d5f7ed711e4be21fe3cde391943d62c25033d48c49d3cfa483",
       "web/index.html": "f496521526787b8edf83559c772314e09a9c952bfa8f13b43e40ad87574e9630",
-      "web/styles.css": "452a73024d26f42afc746f6d37046c477c93a60ad0447dfa007aab1b47d4d862",
+      "web/styles.css": "72df463da628eee1ad3dc2c6efd04975b221c7e0ac832639ce10267fb6468592",
       "web/sw.js": "c7b3bc47e9d328b40490b0ca307b12f92e13c1e36f6a14d1e4648205d3e6b76b"
     },
-    "total_files_audited": 11
+    "total_files_audited": 12
   },
   "cryptographic_signatures": {
-    "hash_algorithm": "SHA-512 / Merkle SHA-256",
-    "digital_seal": "32aa4d5d7742be3f747b1a6d6dc1a438801d642c8ac106eef9e8e55178635a10b3104287a16de6b9bd55aeb6e10b23d4d93021628df0e88d34780eef8b309c7b",
-    "sovereign_signer": "Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)",
-    "validation_status": "AUTHENTIC - 100% VERIFIED",
-    "revocation_status": "UNREVOKED - PERPETUAL SOVEREIGN RIGHT"
+    "algorithm": "Ed25519 (RFC 8032 Asymmetric Signature) + Merkle SHA-256",
+    "signer_identity": "Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)",
+    "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"10d15d5f051137fb7ccfa4dac571948b99ac5307abc309d0512ae3b15feaa0d5\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
+    "ed25519_signature_hex": "4f2a583b75dfa311cb7df4c9770daee2b620c50eff6a8acb2088cecc9cc1a74337beb10976f615653b1a74d4337c497d878e04a979079739788f9a9a660f9e08",
+    "ed25519_signature_b64": "TypYO3XfoxHLffTJdw2u4rYgxQ7/aorLIIjOzJzBp0M3vrEJdvYVZTsadNQzfEl9h44EqXkHlzl4j5qaZg+eCA==",
+    "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATWV5uSOc23vB5bGWRaz+owF0TPxGuiChtSJ+nBuEdhk=\n-----END PUBLIC KEY-----\n",
+    "validation_status": "ASYMMETRIC_SIGNATURE_VERIFIED",
+    "assurance_tier": "PRODUCTION_ASSURED"
   },
   "audit_trail": {
-    "generated_at": "2026-11-06T05:09:03.686020+00:00",
+    "generated_at": "2026-11-06T05:22:27.575362+00:00",
     "spec_compliance": "100% Tool Build Processing - Securty - So Baut man.txt Compliant",
+    "production_assurance_level": "Tier-4 Production Assured",
     "eu_compliance_badge": "VALIDATED",
     "herzens_und_zukunftssicherheit": "CERTIFIED"
   }

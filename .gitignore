@@ -3,3 +3,7 @@ __pycache__/
 *$py.class
 .pytest_cache/
 .DS_Store
+# Sovereign Private Signing Keys (Never commit to Git)
+*signing_key*
+*.key
+config/.api_key
