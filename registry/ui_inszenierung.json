@@ -1,0 +1,21 @@
+{
+  "id": "ui_inszenierung",
+  "name": "UI/UX-Engines, Effekte & Start-Inszenierung",
+  "version": "1.2.0",
+  "group": "UI & Presentation",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "GSAP", "url": "https://github.com/greensock/GSAP"},
+    {"name": "Three.js", "url": "https://github.com/mrdoob/three.js"},
+    {"name": "Canvas Confetti", "url": "https://github.com/catdad/canvas-confetti"},
+    {"name": "Howler.js", "url": "https://github.com/goldfire/howler.js"},
+    {"name": "React Grid Layout", "url": "https://github.com/react-grid-layout/react-grid-layout"}
+  ],
+  "features": [
+    "Roter Wellen-Theatervorhang mit animiertem Oeffnen und Schliessen",
+    "Web-Audio Synthesizer: 3s Glocke auf exakt 3% Lautstaerke (528Hz Solfeggio)",
+    "Feuermelder-Alarmsirene und Vorhang-Sperre bei Kopiervorgaengen",
+    "Scheibenwischer-Effekt alle 4 Sekunden mit Ebenen-Aufleuchten",
+    "Lichtblitz & Happy Overshine Konfetti-Regen beim Systemstart"
+  ]
+}

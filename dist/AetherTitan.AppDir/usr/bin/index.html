@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HCOS // FORINA TITAN Pipeline Engine & Live Spec Radar</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="stylesheet" href="./styles.css" />
+  <!-- CDN Scripts mit lokalen Fallbacks -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+</head>
+<body>
+
+  <!-- 1. Theatervorhang (Start-Inszenierung & Anti-Copy Feuermelder) -->
+  <div id="curtain-overlay">
+    <div class="curtain-panel curtain-left"></div>
+    <div class="curtain-panel curtain-right"></div>
+  </div>
+
+  <!-- 2. Feuermelder-Banner bei Kopierversuch -->
+  <div id="fire-alarm-banner">
+    <h2 style="font-size:1.5rem; letter-spacing:1px; margin-bottom:0.5rem;">🚨 FEUERMELDER-ALARM: KOPIEREN VERBOTEN! 🚨</h2>
+    <p style="font-size:0.95rem; line-height:1.5;">
+      Der Quellcode und alle Inhalte dieser Ebene sind urheberrechtlich geschützt durch:<br>
+      <strong>HCOS - HNOSS CONTROL OPERATING SYSTEM // Daniel Pohl</strong><br>
+      (PROPRIETARY LICENSE - ALL RIGHTS RESERVED). Kopiervorgang blockiert!
+    </p>
+    <button class="titan-btn" style="margin-top:1.2rem;" onclick="resetFireAlarm()">
+      ✓ Verstanden & Theatervorhang wieder öffnen
+    </button>
+  </div>
+
+  <!-- 3. Blitz-Effekt & 4-Sekunden-Scheibenwischer -->
+  <div id="lightning-flash"></div>
+  <div id="wiper-bar"></div>
+
+  <!-- Haupt-Interface -->
+  <div id="app-layout">
+
+    <!-- ==================== SIDEBAR ==================== -->
+    <aside id="sidebar">
+      <div class="sparkle-title" contenteditable="false">✦ FORINA TITAN ✦</div>
+      <p style="font-size:0.72rem; text-align:center; color:var(--gold); opacity:0.85;">
+        HCOS Governance & Pipeline Engine
+      </p>
+
+      <div id="logo-dropzone" onclick="alert('Drag & Drop oder Datei-Upload fuer individuelles Icon-Logo aktiv.')">
+        ★ Icon / Logo hierher ziehen (Editierbar)
+      </div>
+
+      <!-- 3D Flip-Board in der Sidebar -->
+      <div class="flip-container" id="sidebar-flip">
+        <div class="flipper">
+          <div class="flip-front module-card">
+            <strong style="color:var(--gold); font-size:0.85rem;">App-Ordner & PiP-Steuerung</strong>
+            <p style="font-size:0.74rem;">Oeffnet den internen Bild-im-Bild-Webbrowser oder dreht das Flip-Board.</p>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="flex:1;" onclick="togglePiPBrowser()">PiP Browser</button>
+              <button class="titan-btn" style="flex:1;" onclick="document.getElementById('sidebar-flip').classList.toggle('flipped')">Umdrehen ↻</button>
+            </div>
+          </div>
+          <div class="flip-back module-card">
+            <strong style="color:var(--neon-blue); font-size:0.85rem;">Taskbar & Schnellstart</strong>
+            <p style="font-size:0.74rem;">Pocket ID Pass-Forwarding: Aktiv (OIDC Safe Gate)</p>
+            <button class="titan-btn" onclick="document.getElementById('sidebar-flip').classList.toggle('flipped')">Zurueck ↺</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Steuerungs-Buttons -->
+      <button class="titan-btn" id="wiper-toggle-btn" onclick="toggleWiper()">Scheibenwischer: AKTIV (4s)</button>
+      <button class="titan-btn" onclick="toggleEditMode()">Inline-Text-Editor: <span id="edit-state">AUS</span></button>
+      <button class="titan-btn" onclick="toggleViewport()">Modus: Desktop / Handy</button>
+      <button class="titan-btn" onclick="verifyOriginality()">Originalitaets-Pruefung ★</button>
+      <button class="titan-btn" onclick="showLegalModal()">Copyright & Lizenzen 🌟</button>
+
+      <!-- JMAP Partnerschafts-Request Formular -->
+      <div class="module-card" style="margin-top:auto;">
+        <h2 style="font-size:0.95rem;">Partnerschaft (JMAP)</h2>
+        <input type="text" id="partner-org" placeholder="Organisation / Name" />
+        <textarea id="partner-msg" rows="2" placeholder="Anfrage-Details..."></textarea>
+        <button class="titan-btn" onclick="sendJmapRequest()">Direkt an IONOS senden</button>
+        <small style="font-size:0.65rem; opacity:0.8; word-break:break-all;">
+          Ziel: world.banks.eyes.aether@globedynamicz.statesflowwishes.eu
+        </small>
+      </div>
+    </aside>
+
+    <!-- ==================== HAUPTBEREICH ==================== -->
+    <main>
+      <!-- Top-Bar: Atomuhr, Fokus-Stoppuhr & Werte-Badges -->
+      <header class="top-bar module-card">
+        <div>
+          <strong style="color:var(--gold); font-size:0.85rem;">ATOMUHR (UTC/CET):</strong>
+          <span id="atomic-clock" style="font-family:monospace; font-size:1.15rem; color:#fff;">00:00:00.000</span>
+        </div>
+        <div>
+          <strong style="color:var(--neon-blue); font-size:0.85rem;">FOKUS- & ARBEITS-TIMER:</strong>
+          <span id="work-timer" style="font-family:monospace; font-size:1.15rem; color:#fff;">00:00:00</span>
+          <button class="titan-btn" onclick="toggleWorkTimer()" id="timer-btn" style="padding:4px 10px; margin-left:6px;">Start</button>
+          <button class="titan-btn" onclick="resetWorkTimer()" style="padding:4px 10px;">Reset</button>
+        </div>
+        <div class="badge-row">
+          <span class="eu-badge">✔ EU-Union Compliance</span>
+          <span class="eu-badge">✔ Original-Inhalt Badge</span>
+          <span class="eu-badge">♥ Herzens- & Zukunftssicherheit</span>
+        </div>
+      </header>
+
+      <!-- =========================================================================
+           🌟 DIE INNOVATION: LIVE SPEC REALISIERUNGS-RADAR & STATISTIC GLOW POINTS
+           ========================================================================= -->
+      <section class="module-card spec-radar-panel">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+          <div>
+            <h2 style="color:var(--neon-green); border:none; padding:0; font-size:1.2rem; display:inline-flex; align-items:center; gap:8px;">
+              <span class="blink-dot green"></span>
+              LIVE SPEC REALISIERUNGS-RADAR & ENGINE PIPELINE
+            </h2>
+            <p style="font-size:0.8rem; color:#a0aec0; margin-top:2px;">
+              Spezifikation: <strong style="color:#fff;" id="spec-path-label">Tool Build Processing - Securty - So Baut man.txt</strong>
+              · Status: <strong style="color:var(--neon-green);" id="radar-status-text">100% REALISIERT & SYNCHRONISIERT</strong>
+            </p>
+          </div>
+          <div style="display:flex; gap:8px;">
+            <button class="titan-btn" style="border-color:var(--neon-green);" onclick="triggerLiveSpecSync()">
+              ↻ Jetzt Live Sync prüfen
+            </button>
+            <span class="eu-badge" id="radar-sync-time" style="background:rgba(0,255,136,0.15); border-color:var(--neon-green); color:var(--neon-green);">
+              Sync: Live Aktiv
+            </span>
+          </div>
+        </div>
+
+        <!-- Statistic Light Glow Points Grid -->
+        <div style="border-top:1px solid rgba(0,255,136,0.25); padding-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="font-size:0.82rem; color:var(--silver);">
+              STATISTIC LIGHT GLOW POINTS (8 KERN-MODULE):
+            </strong>
+            <span style="font-size:0.82rem; color:var(--neon-green);" id="overall-score-pill">
+              Realisierungsgrad: 100% (8/8 Module)
+            </span>
+          </div>
+
+          <div class="glow-points-grid" id="glow-points-container">
+            <!-- Dynamisch befüllt via spec_sync.py / app.js -->
+            <div class="glow-point-badge" onclick="openModuleAudit('app_engine')">
+              <span class="blink-dot green"></span>
+              <span>1. App-Engine (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('network_dns')">
+              <span class="blink-dot green"></span>
+              <span>2. Netzwerk (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('ui_inszenierung')">
+              <span class="blink-dot green"></span>
+              <span>3. UI Show (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('interface_editor')">
+              <span class="blink-dot green"></span>
+              <span>4. PiP/Editor (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('iam_auth_otp')">
+              <span class="blink-dot green"></span>
+              <span>5. IAM / OTP (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('ai_media')">
+              <span class="blink-dot green"></span>
+              <span>6. KI/Video (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('compliance_jmap')">
+              <span class="blink-dot green"></span>
+              <span>7. JMAP/Audit (100%)</span>
+            </div>
+            <div class="glow-point-badge" onclick="openModuleAudit('telemetry_calendar')">
+              <span class="blink-dot green"></span>
+              <span>8. Telemetrie (100%)</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ==================== MODUL-RASTER ==================== -->
+      <section class="grid-dashboard">
+
+        <!-- 1. IAM Gate -->
+        <div class="module-card" id="card-iam_auth_otp">
+          <h2>
+            <span>1. Zugriffsschutz: IAM & OTP</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('iam_auth_otp')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <input type="email" id="magic-email" placeholder="E-Mail fuer Magic-Link & QR-Code" />
+          <button class="titan-btn" onclick="generateMagicQr()">1. Magic-Link & QR-Code generieren</button>
+          <canvas id="qr-canvas" style="margin:0 auto; display:none; background:#fff; padding:6px; border-radius:6px;"></canvas>
+          <input type="tel" id="otp-phone" placeholder="Handynummer fuer SMS-OTP Token" />
+          <div style="display:flex; gap:6px;">
+            <button class="titan-btn" onclick="sendSmsOtp()" style="flex:1;">2. SMS-OTP senden</button>
+            <input type="text" id="otp-input" placeholder="OTP-Code" style="width:110px;" />
+          </div>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+            <span>GPS-Standort (Opt-in): <strong id="gps-status" style="color:var(--neon-blue);">Abgelehnt</strong></span>
+            <button class="titan-btn" onclick="toggleGpsTracking()" style="padding:4px 8px;">GPS An/Aus</button>
+          </div>
+        </div>
+
+        <!-- 2. Think-Flow & Journalisten-Editor -->
+        <div class="module-card" id="card-interface_editor">
+          <h2>
+            <span>2. Think-Flow & Redaktion</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('interface_editor')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <div style="display:flex; gap:6px;">
+            <select id="think-category" style="flex:1;">
+              <option value="Pressemitteilung">Kategorie: Pressemitteilung</option>
+              <option value="EU-Audit-Bericht">Kategorie: EU-Audit-Bericht</option>
+              <option value="Architektur-Notiz">Kategorie: Architektur-Notiz</option>
+            </select>
+            <button class="titan-btn" onclick="downloadJournalistPackage()">Export (.txt)</button>
+          </div>
+          <textarea id="think-editor" rows="4" placeholder="Thinking Flow aktivieren: Hier Gedanken, Berichte und Systemkonzepte strukturieren..."></textarea>
+        </div>
+
+        <!-- 3. 30-Sekunden Promo-Video & Clipping-Engine -->
+        <div class="module-card" id="card-ui_inszenierung">
+          <h2>
+            <span>3. 30s Promo-Clip & Clipper</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('ui_inszenierung')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <div id="promo-stage" style="height:100px; border-radius:8px; background:linear-gradient(45deg, var(--neon-pink), var(--neon-blue), var(--neon-red)); display:flex; align-items:center; justify-content:center; color:#fff; font-weight:700; text-shadow:0 0 10px #000; font-size:0.88rem; text-align:center; padding:10px;">
+            FORINA TITAN STREAM<br>
+            Sekunde: <span id="video-sec" style="font-family:monospace; margin:0 4px;">0.0</span> / 30.0s
+          </div>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            <button class="titan-btn" onclick="playPromo()" style="flex:1;">Play</button>
+            <button class="titan-btn" onclick="pausePromo()" style="flex:1;">Pause</button>
+            <button class="titan-btn" onclick="clipPromoVideo()" style="flex:1.2;">Clip schneiden</button>
+          </div>
+        </div>
+
+        <!-- 4. KI-Agent Suche & News-Timeline -->
+        <div class="module-card" id="card-ai_media">
+          <h2>
+            <span>4. Claude / LLM Agent & News</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('ai_media')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <div style="display:flex; gap:6px;">
+            <input type="text" id="llm-query" placeholder="Frage an den AI-Agent..." />
+            <button class="titan-btn" onclick="askAgent()">Suchen</button>
+          </div>
+          <div id="llm-response" style="font-size:0.8rem; color:var(--gold); min-height:28px;">
+            Agent bereit fuer System-, Compliance- und Architektur-Abfragen.
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,0.12); padding-top:6px; font-size:0.75rem;">
+            <strong>Animierte Timeline:</strong>
+            <marquee scrollamount="4">+++ HCOS Pipeline Engine Online +++ Live Spec Sync Verifiziert +++ Pocket ID Guardrails Aktiv +++</marquee>
+          </div>
+        </div>
+
+        <!-- 5. Anonyme Telemetrie & Echtzeit-Views -->
+        <div class="module-card" id="card-telemetry_calendar">
+          <h2>
+            <span>5. Anonyme Telemetrie & Views</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('telemetry_calendar')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <p style="font-size:0.8rem;">Anonyme Session-ID: <strong id="anon-id" style="color:var(--neon-blue);">ANON-INIT</strong></p>
+          <p style="font-size:0.8rem;">Echtzeit-Views: <strong id="view-counter" style="color:var(--gold);">1</strong> (Persistenter Sync)</p>
+          <button class="titan-btn" onclick="incrementViewStat()">View-Ereignis synchronisieren</button>
+        </div>
+
+        <!-- 6. Buchungs- & Ressourcen-Kalender -->
+        <div class="module-card" id="card-network_dns">
+          <h2>
+            <span>6. Termin- & Nachfrage-Kalender</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('network_dns')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <input type="datetime-local" id="booking-date" />
+          <select id="booking-type">
+            <option>Termin-Buchung (Direkt ins Postfach)</option>
+            <option>Programm- & Tool-Verwendung registrieren</option>
+            <option>Arbeits-Nachfrage & Audit-Inspektion</option>
+          </select>
+          <button class="titan-btn" onclick="bookCalendarSlot()">Verbindlich buchen</button>
+        </div>
+
+        <!-- 7. OTA System-Updater & Modul-Injektor -->
+        <div class="module-card" id="card-app_engine">
+          <h2>
+            <span>7. OTA Update & API-Injektor</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('app_engine')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <div style="display:flex; justify-content:space-between; align-items:center; font-size:0.8rem;">
+            <span>Offline-Kern: <strong id="pwa-status" style="color:var(--neon-green);">Autark & PWA-Ready</strong></span>
+            <button class="titan-btn" onclick="checkSystemOtaUpdate()" style="padding:4px 8px;">OTA Check</button>
+          </div>
+          <input type="password" id="module-api-key" placeholder="API-Key (z.B. FORINA-TITAN-2026-SECRET)" />
+          <input type="text" id="module-endpoint" placeholder="Modul-Name oder Endpoint (z.B. compliance_jmap)" />
+          <button class="titan-btn" onclick="injectModuleViaApiKey()">Modul per API-Key einpflegen</button>
+        </div>
+
+        <!-- 8. EU-Audit & Compliance Badges -->
+        <div class="module-card" id="card-compliance_jmap">
+          <h2>
+            <span>8. EU-Audit & Badges</span>
+            <button class="light-blink-btn" onclick="openModuleAudit('compliance_jmap')">
+              <span class="blink-dot green"></span> Realisiert
+            </button>
+          </h2>
+          <p style="font-size:0.8rem; line-height:1.4;">
+            Zertifiziert nach EUPL-1.2 Cross-Matrix, NATO Strategic Defense Alignment & EU Regulatory Governance Layer.
+          </p>
+          <div class="badge-row" style="margin-top:6px;">
+            <span class="eu-badge">PIC: 867679357</span>
+            <span class="eu-badge">VAT: 31353063511</span>
+            <span class="eu-badge">D-U-N-S: 315676980</span>
+          </div>
+          <button class="titan-btn" onclick="showLegalModal()">Vollstaendige Zertifizierung einsehen</button>
+        </div>
+
+      </section>
+    </main>
+  </div>
+
+  <!-- PiP Webbrowser Floating Window -->
+  <div id="pip-browser" class="module-card">
+    <div style="display:flex; justify-content:space-between; align-items:center; padding:6px 10px; background:rgba(0,0,0,0.5);">
+      <strong style="font-size:0.8rem; color:var(--gold);">PiP Webbrowser (Guardrail Protected)</strong>
+      <button class="titan-btn" style="padding:2px 8px;" onclick="togglePiPBrowser()">✕</button>
+    </div>
+    <iframe src="about:blank" id="pip-frame" style="flex:1; border:none; background:#0b0e14;"></iframe>
+  </div>
+
+  <!-- Spec Audit Modal -->
+  <div id="spec-modal">
+    <div class="spec-modal-card">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid rgba(255,215,0,0.3); padding-bottom:0.5rem;">
+        <h3 id="modal-mod-title" style="color:var(--gold); font-size:1.15rem;">Modul-Audit</h3>
+        <button class="titan-btn" style="padding:4px 10px;" onclick="closeModuleAudit()">✕ Schliessen</button>
+      </div>
+      <div id="modal-mod-content" style="font-size:0.85rem; line-height:1.6; color:var(--silver);">
+        <!-- Dynamisch gefüllt -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Legal & Copyright Modal -->
+  <div id="legal-modal" style="position:fixed; inset:0; background:rgba(0,0,0,0.9); z-index:10002; display:none; align-items:center; justify-content:center; padding:20px;">
+    <div class="spec-modal-card" style="max-width:750px;">
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem; border-bottom:1px solid var(--gold); padding-bottom:0.5rem;">
+        <h3 style="color:var(--gold); font-size:1.2rem;">🌟 HCOS - COPYRIGHT & CERTIFICATIONS</h3>
+        <button class="titan-btn" style="padding:4px 10px;" onclick="hideLegalModal()">✕ Schliessen</button>
+      </div>
+      <pre style="font-family:monospace; font-size:0.75rem; color:#e2e8f0; white-space:pre-wrap; max-height:65vh; overflow-y:auto; line-height:1.45;">
+Legal name: Daniel Pohl | Trademark: Hnoss / PrisMaTHarIOn
+Royal Kaiser Charter RegSys🌟 PIC: 867679357 | VAT: 31353063511
+HNOSS🌟 PIC: 873042778 | VAT: 31353063511
+D-U-N-S: 315676980 | 317066336
+UNGM ID: 1172700 | Global LEI System: 894500GBJSIW8L6ET310
+
+FRAMEWORKS:
+- NATO Strategic Defense Model alignment
+- European Union Regulatory Governance Layer
+- Pentagon Operational Defense Structure
+
+PROPRIETARY LICENSE - ALL RIGHTS RESERVED
+Copyright © 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.
+Exclusive property of:
+- Daniel Pohl
+- HNOSS Enterprises
+- PRISMANTHARION Corporation
+- SHINEHEALTHCARE GmbH
+- STARLIGHTMOVEMENTS AG
+
+Version: PILOT-2026-EU-NATO-CLASSIFIED
+Effective Date: January 1, 2024 | Last Modified: Januar 6. November, 2026
+      </pre>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>

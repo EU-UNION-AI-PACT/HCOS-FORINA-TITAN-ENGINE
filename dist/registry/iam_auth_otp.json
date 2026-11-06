@@ -1,0 +1,21 @@
+{
+  "id": "iam_auth_otp",
+  "name": "Authentifizierung (IAM), Passkeys, OTP & Datenschutz",
+  "version": "1.2.0",
+  "group": "Identity & Security",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Pocket ID", "url": "https://github.com/pocket-id/pocket-id"},
+    {"name": "Authelia", "url": "https://github.com/authelia/authelia"},
+    {"name": "otplib", "url": "https://github.com/yeojz/otplib"},
+    {"name": "node-qrcode", "url": "https://github.com/soldair/node-qrcode"},
+    {"name": "CookieConsent", "url": "https://github.com/orestbida/cookieconsent"}
+  ],
+  "features": [
+    "Pocket ID OIDC Passkey-Forwarding ohne Passwortzwang",
+    "Magic-Link Generierung mit Ziel-URL Uebertragung",
+    "QR-Code Generator fuer TOTP-Apps (Google/Microsoft Authenticator)",
+    "SMS-OTP Mobilfunk-Verifikation mit Einmal-Token",
+    "Cookie-Banner & DSGVO GPS-Standort-Freigabe mit Widerruf-Toggle"
+  ]
+}

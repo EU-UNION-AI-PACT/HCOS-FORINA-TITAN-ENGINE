@@ -1,0 +1,18 @@
+{
+  "id": "interface_editor",
+  "name": "Kern-Interface, PiP-Browser & Redaktions-Editor",
+  "version": "1.2.0",
+  "group": "Interface & Editorial",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Tiptap", "url": "https://github.com/ueberdosis/tiptap"},
+    {"name": "Editor.js", "url": "https://github.com/codex-team/editor.js"},
+    {"name": "Motion", "url": "https://github.com/framer/motion"}
+  ],
+  "features": [
+    "3D-Flip-Board in der Sidebar fuer schnellen Perspektivwechsel",
+    "Picture-in-Picture (PiP) Browser-Fenster im Vordergrund",
+    "Inline-Text-Editor zur direkten Bearbeitung der UI-Beschriftungen",
+    "Journalisten-Thinking-Flow mit kategorisiertem Text-Export (.txt)"
+  ]
+}

@@ -1,0 +1,21 @@
+# ==============================================================================
+# HCOS FORINA TITAN — CADDY REVERSE PROXY & WILDCARD-DNS (sslip.io / nip.io)
+# Copyright (c) 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.
+# ==============================================================================
+
+forina-titan.{env.LOCAL_IP}.sslip.io, forina-titan.{env.LOCAL_IP}.nip.io, localhost:8080 {
+    encode zstd gzip
+
+    # Forward-Auth zu Pocket ID / Authelia Gate
+    forward_auth localhost:9091 {
+        uri /api/verify?rd=https://auth.{env.LOCAL_IP}.sslip.io/
+        copy_headers Remote-User Remote-Groups Remote-Name Remote-Email
+    }
+
+    # API Routing zu Python Engine Server
+    reverse_proxy /api/* localhost:4000
+
+    # Statische PWA & AppDir Auslieferung
+    root * ../dist
+    file_server
+}

@@ -1,0 +1,18 @@
+{
+  "name": "HCOS FORINA // Titan Governance & Layer Portal",
+  "short_name": "FORINA Titan",
+  "description": "Autarkes Governance-, Sicherheits- und Modul-Portal mit Offline-Sync und Live Spec-Radar",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "background_color": "#0b0e14",
+  "theme_color": "#FFD700",
+  "orientation": "any",
+  "icons": [
+    {
+      "src": "./icon.svg",
+      "sizes": "192x192 512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

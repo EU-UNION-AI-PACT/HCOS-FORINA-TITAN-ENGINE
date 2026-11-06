@@ -1,0 +1,19 @@
+{
+  "id": "network_dns",
+  "name": "Netzwerk, Reverse Proxy & Wildcard-DNS",
+  "version": "1.2.0",
+  "group": "Infrastructure & Routing",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Caddy", "url": "https://github.com/caddyserver/caddy"},
+    {"name": "NGINX", "url": "https://github.com/nginx/nginx"},
+    {"name": "sslip.io", "url": "https://github.com/cunnie/sslip.io"},
+    {"name": "nip.io", "url": "https://github.com/exentriquesolutions/nip.io"}
+  ],
+  "features": [
+    "Caddyfile mit automatischer Forward-Auth und TLS",
+    "NGINX Lastverteilung und Reverse Proxy",
+    "sslip.io und nip.io Wildcard-DNS fuer persistente Domaenen",
+    "Zero-Configuration Domain Resolution fuer lokale und entfernte Dienste"
+  ]
+}

@@ -1,0 +1,258 @@
+{
+  "system": "HCOS - FORINA TITAN MODULE CATALOG",
+  "version": "1.2.0",
+  "modules": [
+    {
+      "id": "ai_media",
+      "name": "KI-Integration, Video-Clipping & Zeiterfassung",
+      "version": "1.2.0",
+      "group": "AI & Media",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Dify",
+          "url": "https://github.com/langgenius/dify"
+        },
+        {
+          "name": "Vercel AI SDK",
+          "url": "https://github.com/vercel/ai"
+        },
+        {
+          "name": "FFmpeg.wasm",
+          "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"
+        },
+        {
+          "name": "Video.js",
+          "url": "https://github.com/videojs/video.js"
+        },
+        {
+          "name": "Super Productivity",
+          "url": "https://github.com/johannesjo/super-productivity"
+        }
+      ],
+      "features": [
+        "Agent-Assist Chat-Modul fuer System- & Architekturabfragen",
+        "30-Sekunden Promo-Video Player (Pink/Blau/Rot Ästhetik)",
+        "Video-Clipper fuer Sequenzschnitte und Highlight-Exporte",
+        "Atomuhr (UTC/CET) gekoppelt mit Fokus- und Arbeitszeiterfassung",
+        "Animierte News-Timeline Ticker-Leiste"
+      ]
+    },
+    {
+      "id": "app_engine",
+      "name": "App-Engine, Build-Pipeline & Code-Schutz",
+      "version": "1.2.0",
+      "group": "Build & Release",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Tauri",
+          "url": "https://github.com/tauri-apps/tauri"
+        },
+        {
+          "name": "AppImageKit",
+          "url": "https://github.com/AppImage/AppImageKit"
+        },
+        {
+          "name": "JavaScript Obfuscator",
+          "url": "https://github.com/javascript-obfuscator/javascript-obfuscator"
+        },
+        {
+          "name": "BorgBackup",
+          "url": "https://github.com/borgbackup/borg"
+        }
+      ],
+      "features": [
+        "AppImage-Packaging fuer Linux mit Zeitstempel-Injektion",
+        "Automatisches tar.gz Vorab-Backup vor jedem Build",
+        "Code-Obfuskation gegen unbefugte Klartext-Einsicht",
+        "Integritaets-Pruefung mit SHA-256 Hashes"
+      ]
+    },
+    {
+      "id": "compliance_jmap",
+      "name": "Compliance, Audit-Engine & JMAP-Anbindung",
+      "version": "1.2.0",
+      "group": "Governance & Compliance",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Open Policy Agent",
+          "url": "https://github.com/open-policy-agent/opa"
+        },
+        {
+          "name": "JMAP Client TS",
+          "url": "https://github.com/audreyt/jmap-client-ts"
+        },
+        {
+          "name": "Stalwart Mail Server",
+          "url": "https://github.com/stalwartlabs/mail-server"
+        }
+      ],
+      "features": [
+        "EU-Audit- & Inspektoren-Portal mit transparenter Richtlinien-Pruefung",
+        "3 Originalitaets- & Werte-Badges (EU-Union, Original-Inhalt, Herzens-Güte)",
+        "Originalitaets-Pruefbutton fuer verifizierte Systemzertifikate",
+        "JMAP Partnerschafts-Request an world.banks.eyes.aether@globedynamicz.statesflowwishes.eu"
+      ]
+    },
+    {
+      "id": "iam_auth_otp",
+      "name": "Authentifizierung (IAM), Passkeys, OTP & Datenschutz",
+      "version": "1.2.0",
+      "group": "Identity & Security",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Pocket ID",
+          "url": "https://github.com/pocket-id/pocket-id"
+        },
+        {
+          "name": "Authelia",
+          "url": "https://github.com/authelia/authelia"
+        },
+        {
+          "name": "otplib",
+          "url": "https://github.com/yeojz/otplib"
+        },
+        {
+          "name": "node-qrcode",
+          "url": "https://github.com/soldair/node-qrcode"
+        },
+        {
+          "name": "CookieConsent",
+          "url": "https://github.com/orestbida/cookieconsent"
+        }
+      ],
+      "features": [
+        "Pocket ID OIDC Passkey-Forwarding ohne Passwortzwang",
+        "Magic-Link Generierung mit Ziel-URL Uebertragung",
+        "QR-Code Generator fuer TOTP-Apps (Google/Microsoft Authenticator)",
+        "SMS-OTP Mobilfunk-Verifikation mit Einmal-Token",
+        "Cookie-Banner & DSGVO GPS-Standort-Freigabe mit Widerruf-Toggle"
+      ]
+    },
+    {
+      "id": "interface_editor",
+      "name": "Kern-Interface, PiP-Browser & Redaktions-Editor",
+      "version": "1.2.0",
+      "group": "Interface & Editorial",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Tiptap",
+          "url": "https://github.com/ueberdosis/tiptap"
+        },
+        {
+          "name": "Editor.js",
+          "url": "https://github.com/codex-team/editor.js"
+        },
+        {
+          "name": "Motion",
+          "url": "https://github.com/framer/motion"
+        }
+      ],
+      "features": [
+        "3D-Flip-Board in der Sidebar fuer schnellen Perspektivwechsel",
+        "Picture-in-Picture (PiP) Browser-Fenster im Vordergrund",
+        "Inline-Text-Editor zur direkten Bearbeitung der UI-Beschriftungen",
+        "Journalisten-Thinking-Flow mit kategorisiertem Text-Export (.txt)"
+      ]
+    },
+    {
+      "id": "network_dns",
+      "name": "Netzwerk, Reverse Proxy & Wildcard-DNS",
+      "version": "1.2.0",
+      "group": "Infrastructure & Routing",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Caddy",
+          "url": "https://github.com/caddyserver/caddy"
+        },
+        {
+          "name": "NGINX",
+          "url": "https://github.com/nginx/nginx"
+        },
+        {
+          "name": "sslip.io",
+          "url": "https://github.com/cunnie/sslip.io"
+        },
+        {
+          "name": "nip.io",
+          "url": "https://github.com/exentriquesolutions/nip.io"
+        }
+      ],
+      "features": [
+        "Caddyfile mit automatischer Forward-Auth und TLS",
+        "NGINX Lastverteilung und Reverse Proxy",
+        "sslip.io und nip.io Wildcard-DNS fuer persistente Domaenen",
+        "Zero-Configuration Domain Resolution fuer lokale und entfernte Dienste"
+      ]
+    },
+    {
+      "id": "telemetry_calendar",
+      "name": "Anonyme Telemetrie, Statistik & Buchungssystem",
+      "version": "1.2.0",
+      "group": "Telemetry & Scheduling",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Umami",
+          "url": "https://github.com/umami-software/umami"
+        },
+        {
+          "name": "Plausible Analytics",
+          "url": "https://github.com/plausible/analytics"
+        },
+        {
+          "name": "Cal.com",
+          "url": "https://github.com/calcom/cal.com"
+        }
+      ],
+      "features": [
+        "Anonymisiertes Logging auf Basis zufaelliger Request- & Session-IDs",
+        "Persistente Echtzeit-Views und Nutzungsstatistik",
+        "Termin-Buchungskalender mit direkter Synchronisation in Postfach",
+        "Programm- & Arbeits-Nachfrage-Kalender fuer Modul- und Slot-Registrierung",
+        "Live-Spec Realisierungs-Radar mit Light Blink Buttons & Statistic Glow Points"
+      ]
+    },
+    {
+      "id": "ui_inszenierung",
+      "name": "UI/UX-Engines, Effekte & Start-Inszenierung",
+      "version": "1.2.0",
+      "group": "UI & Presentation",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "GSAP",
+          "url": "https://github.com/greensock/GSAP"
+        },
+        {
+          "name": "Three.js",
+          "url": "https://github.com/mrdoob/three.js"
+        },
+        {
+          "name": "Canvas Confetti",
+          "url": "https://github.com/catdad/canvas-confetti"
+        },
+        {
+          "name": "Howler.js",
+          "url": "https://github.com/goldfire/howler.js"
+        },
+        {
+          "name": "React Grid Layout",
+          "url": "https://github.com/react-grid-layout/react-grid-layout"
+        }
+      ],
+      "features": [
+        "Roter Wellen-Theatervorhang mit animiertem Oeffnen und Schliessen",
+        "Web-Audio Synthesizer: 3s Glocke auf exakt 3% Lautstaerke (528Hz Solfeggio)",
+        "Feuermelder-Alarmsirene und Vorhang-Sperre bei Kopiervorgaengen",
+        "Scheibenwischer-Effekt alle 4 Sekunden mit Ebenen-Aufleuchten",
+        "Lichtblitz & Happy Overshine Konfetti-Regen beim Systemstart"
+      ]
+    }
+  ]
+}

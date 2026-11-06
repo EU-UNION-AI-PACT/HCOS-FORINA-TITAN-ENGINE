@@ -1,0 +1,19 @@
+{
+  "id": "telemetry_calendar",
+  "name": "Anonyme Telemetrie, Statistik & Buchungssystem",
+  "version": "1.2.0",
+  "group": "Telemetry & Scheduling",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Umami", "url": "https://github.com/umami-software/umami"},
+    {"name": "Plausible Analytics", "url": "https://github.com/plausible/analytics"},
+    {"name": "Cal.com", "url": "https://github.com/calcom/cal.com"}
+  ],
+  "features": [
+    "Anonymisiertes Logging auf Basis zufaelliger Request- & Session-IDs",
+    "Persistente Echtzeit-Views und Nutzungsstatistik",
+    "Termin-Buchungskalender mit direkter Synchronisation in Postfach",
+    "Programm- & Arbeits-Nachfrage-Kalender fuer Modul- und Slot-Registrierung",
+    "Live-Spec Realisierungs-Radar mit Light Blink Buttons & Statistic Glow Points"
+  ]
+}

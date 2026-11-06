@@ -1,0 +1,21 @@
+{
+  "id": "ai_media",
+  "name": "KI-Integration, Video-Clipping & Zeiterfassung",
+  "version": "1.2.0",
+  "group": "AI & Media",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Dify", "url": "https://github.com/langgenius/dify"},
+    {"name": "Vercel AI SDK", "url": "https://github.com/vercel/ai"},
+    {"name": "FFmpeg.wasm", "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"},
+    {"name": "Video.js", "url": "https://github.com/videojs/video.js"},
+    {"name": "Super Productivity", "url": "https://github.com/johannesjo/super-productivity"}
+  ],
+  "features": [
+    "Agent-Assist Chat-Modul fuer System- & Architekturabfragen",
+    "30-Sekunden Promo-Video Player (Pink/Blau/Rot Ästhetik)",
+    "Video-Clipper fuer Sequenzschnitte und Highlight-Exporte",
+    "Atomuhr (UTC/CET) gekoppelt mit Fokus- und Arbeitszeiterfassung",
+    "Animierte News-Timeline Ticker-Leiste"
+  ]
+}
