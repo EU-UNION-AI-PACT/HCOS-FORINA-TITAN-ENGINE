@@ -17,3 +17,6 @@ config/.vault_salt*
 *.webp
 *Bilder*
 *.zip.extracted
+# Exclude physical system backups from git tracking (Privacy & Sovereign Archive Isolation)
+backups/*.tar.gz
+backups/*.zip

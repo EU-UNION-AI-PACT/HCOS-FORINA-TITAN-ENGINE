@@ -58,7 +58,7 @@ class TestForinaTitanEngine(unittest.TestCase):
 
     def test_sovereign_certification(self):
         certifier = SovereignCertifier(self.root)
-        cert = certifier.generate_certificate()
+        cert = certifier.generate_certificate(sync_dist=False)
         self.assertEqual(cert["metadata"]["author_and_creator"], "Daniel Pohl")
         self.assertEqual(cert["metadata"]["certifications"]["royal_kaiser_charter_regsys"]["pic"], "867679357")
         self.assertEqual(cert["metadata"]["certifications"]["global_lei"], "894500GBJSIW8L6ET310")
@@ -204,8 +204,14 @@ class TestForinaTitanEngine(unittest.TestCase):
             loader.execute_module("test_unapproved", "test_action", {})
 
     def test_13_gate_assurance_pipeline(self):
-        if os.environ.get("FORINA_IN_G06_AUDIT") == "1":
-            return  # Prevent recursive loop during G06 audit
+        # Recursion safety ONLY when G06 active runner is executing with matching in-memory nonce
+        current_nonce = os.environ.get("FORINA_INTERNAL_G06_NONCE")
+        if current_nonce and current_nonce == getattr(AssuranceGatePipeline, "_active_g06_nonce", None):
+            # Inner invocation from G06 runner: verify gate spec definitions without spawning nested runner
+            from forina_engine.assurance_gates import GATES_SPEC
+            self.assertEqual(len(GATES_SPEC), 13)
+            return
+
         pipeline = AssuranceGatePipeline(self.root)
         audit = pipeline.audit_all_gates()
         self.assertEqual(audit["total_gates"], 13)

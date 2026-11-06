@@ -138,7 +138,7 @@ class SovereignCertifier:
             "total_files_audited": len(file_hashes)
         }
 
-    def generate_certificate(self) -> Dict[str, Any]:
+    def generate_certificate(self, sync_dist: bool = True) -> Dict[str, Any]:
         self.certs_dir.mkdir(parents=True, exist_ok=True)
         private_key, public_key = self._get_or_create_keypair()
         codebase_proof = self.compute_codebase_merkle_root()
@@ -197,10 +197,11 @@ class SovereignCertifier:
         md_content = self._render_markdown_certificate(cert_payload)
         md_path.write_text(md_content, encoding="utf-8")
 
-        # 3. Save dist copy if dist exists
-        dist_cert = self.root / "dist" / "certificate.json"
-        if dist_cert.parent.exists():
-            dist_cert.write_text(json.dumps(cert_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
+        # 3. Save dist copy if dist exists and sync_dist is enabled
+        if sync_dist:
+            dist_cert = self.root / "dist" / "certificate.json"
+            if dist_cert.parent.exists():
+                dist_cert.write_text(json.dumps(cert_payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
 
         return cert_payload
 

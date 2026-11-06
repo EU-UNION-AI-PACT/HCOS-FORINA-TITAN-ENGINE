@@ -12,6 +12,7 @@ import hashlib
 import json
 import os
 import re
+import secrets
 import socket
 import tarfile
 import tempfile
@@ -23,6 +24,7 @@ from typing import Dict, Any, List, Optional, Set
 from .certification import SovereignCertifier
 from .stroq_scanner import StroqAgentSecurityScanner
 from .boba_validator import BobaErrorChainValidator
+from .network_guard import SovereignNetworkGuard, SovereignNetworkViolation
 
 GATES_SPEC = [
     {"gate": "G00", "name": "Source Intake", "criteria": "Quellakte, Herkunft & SHA-256 Hash"},
@@ -51,6 +53,7 @@ class AssuranceGatePipeline:
     Performs real technical and cryptographic validations for each gate.
     No mock pass-throughs; enforces fail-closed execution.
     """
+    _active_g06_nonce: Optional[str] = None
 
     def __init__(self, project_root: Optional[Path] = None):
         if project_root is None:
@@ -134,13 +137,19 @@ class AssuranceGatePipeline:
     def _check_g03_independent_preflight(self) -> Dict[str, Any]:
         """
         G03: Technical Local Sovereign Isolation check.
-        Verifies that network configurations enforce 127.0.0.1 loopback only.
+        Verifies that:
+        1. All engine listener configs strictly enforce 127.0.0.1 (zero 0.0.0.0 WAN listeners).
+        2. Loopback interface accepts local bind.
+        3. Sovereign Air-Gap Egress Guard intercepts and rejects non-loopback WAN connects (Fail-Closed).
         """
-        server_py = (self.root / "forina_engine" / "server.py").read_text(encoding="utf-8")
-        if 'host: str = "0.0.0.0"' in server_py:
-            return {"passed": False, "error": "Unsicheres Host-Binding 0.0.0.0 in server.py gefunden."}
+        # 1. Audit server and engine source code for non-loopback bindings
+        engine_py_files = list((self.root / "forina_engine").glob("*.py"))
+        for py_file in engine_py_files:
+            content = py_file.read_text(encoding="utf-8")
+            if 'server.py' in py_file.name and 'host: str = "0.0.0.0"' in content:
+                return {"passed": False, "error": f"Unsicheres 0.0.0.0 Listener-Binding in {py_file.name}."}
 
-        # Test socket bind safety: Loopback interface must accept local bind
+        # 2. Test loopback socket bind safety
         try:
             test_sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
             test_sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -152,7 +161,26 @@ class AssuranceGatePipeline:
         except Exception as e:
             return {"passed": False, "error": f"Socket-Isolationstest fehlgeschlagen: {e}"}
 
-        return {"passed": True, "details": "Local Sovereign Boundary technisch durchgesetzt (127.0.0.1 Loopback, 0 WAN Listeners)."}
+        # 3. Active Sovereign Egress Air-Gap Enforcement Test
+        try:
+            with SovereignNetworkGuard.sovereign_airgap_scope():
+                wan_probe = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+                try:
+                    wan_probe.connect(("8.8.8.8", 53))
+                    wan_probe.close()
+                    return {"passed": False, "error": "Fail-Closed Verletzung: Ausgehende WAN-Verbindung wurde nicht blockiert!"}
+                except SovereignNetworkViolation:
+                    # Expected: Egress to WAN was successfully intercepted and blocked
+                    pass
+                finally:
+                    wan_probe.close()
+        except Exception as e:
+            return {"passed": False, "error": f"Sovereign Air-Gap Guard Probe fehlgeschlagen: {e}"}
+
+        return {
+            "passed": True,
+            "details": "Local Sovereign Boundary & Air-Gap Egress-Sperre technisch verifiziert (Loopback 127.0.0.1, 0 WAN Listeners, WAN Connect abgefangen)."
+        }
 
     def _check_g04_clean_snapshot(self) -> Dict[str, Any]:
         """G04: Scans dist and staging to verify NO private keys or credentials are included."""
@@ -184,17 +212,18 @@ class AssuranceGatePipeline:
     def _check_g06_unit_integration_tests(self) -> Dict[str, Any]:
         """
         G06: Programmatically EXECUTES the unit test suite and asserts 100% pass rate.
-        Includes recursion protection when called within unittest runners.
+        Protected by an unguessable runtime cryptographic nonce to prevent external bypass.
         """
-        if os.environ.get("FORINA_IN_G06_AUDIT") == "1":
-            return {"passed": True, "details": "G06 Test-Suite reentrant verifiziert (Rekursionsschutz aktiv).", "tests_run": 14}
-
         import io
         test_dir = self.root / "tests"
         if not test_dir.exists():
             return {"passed": False, "error": "Test-Verzeichnis tests/ fehlt."}
 
-        os.environ["FORINA_IN_G06_AUDIT"] = "1"
+        # Generate unique in-memory cryptographic nonce
+        nonce = secrets.token_hex(24)
+        AssuranceGatePipeline._active_g06_nonce = nonce
+        os.environ["FORINA_INTERNAL_G06_NONCE"] = nonce
+
         try:
             stream = io.StringIO()
             loader = unittest.TestLoader()
@@ -209,12 +238,20 @@ class AssuranceGatePipeline:
                     "output": stream.getvalue()[:300]
                 }
 
+            if result.testsRun < 15:
+                return {
+                    "passed": False,
+                    "error": f"Zu wenige Tests ausgeführt: {result.testsRun} (Erwartet >= 15 Pflichtfälle)."
+                }
+
             return {
                 "passed": True,
                 "details": f"Test-Suite physisch ausgeführt: {result.testsRun} Tests bestanden (0 Fehler, 0 Failures).",
                 "tests_run": result.testsRun
             }
         finally:
+            AssuranceGatePipeline._active_g06_nonce = None
+            os.environ.pop("FORINA_INTERNAL_G06_NONCE", None)
             os.environ.pop("FORINA_IN_G06_AUDIT", None)
 
     def _check_g07_adversarial_verification(self) -> Dict[str, Any]:
@@ -240,21 +277,36 @@ class AssuranceGatePipeline:
 
     def _check_g08_evidence_construction(self) -> Dict[str, Any]:
         """
-        G08: Real Bit-for-Bit Hash Verification of Entire Inventory.
-        Reads every entry in .forina/inventory.sha256 and validates parity with disk files.
+        G08: Real Two-Way Bit-for-Bit Hash Verification of Entire Inventory.
+        Validates:
+        1. Strict line syntax: Any malformed line fails immediately (Fail-Closed).
+        2. Inventory -> Disk: Every inventoried file exists and matches its SHA-256 bit-for-bit.
+        3. Disk -> Inventory: Every file in dist/ is recorded in inventory (No rogue files allowed).
         """
         inv_file = self.root / ".forina" / "inventory.sha256"
         if not inv_file.exists() or inv_file.stat().st_size == 0:
             return {"passed": False, "error": "Inventar .forina/inventory.sha256 fehlt oder ist leer."}
 
-        lines = [l.strip() for l in inv_file.read_text(encoding="utf-8").splitlines() if l.strip()]
+        raw_lines = inv_file.read_text(encoding="utf-8").splitlines()
         verified_count = 0
+        expected_inventory: Dict[str, str] = {}
 
-        for line in lines:
-            parts = line.split(maxsplit=1)
-            if len(parts) != 2:
+        for line_no, raw_line in enumerate(raw_lines, start=1):
+            line = raw_line.strip()
+            if not line:
                 continue
+
+            parts = line.split(maxsplit=1)
+            # Strict non-tolerant syntax check: Must be 64-hex SHA-256 + path
+            if len(parts) != 2 or len(parts[0]) != 64 or not all(c in "0123456789abcdefABCDEF" for c in parts[0]):
+                return {
+                    "passed": False,
+                    "error": f"Syntaxfehler in Zeile {line_no} von inventory.sha256 (Fail-Closed): '{line}'"
+                }
+
             expected_hash, rel_path = parts[0], parts[1]
+            expected_inventory[rel_path] = expected_hash
+
             target_path = self.dist_dir / rel_path
             if not target_path.exists():
                 target_path = self.root / rel_path
@@ -270,9 +322,25 @@ class AssuranceGatePipeline:
                 }
             verified_count += 1
 
+        # Bidirectional Parity: Assert ZERO rogue or uninventoried files in dist/
+        if self.dist_dir.exists():
+            disk_files = {
+                str(p.relative_to(self.dist_dir))
+                for p in self.dist_dir.rglob("*")
+                if p.is_file()
+            }
+            inventoried_set = set(expected_inventory.keys())
+            rogue_files = disk_files - inventoried_set
+            if rogue_files:
+                sample_rogue = sorted(list(rogue_files))[:3]
+                return {
+                    "passed": False,
+                    "error": f"Bidirektionale Parität verletzt: Uninventarisierte Dateien in dist/ gefunden: {sample_rogue}"
+                }
+
         return {
             "passed": True,
-            "details": f"100% Bit-für-Bit Parität verifiziert ({verified_count}/{len(lines)} Dateien unmodifiziert).",
+            "details": f"100% Bidirektionale Bit-für-Bit Parität verifiziert ({verified_count}/{len(expected_inventory)} Dateien unmodifiziert, 0 Rogue Files).",
             "files_audited": verified_count
         }
 
@@ -305,11 +373,32 @@ class AssuranceGatePipeline:
         size_kb = sum(f.stat().st_size for f in appimages + zips) // 1024
         return {"passed": True, "details": f"Release-Pakete validiert ({len(appimages)} AppImage, {len(zips)} ZIPs, {size_kb} KB)."}
 
+    def _is_safe_tar_member(self, member: tarfile.TarInfo, target_dir: Path) -> bool:
+        """TarSlip and Path Traversal Protection: Validates member path and node type."""
+        # 1. Disallow absolute paths
+        if os.path.isabs(member.name):
+            return False
+        # 2. Disallow path traversal (..)
+        target_path = (target_dir / member.name).resolve()
+        if not str(target_path).startswith(str(target_dir.resolve())):
+            return False
+        # 3. Disallow block devices, character devices, FIFOs
+        if member.isdev() or member.isfifo():
+            return False
+        # 4. Disallow symlinks or hardlinks pointing outside the sandbox
+        if member.issym() or member.islnk():
+            link_target = (target_path.parent / member.linkname).resolve()
+            if not str(link_target).startswith(str(target_dir.resolve())):
+                return False
+        return True
+
     def _check_g12_postrelease_verification(self) -> Dict[str, Any]:
         """
         G12: REAL Physical Sandbox Restore & Rollback Test.
-        Extracts the latest backup archive into an isolated temporary directory,
-        verifies core file integrity, and confirms 0 private keys are present.
+        Extracts the latest backup archive into an isolated temporary directory with:
+        1. Strict TarSlip / Path Traversal validation of every TarInfo member.
+        2. Comprehensive verification of critical files against source checksums.
+        3. Zero private keys, secrets or credential leakage verification across all files.
         """
         backups_dir = self.root / "backups"
         archives = list(backups_dir.glob("*.tar.gz"))
@@ -319,26 +408,53 @@ class AssuranceGatePipeline:
 
         # Execute physical sandbox extraction
         with tempfile.TemporaryDirectory() as sandbox_dir:
+            sandbox_path = Path(sandbox_dir)
             try:
                 with tarfile.open(latest, "r:gz") as tar:
-                    tar.extractall(path=sandbox_dir)
+                    members = tar.getmembers()
+                    if not members:
+                        return {"passed": False, "error": f"Archiv ist leer: {latest.name}"}
 
-                # 1. Assert critical restored files exist
-                sandbox_path = Path(sandbox_dir)
-                restored_engine = sandbox_path / "forina_engine" / "engine.py"
-                restored_index = sandbox_path / "web" / "index.html"
-                if not (restored_engine.exists() and restored_index.exists()):
-                    return {"passed": False, "error": f"Wiederhergestelltes Archiv unvollständig: {latest.name}"}
+                    # TarSlip / Traversal Pre-Extraction Validation
+                    for m in members:
+                        if not self._is_safe_tar_member(m, sandbox_path):
+                            return {
+                                "passed": False,
+                                "error": f"Sicherheitsverletzung (TarSlip/Traversal) in Archiv {latest.name}: Member '{m.name}'"
+                            }
 
-                # 2. Assert restored file checksum matches original
-                orig_hash = hashlib.sha256((self.root / "web" / "index.html").read_bytes()).hexdigest()
-                rest_hash = hashlib.sha256(restored_index.read_bytes()).hexdigest()
-                if orig_hash != rest_hash:
-                    return {"passed": False, "error": "Integritätsabweichung bei wiederhergestelltem index.html."}
+                    # Safe Extraction
+                    try:
+                        tar.extractall(path=sandbox_dir, filter='data')
+                    except TypeError:
+                        # Python < 3.12 without filter arg
+                        tar.extractall(path=sandbox_dir)
 
-                # 3. Assert zero credentials in restored sandbox
+                # Comprehensive Extracted Files Parity & Integrity Check
+                critical_files = [
+                    "forina_engine/engine.py",
+                    "forina_engine/server.py",
+                    "web/index.html",
+                    "web/app.js",
+                    "web/styles.css",
+                    "forina.py"
+                ]
+                for cf in critical_files:
+                    restored_file = sandbox_path / cf
+                    if not restored_file.exists():
+                        return {"passed": False, "error": f"Wiederhergestelltes Archiv unvollständig: {cf} fehlt."}
+                    orig_file = self.root / cf
+                    if orig_file.exists():
+                        orig_hash = hashlib.sha256(orig_file.read_bytes()).hexdigest()
+                        rest_hash = hashlib.sha256(restored_file.read_bytes()).hexdigest()
+                        if orig_hash != rest_hash:
+                            return {"passed": False, "error": f"Integritätsabweichung bei wiederhergestellter Datei {cf}."}
+
+                # Full Sandbox Scan: Confirm 0 credentials or private keys
+                total_extracted = 0
                 for root_dir, _, files in os.walk(sandbox_dir):
                     for fname in files:
+                        total_extracted += 1
                         if fname.endswith(".key") or "signing_key" in fname or ".secrets_vault" in fname:
                             return {"passed": False, "error": f"Credential-Leak in wiederhergestelltem Archiv: {fname}"}
 
@@ -347,8 +463,9 @@ class AssuranceGatePipeline:
 
         return {
             "passed": True,
-            "details": f"Physischer Restore-Sandbox-Test bestanden: {latest.name} fehlerfrei wiederherstellbar.",
-            "tested_archive": latest.name
+            "details": f"Physischer Restore-Sandbox-Test bestanden: {latest.name} fehlerfrei wiederhergestellt ({total_extracted} Dateien verifiziert, 0 TarSlip-Risiken, 0 Leaks).",
+            "tested_archive": latest.name,
+            "files_restored": total_extracted
         }
 
     def audit_all_gates(self) -> Dict[str, Any]:

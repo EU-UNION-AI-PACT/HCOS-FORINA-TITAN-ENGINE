@@ -106,10 +106,10 @@ class ForinaTitanEngine:
             backup_filename = f"backup_hcos_titan_{timestamp}.tar.gz"
             backup_path = self.backups_dir / backup_filename
             with tarfile.open(backup_path, "w:gz") as tar:
-                for folder in ["web", "registry", "config", "scripts", "forina_engine", "modules", "skills"]:
-                    folder_path = self.root / folder
-                    if folder_path.exists():
-                        tar.add(str(folder_path), arcname=folder, filter=_clean_backup_filter)
+                for item_name in ["web", "registry", "config", "scripts", "forina_engine", "modules", "skills", "forina.py", "COPYRIGHT.md"]:
+                    item_path = self.root / item_name
+                    if item_path.exists():
+                        tar.add(str(item_path), arcname=item_name, filter=_clean_backup_filter)
             report["stages"]["BACKUP"] = {
                 "status": "PASS",
                 "archive": backup_filename,
@@ -262,6 +262,17 @@ class ForinaTitanEngine:
                     shutil.copy2(f, appdir_usr / f.name)
             if (self.web_dir / "icon.svg").exists():
                 shutil.copy2(self.web_dir / "icon.svg", appdir / "hcos-titan.svg")
+
+            # Finalize 100% Comprehensive Inventory (including AppDir & all staged assets)
+            final_inventory = {}
+            for item in sorted(self.dist_dir.rglob("*")):
+                if item.is_file():
+                    rel = item.relative_to(self.dist_dir)
+                    final_inventory[str(rel)] = calc_sha256(item.read_bytes())
+
+            (self.meta_dir / "inventory.sha256").write_text(
+                "\n".join(f"{h}  {f}" for f, h in final_inventory.items()), encoding="utf-8"
+            )
 
             # Build true Linux .AppImage binary if appimagetool is available
             appimage_path = self.releases_dir / f"ForinaTitan-1.2.0-x86_64.AppImage"
