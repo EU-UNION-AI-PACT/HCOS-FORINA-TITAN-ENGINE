@@ -559,3 +559,44 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 8px rgba(0, 255, 136, 0.4);
 }
 
+/* =========================================================================
+   ✨ HCOS SMOOTH SLIDING ENGINE & VELVET UI (GPU-ACCELERATED 60+ FPS)
+   ========================================================================= */
+.ai-tab-content {
+  animation: slideFadeIn 0.32s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  will-change: transform, opacity;
+  transform: translate3d(0, 0, 0);
+}
+
+@keyframes slideFadeIn {
+  from {
+    opacity: 0;
+    transform: translate3d(0, 8px, 0);
+  }
+  to {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.velvet-slide-card {
+  transition: transform 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.velvet-slide-card:hover {
+  transform: translate3d(0, -3px, 0);
+  box-shadow: 0 8px 24px rgba(255, 215, 0, 0.12);
+}
+
+.actpack-tick-badge {
+  font-family: monospace;
+  font-size: 0.65rem;
+  background: rgba(0, 229, 255, 0.1);
+  color: var(--neon-blue);
+  border: 1px solid rgba(0, 229, 255, 0.3);
+  padding: 1px 6px;
+  border-radius: 4px;
+}
+
+

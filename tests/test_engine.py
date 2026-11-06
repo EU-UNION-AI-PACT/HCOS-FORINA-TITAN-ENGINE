@@ -23,6 +23,7 @@ from forina_engine.repo_catalog import RepositoryEvaluationCatalog
 from forina_engine.network_guard import SovereignNetworkGuard, SovereignNetworkViolation
 from forina_engine.concept_suite import ConceptPaperSuite
 from forina_engine.harness_loop import HarnessLoopEngine
+from forina_engine.actpack_zeroclock import ActPackZeroClock, NaTZaFaultToleranceViolation
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -362,6 +363,30 @@ class TestForinaTitanEngine(unittest.TestCase):
 
         state = harness.get_state()
         self.assertIn("cycle_id", state)
+
+    def test_actpack_zeroclock_and_natza_cfs(self):
+        apzc = ActPackZeroClock(self.root)
+
+        # 1. Monotonic Zero-Clock Ticks
+        t1 = apzc.get_zero_clock_tick()
+        t2 = apzc.get_zero_clock_tick()
+        self.assertEqual(t1["tick"], 1)
+        self.assertEqual(t2["tick"], 2)
+        self.assertNotEqual(t1["block_hash"], t2["block_hash"])
+        self.assertEqual(t1["synchronization_status"], "SYNCHRONIZED")
+
+        # 2. NaTZa Triple Modular Redundancy (TMR) Voter Consensus
+        consensus_val = apzc.verify_tmr_consensus("HASH_A", "HASH_A", "HASH_B")
+        self.assertEqual(consensus_val, "HASH_A")
+        
+        # Test divergence fail-closed
+        with self.assertRaises(NaTZaFaultToleranceViolation):
+            apzc.verify_tmr_consensus("HASH_A", "HASH_B", "HASH_C")
+
+        # 3. Devin Sub-Spawning with WhyTrace
+        task = apzc.spawn_subagent_task("agent_master", "micro_audit", {"target": "m08_finance"})
+        self.assertIn("whytrace_", task["trace_id"])
+        self.assertEqual(task["status"], "PROVISIONED_SANDBOX")
 
 
 if __name__ == "__main__":
