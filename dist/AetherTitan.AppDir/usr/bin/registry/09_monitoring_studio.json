@@ -1,0 +1,19 @@
+{
+  "id": "09_monitoring_studio",
+  "name": "Monitoring Studio",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 9,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "open-telemetry/opentelemetry-python", "url": "https://github.com/open-telemetry/opentelemetry-python"},
+    {"name": "prometheus/prometheus", "url": "https://github.com/prometheus/prometheus"},
+    {"name": "Arize-ai/phoenix", "url": "https://github.com/Arize-ai/phoenix"}
+  ],
+  "features": [
+    "Echtzeit-Telemetrie, Latenzmessung und Ausführungsstatus",
+    "OpenTelemetry Traces für Agenten- und Pipeline-Durchläufe",
+    "P95 Latenz-Tracking und Fehlerraten-Überwachung",
+    "Lokale Speicher- und Performance-Metriken"
+  ]
+}

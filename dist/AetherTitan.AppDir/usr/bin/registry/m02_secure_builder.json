@@ -1,0 +1,18 @@
+{
+  "id": "m02_secure_builder",
+  "name": "M02: Secure App Builder & Linux Delivery",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 2,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "tauri-apps/tauri", "url": "https://github.com/tauri-apps/tauri"},
+    {"name": "AppImage/AppImageKit", "url": "https://github.com/AppImage/AppImageKit"},
+    {"name": "AppImageCommunity/AppImageUpdate", "url": "https://github.com/AppImageCommunity/AppImageUpdate"}
+  ],
+  "features": [
+    "Deterministische PWA & AppImage Kompilierung",
+    "Lokale Staging-Pipeline ohne Host-Modifikation",
+    "Offline-First Ausführbarkeit auf Linux"
+  ]
+}

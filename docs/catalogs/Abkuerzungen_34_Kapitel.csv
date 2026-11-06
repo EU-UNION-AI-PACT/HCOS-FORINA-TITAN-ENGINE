@@ -1,0 +1,307 @@
+Kapitel,Thema,Kuerzel,Langform,Integrationskontext
+1,Requirements Engineering,REQ,Requirement,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,NFR,Nonfunctional Requirement,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,SLO,Service Level Objective,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,SLI,Service Level Indicator,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,DoD,Definition of Done,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,AC,Acceptance Criteria,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,RACI,Responsible Accountable Consulted Informed,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,ADR,Architecture Decision Record,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+1,Requirements Engineering,RFC,Request for Comments,Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests
+2,Information Architecture,IA,Information Architecture,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,JTBD,Jobs To Be Done,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,Sitemap,Navigation Map,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,Taxonomy,Klassifikation,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,Ontology,Begriffsmodell,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,Facet,Suchfiltermerkmal,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,Breadcrumb,Navigationspfad,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,ContentType,Inhaltsmodell,Suche nach Auditbelegen statt Navigation nach Python-Datei
+2,Information Architecture,CardSort,Karten-Sortierung,Suche nach Auditbelegen statt Navigation nach Python-Datei
+3,Experience Design,XD,Experience Design,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,UX,User Experience,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,UI,User Interface,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,CX,Customer Experience,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,HCD,Human-Centered Design,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,UCD,User-Centered Design,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,HE,Heuristic Evaluation,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,SUS,System Usability Scale,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+3,Experience Design,UXR,User Experience Research,Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau
+4,Design Systems,DT,Design Token,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,DS,Design System,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,A11Y,Accessibility,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,ARIA,Accessible Rich Internet Applications,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,RTL,Right-to-Left,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,WCAG,Web Content Accessibility Guidelines,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,L10N,Localization,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,I18N,Internationalization,Statuskarte mit Fehler- und Unbekanntzustand
+4,Design Systems,Figma,Design Collaboration Tool,Statuskarte mit Fehler- und Unbekanntzustand
+5,Frontend Architecture,SPA,Single Page Application,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,SSR,Server-Side Rendering,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,SSG,Static Site Generation,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,CSP,Content Security Policy,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,DOM,Document Object Model,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,XSS,Cross-Site Scripting,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,CSRF,Cross-Site Request Forgery,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,SRI,Subresource Integrity,Repository-Karten ohne riskante href-Schemas
+5,Frontend Architecture,CORS,Cross-Origin Resource Sharing,Repository-Karten ohne riskante href-Schemas
+6,Backend Services,REST,Representational State Transfer,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,RPC,Remote Procedure Call,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,DTO,Data Transfer Object,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,BFF,Backend for Frontend,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,CQRS,Command Query Responsibility Segregation,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,DDD,Domain-Driven Design,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,ORM,Object Relational Mapping,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,CRUD,Create Read Update Delete,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+6,Backend Services,HTTP,Hypertext Transfer Protocol,Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte
+7,Data Contracts,JSON,JavaScript Object Notation,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,JSONS,JSON Schema,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,YAML,YAML Ain't Markup Language,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,CSV,Comma-Separated Values,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,XML,Extensible Markup Language,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,XSD,XML Schema Definition,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,Protobuf,Protocol Buffers,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,Avro,Apache Avro,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+7,Data Contracts,IDL,Interface Definition Language,Audit-Event bleibt bei UI-Update rückwärtskompatibel
+8,API Governance,OpenAPI,OpenAPI Specification,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,AsyncAPI,AsyncAPI Specification,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,SDK,Software Development Kit,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,API,Application Programming Interface,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,SemVer,Semantic Versioning,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,OAuth,Open Authorization,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,OIDC,OpenID Connect,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,JWT,JSON Web Token,Read-only Banking Vertrag und stufenweise Versionierung
+8,API Governance,IdemKey,Idempotency Key,Read-only Banking Vertrag und stufenweise Versionierung
+9,Event-Driven Design,EDA,Event-Driven Architecture,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,DLQ,Dead Letter Queue,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,CDC,Change Data Capture,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,Outbox,Transactional Outbox,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,Saga,Distributed Transaction Coordination,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,ETag,Entity Tag,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,TTL,Time To Live,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,ACK,Acknowledgment,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+9,Event-Driven Design,NACK,Negative Acknowledgment,Signiertes Gate-Ergebnis über eine Event-Schnittstelle
+10,Identity & Access,IAM,Identity and Access Management,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,RBAC,Role-Based Access Control,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,ABAC,Attribute-Based Access Control,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,PDP,Policy Decision Point,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,PEP,Policy Enforcement Point,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,MFA,Multi-Factor Authentication,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,TOTP,Time-Based One-Time Password,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,SSO,Single Sign-On,Einwilligung wird bei Sperrung überall widerrufen
+10,Identity & Access,SCIM,System for Cross-domain Identity Management,Einwilligung wird bei Sperrung überall widerrufen
+11,Secrets & Cryptography,KMS,Key Management Service,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,HSM,Hardware Security Module,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,PKI,Public Key Infrastructure,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,KDF,Key Derivation Function,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,AEAD,Authenticated Encryption with Associated Data,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,AES,Advanced Encryption Standard,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,Ed25519,Edwards-curve Digital Signature,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,SHA-256,Secure Hash Algorithm 256,Trennung von Signier- und Authentifikationsschlüsseln
+11,Secrets & Cryptography,JWK,JSON Web Key,Trennung von Signier- und Authentifikationsschlüsseln
+12,Software Supply Chain,SBOM,Software Bill of Materials,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,SLSA,Supply-chain Levels for Software Artifacts,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,SCA,Software Composition Analysis,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,SAST,Static Application Security Testing,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,DAST,Dynamic Application Security Testing,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,IAST,Interactive Application Security Testing,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,VEX,Vulnerability Exploitability eXchange,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,CVE,Common Vulnerabilities and Exposures,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+12,Software Supply Chain,CWE,Common Weakness Enumeration,"AppImage-Hash, SBOM und Repo-SHA nachvollziehbar"
+13,Testing Strategy,UT,Unit Test,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,IT,Integration Test,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,E2E,End-to-End Test,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,UAT,User Acceptance Test,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,PBT,Property-Based Testing,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,Fuzz,Fuzz Testing,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,MutTest,Mutation Testing,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,Snapshot,Snapshot Testing,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+13,Testing Strategy,TDD,Test-Driven Development,Manipulierter SHA oder falsche Banking-Permission muss scheitern
+14,Continuous Delivery,CI,Continuous Integration,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,CD,Continuous Delivery,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,GitOps,Git Operations Model,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,IaC,Infrastructure as Code,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,CICD,CI/CD Pipeline,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,Canary,Incremental Rollout,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,BlueGreen,Blue-Green Deployment,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,Rollback,Release Reversal,Signierte Stufen Dev bis Release mit Rollback
+14,Continuous Delivery,RC,Release Candidate,Signierte Stufen Dev bis Release mit Rollback
+15,Runtime Isolation,AirGap,Physically or Technically Isolated Network,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,Egress,Outbound Network Traffic,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,Seccomp,Linux Syscall Filtering,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,MAC,Mandatory Access Control,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,DAC,Discretionary Access Control,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,LSM,Linux Security Module,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,UID,User Identifier,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,FUSE,Filesystem in Userspace,Launcher lehnt fehlendes No-Egress-Evidence ab
+15,Runtime Isolation,Rootless,Without Elevated Privileges,Launcher lehnt fehlendes No-Egress-Evidence ab
+16,Resilience and Backup,BCP,Business Continuity Plan,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,DRP,Disaster Recovery Plan,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,RTO,Recovery Time Objective,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,RPO,Recovery Point Objective,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,MTTR,Mean Time To Recovery,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,MTBF,Mean Time Between Failures,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,HA,High Availability,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,PITR,Point-in-Time Recovery,Borg-Archiv auf synthetischen Daten wiederherstellen
+16,Resilience and Backup,3-2-1,Backup Copy Rule,Borg-Archiv auf synthetischen Daten wiederherstellen
+17,Observability,OTel,OpenTelemetry,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,SIEM,Security Information and Event Management,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,SOAR,Security Orchestration Automation and Response,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,APM,Application Performance Monitoring,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,RUM,Real User Monitoring,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,P95,95th Percentile,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,RED,Rate Errors Duration,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,USE,Utilization Saturation Errors,Request-Latenz und Gate-Fails anonym korrelieren
+17,Observability,SRE,Site Reliability Engineering,Request-Latenz und Gate-Fails anonym korrelieren
+18,Threat Modeling,STRIDE,Spoofing Tampering Repudiation Information disclosure Denial of service Elevation of privilege,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,DREAD,Damage Reproducibility Exploitability Affected users Discoverability,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,ATTACK,MITRE ATT&CK,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,TTP,Tactics Techniques Procedures,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,KEV,Known Exploited Vulnerabilities,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,IOC,Indicator of Compromise,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,TLP,Traffic Light Protocol,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,STIX,Structured Threat Information Expression,Agent-Prompt darf keine Tools freischalten
+18,Threat Modeling,TAXII,Trusted Automated Exchange of Intelligence Information,Agent-Prompt darf keine Tools freischalten
+19,Privacy Engineering,PII,Personally Identifiable Information,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,DPIA,Data Protection Impact Assessment,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,ROPA,Record of Processing Activities,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,DSAR,Data Subject Access Request,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,PET,Privacy Enhancing Technology,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,DLP,Data Loss Prevention,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,Pseudonymization,Reversible Identifier Separation,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,Anonymization,Non-Reidentifiable Processing,Löschauftrag propagiert in Read Models und Backups
+19,Privacy Engineering,TOM,Technical and Organizational Measures,Löschauftrag propagiert in Read Models und Backups
+20,GRC and Compliance,GRC,Governance Risk Compliance,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,ISMS,Information Security Management System,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,AIMS,AI Management System,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,PIMS,Privacy Information Management System,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,BCMS,Business Continuity Management System,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,SoA,Statement of Applicability,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,CAPA,Corrective and Preventive Action,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,KRI,Key Risk Indicator,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+20,GRC and Compliance,KPI,Key Performance Indicator,M07 Domain Trust erfordert autorisierte Herkunftsnachweise
+21,Evidence Engineering,Merkle,Merkle Tree,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,HashChain,Chained Digest Log,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,Attest,Signed Attestation,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,Provenance,Artifact Origin Proof,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,WORM,Write Once Read Many,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,Timestamp,Trusted Time Evidence,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,OCSP,Online Certificate Status Protocol,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,CRL,Certificate Revocation List,Gate PASS verfällt nach geänderter Binary
+21,Evidence Engineering,ETSI,European Telecommunications Standards Institute,Gate PASS verfällt nach geänderter Binary
+22,Agents & LLM Integration,LLM,Large Language Model,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,RAG,Retrieval-Augmented Generation,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,MCP,Model Context Protocol,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,A2A,Agent-to-Agent Protocol,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,ReAct,Reasoning and Acting Pattern,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,RBA,Risk-Based Approval,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,HITL,Human in the Loop,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,HCL,Harness Control Loop,Harness Loop mit unabhängigen Testorakeln
+22,Agents & LLM Integration,ToolGate,External Tool Policy Gate,Harness Loop mit unabhängigen Testorakeln
+23,Model Evaluation,Eval,Model Evaluation,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,GoldenSet,Curated Reference Dataset,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,Drift,Model Distribution Shift,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,ECE,Expected Calibration Error,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,FPR,False Positive Rate,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,FNR,False Negative Rate,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,TPR,True Positive Rate,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,Confidence,Calibrated Confidence,BOBA-Kette reproduzierbar mit Negativfällen messen
+23,Model Evaluation,Oracle,Independent Test Oracle,BOBA-Kette reproduzierbar mit Negativfällen messen
+24,Search and Knowledge,IR,Information Retrieval,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,BM25,Best Matching 25,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,ANN,Approximate Nearest Neighbor,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,RRF,Reciprocal Rank Fusion,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,KG,Knowledge Graph,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,RDF,Resource Description Framework,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,SPARQL,SPARQL Protocol and RDF Query Language,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,Rerank,Search Result Re-ranking,Normen-Crosswalk mit markierten Unsicherheiten
+24,Search and Knowledge,Citation,Source Reference,Normen-Crosswalk mit markierten Unsicherheiten
+25,Data Storage,OLTP,Online Transaction Processing,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,OLAP,Online Analytical Processing,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,ACID,Atomicity Consistency Isolation Durability,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,BASE,Basically Available Soft state Eventual consistency,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,MVCC,Multi-Version Concurrency Control,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,WAL,Write-Ahead Log,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,ETL,Extract Transform Load,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,ELT,Extract Load Transform,Replikation ausschließlich nach freigegebener Zone
+25,Data Storage,CDC,Change Data Capture,Replikation ausschließlich nach freigegebener Zone
+26,Networking & DNS,DNS,Domain Name System,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,DNSSEC,DNS Security Extensions,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,TLS,Transport Layer Security,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,mTLS,Mutual TLS,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,RDAP,Registration Data Access Protocol,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,HSTS,HTTP Strict Transport Security,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,PKIX,Public Key Infrastructure X.509,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,CT,Certificate Transparency,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+26,Networking & DNS,ACME,Automated Certificate Management Environment,DNSSEC TLS RDAP werden als technische Nachweise getrennt
+27,Open Banking,AIS,Account Information Service,Nur lesende Transaktionen an M08 senden
+27,Open Banking,AISP,Account Information Service Provider,Nur lesende Transaktionen an M08 senden
+27,Open Banking,PIS,Payment Initiation Service,Nur lesende Transaktionen an M08 senden
+27,Open Banking,PISP,Payment Initiation Service Provider,Nur lesende Transaktionen an M08 senden
+27,Open Banking,SCA,Strong Customer Authentication,Nur lesende Transaktionen an M08 senden
+27,Open Banking,PSD2,Payment Services Directive 2,Nur lesende Transaktionen an M08 senden
+27,Open Banking,SEPA,Single Euro Payments Area,Nur lesende Transaktionen an M08 senden
+27,Open Banking,IBAN,International Bank Account Number,Nur lesende Transaktionen an M08 senden
+27,Open Banking,BIC,Business Identifier Code,Nur lesende Transaktionen an M08 senden
+28,Payment Integration,PSP,Payment Service Provider,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,EMI,Electronic Money Institution,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,PI,Payment Institution,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,RTGS,Real-Time Gross Settlement,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,ACH,Automated Clearing House,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,SCT,SEPA Credit Transfer,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,SCTInst,SEPA Instant Credit Transfer,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,RTP,Real-Time Payments,Keine Zahlungsausführung durch Analysemodul
+28,Payment Integration,SWIFT,Society for Worldwide Interbank Financial Telecommunication,Keine Zahlungsausführung durch Analysemodul
+29,Blockchain Integration,DLT,Distributed Ledger Technology,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,EVM,Ethereum Virtual Machine,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,RPC,Remote Procedure Call,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,ABI,Application Binary Interface,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,SC,Smart Contract,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,DID,Decentralized Identifier,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,VC,Verifiable Credential,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,ZKP,Zero-Knowledge Proof,Read-only Chain-Events getrennt von Signaturaktionen
+29,Blockchain Integration,MPC,Multi-Party Computation,Read-only Chain-Events getrennt von Signaturaktionen
+30,Crypto Asset Risk,CASP,Crypto-Asset Service Provider,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,VASP,Virtual Asset Service Provider,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,MiCA,Markets in Crypto-Assets Regulation,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,AML,Anti-Money Laundering,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,KYC,Know Your Customer,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,KYB,Know Your Business,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,TravelRule,Crypto Transfer Information Rule,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,CDD,Customer Due Diligence,Wallet ist nicht automatisch reguliertes Konto
+30,Crypto Asset Risk,EDD,Enhanced Due Diligence,Wallet ist nicht automatisch reguliertes Konto
+31,Smart Contract Assurance,Reentrancy,Recursive Contract Entry,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,CEI,Checks Effects Interactions,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,EIP,Ethereum Improvement Proposal,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,ERC,Ethereum Request for Comments,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,Slither,Static Contract Analyzer,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,Foundry,EVM Testing Toolkit,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,Hardhat,Ethereum Development Environment,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,Timelock,Delayed Administrative Action,Simulierter Settlement-Fail-Test vor Deployment
+31,Smart Contract Assurance,Multisig,Multi-Signature Authorization,Simulierter Settlement-Fail-Test vor Deployment
+32,Web3 UX,SIWE,Sign-In with Ethereum,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,EIP712,Typed Structured Data Signing,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,Nonce,Single-Use Random Value,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,ChainID,Blockchain Network Identifier,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,Gas,Transaction Execution Fee,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,MEV,Maximal Extractable Value,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,AA,Account Abstraction,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,Paymaster,Gas Sponsorship Contract,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+32,Web3 UX,WalletConnect,Wallet Connection Protocol,Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger
+33,Release Metadata,SPDX,Software Package Data Exchange,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,CycloneDX,SBOM Format,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,OSCAL,Open Security Controls Assessment Language,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,SARIF,Static Analysis Results Interchange Format,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,JWS,JSON Web Signature,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,DSSE,Dead Simple Signing Envelope,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,Sigstore,Open Source Signing Project,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,Rekor,Transparency Log,Intern PASS ist nicht extern zertifiziert
+33,Release Metadata,SCEP,Simple Certificate Enrollment Protocol,Intern PASS ist nicht extern zertifiziert
+34,Operations Language,P0,Critical Incident Priority,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,P1,High Incident Priority,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,SOP,Standard Operating Procedure,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,Runbook,Operational Step Guide,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,OnCall,Incident Response Duty,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,RCA,Root Cause Analysis,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,Postmortem,Incident Learning Review,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,ChangeFreeze,Temporary Release Stop,P1-Vorfall wechselt Status aller betroffenen Belege
+34,Operations Language,SLA,Service Level Agreement,P1-Vorfall wechselt Status aller betroffenen Belege

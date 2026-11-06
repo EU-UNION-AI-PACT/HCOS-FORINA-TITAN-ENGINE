@@ -1,0 +1,19 @@
+{
+  "id": "m07_domain_trust",
+  "name": "M07: FORINA Domain Trust & Compliance",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 7,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "caddyserver/caddy", "url": "https://github.com/caddyserver/caddy"},
+    {"name": "nginx/nginx", "url": "https://github.com/nginx/nginx"},
+    {"name": "open-policy-agent/opa", "url": "https://github.com/open-policy-agent/opa"},
+    {"name": "cunnie/sslip.io", "url": "https://github.com/cunnie/sslip.io"}
+  ],
+  "features": [
+    "DNSSEC, TLS & RDAP technische Verifikation",
+    "Open Policy Agent (OPA) Validierung regulatorischer Governance",
+    "Strukturierte Domain-Audit-Records statt bloßer Badges"
+  ]
+}

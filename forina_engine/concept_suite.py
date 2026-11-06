@@ -446,3 +446,56 @@ class ConceptPaperSuite:
                 "ungm": "1172700"
             }
         }
+
+    def list_baende(self) -> List[Dict[str, Any]]:
+        """Returns the 4 Monumental Volumes (144 A4 Pages, 136 Chapters)."""
+        baende_meta = [
+            {"band": "A", "title": "Band A: Gesamtarchitektur, IA, XD & Modulare Plattform", "chapters": 34, "file": "docs/baende/Band_A_144_Seiten.md"},
+            {"band": "B", "title": "Band B: Entwicklungssprache, 34 Glossar-Fachkapitel & API-Strategie", "chapters": 34, "file": "docs/baende/Band_B_144_Seiten.md"},
+            {"band": "C", "title": "Band C: Blockchain, Crypto, Web3, Security & Finance (272 Keywords)", "chapters": 34, "file": "docs/baende/Band_C_144_Seiten.md"},
+            {"band": "D", "title": "Band D: Normen, Zertifikate, Abzeichen & Automatische Abnahme", "chapters": 34, "file": "docs/baende/Band_D_144_Seiten.md"}
+        ]
+        res = []
+        for b in baende_meta:
+            path = self.root / b["file"]
+            b_info = dict(b)
+            b_info["exists"] = path.exists()
+            b_info["bytes"] = path.stat().st_size if path.exists() else 0
+            res.append(b_info)
+        return res
+
+    def get_band_content(self, band_letter: str) -> Optional[Dict[str, Any]]:
+        band_letter = band_letter.upper()
+        baende = {b["band"]: b for b in self.list_baende()}
+        if band_letter not in baende:
+            return None
+        target = baende[band_letter]
+        path = self.root / target["file"]
+        if path.exists():
+            target["content"] = path.read_text(encoding="utf-8")
+        else:
+            target["content"] = f"# {target['title']}\nDatei nicht gefunden."
+        return target
+
+    def get_136_themen(self) -> Dict[str, Any]:
+        themen_file = self.root / "docs" / "catalogs" / "THEMEN_136_KAPITEL.json"
+        if themen_file.exists():
+            import json
+            try:
+                return json.loads(themen_file.read_text(encoding="utf-8"))
+            except Exception:
+                pass
+        return {}
+
+    def list_specialized_papers(self) -> List[Dict[str, Any]]:
+        spec_dir = self.root / "docs" / "concept_papers" / "specialized"
+        res = []
+        if spec_dir.exists():
+            for f in sorted(spec_dir.glob("*.md")):
+                res.append({
+                    "id": f.stem,
+                    "title": f.stem.replace("_", " "),
+                    "file": f"docs/concept_papers/specialized/{f.name}",
+                    "size": f.stat().st_size
+                })
+        return res

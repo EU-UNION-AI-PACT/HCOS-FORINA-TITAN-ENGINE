@@ -1,0 +1,19 @@
+{
+  "id": "07_trust_compliance",
+  "name": "Trust & Compliance Engine",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 7,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "guardrails-ai/guardrails", "url": "https://github.com/guardrails-ai/guardrails"},
+    {"name": "confident-ai/deepeval", "url": "https://github.com/confident-ai/deepeval"},
+    {"name": "open-policy-agent/opa", "url": "https://github.com/open-policy-agent/opa"}
+  ],
+  "features": [
+    "Sicherheitskontrollen und regulatorische Zuordnungen (EU AI Act)",
+    "NATO Strategic Defense Alignment & EU Governance Layer",
+    "Fail-Closed Guardrails gegen Sicherheitsverletzungen",
+    "Integritätsüberwachung für Dual-Layer Lizenzstrukturen"
+  ]
+}

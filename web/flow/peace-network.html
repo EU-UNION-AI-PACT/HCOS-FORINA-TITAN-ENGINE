@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>Peace Network #0810</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellipse at center, hsl(242, 60%, 8%) 0%, hsl(252, 70%, 3%) 100%);}
+  canvas{display:block;width:100vw;height:100vh;}
+  .meta{position:fixed;left:12px;bottom:10px;font:11px/1.4 ui-sans-serif,system-ui;color:rgba(255,255,255,.45);letter-spacing:.08em;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="meta">PEACE NETWORK · SEED 0810</div>
+<script>
+(()=>{
+  const P = {"seed":810,"nodes":552,"linkDist":109.39761593006551,"attraction":0.006632676147855819,"repulsion":0.24626019446877762,"upward":0.03902235336136073,"spiralBias":0.5494386396836489,"palette":["#7FE7E1","#FFFFFF","#F4C95D"],"bgInner":"hsl(242, 60%, 8%)","bgOuter":"hsl(252, 70%, 3%)"};
+  const cv = document.getElementById('c');
+  const ctx = cv.getContext('2d');
+  let W=0,H=0,cx=0,cy=0;
+  function resize(){W=cv.width=innerWidth*devicePixelRatio;H=cv.height=innerHeight*devicePixelRatio;cv.style.width=innerWidth+'px';cv.style.height=innerHeight+'px';cx=W/2;cy=H/2;}
+  addEventListener('resize',resize);resize();
+
+  // Seeded PRNG
+  let s = P.seed>>>0;
+  const rnd = () => { s|=0; s=(s+0x6d2b79f5)|0; let t=s; t=Math.imul(t^t>>>15,t|1); t^=t+Math.imul(t^t>>>7,t|61); return ((t^t>>>14)>>>0)/4294967296; };
+
+  // Spiral / orbit seeding
+  const nodes = [];
+  for(let i=0;i<P.nodes;i++){
+    const ang = rnd()*Math.PI*2;
+    const rad = Math.pow(rnd(),0.6)*Math.min(W,H)*0.45;
+    const sp = P.spiralBias * ang * 0.3;
+    const x = cx + Math.cos(ang+sp)*rad;
+    const y = cy + Math.sin(ang+sp)*rad;
+    const c = P.palette[Math.floor(rnd()*P.palette.length)];
+    nodes.push({x,y,vx:(rnd()-0.5)*0.4,vy:(rnd()-0.5)*0.4,c,r:0.8+rnd()*1.6});
+  }
+
+  let mx=cx,my=cy,mActive=false;
+  addEventListener('mousemove',e=>{mx=e.clientX*devicePixelRatio;my=e.clientY*devicePixelRatio;mActive=true;});
+
+  const LINK = P.linkDist*devicePixelRatio;
+  const LINK2 = LINK*LINK;
+
+  function frame(){
+    // "Licht-Radiergummi": destination-out fade preserves background, fades light.
+    ctx.globalCompositeOperation='destination-out';
+    ctx.fillStyle='rgba(0,0,0,0.08)';
+    ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation='lighter';
+
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i];
+      // soft attraction to center (Nächstenliebe)
+      a.vx += (cx-a.x)*P.attraction*0.02;
+      a.vy += (cy-a.y)*P.attraction*0.02;
+      // upward vector (Hoffnung)
+      a.vy -= P.upward*0.5;
+      // mouse gravity
+      if(mActive){
+        const dx=mx-a.x,dy=my-a.y,d2=dx*dx+dy*dy;
+        if(d2<400*400*devicePixelRatio*devicePixelRatio){
+          const d=Math.sqrt(d2)+1;
+          a.vx += dx/d*0.6;
+          a.vy += dy/d*0.6;
+        }
+      }
+      // tangential spiral
+      const tx=-(a.y-cy), ty=(a.x-cx);
+      const tl=Math.hypot(tx,ty)+1;
+      a.vx += (tx/tl)*P.spiralBias*0.05;
+      a.vy += (ty/tl)*P.spiralBias*0.05;
+
+      a.vx*=0.985; a.vy*=0.985;
+      a.x+=a.vx; a.y+=a.vy;
+
+      // wrap upward (rises and re-enters at bottom)
+      if(a.y<-20) a.y=H+20;
+      if(a.y>H+40) a.y=-20;
+      if(a.x<-20) a.x=W+20; if(a.x>W+20) a.x=-20;
+    }
+
+    // soft repulsion + links
+    for(let i=0;i<nodes.length;i++){
+      const a=nodes[i];
+      for(let j=i+1;j<nodes.length;j++){
+        const b=nodes[j];
+        const dx=b.x-a.x, dy=b.y-a.y, d2=dx*dx+dy*dy;
+        if(d2<LINK2 && d2>0.5){
+          const d=Math.sqrt(d2);
+          const alpha=(1-d/LINK)*0.35;
+          ctx.strokeStyle=a.c+Math.floor(alpha*255).toString(16).padStart(2,'0');
+          ctx.lineWidth=0.6*devicePixelRatio;
+          ctx.beginPath(); ctx.moveTo(a.x,a.y); ctx.lineTo(b.x,b.y); ctx.stroke();
+          // gentle repel
+          const f=P.repulsion/(d+1);
+          a.vx -= dx*f*0.001; a.vy -= dy*f*0.001;
+          b.vx += dx*f*0.001; b.vy += dy*f*0.001;
+        }
+      }
+      ctx.fillStyle=a.c;
+      ctx.beginPath(); ctx.arc(a.x,a.y,a.r*devicePixelRatio,0,Math.PI*2); ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

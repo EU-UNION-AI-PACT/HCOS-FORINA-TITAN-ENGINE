@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8">
+  <title>Sparkle + Spektralfrequenz (Web Audio API)</title>
+  <style>
+    body {
+      margin: 0;
+      background: #000;
+      overflow: hidden;
+      font-family: system-ui, sans-serif;
+      color: #ccc;
+    }
+    canvas { display: block; }
+    #info {
+      position: fixed;
+      top: 12px;
+      left: 12px;
+      font-size: 13px;
+      background: rgba(0,0,0,0.7);
+      padding: 8px 12px;
+      border-radius: 6px;
+      pointer-events: none;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+  <div id="info">Klicke irgendwo, um das Mikrofon zu starten</div>
+  <canvas id="sparkle"></canvas>
+
+  <script>
+    const canvas = document.getElementById('sparkle');
+    const ctx = canvas.getContext('2d');
+    const info = document.getElementById('info');
+
+    function resize() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+    resize();
+    window.addEventListener('resize', resize);
+
+    // Partikel
+    const particles = [];
+    const maxParticles = 200;
+    let spectralEnergy = 0.25;
+    let spectralCentroid = 0.5;
+
+    class Particle {
+      constructor() { this.reset(); }
+
+      reset() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.baseSize = Math.random() * 1.6 + 0.4;
+        this.life = Math.random() * 100 + 60;
+        this.maxLife = this.life;
+        this.vx = (Math.random() - 0.5) * 0.6;
+        this.vy = (Math.random() - 0.5) * 0.6;
+      }
+
+      update() {
+        const boost = 0.5 + spectralEnergy * 1.5;
+        this.x += this.vx * boost;
+        this.y += this.vy * boost;
+        this.life--;
+        if (this.life <= 0) this.reset();
+      }
+
+      draw() {
+        const alpha = Math.max(0, this.life / this.maxLife) * (0.35 + spectralEnergy * 0.65);
+        const size = this.baseSize * (0.6 + spectralEnergy * 1.4);
+        const hue = 190 + spectralCentroid * 90;
+
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, size, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${hue}, 85%, 68%, ${alpha})`;
+        ctx.shadowBlur = 8 + spectralEnergy * 16;
+        ctx.shadowColor = `hsla(${hue}, 90%, 60%, 0.75)`;
+        ctx.fill();
+        ctx.shadowBlur = 0;
+      }
+    }
+
+    for (let i = 0; i < maxParticles; i++) particles.push(new Particle());
+
+    // Audio
+    let audioContext = null;
+    let analyser = null;
+    let isRunning = false;
+    let frequencyData = null;
+
+    async function startAudio() {
+      if (isRunning) return;
+      try {
+        audioContext = new AudioContext();
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        const source = audioContext.createMediaStreamSource(stream);
+        analyser = audioContext.createAnalyser();
+        analyser.fftSize = 2048;
+        analyser.smoothingTimeConstant = 0.8;
+        source.connect(analyser);
+        frequencyData = new Uint8Array(analyser.frequencyBinCount);
+        isRunning = true;
+        info.textContent = "Mikrofon aktiv – Spektralfrequenz steuert die Partikel";
+      } catch (err) {
+        console.error(err);
+        info.textContent = "Mikrofon-Zugriff fehlgeschlagen";
+      }
+    }
+
+    function updateSpectral() {
+      if (!isRunning || !analyser) return;
+
+      analyser.getByteFrequencyData(frequencyData);
+
+      // Energy (Durchschnitt der Amplituden)
+      let sum = 0;
+      for (let i = 0; i < frequencyData.length; i++) {
+        sum += frequencyData[i];
+      }
+      const avg = sum / frequencyData.length;
+      spectralEnergy = Math.min(1, avg / 80);
+
+      // Spectral Centroid (gewichteter Durchschnitt der Frequenzen)
+      let weightedSum = 0;
+      let magnitudeSum = 0;
+      for (let i = 0; i < frequencyData.length; i++) {
+        const mag = frequencyData[i];
+        weightedSum += i * mag;
+        magnitudeSum += mag;
+      }
+      if (magnitudeSum > 0) {
+        const centroidBin = weightedSum / magnitudeSum;
+        spectralCentroid = Math.min(1, centroidBin / (frequencyData.length * 0.6));
+      }
+    }
+
+    function animate() {
+      updateSpectral();
+
+      ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      for (const p of particles) {
+        p.update();
+        p.draw();
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    // Start
+    animate();
+    document.body.addEventListener('click', startAudio);
+    info.textContent = "Klicke irgendwo, um das Mikrofon zu starten";
+  </script>
+</body>
+</html>

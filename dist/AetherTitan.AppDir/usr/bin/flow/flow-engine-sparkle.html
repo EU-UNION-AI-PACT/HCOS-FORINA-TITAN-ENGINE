@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<title>Flow Engine · Event Network + Sparkle</title>
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<style>
+  html,body{margin:0;height:100%;overflow:hidden;background:radial-gradient(ellipse at center, hsl(242, 60%, 8%) 0%, hsl(252, 70%, 3%) 100%);}
+  canvas{display:block;width:100vw;height:100vh;}
+  .hud{
+    position:fixed;left:16px;top:16px;
+    font:12px/1.5 ui-monospace,monospace;
+    color:rgba(255,255,255,.7);
+    background:rgba(0,0,0,.4);
+    padding:10px 14px;border-radius:8px;
+    pointer-events:none;z-index:10;
+  }
+  .hud b{color:#7FE7E1;}
+</style>
+</head>
+<body>
+<canvas id="c"></canvas>
+<div class="hud">
+  <div><b>FLOW ENGINE</b> · Event Network</div>
+  <div>Energy: <span id="energy">0.00</span></div>
+  <div>Events: <span id="events">0</span></div>
+  <div>Klicke für Trigger</div>
+</div>
+<script>
+(()=>{
+  const P = {
+    nodes: 380,
+    linkDist: 90,
+    attraction: 0.008,
+    repulsion: 0.22,
+    upward: 0.025,
+    spiralBias: 0.42,
+    palette: ["#7FE7E1","#FFFFFF","#F4C95D","#A78BFA"]
+  };
+
+  const cv = document.getElementById('c');
+  const ctx = cv.getContext('2d');
+  const elEnergy = document.getElementById('energy');
+  const elEvents = document.getElementById('events');
+
+  let W=0, H=0, cx=0, cy=0;
+  function resize(){
+    W = cv.width = innerWidth * devicePixelRatio;
+    H = cv.height = innerHeight * devicePixelRatio;
+    cv.style.width = innerWidth + 'px';
+    cv.style.height = innerHeight + 'px';
+    cx = W/2; cy = H/2;
+  }
+  addEventListener('resize', resize); resize();
+
+  let seed = 810;
+  const rnd = () => {
+    seed |= 0; seed = (seed + 0x6d2b79f5)|0;
+    let t = seed;
+    t = Math.imul(t ^ t>>>15, t|1);
+    t ^= t + Math.imul(t ^ t>>>7, t|61);
+    return ((t ^ t>>>14)>>>0) / 4294967296;
+  };
+
+  // Sparkle particles (background)
+  const sparkles = [];
+  const sparkleCount = 180;
+  for(let i=0; i<sparkleCount; i++){
+    sparkles.push({
+      x: rnd() * W,
+      y: rnd() * H,
+      size: 0.4 + rnd() * 1.4,
+      life: rnd() * 100,
+      maxLife: 60 + rnd() * 80,
+      vx: (rnd()-0.5)*0.3,
+      vy: (rnd()-0.5)*0.3,
+      hue: 180 + rnd()*60
+    });
+  }
+
+  // Nodes
+  const nodes = [];
+  for(let i=0; i<P.nodes; i++){
+    const ang = rnd() * Math.PI * 2;
+    const rad = Math.pow(rnd(), 0.55) * Math.min(W,H) * 0.42;
+    const sp = P.spiralBias * ang * 0.28;
+    nodes.push({
+      x: cx + Math.cos(ang+sp)*rad,
+      y: cy + Math.sin(ang+sp)*rad,
+      vx: (rnd()-0.5)*0.5,
+      vy: (rnd()-0.5)*0.5,
+      c: P.palette[Math.floor(rnd()*P.palette.length)],
+      r: 0.7 + rnd()*1.8,
+      type: rnd() < 0.15 ? 'trigger' : 'sensor'
+    });
+  }
+
+  let mx = cx, my = cy, mActive = false;
+  let spectralEnergy = 0.25;
+  let eventCount = 0;
+  let pulse = 0;
+
+  addEventListener('mousemove', e => {
+    mx = e.clientX * devicePixelRatio;
+    my = e.clientY * devicePixelRatio;
+    mActive = true;
+  });
+
+  addEventListener('click', () => {
+    spectralEnergy = Math.min(1, spectralEnergy + 0.35);
+    pulse = 1;
+    eventCount++;
+    elEvents.textContent = eventCount;
+  });
+
+  const LINK = P.linkDist * devicePixelRatio;
+  const LINK2 = LINK * LINK;
+
+  function updateSparkles(){
+    for(const s of sparkles){
+      s.life--;
+      s.x += s.vx * (1 + spectralEnergy * 0.5);
+      s.y += s.vy * (1 + spectralEnergy * 0.5);
+      if(s.life <= 0){
+        s.x = rnd() * W;
+        s.y = rnd() * H;
+        s.life = s.maxLife;
+        s.vx = (rnd()-0.5)*0.3;
+        s.vy = (rnd()-0.5)*0.3;
+      }
+    }
+  }
+
+  function drawSparkles(){
+    for(const s of sparkles){
+      const alpha = Math.max(0, s.life / s.maxLife) * (0.3 + spectralEnergy * 0.5);
+      const size = s.size * (0.8 + spectralEnergy * 0.6);
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, size * devicePixelRatio, 0, Math.PI*2);
+      ctx.fillStyle = `hsla(${s.hue}, 80%, 70%, ${alpha})`;
+      ctx.shadowBlur = 6 + spectralEnergy * 10;
+      ctx.shadowColor = `hsla(${s.hue}, 90%, 60%, 0.6)`;
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+  }
+
+  function frame(){
+    // Fade
+    ctx.globalCompositeOperation = 'destination-out';
+    ctx.fillStyle = 'rgba(0,0,0,0.06)';
+    ctx.fillRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    spectralEnergy *= 0.985;
+    pulse *= 0.92;
+    elEnergy.textContent = spectralEnergy.toFixed(2);
+
+    // Update & draw sparkles first (background)
+    updateSparkles();
+    drawSparkles();
+
+    // Nodes
+    for(let i=0; i<nodes.length; i++){
+      const a = nodes[i];
+      a.vx += (cx - a.x) * P.attraction * 0.02;
+      a.vy += (cy - a.y) * P.attraction * 0.02;
+      a.vy -= P.upward * 0.5;
+
+      if(mActive){
+        const dx = mx - a.x, dy = my - a.y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 < 350*350*devicePixelRatio*devicePixelRatio){
+          const d = Math.sqrt(d2) + 1;
+          a.vx += dx/d * 0.55;
+          a.vy += dy/d * 0.55;
+        }
+      }
+
+      const tx = -(a.y - cy), ty = (a.x - cx);
+      const tl = Math.hypot(tx, ty) + 1;
+      a.vx += (tx/tl) * P.spiralBias * 0.045;
+      a.vy += (ty/tl) * P.spiralBias * 0.045;
+
+      if(a.type === 'trigger'){
+        a.vx += (rnd()-0.5) * spectralEnergy * 0.8;
+        a.vy += (rnd()-0.5) * spectralEnergy * 0.8;
+      }
+
+      a.vx *= 0.986;
+      a.vy *= 0.986;
+      a.x += a.vx;
+      a.y += a.vy;
+
+      if(a.y < -30) a.y = H + 30;
+      if(a.y > H + 40) a.y = -30;
+      if(a.x < -30) a.x = W + 30;
+      if(a.x > W + 30) a.x = -30;
+    }
+
+    // Links
+    for(let i=0; i<nodes.length; i++){
+      const a = nodes[i];
+      for(let j=i+1; j<nodes.length; j++){
+        const b = nodes[j];
+        const dx = b.x - a.x, dy = b.y - a.y;
+        const d2 = dx*dx + dy*dy;
+        if(d2 < LINK2 && d2 > 0.5){
+          const d = Math.sqrt(d2);
+          const baseAlpha = (1 - d/LINK) * 0.28;
+          const energyAlpha = baseAlpha * (0.55 + spectralEnergy * 0.7);
+          const alpha = Math.min(1, energyAlpha + pulse * 0.35);
+
+          ctx.strokeStyle = a.c + Math.floor(alpha * 255).toString(16).padStart(2,'0');
+          ctx.lineWidth = (0.45 + spectralEnergy * 0.7) * devicePixelRatio;
+          ctx.beginPath();
+          ctx.moveTo(a.x, a.y);
+          ctx.lineTo(b.x, b.y);
+          ctx.stroke();
+
+          const f = P.repulsion / (d + 1);
+          a.vx -= dx * f * 0.001;
+          a.vy -= dy * f * 0.001;
+          b.vx += dx * f * 0.001;
+          b.vy += dy * f * 0.001;
+        }
+      }
+
+      const size = a.r * (1 + spectralEnergy * 0.5 + (a.type==='trigger' ? pulse*0.7 : 0));
+      ctx.fillStyle = a.c;
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, size * devicePixelRatio, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    requestAnimationFrame(frame);
+  }
+
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>

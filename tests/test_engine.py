@@ -406,6 +406,59 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertIn("whytrace_", task["trace_id"])
         self.assertEqual(task["status"], "PROVISIONED_SANDBOX")
 
+    def test_144_seiten_enzyklopaedie_and_baende(self):
+        suite = ConceptPaperSuite(self.root)
+        baende = suite.list_baende()
+        self.assertEqual(len(baende), 4, "Muss exakt 4 Bände (A, B, C, D) umfassen")
+        for b in baende:
+            self.assertTrue(b["exists"], f"Band {b['band']} muss physisch existieren")
+            self.assertGreater(b["bytes"], 100000, f"Band {b['band']} muss substanziellen Volltext haben (>100KB)")
+
+        band_a = suite.get_band_content("A")
+        self.assertIsNotNone(band_a)
+        self.assertIn("Band A", band_a["title"])
+
+        themen = suite.get_136_themen()
+        self.assertEqual(len(themen), 4)
+        total_kap = sum(len(v) for v in themen.values())
+        self.assertEqual(total_kap, 136, "Muss exakt 136 Fachkapitel umfassen")
+
+        spec = suite.list_specialized_papers()
+        self.assertGreaterEqual(len(spec), 3)
+
+    def test_34_normen_svg_badges_registry(self):
+        from forina_engine.audit_badges import AuditBadgeRegistry
+        reg = AuditBadgeRegistry(self.root)
+        badges = reg.list_badges()
+        self.assertEqual(len(badges), 34, "Muss exakt 34 Vektor-SVG-Badges verifizieren")
+        
+        # Verify first badge NORM-001
+        b1 = badges[0]
+        self.assertEqual(b1["norm_id"], "NORM-001")
+        self.assertIn("DSGVO", b1["title"])
+        self.assertTrue(b1["verified"])
+        self.assertEqual(len(b1["sha256"]), 64)
+
+        svg = reg.get_badge_svg("NORM-001")
+        self.assertIsNotNone(svg)
+        self.assertIn("<svg", svg)
+
+    def test_institutional_finance_registry(self):
+        from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+        fin = InstitutionalFinanceRegistry(self.root)
+        banks = fin.get_central_banks()
+        self.assertGreaterEqual(len(banks), 6)
+        ezb = next((b for b in banks if b["id"] == "EZB"), None)
+        self.assertIsNotNone(ezb)
+        self.assertIn("TARGET2", ezb["clearing_systems"])
+
+        providers = fin.get_open_banking_providers()
+        self.assertGreaterEqual(len(providers), 8)
+        self.assertTrue(all(p["read_only"] for p in providers), "Open Banking muss strikt read-only sein")
+
+        schemas = fin.get_iso20022_message_schemas()
+        self.assertGreaterEqual(len(schemas), 5)
+
 
 if __name__ == "__main__":
     unittest.main()

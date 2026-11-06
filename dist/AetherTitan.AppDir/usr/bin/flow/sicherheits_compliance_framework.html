@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Staatliches Sicherheits-, Compliance- & KI-Einkesselungs-Spezifikationsdokument</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Inter & JetBrains Mono -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        navy: {
+                            800: '#1e293b',
+                            900: '#0f172a',
+                            950: '#020617',
+                        },
+                        cyber: {
+                            blue: '#3b82f6',
+                            glow: '#60a5fa',
+                            dark: '#172554',
+                        }
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 3s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'scanline': 'scanline 8s linear infinite',
+                    },
+                    keyframes: {
+                        scanline: {
+                            '0%': { transform: 'translateY(-100%)' },
+                            '100%': { transform: 'translateY(100%)' }
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .cyber-grid {
+            background-image: 
+                linear-gradient(to right, rgba(59, 130, 246, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(59, 130, 246, 0.05) 1px, transparent 1px);
+            background-size: 24px 24px;
+        }
+        .glow-text {
+            text-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+        }
+        .glow-border {
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+        }
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; color: black; }
+            .print-border { border: 1px solid #cbd5e1 !important; box-shadow: none !important; }
+            .page-break { page-break-before: always; margin-top: 2rem; }
+            .print-bg-light { background-color: #f8fafc !important; color: #0f172a !important; }
+            .print-text-dark { color: #0f172a !important; }
+            .cyber-grid { background-image: none !important; }
+        }
+        
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #020617; }
+        ::-webkit-scrollbar-thumb { background: #1e293b; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #3b82f6; }
+    </style>
+</head>
+<body class="bg-slate-950 text-slate-100 font-sans min-h-screen pb-20 cyber-grid relative selection:bg-blue-500/30 selection:text-blue-200">
+
+    <!-- Top Navigation Bar (No Print) -->
+    <header class="no-print bg-slate-950/80 backdrop-blur-md border-b border-slate-800/80 sticky top-0 z-50 shadow-lg shadow-black/50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <i class="fa-solid fa-shield-halved text-blue-500 text-2xl relative z-10"></i>
+                    <div class="absolute inset-0 bg-blue-500 blur-md opacity-40 animate-pulse-slow"></div>
+                </div>
+                <div>
+                    <span class="font-bold text-sm sm:text-base tracking-widest text-slate-100 block leading-none drop-shadow-md">GOV-SEC // ARCHITECTURE SPECIFICATION v7.0</span>
+                    <span class="text-[10px] text-blue-400/80 font-mono uppercase tracking-widest">Zentralstelle für Digitale Souveränität & KI-Kontrolle</span>
+                </div>
+            </div>
+            <div class="flex items-center space-x-3">
+                <div class="hidden md:flex items-center px-3 py-1 bg-red-500/10 border border-red-500/30 rounded text-red-500 text-[10px] font-mono font-bold tracking-widest mr-2">
+                    <i class="fa-solid fa-triangle-exclamation mr-1.5"></i> TLP: RED (RESTRICTED)
+                </div>
+                <button onclick="generateNewHash()" class="bg-slate-900 hover:bg-slate-800 text-slate-300 hover:text-blue-400 px-3 py-2 rounded-lg text-xs sm:text-sm font-mono transition-all duration-300 flex items-center gap-2 border border-slate-700 hover:border-blue-500/50">
+                    <i class="fa-solid fa-arrows-rotate"></i> Keys Sync
+                </button>
+                <button onclick="window.print()" class="bg-blue-600 hover:bg-blue-500 text-white px-4 py-2 rounded-lg text-xs sm:text-sm font-semibold shadow-lg shadow-blue-600/30 transition-all duration-300 flex items-center gap-2 border border-blue-400/50">
+                    <i class="fa-solid fa-file-pdf"></i> Dossier Export
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 mt-10 space-y-12 relative z-10">
+
+        <!-- ==================== HEADER & ECHTHEITS-BADGES ==================== -->
+        <div class="bg-slate-900/90 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 sm:p-12 shadow-2xl relative overflow-hidden print-border print-bg-light glow-border group" id="section-a">
+            
+            <!-- Background Decoration -->
+            <div class="absolute -right-32 -top-32 opacity-[0.03] group-hover:opacity-[0.05] transition-opacity duration-1000 pointer-events-none no-print">
+                <i class="fa-solid fa-fingerprint text-[500px] text-blue-500"></i>
+            </div>
+            
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-blue-500 to-transparent opacity-50 no-print"></div>
+
+            <!-- HEADER TITLE -->
+            <div class="border-b border-slate-800/80 pb-8 mb-8 text-center sm:text-left flex flex-col sm:flex-row justify-between items-start gap-8">
+                <div class="flex-1">
+                    <div class="flex flex-wrap gap-2 mb-4">
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-blue-500/10 border border-blue-500/30 text-blue-400 text-[10px] font-mono uppercase tracking-widest font-semibold">
+                            <i class="fa-solid fa-layer-group"></i> State-Level Specification
+                        </div>
+                        <div class="inline-flex items-center gap-1.5 px-3 py-1 rounded bg-rose-500/10 border border-rose-500/30 text-rose-400 text-[10px] font-mono uppercase tracking-widest font-semibold">
+                            <i class="fa-solid fa-lock"></i> Verschlusssache
+                        </div>
+                    </div>
+                    <h1 class="text-3xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-slate-200 to-slate-400 print-text-dark tracking-tight mb-4 leading-tight">
+                        GLOBALE SICHERHEITS-, COMPLIANCE- & <br class="hidden xl:block">DATENHOHEITS-SPEZIFIKATION
+                    </h1>
+                    <p class="text-slate-400 print-text-dark text-sm sm:text-base max-w-4xl leading-relaxed">
+                        Umfassendes regulatorisches, technisches und architektonisches Referenzdokument zur Durchsetzung staatlich verifizierter Datenhoheit, quantenresistenter Hardware-Root-of-Trust-Validierung, Zero-Trust-Telemetrie sowie der vollständigen Isolierung, Einkesselung und Laufzeitüberwachung autonomer KI-Agenten und LLM-Systeme.
+                    </p>
+                </div>
+
+                <!-- Badges -->
+                <div class="flex flex-col gap-3 shrink-0 sm:w-64">
+                    <div class="flex items-center gap-3 bg-slate-950/80 backdrop-blur border border-amber-500/30 rounded-lg p-3 shadow-lg print-border hover:border-amber-500/60 transition-colors">
+                        <div class="w-10 h-10 rounded bg-amber-500/10 border border-amber-500/50 flex items-center justify-center text-amber-400 text-lg shrink-0">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-[11px] font-bold text-amber-400 tracking-wider">OFFIZIELLES ORIGINAL</div>
+                            <div class="text-[9px] font-mono text-slate-400 print-text-dark uppercase">Staatlich Zertifiziert</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-3 bg-slate-950/80 backdrop-blur border border-emerald-500/30 rounded-lg p-3 shadow-lg print-border hover:border-emerald-500/60 transition-colors">
+                        <div class="w-10 h-10 rounded bg-emerald-500/10 border border-emerald-500/50 flex items-center justify-center text-emerald-400 text-lg shrink-0">
+                            <i class="fa-solid fa-shield-check"></i>
+                        </div>
+                        <div class="text-left">
+                            <div class="text-[11px] font-bold text-emerald-400 tracking-wider">COMPLIANCE VERIFIZIERT</div>
+                            <div class="text-[9px] font-mono text-slate-400 print-text-dark uppercase">Key-Pipeline Aktiv</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- KRYPTOGRAFISCHER INTEGRITÄTSBLOCK -->
+            <div class="bg-[#050b14] border border-slate-700/60 rounded-xl p-6 font-mono shadow-inner relative overflow-hidden print-border">
+                <!-- Scanline effect purely visual -->
+                <div class="absolute inset-0 bg-blue-500/5 w-full h-[10%] opacity-50 animate-scanline pointer-events-none no-print"></div>
+
+                <div class="flex flex-col md:flex-row md:items-center justify-between text-xs text-slate-400 gap-2 pb-3 border-b border-slate-800/80 mb-4">
+                    <span class="flex items-center gap-2 text-blue-400 font-bold uppercase tracking-widest text-[11px]">
+                        <i class="fa-solid fa-key"></i> Kryptografischer Echtheits- & Integritätsnachweis
+                    </span>
+                    <span class="text-[10px] text-slate-500 font-bold" id="hash-timestamp">TIMESTAMP: LOADING...</span>
+                </div>
+                
+                <div class="mb-4">
+                    <span class="text-[9px] text-slate-500 uppercase tracking-widest block mb-1.5 font-bold">SHA-3 / 512-Bit Verifizierungshash (Dokumenten- & Systemintegrität)</span>
+                    <div class="text-amber-400 text-xs sm:text-sm font-bold break-all tracking-wider selection:bg-amber-500 selection:text-slate-950 bg-slate-900 p-3.5 rounded border border-slate-700/50 shadow-inner flex justify-between items-center group">
+                        <span id="sha256-hash">GENERATE_HASHING_CODE_PROCESSING...</span>
+                        <button onclick="copyHash()" class="no-print opacity-0 group-hover:opacity-100 transition-opacity text-slate-400 hover:text-amber-400">
+                            <i class="fa-regular fa-copy text-lg"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="col-span-1 md:col-span-2">
+                        <span class="text-[9px] text-slate-500 uppercase tracking-widest block mb-1.5 font-bold">Kyber-1024 / RSA-8192 Public Key Fingerprint</span>
+                        <div class="text-slate-300 text-xs break-all bg-slate-900 p-2.5 rounded border border-slate-700/50 shadow-inner" id="ssh-fingerprint">
+                            SHA512:LoadingFingerprint...
+                        </div>
+                    </div>
+                    <div class="col-span-1">
+                        <span class="text-[9px] text-slate-500 uppercase tracking-widest block mb-1.5 font-bold">Zentrale Signatur-ID</span>
+                        <div class="text-emerald-400 text-xs font-bold break-all bg-slate-900 p-2.5 rounded border border-slate-700/50 shadow-inner text-center" id="gov-key-id">
+                            GOV-KEY-2026-X992
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 text-[10px] text-slate-500 pt-4 mt-4 border-t border-slate-800/80">
+                    <span class="flex items-center gap-2 text-slate-400 font-semibold uppercase tracking-wider">
+                        <i class="fa-solid fa-satellite-dish text-blue-500"></i> Ende-zu-Ende Telemetrie-Bindung aktiv
+                    </span>
+                    <span class="text-emerald-500 font-mono flex items-center gap-1">
+                        <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse block"></span> STATUS: VERIFIED
+                    </span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SEKTION 1: VÖLKERRECHT & REGULIERUNG ==================== -->
+        <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-xl print-border page-break print-bg-light transition-colors hover:border-blue-900/50" id="section-1">
+            <div class="flex items-center gap-3 text-blue-400 font-bold text-xl sm:text-2xl mb-8 border-b border-slate-800 pb-4">
+                <i class="fa-solid fa-scale-balanced text-2xl"></i> 
+                <span>TEIL I: RECHTSNORMEN, VÖLKERRECHT & DIGITALE SOUVERÄNITÄT</span>
+            </div>
+
+            <div class="space-y-6 text-slate-300 print-text-dark text-sm leading-relaxed">
+                <p class="text-slate-400 mb-6 text-base">
+                    Die informationelle Selbstbestimmung sowie der Schutz kritischer staatlicher und unternehmerischer Infrastrukturen (KRITIS) bedingen ein regulatorisches Zero-Trust-Paradigma gegenüber hochkomplexen Softwaresystemen.
+                </p>
+
+                <div class="bg-slate-950/70 p-6 rounded-xl border border-slate-800 print-border relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-blue-500"></div>
+                    <h3 class="font-bold text-slate-100 print-text-dark text-lg mb-3 flex items-center gap-2">
+                        <i class="fa-solid fa-globe text-blue-500"></i> 1.1 Territorialprinzip und staatlicher Autorisierungszwang
+                    </h3>
+                    <p class="text-slate-400 print-text-dark mb-4">
+                        Im Zuge der voranschreitenden Automatisierung digitaler Arbeitsprozesse ist der Erhalt der staatlichen und individuellen Datenhoheit ein unumstößlicher Grundpfeiler der nationalen Sicherheit. Softwarelösungen, große Sprachmodelle (LLMs), Chatbots und autonome KI-Agenten dürfen unter keinen Umständen unangemeldet, unkontrolliert oder netzwerkoffen operieren.
+                    </p>
+                    <p class="text-slate-400 print-text-dark">
+                        Vor jeglicher Bereitstellung in einem Wirknetz (Produktion) erfordert jedes informationstechnische Werkzeug eine staatlich verifizierte Freigabe. Diese Freigabe wird durch die zwingende Integration eines dynamisch rotierenden staatlichen Zertifikatsschlüssels (Governance-Key) direkt auf Hardware-, Kernel- und Applikationsebene erzwungen.
+                    </p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div class="bg-slate-950/50 p-6 rounded-xl border border-slate-800 hover:bg-slate-950/80 transition-colors print-border">
+                        <h4 class="font-bold text-amber-400 text-sm flex items-center gap-2 border-b border-slate-800 pb-3 mb-3 uppercase tracking-wider">
+                            <i class="fa-solid fa-gavel text-lg"></i> Internationales Recht & Souveränität
+                        </h4>
+                        <p class="text-slate-400 print-text-dark text-xs sm:text-sm leading-relaxed mb-3">
+                            Einhaltung des Völkergewohnheitsrechts bezüglich digitaler territorialer Integrität. Striktes Verbot und Verhinderung unbefugten extraterritorialen Datenabflusses (Egress) durch ausländische Instanzen, Cloud-Provider oder nicht-staatliche APT-Akteure.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">UN-Resolution 73/27</span>
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">ISO/IEC 27001</span>
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">BSI-Grundschutz IT-Gr.</span>
+                        </div>
+                    </div>
+
+                    <div class="bg-slate-950/50 p-6 rounded-xl border border-slate-800 hover:bg-slate-950/80 transition-colors print-border">
+                        <h4 class="font-bold text-emerald-400 text-sm flex items-center gap-2 border-b border-slate-800 pb-3 mb-3 uppercase tracking-wider">
+                            <i class="fa-solid fa-user-shield text-lg"></i> EU AI Act & DSGVO-Mandate
+                        </h4>
+                        <p class="text-slate-400 print-text-dark text-xs sm:text-sm leading-relaxed mb-3">
+                            Hardwaregestützte Garantie von "Privacy by Design". Strikte Einhaltung der Vorgaben des EU AI Act (Art. 14: Menschliche Aufsicht) für Hochrisiko-KI-Systeme. Automatisierte Agenten erfordern lückenlose Audit-Trails für jede autonome Entscheidung.
+                        </p>
+                        <div class="flex flex-wrap gap-2 mt-4">
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">DSGVO Art. 25 & 32</span>
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">EU AI Act (Annex IV)</span>
+                            <span class="px-2 py-1 bg-slate-900 rounded border border-slate-700 text-[10px] font-mono text-slate-400">NIS-2 Direktive</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-red-950/20 p-6 rounded-xl border border-red-900/30 print-border relative overflow-hidden">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-red-500"></div>
+                    <h4 class="font-bold text-red-400 text-base flex items-center gap-2 mb-2">
+                        <i class="fa-solid fa-triangle-exclamation"></i> 1.2 Sanktionsmechanismen & Strafrechtliche Verfolgung
+                    </h4>
+                    <p class="text-slate-400 print-text-dark text-sm leading-relaxed">
+                        Die Umgehung der staatlichen Schlüsselarchitektur, die Manipulation von Telemetrie-Schnittstellen oder die Bereitstellung unlizenzierter KI-Modelle wird als Gefährdung der informationellen Infrastruktur gewertet. Zuwiderhandlungen führen zur sofortigen Netz-Isolation der betroffenen ASN (Autonomous System Number) sowie strafrechtlicher Verfolgung der verantwortlichen Organe nach dem nationalen Cybersicherheitsgesetz.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SEKTION 2: HARDWARE- & BIOS-LEVEL SECURITY PIPELINE ==================== -->
+        <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-xl print-border page-break print-bg-light transition-colors hover:border-emerald-900/30" id="section-2">
+            <div class="flex items-center gap-3 text-emerald-500 font-bold text-xl sm:text-2xl mb-8 border-b border-slate-800 pb-4">
+                <i class="fa-solid fa-microchip text-2xl"></i> 
+                <span>TEIL II: HARDWARE-, BIOS- & KERNEL-SECURITY PIPELINE</span>
+            </div>
+
+            <div class="space-y-6">
+                <p class="text-slate-300 print-text-dark text-sm leading-relaxed">
+                    Softwarebasierte Sicherheitsmechanismen sind kompromittierbar. Daher wird eine tiefgreifende, hardwarenahe Zertifizierungskette ("Hardware Root-of-Trust") als zwingender Standard etabliert. Diese unterbindet die Ausführung unlizenzierter oder modifizierter Softwareumgebungen (insbesondere Container-Laufzeiten für KI-Modelle) noch vor der Initialisierung des Betriebssystems.
+                </p>
+
+                <div class="overflow-x-auto rounded-xl border border-slate-700/80 shadow-lg">
+                    <table class="w-full text-left text-sm text-slate-300 border-collapse print-border">
+                        <thead class="bg-slate-950 text-slate-400 uppercase font-mono text-[10px] tracking-wider print-bg-light border-b border-slate-700">
+                            <tr>
+                                <th class="p-4 py-5 font-semibold">Architektur-Schicht</th>
+                                <th class="p-4 py-5 font-semibold">Technische Spezifikation & Funktionsweise</th>
+                                <th class="p-4 py-5 font-semibold">Standard / Krypto-Protokoll</th>
+                                <th class="p-4 py-5 font-semibold text-center">Integritäts-Status</th>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-slate-800/80 bg-slate-900/40 print-bg-light">
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="p-4 font-bold text-slate-100 print-text-dark whitespace-nowrap"><i class="fa-solid fa-server text-blue-500 mr-2"></i> L0: Hardware Root</td>
+                                <td class="p-4 text-slate-400 print-text-dark text-xs leading-relaxed">TPM 2.0 / HSM-Verankerung zur sicheren Speicherung privater staatlicher Freigabeschlüssel. Unveränderliche kryptografische Bindung des Bootloaders.</td>
+                                <td class="p-4 font-mono text-[11px] text-emerald-400 print-text-dark">RSA-8192 / ECC P-521</td>
+                                <td class="p-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/30 tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse"></span> VERIFIZIERT</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="p-4 font-bold text-slate-100 print-text-dark whitespace-nowrap"><i class="fa-solid fa-microchip text-blue-500 mr-2"></i> L1: Secure Enclaves</td>
+                                <td class="p-4 text-slate-400 print-text-dark text-xs leading-relaxed">Speicherkapselung. Lauffähige KI-Modelle und deren Gewichte (Weights) werden ausschließlich im verschlüsselten RAM ausgeführt. Kein Plaintext-Dumping möglich.</td>
+                                <td class="p-4 font-mono text-[11px] text-emerald-400 print-text-dark">Intel SGX / AMD SEV-SNP</td>
+                                <td class="p-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/30 tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> AKTIV</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="p-4 font-bold text-slate-100 print-text-dark whitespace-nowrap"><i class="fa-solid fa-network-wired text-blue-500 mr-2"></i> L2: PQC Network</td>
+                                <td class="p-4 text-slate-400 print-text-dark text-xs leading-relaxed">Quantenresistente Ende-zu-Ende Verschlüsselung aller In-Transit-Kommunikation zwischen verteilten Agenten-Knoten und staatlichen Audit-Servern.</td>
+                                <td class="p-4 font-mono text-[11px] text-amber-400 print-text-dark">Kyber (ML-KEM) / Dilithium</td>
+                                <td class="p-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-amber-500/10 text-amber-400 text-[10px] font-bold border border-amber-500/30 tracking-widest">MANDATORISCH</span>
+                                </td>
+                            </tr>
+                            <tr class="hover:bg-slate-800/30 transition-colors">
+                                <td class="p-4 font-bold text-slate-100 print-text-dark whitespace-nowrap"><i class="fa-solid fa-eye-slash text-blue-500 mr-2"></i> L3: Zero-Knowledge</td>
+                                <td class="p-4 text-slate-400 print-text-dark text-xs leading-relaxed">Telemetrie-Entkopplung: Systemische kryptografische Trennung von inhaltlichen Anwendungsdaten und operativen Audit-Logs.</td>
+                                <td class="p-4 font-mono text-[11px] text-emerald-400 print-text-dark">zk-SNARKs / Homomorph</td>
+                                <td class="p-4 text-center">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-emerald-500/10 text-emerald-400 text-[10px] font-bold border border-emerald-500/30 tracking-widest"><span class="w-1.5 h-1.5 rounded-full bg-emerald-400"></span> ZERTIFIZIERT</span>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SEKTION 3: EINKESSELUNG VON KI-AGENTEN & CHATBOTS ==================== -->
+        <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-xl print-border page-break print-bg-light transition-colors hover:border-indigo-900/50" id="section-3">
+            <div class="flex items-center gap-3 text-indigo-400 font-bold text-xl sm:text-2xl mb-8 border-b border-slate-800 pb-4">
+                <i class="fa-solid fa-robot text-2xl"></i> 
+                <span>TEIL III: EINKESSELUNG, COGNITIVE FIREWALLS & AGENTIC CONTROL</span>
+            </div>
+
+            <div class="space-y-6 text-sm">
+                <p class="text-slate-300 print-text-dark leading-relaxed mb-6">
+                    Um zu verhindern, dass große Sprachmodelle (LLMs), multimodale KI-Agenten oder Automatisierungs-Bots eigenständig Daten exfiltrieren (Data Leakage) oder feindselige Aktionen in Wirknetzen durchführen ("Letale Autonomie"), greift eine dedizierte, tiefenwirksame Kontrollarchitektur ("Einkesselung").
+                </p>
+
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                    <!-- Sandbox -->
+                    <div class="bg-slate-950/60 p-6 rounded-xl border border-slate-700/50 hover:border-indigo-500/40 transition-colors print-border group relative overflow-hidden">
+                        <div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity"><i class="fa-solid fa-box text-8xl text-indigo-500"></i></div>
+                        <h3 class="font-bold text-indigo-400 text-base flex items-center gap-2 border-b border-slate-800 pb-3 mb-4">
+                            <i class="fa-solid fa-box-archive"></i> 3.1 Air-Gapped Sandbox & Boundary
+                        </h3>
+                        <p class="text-slate-400 print-text-dark text-xs sm:text-sm leading-relaxed mb-4">
+                            Autonome Agenten operieren zwingend in flüchtigen, virtuellen Sandbox-Containern. Jeglicher Shell-Zugriff, Dateisystem-Escape oder direkte Socket-Bindung an das Host-System ist kernel-seitig durch eBPF-Filter blockiert.
+                        </p>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300 print-text-dark">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-shield-halved text-indigo-500 mt-1"></i>
+                                <span><b>CPU/GPU-Drosselung (Cgroups v2):</b> Strikte Ressourcenlimitierung zur Prävention von Denial-of-Service- und Fork-Bomb-Szenarien durch entgleiste LLM-Instanzen.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-network-wired text-indigo-500 mt-1"></i>
+                                <span><b>Egress-Proxy-Zwang:</b> Kein Agent darf direkt HTTP/TCP nach außen sprechen; alles wird durch eine staatliche Deep-Packet-Inspection-Firewall geroutet.</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Cognitive Firewall -->
+                    <div class="bg-slate-950/60 p-6 rounded-xl border border-slate-700/50 hover:border-amber-500/40 transition-colors print-border group relative overflow-hidden">
+                        <div class="absolute right-0 top-0 opacity-5 group-hover:opacity-10 transition-opacity"><i class="fa-solid fa-brain text-8xl text-amber-500"></i></div>
+                        <h3 class="font-bold text-amber-400 text-base flex items-center gap-2 border-b border-slate-800 pb-3 mb-4">
+                            <i class="fa-solid fa-brain"></i> 3.2 Cognitive Firewalls & Prompt DLP
+                        </h3>
+                        <p class="text-slate-400 print-text-dark text-xs sm:text-sm leading-relaxed mb-4">
+                            Nicht nur Netzwerkpakete, sondern die *Semantik* der Ein- und Ausgaben wird in Echtzeit überwacht (Semantic Data Loss Prevention).
+                        </p>
+                        <ul class="space-y-3 text-xs sm:text-sm text-slate-300 print-text-dark">
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-filter text-amber-500 mt-1"></i>
+                                <span><b>Prompt-Injection Detection:</b> Ein vorgelagertes, isoliertes Guardrail-Modell analysiert Prompts auf Jailbreak-Versuche, Privilege Escalation oder System-Manipulation, bevor das Haupt-LLM den Request erhält.</span>
+                            </li>
+                            <li class="flex items-start gap-3">
+                                <i class="fa-solid fa-eye text-amber-500 mt-1"></i>
+                                <span><b>PII & Source-Code Blocking:</b> Automatisches Maskieren von sensiblen Personendaten (PII), API-Schlüsseln oder proprietärem Quellcode im Output-Stream des Modells.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="bg-indigo-950/20 p-6 rounded-xl border border-indigo-900/30 print-border relative overflow-hidden mt-6">
+                    <div class="absolute left-0 top-0 bottom-0 w-1 bg-indigo-500"></div>
+                    <h4 class="font-bold text-indigo-400 text-base flex items-center gap-2 mb-3">
+                        <i class="fa-solid fa-rotate-left"></i> 3.3 Agentic Loop Breakers (Endlosschleifen-Intervention)
+                    </h4>
+                    <p class="text-slate-400 print-text-dark text-sm leading-relaxed">
+                        Agenten, die rekursives Planing (z.B. ReAct, AutoGPT-Derivate) nutzen, müssen mit einem kryptografisch signierten Token-Budget und "Max-Iteration-Limits" versehen werden. Erreicht ein Agenten-Loop einen bestimmten Schwellenwert ohne menschlichen Eingriff (Human-in-the-Loop Freigabe), wird der Prozess zwangsterminiert (SIGKILL) und der Memory-Status zur forensischen Analyse eingefroren.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SEKTION 4: NOTFALL-PROTOKOLLE ==================== -->
+        <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-xl print-border page-break print-bg-light transition-colors hover:border-red-900/50" id="section-4">
+            <div class="flex items-center gap-3 text-red-500 font-bold text-xl sm:text-2xl mb-8 border-b border-slate-800 pb-4">
+                <i class="fa-solid fa-biohazard text-2xl animate-pulse"></i> 
+                <span>TEIL IV: NOTFALL-PROTOKOLLE, KILL-SWITCHES & TELEMETRIE</span>
+            </div>
+
+            <div class="space-y-6 text-sm">
+                <p class="text-slate-300 print-text-dark leading-relaxed">
+                    Für den Fall einer massiven Kompromittierung, Ausbreitung bösartiger KI-Vektoren oder bei Abzug der staatlichen Zertifizierung verfügt das Framework über unumkehrbare Protokolle zur sofortigen Neutralisierung der betroffenen Instanzen.
+                </p>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <div class="bg-red-950/20 border border-red-900/50 p-6 rounded-xl flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-red-900/30 flex items-center justify-center text-red-500 text-3xl mb-4 border border-red-500/50 shadow-[0_0_15px_rgba(239,68,68,0.3)]">
+                            <i class="fa-solid fa-power-off"></i>
+                        </div>
+                        <h4 class="text-slate-100 font-bold mb-2">Hardware Kill-Switch</h4>
+                        <p class="text-xs text-slate-400">TPM-basierter Zertifikats-Entzug. Führt zur sofortigen, physischen Trennung des RAM-Zugriffs für Modell-Laufzeiten. System weigert sich auf Kernel-Ebene, die GPU anzusteuern.</p>
+                    </div>
+
+                    <div class="bg-amber-950/20 border border-amber-900/50 p-6 rounded-xl flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-amber-900/30 flex items-center justify-center text-amber-500 text-3xl mb-4 border border-amber-500/50">
+                            <i class="fa-solid fa-tower-broadcast"></i>
+                        </div>
+                        <h4 class="text-slate-100 font-bold mb-2">State-Alert Routing</h4>
+                        <p class="text-xs text-slate-400">Bei Detektion feindseliger Model-Injections wird sofort ein verschlüsseltes Telemetrie-Paket (Out-of-Band) an das staatliche Cyber-Abwehrzentrum gesendet.</p>
+                    </div>
+
+                    <div class="bg-blue-950/20 border border-blue-900/50 p-6 rounded-xl flex flex-col items-center text-center">
+                        <div class="w-16 h-16 rounded-full bg-blue-900/30 flex items-center justify-center text-blue-500 text-3xl mb-4 border border-blue-500/50">
+                            <i class="fa-solid fa-bomb"></i>
+                        </div>
+                        <h4 class="text-slate-100 font-bold mb-2">Anti-Logic-Bombing</h4>
+                        <p class="text-xs text-slate-400">Automatisierte Erkennung von verschleiertem, schädlichem Code, der von KI-Agenten in Repositories committed wird. Automatisiertes Rollback und Quarantäne.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ==================== SEKTION 5: COMPLIANCE AUDIT & SIGNATUR-FORMULAR ==================== -->
+        <div class="bg-slate-900/80 backdrop-blur-sm border border-slate-800 rounded-2xl p-6 sm:p-10 shadow-2xl print-border page-break print-bg-light" id="section-5">
+            <div class="flex items-center justify-between border-b border-slate-800 pb-4 mb-8">
+                <div class="flex items-center gap-3 text-slate-100 font-bold text-xl sm:text-2xl">
+                    <i class="fa-solid fa-file-signature text-blue-500 text-2xl"></i> 
+                    <span>TEIL V: DOKUMENTATION & AUDIT-FREIGABE</span>
+                </div>
+                <div class="text-[10px] text-slate-500 font-mono uppercase tracking-widest hidden sm:block">
+                    Formular-ID: AUDIT-REQ-99X
+                </div>
+            </div>
+
+            <form id="audit-form" class="space-y-6 text-sm" onsubmit="event.preventDefault();">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block text-slate-400 print-text-dark mb-1.5 font-semibold text-xs uppercase tracking-wider">Software / Tool Name & Version</label>
+                        <input type="text" value="Enterprise Sovereign AI Agent System v7.0.1" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 font-mono print-border print-bg-light print-text-dark transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 print-text-dark mb-1.5 font-semibold text-xs uppercase tracking-wider">Betreibende Organisation / Provider</label>
+                        <input type="text" value="GovSec Sovereign Cloud Infrastructure GmbH" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 print-border print-bg-light print-text-dark transition-all">
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 print-text-dark mb-1.5 font-semibold text-xs uppercase tracking-wider">Geografischer Hosting-Standort (Territorialprinzip)</label>
+                        <select class="w-full bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 text-slate-200 focus:outline-none focus:border-blue-500 print-border print-bg-light print-text-dark">
+                            <option>DE-FRA-1 (EU-Souveränitätszone)</option>
+                            <option>DE-BER-2 (Regierungsnetzwerk)</option>
+                            <option disabled>US-EAST-1 (Gesperrt wegen Data-Act)</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <label class="block text-slate-400 print-text-dark mb-1.5 font-semibold text-xs uppercase tracking-wider">Status der Hardware-Key-Pipeline</label>
+                        <select class="w-full bg-emerald-950/20 border border-emerald-900/50 rounded-lg p-3 text-emerald-400 font-bold focus:outline-none focus:border-emerald-500 print-border print-bg-light print-text-dark">
+                            <option>✓ GENEHMIGT - Zero-Trust Token Aktiv</option>
+                            <option>⚠ IN PRÜFUNG - Sandbox Einschränkungen Aktiv</option>
+                            <option>✗ GESPERRT - Hardware Root-of-Trust fehlgeschlagen</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Checkbox Grid for Compliance Details -->
+                <div class="bg-slate-950/50 border border-slate-800 rounded-xl p-5 mt-6 print-border">
+                    <label class="block text-slate-400 print-text-dark mb-4 font-semibold text-xs uppercase tracking-wider border-b border-slate-800 pb-2">Mandatorische Compliance-Prüfungen (Pre-Flight Checks)</label>
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" checked class="w-4 h-4 rounded border-slate-600 text-blue-600 focus:ring-blue-500 focus:ring-2 bg-slate-800 accent-blue-500">
+                            <span class="text-slate-300 text-xs group-hover:text-white transition-colors">Cognitive Firewall / Guardrails aktiv</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" checked class="w-4 h-4 rounded border-slate-600 text-blue-600 focus:ring-blue-500 focus:ring-2 bg-slate-800 accent-blue-500">
+                            <span class="text-slate-300 text-xs group-hover:text-white transition-colors">Post-Quantum (Kyber) In-Transit Encryption</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" checked class="w-4 h-4 rounded border-slate-600 text-blue-600 focus:ring-blue-500 focus:ring-2 bg-slate-800 accent-blue-500">
+                            <span class="text-slate-300 text-xs group-hover:text-white transition-colors">Agentic Loop Breaker konfiguriert</span>
+                        </label>
+                        <label class="flex items-center gap-3 cursor-pointer group">
+                            <input type="checkbox" checked class="w-4 h-4 rounded border-slate-600 text-blue-600 focus:ring-blue-500 focus:ring-2 bg-slate-800 accent-blue-500">
+                            <span class="text-slate-300 text-xs group-hover:text-white transition-colors">Semantic DLP gegen Source-Code Leakage</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block text-slate-400 print-text-dark mb-1.5 font-semibold text-xs uppercase tracking-wider">Zusatzbestimmungen & Audit-Log Vermerk</label>
+                    <textarea rows="3" class="w-full bg-slate-950/80 border border-slate-700/80 rounded-lg p-3 text-slate-300 focus:outline-none focus:border-blue-500 leading-relaxed print-border print-bg-light print-text-dark text-xs font-mono">Das vorliegende Multi-Agenten-System erfüllt vollumfänglich die strikten Bedingungen der staatlichen Sicherheits-Pipeline Rev-7. Sämtliche Agenten-Instanzen sind in Intel SGX Enclaves isoliert. Egress-Traffic wird via TLS 1.3 + ML-KEM durch die zentrale Firewall geroutet. Keine Lese-/Schreibzugriffe auf das Host-OS möglich.</textarea>
+                </div>
+            </form>
+
+            <!-- FOOTER SIGNATURE BLOCK -->
+            <div class="border-t border-slate-800 pt-8 mt-10 grid grid-cols-1 sm:grid-cols-2 gap-8 items-end">
+                <div>
+                    <div class="text-[10px] text-slate-500 print-text-dark mb-3 uppercase tracking-widest font-bold">Autorisierung & Dokumentensignatur</div>
+                    <div class="border-b-2 border-slate-700 pb-2 font-mono text-slate-200 print-text-dark text-sm flex items-center justify-between">
+                        <span>/SIGNED/ Chief Security Auditor & KI-Beauftragter</span>
+                        <i class="fa-solid fa-signature text-blue-400 text-xl"></i>
+                    </div>
+                    <div class="text-[10px] text-slate-500 print-text-dark mt-2 flex justify-between">
+                        <span>Zertifikats-ID: #8849-AF-2026-GOV-SEC-MULTI-LAYER</span>
+                        <span class="text-blue-500/70 font-mono">Valid Until: 2027-12-31</span>
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center sm:items-end justify-center">
+                    <div class="w-40 h-40 rounded-full border-4 border-dashed border-emerald-500/40 p-2 flex items-center justify-center text-center relative rotate-[-12deg] group cursor-default hover:border-emerald-400/80 transition-colors duration-500">
+                        <!-- Outer rotating ring purely visual -->
+                        <div class="absolute inset-0 border border-emerald-500/20 rounded-full animate-[spin_10s_linear_infinite] group-hover:border-emerald-500/50"></div>
+                        
+                        <div class="w-full h-full rounded-full border-2 border-emerald-500/80 flex flex-col items-center justify-center p-2 bg-emerald-950/30 shadow-[0_0_30px_rgba(16,185,129,0.15)] group-hover:shadow-[0_0_40px_rgba(16,185,129,0.3)] transition-shadow duration-500">
+                            <i class="fa-solid fa-shield-cat text-emerald-400 text-3xl mb-1"></i>
+                            <span class="text-[8px] font-bold text-emerald-500 tracking-tighter uppercase mb-0.5">Governmental</span>
+                            <span class="text-[14px] font-extrabold text-white print-text-dark tracking-widest uppercase drop-shadow-md">APPROVED</span>
+                            <span class="text-[7px] text-emerald-400/80 font-mono mt-1">DATENHOHEIT 2026</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- JavaScript for Hashing & UI Actions -->
+    <script>
+        function generateSHA512(str) {
+            // Simplified mockup for a long hash string mimicking SHA-512 visually
+            let hash = 0;
+            let result = '';
+            const chars = '0123456789ABCDEF';
+            for (let i = 0; i < str.length; i++) {
+                hash = (hash << 5) - hash + str.charCodeAt(i);
+                hash |= 0;
+            }
+            // Generate a 128 character hex string (512 bits)
+            for (let i = 0; i < 128; i++) {
+                let charCode = Math.abs(Math.sin(hash + i) * 16) | 0;
+                result += chars[charCode % 16];
+            }
+            return result;
+        }
+
+        function generateNewHash() {
+            const btn = document.querySelector('button[onclick="generateNewHash()"] i');
+            btn.classList.add('fa-spin');
+            
+            setTimeout(() => {
+                const timestamp = new Date().toISOString();
+                const randomSeed = Math.random().toString(36).substring(2) + timestamp;
+                const fullHash = generateSHA512(randomSeed);
+                
+                // Animate text reveal
+                const hashElement = document.getElementById('sha256-hash');
+                hashElement.style.opacity = '0';
+                
+                setTimeout(() => {
+                    hashElement.innerText = fullHash;
+                    hashElement.style.opacity = '1';
+                    
+                    document.getElementById('hash-timestamp').innerText = 'TIMESTAMP: ' + timestamp.replace('T', ' ').substring(0, 19) + ' UTC';
+                    document.getElementById('ssh-fingerprint').innerText = 'SHA512:' + fullHash.substring(0, 48) + '...';
+                    document.getElementById('gov-key-id').innerText = 'GOV-KEY-' + new Date().getFullYear() + '-' + fullHash.substring(0, 8).toUpperCase() + '-AUTH';
+                    
+                    btn.classList.remove('fa-spin');
+                    
+                    // Show small notification
+                    showToast('Key-Pipeline erfolgreich resynchronisiert', 'blue');
+                }, 300);
+            }, 600);
+        }
+
+        function copyHash() {
+            const hashText = document.getElementById('sha256-hash').innerText;
+            navigator.clipboard.writeText(hashText).then(() => {
+                showToast('Zertifikats-Hash in die Zwischenablage kopiert!', 'emerald');
+            });
+        }
+
+        function showToast(message, color) {
+            const toast = document.createElement('div');
+            const colorClass = color === 'emerald' ? 'bg-emerald-600/90 border-emerald-500' : 'bg-blue-600/90 border-blue-500';
+            const iconClass = color === 'emerald' ? 'fa-check-circle' : 'fa-info-circle';
+            
+            toast.className = `fixed bottom-6 right-6 ${colorClass} border text-white px-5 py-3 rounded-lg text-sm font-semibold shadow-2xl backdrop-blur-sm transition-all duration-300 transform translate-y-10 opacity-0 z-50 flex items-center gap-3`;
+            toast.innerHTML = `<i class="fa-solid ${iconClass} text-lg"></i> ${message}`;
+            
+            document.body.appendChild(toast);
+            
+            // Animate in
+            setTimeout(() => {
+                toast.classList.remove('translate-y-10', 'opacity-0');
+            }, 10);
+            
+            // Animate out
+            setTimeout(() => {
+                toast.classList.add('translate-y-10', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        window.onload = function() {
+            // Initial delay to simulate loading
+            setTimeout(generateNewHash, 400);
+        };
+    </script>
+</body>
+</html>

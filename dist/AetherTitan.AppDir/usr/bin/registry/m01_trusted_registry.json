@@ -1,0 +1,18 @@
+{
+  "id": "m01_trusted_registry",
+  "name": "M01: Trusted Module Registry & Loader",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 1,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "module-federation/core", "url": "https://github.com/module-federation/core"},
+    {"name": "originjs/vite-plugin-federation", "url": "https://github.com/originjs/vite-plugin-federation"},
+    {"name": "single-spa/single-spa", "url": "https://github.com/single-spa/single-spa"}
+  ],
+  "features": [
+    "Erweiterungen katalogisieren & Hash-Integrität erzwingen",
+    "Fail-Closed Gate bei unautorisierten Modulen",
+    "7-Stufen-Lifecycle von Entwurf bis Freigegeben"
+  ]
+}

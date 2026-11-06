@@ -1,0 +1,18 @@
+{
+  "id": "m05_ai_cost_router",
+  "name": "M05: AI Model, Cost & Router Gateway",
+  "version": "1.2.0",
+  "group": "13-Module Masterkonzept",
+  "category_index": 5,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "vercel/ai", "url": "https://github.com/vercel/ai"},
+    {"name": "langgenius/dify", "url": "https://github.com/langgenius/dify"},
+    {"name": "off-grid-ai/OGAD", "url": "https://github.com/off-grid-ai/OGAD"}
+  ],
+  "features": [
+    "Dynamisches Modell-Routing (Local Offline, CompactifAI EU, Mistral)",
+    "Token-Budget-Überwachung & Kostenoptimierung",
+    "DSGVO-Datenresidenz-Prüfung vor API-Dispatch"
+  ]
+}

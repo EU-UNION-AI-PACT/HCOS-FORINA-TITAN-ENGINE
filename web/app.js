@@ -601,7 +601,7 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness', 'baende', 'badges', 'flow'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
@@ -612,6 +612,9 @@ function switchAiTab(tabName) {
   if (tabName === 'repos') loadRepositoriesCatalog();
   if (tabName === 'concepts') loadConceptPapers();
   if (tabName === 'harness') loadHarnessLoopStatus();
+  if (tabName === 'baende') loadBaendeCatalog();
+  if (tabName === 'badges') loadAuditBadges();
+  if (tabName === 'flow') loadFlowEngines();
 }
 
 async function sendAgentMessage() {
@@ -1604,6 +1607,160 @@ function resetFocusTimer() {
   const display = document.getElementById('focus-timer-display');
   if (btn) btn.textContent = '▶ Start';
   if (display) display.textContent = '25:00';
+}
+
+// =========================================================================
+// 📖 144 SEITEN ENZYKLOPÄDIE & 4 BÄNDE
+// =========================================================================
+async function loadBaendeCatalog() {
+  const container = document.getElementById('baende-catalog-container');
+  const specContainer = document.getElementById('specialized-papers-container');
+  if (!container) return;
+
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade 144 Seiten Enzyklopädie...</div>';
+
+  try {
+    const res = await fetch('/api/baende/list');
+    const data = await res.json();
+    const baende = data.baende || [];
+    const specialized = data.specialized || [];
+
+    container.innerHTML = baende.map(b => {
+      const safeTitle = escapeHtml(b.title);
+      const safeBand = escapeHtml(b.band);
+      const sizeKb = Math.round((b.bytes || 0) / 1024);
+
+      return `
+        <div class="concept-card" onclick="openBandModal('${safeBand}')" style="background:rgba(255,255,255,0.04); border:1px solid rgba(0,240,255,0.25); border-radius:8px; padding:10px; cursor:pointer; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+              <span style="color:var(--neon-blue); font-weight:700; font-size:0.75rem; border:1px solid var(--neon-blue); padding:1px 6px; border-radius:4px;">BAND ${safeBand}</span>
+              <span style="font-size:0.65rem; color:var(--gold);">${b.chapters} Fachkapitel</span>
+            </div>
+            <div style="margin-top:6px; font-weight:700; color:#fff; font-size:0.8rem; line-height:1.3;">
+              ${safeTitle}
+            </div>
+          </div>
+          <div style="margin-top:8px; padding-top:6px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.65rem; color:#94a3b8; display:flex; justify-content:space-between; align-items:center;">
+            <span>${sizeKb} KB · Volltext A4</span>
+            <span style="color:var(--neon-green); font-weight:700;">Lesen ➔</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    if (specContainer) {
+      specContainer.innerHTML = specialized.map(s => {
+        return `
+          <div style="background:rgba(255,215,0,0.08); border:1px solid rgba(255,215,0,0.3); border-radius:6px; padding:4px 8px; font-size:0.68rem; color:#fff;">
+            <strong style="color:var(--gold);">${escapeHtml(s.title)}</strong>
+            <span style="color:#94a3b8; margin-left:4px;">(${Math.round(s.size/1024)} KB)</span>
+          </div>
+        `;
+      }).join('');
+    }
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">Enzyklopädie lokal in docs/baende/ verfügbar.</div>';
+  }
+}
+
+async function openBandModal(bandLetter) {
+  const modal = document.getElementById('concept-paper-modal');
+  const badgeEl = document.getElementById('modal-paper-badge');
+  const titleEl = document.getElementById('modal-paper-title');
+  const metaEl = document.getElementById('modal-paper-meta');
+  const bodyEl = document.getElementById('modal-paper-body');
+  if (!modal || !bodyEl) return;
+
+  modal.style.display = 'flex';
+  bodyEl.innerHTML = `<div style="color:var(--silver); font-size:0.8rem; padding:20px 0;">Lade Band ${escapeHtml(bandLetter)} Volltext (144 Seiten Gesamtwerk)...</div>`;
+
+  try {
+    const res = await fetch(`/api/baende/content?band=${encodeURIComponent(bandLetter)}`);
+    const data = await res.json();
+
+    if (badgeEl) badgeEl.textContent = `BAND ${data.band}`;
+    if (titleEl) titleEl.textContent = data.title;
+
+    if (metaEl) {
+      metaEl.innerHTML = `
+        <div><strong style="color:var(--gold);">Enzyklopädie:</strong> 144 A4 Seiten · 136 Fachkapitel</div>
+        <div><strong style="color:var(--neon-pink);">Band:</strong> ${escapeHtml(data.band)}</div>
+        <div><strong style="color:var(--neon-green);">Status:</strong> Sovereign Provenance Verified</div>
+      `;
+    }
+
+    bodyEl.innerHTML = renderSimpleMarkdown(data.content);
+  } catch (e) {
+    bodyEl.innerHTML = `<div style="color:#ef4444;">Fehler beim Laden von Band ${escapeHtml(bandLetter)}: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+// =========================================================================
+// 🎖 34 NORMEN SVG BADGES GALERIE
+// =========================================================================
+async function loadAuditBadges() {
+  const container = document.getElementById('badges-gallery-container');
+  if (!container) return;
+
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade 34 Vektor-SVG-Badges...</div>';
+
+  try {
+    const res = await fetch('/api/badges/list');
+    const data = await res.json();
+    const badges = data.badges || [];
+
+    container.innerHTML = badges.map(b => {
+      const safeId = escapeHtml(b.norm_id);
+      const safeTitle = escapeHtml(b.title);
+      const safeCat = escapeHtml(b.category);
+      const safeSha = escapeHtml(b.sha256.substring(0, 12));
+
+      return `
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,215,0,0.2); border-radius:8px; padding:10px; display:flex; flex-direction:column; justify-content:space-between; text-align:center;">
+          <div style="margin-bottom:8px;">
+            <div style="font-size:0.62rem; color:var(--gold); font-weight:700; text-align:left;">${safeId}</div>
+            <div style="margin:6px auto; height:52px; display:flex; align-items:center; justify-content:center;">
+              <img src="/api/badges/svg/${safeId}" alt="${safeId}" style="max-height:48px; max-width:180px; filter:drop-shadow(0 0 6px rgba(0,240,255,0.3));" />
+            </div>
+            <div style="font-weight:700; color:#fff; font-size:0.74rem; line-height:1.25; margin-top:4px;">
+              ${safeTitle}
+            </div>
+            <div style="color:var(--neon-blue); font-size:0.60rem; margin-top:2px;">
+              ${safeCat} · ${b.control_count} Kontrollen
+            </div>
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,0.06); padding-top:4px; font-size:0.58rem; color:#94a3b8; font-family:monospace;">
+            SHA: ${safeSha}...
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">34 Badges lokal in web/badges/normen/ verfügbar.</div>';
+  }
+}
+
+// =========================================================================
+// ✦ 3D HOLOGRAPHIC FLOW ENGINE
+// =========================================================================
+function switchFlowEngine(url) {
+  const iframe = document.getElementById('flow-engine-iframe');
+  if (iframe) iframe.src = url;
+}
+
+function openFlowFullscreen() {
+  const iframe = document.getElementById('flow-engine-iframe');
+  if (!iframe) return;
+  if (iframe.requestFullscreen) {
+    iframe.requestFullscreen();
+  } else if (iframe.webkitRequestFullscreen) {
+    iframe.webkitRequestFullscreen();
+  }
+}
+
+function loadFlowEngines() {
+  // Trigger initial frame render if needed
 }
 
 

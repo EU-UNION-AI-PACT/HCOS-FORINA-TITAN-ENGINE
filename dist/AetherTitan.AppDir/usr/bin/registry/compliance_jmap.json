@@ -1,0 +1,18 @@
+{
+  "id": "compliance_jmap",
+  "name": "Compliance, Audit-Engine & JMAP-Anbindung",
+  "version": "1.2.0",
+  "group": "Governance & Compliance",
+  "status": "active",
+  "open_source_repos": [
+    {"name": "Open Policy Agent", "url": "https://github.com/open-policy-agent/opa"},
+    {"name": "JMAP Client TS", "url": "https://github.com/audreyt/jmap-client-ts"},
+    {"name": "Stalwart Mail Server", "url": "https://github.com/stalwartlabs/mail-server"}
+  ],
+  "features": [
+    "EU-Audit- & Inspektoren-Portal mit transparenter Richtlinien-Pruefung",
+    "3 Originalitaets- & Werte-Badges (EU-Union, Original-Inhalt, Herzens-Güte)",
+    "Originalitaets-Pruefbutton fuer verifizierte Systemzertifikate",
+    "JMAP Partnerschafts-Request an world.banks.eyes.aether@globedynamicz.statesflowwishes.eu"
+  ]
+}

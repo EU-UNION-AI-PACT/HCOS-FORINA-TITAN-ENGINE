@@ -135,6 +135,12 @@ class ForinaTitanEngine:
                 else:
                     shutil.copy2(asset, dest)
 
+            # Copy subdirectories in web (e.g. flow, badges)
+            for sub_name in ["flow", "badges"]:
+                sub_src = self.web_dir / sub_name
+                if sub_src.exists():
+                    shutil.copytree(sub_src, self.dist_dir / sub_name, dirs_exist_ok=True)
+
             # Copy or generate registry in dist/registry
             dist_reg = self.dist_dir / "registry"
             dist_reg.mkdir(parents=True, exist_ok=True)
@@ -260,6 +266,8 @@ class ForinaTitanEngine:
             for f in self.dist_dir.glob("*"):
                 if f.is_file():
                     shutil.copy2(f, appdir_usr / f.name)
+                elif f.is_dir() and f.name != "AetherTitan.AppDir":
+                    shutil.copytree(f, appdir_usr / f.name, dirs_exist_ok=True)
             if (self.web_dir / "icon.svg").exists():
                 shutil.copy2(self.web_dir / "icon.svg", appdir / "hcos-titan.svg")
 

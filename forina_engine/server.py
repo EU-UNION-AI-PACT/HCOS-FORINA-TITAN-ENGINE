@@ -307,6 +307,91 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 11b. 144 SEITEN ENZYKLOPÄDIE — 4 BÄNDE & 136 KAPITEL
+        if parsed.path == "/api/baende/list":
+            suite = ConceptPaperSuite(self.project_root)
+            payload = {
+                "baende": suite.list_baende(),
+                "specialized": suite.list_specialized_papers(),
+                "total_chapters": 136
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/baende/content":
+            band_letter = query.get("band", ["A"])[0]
+            suite = ConceptPaperSuite(self.project_root)
+            data = suite.get_band_content(band_letter)
+            if not data:
+                self._set_json_headers(404)
+                self.wfile.write(json.dumps({"error": f"Band {band_letter} nicht gefunden"}).encode("utf-8"))
+                return
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(data, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 11c. 34 NORMEN SVG BADGES & REGULATORY AUDIT
+        if parsed.path == "/api/badges/list":
+            from forina_engine.audit_badges import AuditBadgeRegistry
+            reg = AuditBadgeRegistry(self.project_root)
+            payload = {
+                "summary": reg.get_summary(),
+                "badges": reg.list_badges()
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path.startswith("/api/badges/svg"):
+            from forina_engine.audit_badges import AuditBadgeRegistry
+            reg = AuditBadgeRegistry(self.project_root)
+            badge_id = query.get("id", [""])[0]
+            if not badge_id:
+                parts = parsed.path.strip("/").split("/")
+                if len(parts) >= 4:
+                    badge_id = parts[3]
+            svg_content = reg.get_badge_svg(badge_id) if badge_id else None
+            if not svg_content:
+                self._set_json_headers(404)
+                self.wfile.write(json.dumps({"error": f"Badge {badge_id} nicht gefunden"}).encode("utf-8"))
+                return
+            self.send_response(200)
+            self.send_header("Content-Type", "image/svg+xml; charset=utf-8")
+            self.send_header("Access-Control-Allow-Origin", "*")
+            self.end_headers()
+            self.wfile.write(svg_content.encode("utf-8"))
+            return
+
+        # 11d. INSTITUTIONAL FINANCE & CENTRAL BANKING
+        if parsed.path == "/api/finance/institutions":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            payload = {
+                "summary": fin_reg.get_summary(),
+                "central_banks": fin_reg.get_central_banks(),
+                "open_banking_providers": fin_reg.get_open_banking_providers(),
+                "iso20022_schemas": fin_reg.get_iso20022_message_schemas()
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 11e. 3D FLOW ENGINE VISUALISIERUNGEN
+        if parsed.path == "/api/flow/list":
+            flow_dir = self.project_root / "web" / "flow"
+            files = []
+            if flow_dir.exists():
+                for f in sorted(flow_dir.glob("*.html")):
+                    files.append({
+                        "name": f.name,
+                        "title": f.stem.replace("-", " ").title(),
+                        "url": f"/flow/{f.name}"
+                    })
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"flow_engines": files}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 12. AUTOMATED HARNESS LOOP
         if parsed.path == "/api/harness/status":
             engine = HarnessLoopEngine(self.project_root)

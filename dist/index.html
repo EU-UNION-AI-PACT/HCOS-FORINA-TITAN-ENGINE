@@ -224,6 +224,9 @@
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('gates')">🏛 13-Gates (G00-G12)</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--gold);" onclick="switchAiTab('concepts')">📜 34 Concept Papers (v2.0)</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-pink);" onclick="switchAiTab('harness')">🔄 Harness Loop</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-blue);" onclick="switchAiTab('baende')">📖 144 S. Enzyklopädie</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--gold);" onclick="switchAiTab('badges')">🎖 34 Normen Badges</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-pink);" onclick="switchAiTab('flow')">✦ 3D Flow Engine</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('skills')">📚 Skills</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 RAG</button>
@@ -459,6 +462,70 @@
             <!-- Dynamisch via loadHarnessLoopStatus() -->
           </div>
           <div id="harness-live-feedback" style="display:none; margin-top:8px; background:#070b12; border:1px solid var(--neon-pink); border-radius:6px; padding:8px; font-size:0.72rem; color:#cbd5e1;"></div>
+        </div>
+
+        <!-- TAB 11: 144 SEITEN ENZYKLOPÄDIE (BÄNDE A-D & 136 KAPITEL) -->
+        <div id="ai-tab-baende" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--neon-blue);">📖 HCOS FORINA TITAN — 144 Seiten Enzyklopädie (4 Bände & 136 Kapitel)</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Vollständiges Gesamtwerk: Band A (Architektur/IA/XD), Band B (Glossar/APIs), Band C (Blockchain/Web3/Finance), Band D (Normen & Abzeichen)
+              </p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem;" onclick="loadBaendeCatalog()">↻ Aktualisieren</button>
+            </div>
+          </div>
+          <div id="baende-catalog-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:10px; margin-top:6px;">
+            <!-- Dynamisch via loadBaendeCatalog() -->
+          </div>
+          <div style="margin-top:12px; border-top:1px solid rgba(255,255,255,0.08); padding-top:8px;">
+            <strong style="font-size:0.76rem; color:var(--gold);">⚡ Spezialisierte Concept Papers:</strong>
+            <div id="specialized-papers-container" style="display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;">
+              <!-- Dynamisch via loadBaendeCatalog() -->
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 12: 34 NORMEN SVG BADGES GALERIE -->
+        <div id="ai-tab-badges" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--gold);">🎖 34 Normen & Regulatory Badges (Vektor-SVG Integritätsgalerie)</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Kryptografisch beglaubigte Vektor-Abzeichen für EU-Recht (DSGVO, DORA, NIS2, AI Act), ISO (27001, 9001, 20000), BSI IT-Grundschutz & TISAX
+              </p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem;" onclick="loadAuditBadges()">↻ Alle 34 Badges prüfen</button>
+            </div>
+          </div>
+          <div id="badges-gallery-container" style="display:grid; grid-template-columns:repeat(auto-fill, minmax(220px, 1fr)); gap:10px; max-height:340px; overflow-y:auto; padding-right:4px;">
+            <!-- Dynamisch via loadAuditBadges() -->
+          </div>
+        </div>
+
+        <!-- TAB 13: 3D HOLOGRAPHIC FLOW ENGINE -->
+        <div id="ai-tab-flow" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--neon-pink);">✦ 3D Holographic Flow Engine & Quantum Datacenter MapGraph ✦</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Interaktives WebGL Event-Netzwerk, Spektralpartikel & Staatliches Sicherheits-Cockpit
+              </p>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+              <button class="titan-btn" style="padding:3px 8px; font-size:0.72rem;" onclick="switchFlowEngine('/flow/flow-engine-3d.html')">3D Network</button>
+              <button class="titan-btn" style="padding:3px 8px; font-size:0.72rem;" onclick="switchFlowEngine('/flow/flow-engine-network.html')">MapGraph</button>
+              <button class="titan-btn" style="padding:3px 8px; font-size:0.72rem;" onclick="switchFlowEngine('/flow/sparkle-spectral.html')">Spektral-Shader</button>
+              <button class="titan-btn" style="padding:3px 8px; font-size:0.72rem; border-color:var(--neon-green);" onclick="switchFlowEngine('/flow/sicherheits_compliance_framework.html')">Staatl. Compliance Cockpit</button>
+              <button class="titan-btn" style="padding:3px 8px; font-size:0.72rem; border-color:var(--gold);" onclick="openFlowFullscreen()">⛶ Vollbild</button>
+            </div>
+          </div>
+          <div style="background:#05070e; border:1px solid rgba(0,240,255,0.3); border-radius:8px; overflow:hidden; height:380px; position:relative;">
+            <iframe id="flow-engine-iframe" src="/flow/flow-engine-3d.html" style="width:100%; height:100%; border:none;" title="3D Flow Engine"></iframe>
+          </div>
         </div>
       </section>
 

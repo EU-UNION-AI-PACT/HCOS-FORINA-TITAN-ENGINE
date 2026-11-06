@@ -1,0 +1,856 @@
+[
+  {
+    "id": "NORM-001",
+    "name": "EU-DSGVO / GDPR (EU) 2016/679",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Rechtsgrundlage und Zweckbindung",
+      "Datenminimierung",
+      "Betroffenenrechte",
+      "TOMs",
+      "Auftragsverarbeitung",
+      "Löschfristen"
+    ],
+    "evidence_requests": [
+      "RoPA",
+      "Datenschutzhinweise",
+      "DPIA-Entscheidung",
+      "Consent-Receipt",
+      "Löschtest",
+      "Zugriffsprotokoll"
+    ]
+  },
+  {
+    "id": "NORM-002",
+    "name": "DORA Verordnung (EU) 2022/2554",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "ICT-Risikomanagement",
+      "Vorfallmanagement",
+      "Resilienztests",
+      "Drittparteirisiko",
+      "Governance",
+      "Informationsaustausch"
+    ],
+    "evidence_requests": [
+      "ICT-Asset-Register",
+      "kritische Dienstekette",
+      "Vorfallplan",
+      "Exit-Strategie",
+      "Testprotokoll",
+      "Dienstleisterverträge"
+    ]
+  },
+  {
+    "id": "NORM-003",
+    "name": "NIS2 Richtlinie (EU) 2022/2555",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Risikomanagement",
+      "Lieferkette",
+      "Incident Handling",
+      "Meldewege",
+      "Geschäftsleitung",
+      "BCM"
+    ],
+    "evidence_requests": [
+      "Anwendbarkeitsanalyse",
+      "Assetliste",
+      "Meldeplan",
+      "Lieferantenbeurteilungen",
+      "Awareness",
+      "Tests"
+    ]
+  },
+  {
+    "id": "NORM-004",
+    "name": "EU AI Act (EU) 2024/1689",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2024/1689",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Risikoklassifizierung",
+      "Verbotstatbestände",
+      "Transparenz",
+      "High-Risk-Prozesse wo anwendbar",
+      "menschliche Aufsicht",
+      "Dokumentation"
+    ],
+    "evidence_requests": [
+      "AI-Systeminventar",
+      "Use-Case-Factsheet",
+      "Risikoentscheidung",
+      "Daten-Governance",
+      "Testfälle",
+      "Nutzungsinformation"
+    ]
+  },
+  {
+    "id": "NORM-005",
+    "name": "Cyber Resilience Act (EU) 2024/2847",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Secure by Design",
+      "Schwachstellenmanagement",
+      "Herstellerpflichten",
+      "technische Dokumentation",
+      "Update- und Meldewege"
+    ],
+    "evidence_requests": [
+      "Produktklassifizierung",
+      "SBOM",
+      "Schwachstellenprozess",
+      "Sicherheitsupdates",
+      "technische Akte",
+      "Risikoanalyse"
+    ]
+  },
+  {
+    "id": "NORM-006",
+    "name": "MiCA Verordnung (EU) 2023/1114",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2023/1114/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Token-Klassifikation",
+      "Whitepaper",
+      "Emittentenpflichten",
+      "CASP-Lizenzstatus",
+      "Beschwerdeweg",
+      "Marktmissbrauchsschutz"
+    ],
+    "evidence_requests": [
+      "Token-Dossier",
+      "Registerauszug",
+      "Whitepaper-Referenz",
+      "Custody-Rechte",
+      "Compliance-Mapping",
+      "Freigabeprotokoll"
+    ]
+  },
+  {
+    "id": "NORM-007",
+    "name": "eIDAS 2 / EU Digital Identity (EU) 2024/1183",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2024/1183/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Identitätsbindung",
+      "Wallet-Vertrauensmodell",
+      "Verifizierbarkeit",
+      "Attributfreigabe",
+      "Widerruf",
+      "Interoperabilität"
+    ],
+    "evidence_requests": [
+      "DID-/VC-Profile",
+      "Vertrauensliste",
+      "Issuer-Evidence",
+      "Wallet-Tests",
+      "Signaturprüfung",
+      "Scope"
+    ]
+  },
+  {
+    "id": "NORM-008",
+    "name": "PSD2 Richtlinie (EU) 2015/2366",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/dir/2015/2366/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Starke Kundenauthentifizierung",
+      "Kundeneinwilligung",
+      "Schnittstellenrechte",
+      "Sicherheitsmaßnahmen",
+      "Providerrolle",
+      "Beschwerdeweg"
+    ],
+    "evidence_requests": [
+      "Consent-Scope",
+      "SCA-Test",
+      "Rollen-/Lizenzanalyse",
+      "Providervertrag",
+      "Access Log",
+      "Widerrufstest"
+    ]
+  },
+  {
+    "id": "NORM-009",
+    "name": "EU AML-Regelwerk / AMLR (EU) 2024/1624",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Kundensorgfalt",
+      "wirtschaftlich Berechtigte",
+      "Monitoring",
+      "Verdachtsmeldungen",
+      "Aufbewahrung",
+      "Kontrollen"
+    ],
+    "evidence_requests": [
+      "Produktrollenmatrix",
+      "AML-Policy",
+      "synthetische Screening-Fälle",
+      "Eskalationsprozess",
+      "Trainingsbeleg"
+    ]
+  },
+  {
+    "id": "NORM-010",
+    "name": "DLT-Pilotverordnung (EU) 2022/858",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2022/858/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Rechtliche Klassifikation",
+      "Betriebsmodell",
+      "DLT-Risiken",
+      "Marktinfrastruktur-Governance",
+      "Teilnehmerrechte",
+      "Exit"
+    ],
+    "evidence_requests": [
+      "DLT-Architektur",
+      "Zulassungspfad",
+      "Aufsichtsentscheid",
+      "Settlement-Finality-Matrix",
+      "Testnet-Protokoll"
+    ]
+  },
+  {
+    "id": "NORM-011",
+    "name": "European Accessibility Act (EU) 2019/882",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/dir/2019/882/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Bedienbarkeit",
+      "Verständlichkeit",
+      "Eingabehilfe",
+      "Dokumentation",
+      "Supportzugang",
+      "zugängliche Interaktion"
+    ],
+    "evidence_requests": [
+      "WCAG-Mapping",
+      "Tastaturtest",
+      "Screenreader-Test",
+      "Kontrastbericht",
+      "Fehlerbehebungsplan"
+    ]
+  },
+  {
+    "id": "NORM-012",
+    "name": "EU Data Act (EU) 2023/2854",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Datenzugangsrechte",
+      "Fairness",
+      "Portabilität",
+      "Schutz von Geschäftsgeheimnissen",
+      "Interoperabilität",
+      "Vertragspflichten"
+    ],
+    "evidence_requests": [
+      "Data Inventory",
+      "API-Export-Test",
+      "Data-Sharing-Kontrakt",
+      "Lösch-/Wechselplan",
+      "Jurisdiktionsanalyse"
+    ]
+  },
+  {
+    "id": "NORM-013",
+    "name": "Data Governance Act (EU) 2022/868",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2022/868/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Intermediary-Rollen",
+      "Zwecktrennung",
+      "organisatorische Unabhängigkeit",
+      "Vertrauen",
+      "Transparenz",
+      "Register"
+    ],
+    "evidence_requests": [
+      "Vermittlungsmodell",
+      "Data-Sharing-Katalog",
+      "Governance-Regeln",
+      "Anbieter-Status",
+      "Nutzungsbedingungen"
+    ]
+  },
+  {
+    "id": "NORM-014",
+    "name": "Digital Services Act (EU) 2022/2065",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2022/2065/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Kontaktstellen",
+      "Transparenz",
+      "Meldungsbearbeitung",
+      "Beschwerdewege",
+      "ggf. zusätzliche Plattformpflichten"
+    ],
+    "evidence_requests": [
+      "Serviceklassifizierung",
+      "Notice-and-Action-Prozess",
+      "Moderationsaudit",
+      "Berichtspflichtenentscheidung"
+    ]
+  },
+  {
+    "id": "NORM-015",
+    "name": "EU Taxonomy (EU) 2020/852 / ESG",
+    "type": "GESETZ",
+    "source": "https://eur-lex.europa.eu/eli/reg/2020/852/oj",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Technische Bewertung",
+      "Tätigkeitsklassifikation",
+      "DNSH",
+      "Mindestschutz",
+      "Nachweise",
+      "Datenqualität"
+    ],
+    "evidence_requests": [
+      "Asset-Taxonomy Map",
+      "Prüfmethoden",
+      "Quellen-Datum",
+      "Nichtanwendbarkeitsentscheidung",
+      "Review"
+    ]
+  },
+  {
+    "id": "NORM-016",
+    "name": "ISO/IEC 27001:2022 Informationssicherheitsmanagement",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/27001",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Kontext und Risiken",
+      "ISMS-Führung",
+      "Anwendbarkeitserklärung",
+      "Maßnahmen",
+      "Audits",
+      "kontinuierliche Verbesserung"
+    ],
+    "evidence_requests": [
+      "Scope Statement",
+      "Risk Register",
+      "SoA",
+      "interne Audits",
+      "Management Review",
+      "Wirksamkeitsbelege"
+    ]
+  },
+  {
+    "id": "NORM-017",
+    "name": "ISO/IEC 27002:2022 Security Controls",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/75652.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Organisatorische Kontrollen",
+      "personelle Kontrollen",
+      "physische Kontrollen",
+      "technische Kontrollen",
+      "Wirksamkeit"
+    ],
+    "evidence_requests": [
+      "Control Catalogue",
+      "Maßnahmenbelege",
+      "Verantwortliche",
+      "Audit-Proben",
+      "Gap-Analyse"
+    ]
+  },
+  {
+    "id": "NORM-018",
+    "name": "ISO/IEC 27701:2025 PIMS",
+    "type": "NORM",
+    "source": "https://committee.iso.org/standard/27701",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "PII-Governance",
+      "Rollen",
+      "Privacy Risks",
+      "Rechteprozesse",
+      "Datenschutzkontrollen",
+      "Verbesserung"
+    ],
+    "evidence_requests": [
+      "PIMS Scope",
+      "Dateninventar",
+      "Datenschutzprüfung",
+      "Betroffenenrechte",
+      "Prozessaudit"
+    ]
+  },
+  {
+    "id": "NORM-019",
+    "name": "ISO/IEC 42001:2023 AIMS",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/42001",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "AI-Governance",
+      "Risiko- und Wirkungsbewertung",
+      "Systeminventar",
+      "Prozesse",
+      "Evaluierung",
+      "Verbesserung"
+    ],
+    "evidence_requests": [
+      "AI Policy",
+      "Systemliste",
+      "Risikodossier",
+      "Modelltests",
+      "Managementreview",
+      "Human Oversight"
+    ]
+  },
+  {
+    "id": "NORM-020",
+    "name": "ISO 9001:2026 Qualitätsmanagement",
+    "type": "NORM",
+    "source": "https://www.iso.org/9001-2026",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Führung",
+      "Qualitätsziele",
+      "Prozesssteuerung",
+      "Risiko und Chance",
+      "Nichtkonformität",
+      "Managementreview"
+    ],
+    "evidence_requests": [
+      "Prozesskarte",
+      "KPIs",
+      "Abweichungen",
+      "Korrekturmaßnahmen",
+      "Auditkalender",
+      "Managementreview"
+    ]
+  },
+  {
+    "id": "NORM-021",
+    "name": "ISO 22301:2019 Business Continuity",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/75106.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Business Impact Analysis",
+      "RTO/RPO",
+      "Fortführungsstrategien",
+      "Übungen",
+      "Notfallkommunikation",
+      "Verbesserungen"
+    ],
+    "evidence_requests": [
+      "BIA",
+      "Recovery-Pläne",
+      "Restore-Test",
+      "Übungsbericht",
+      "Krisenrollen",
+      "Recovery-KPIs"
+    ]
+  },
+  {
+    "id": "NORM-022",
+    "name": "ISO/IEC 20000-1:2018 Service Management",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/70636.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Service Design",
+      "Incident- und Change-Management",
+      "Supplier Control",
+      "Service Levels",
+      "Continual Improvement"
+    ],
+    "evidence_requests": [
+      "Service-Katalog",
+      "SLA/SLO",
+      "Incident Records",
+      "Change Freigaben",
+      "Lieferantenreview"
+    ]
+  },
+  {
+    "id": "NORM-023",
+    "name": "ISO/IEC 27017:2015 Cloud Controls",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/43757.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Shared Responsibility",
+      "Provisioning",
+      "Virtualization Security",
+      "Cloud Logging",
+      "Asset Return",
+      "Tenant Isolation"
+    ],
+    "evidence_requests": [
+      "Responsibility Matrix",
+      "Cloud Config",
+      "Access Review",
+      "Third Party Contract",
+      "Log Hygiene"
+    ]
+  },
+  {
+    "id": "NORM-024",
+    "name": "ISO/IEC 27018:2019 Public Cloud Privacy",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/76559.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "PII Handling",
+      "Löschung",
+      "Transparenz",
+      "Subprocessing",
+      "Zugriffskontrolle",
+      "Auditing"
+    ],
+    "evidence_requests": [
+      "Cloud Processing Agreement",
+      "Löschbestätigung",
+      "PII Inventory",
+      "Supplier Assessment"
+    ]
+  },
+  {
+    "id": "NORM-025",
+    "name": "ISO 31000:2018 Risikomanagement",
+    "type": "NORM",
+    "source": "https://www.iso.org/standard/65694.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Risikokontext",
+      "Identifizierung",
+      "Analyse",
+      "Bewertung",
+      "Behandlung",
+      "Monitoring"
+    ],
+    "evidence_requests": [
+      "Risk Method",
+      "Risk Register",
+      "Treatments",
+      "Monitoring Review",
+      "Decision Minutes"
+    ]
+  },
+  {
+    "id": "NORM-026",
+    "name": "NIST Cybersecurity Framework 2.0",
+    "type": "FRAMEWORK",
+    "source": "https://www.nist.gov/cyberframework",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Govern",
+      "Identify",
+      "Protect",
+      "Detect",
+      "Respond",
+      "Recover"
+    ],
+    "evidence_requests": [
+      "CSF Profile",
+      "Gap Analysis",
+      "Risk Register",
+      "Control Trace",
+      "KPIs"
+    ]
+  },
+  {
+    "id": "NORM-027",
+    "name": "NIST SSDF SP 800-218",
+    "type": "FRAMEWORK",
+    "source": "https://csrc.nist.gov/pubs/sp/800/218/final",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Prepare Organization",
+      "Protect Software",
+      "Produce Well-Secured Software",
+      "Respond to Vulnerabilities"
+    ],
+    "evidence_requests": [
+      "Secure SDLC",
+      "Build Provenance",
+      "Training",
+      "Code Review",
+      "Vulnerability Response",
+      "Evidence"
+    ]
+  },
+  {
+    "id": "NORM-028",
+    "name": "NIST SP 800-53 Rev. 5",
+    "type": "FRAMEWORK",
+    "source": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Access Control",
+      "Audit",
+      "Configuration",
+      "Incident Response",
+      "System Integrity",
+      "Privacy Controls"
+    ],
+    "evidence_requests": [
+      "System Security Plan",
+      "Control Assessment",
+      "POA&M",
+      "Risk Evidence",
+      "Independent Test"
+    ]
+  },
+  {
+    "id": "NORM-029",
+    "name": "OWASP ASVS 5.0.0",
+    "type": "FRAMEWORK",
+    "source": "https://asvs.owasp.org/",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Authentication",
+      "Session",
+      "Access Control",
+      "Input Validation",
+      "API Security",
+      "Data Protection"
+    ],
+    "evidence_requests": [
+      "ASVS Matrix",
+      "PenTest Results",
+      "Source Review",
+      "Negative API Tests",
+      "Defect Evidence"
+    ]
+  },
+  {
+    "id": "NORM-030",
+    "name": "OWASP SAMM",
+    "type": "FRAMEWORK",
+    "source": "https://owaspsamm.org/",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Governance",
+      "Design",
+      "Implementation",
+      "Verification",
+      "Operations"
+    ],
+    "evidence_requests": [
+      "SAMM Assessment",
+      "Improvement Backlog",
+      "Maturity Profile",
+      "Sprint Evidence",
+      "Review"
+    ]
+  },
+  {
+    "id": "NORM-031",
+    "name": "CIS Controls v8.1",
+    "type": "FRAMEWORK",
+    "source": "https://www.cisecurity.org/controls/v8-1",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Asset Control",
+      "Data Protection",
+      "Secure Configuration",
+      "Vulnerability Management",
+      "Incident Response",
+      "PenTest"
+    ],
+    "evidence_requests": [
+      "Control-to-Safeguard Matrix",
+      "Asset Inventory",
+      "Scan",
+      "Response Exercise",
+      "KPI"
+    ]
+  },
+  {
+    "id": "NORM-032",
+    "name": "BSI IT-Grundschutz",
+    "type": "FRAMEWORK",
+    "source": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Strukturanalyse",
+      "Schutzbedarf",
+      "Modellierung",
+      "Basisabsicherung",
+      "Sicherheitscheck",
+      "Revision"
+    ],
+    "evidence_requests": [
+      "Grundschutz-Konzept",
+      "IT-Verbund",
+      "Maßnahmenliste",
+      "Dokumentation",
+      "Audit-Report"
+    ]
+  },
+  {
+    "id": "NORM-033",
+    "name": "PCI DSS 4.0.1",
+    "type": "SCHEME",
+    "source": "https://www.pcisecuritystandards.org/document_library/",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "Scope Minimization",
+      "Network Segmentation",
+      "Encryption",
+      "Access",
+      "Logging",
+      "Penetration Tests"
+    ],
+    "evidence_requests": [
+      "Cardholder Data Flow",
+      "SAQ/ROC je Typ",
+      "AOC",
+      "ASV Reports",
+      "PenTest",
+      "Policies"
+    ]
+  },
+  {
+    "id": "NORM-034",
+    "name": "TISAX / VDA ISA",
+    "type": "SCHEME",
+    "source": "https://portal.enx.com/en-us/TISAX/ISA/",
+    "scope": "TO_BE_ASSESSED",
+    "internal_badge_status": "UNKNOWN",
+    "external_certified": false,
+    "logo_use_allowed": false,
+    "mandatory_controls": [
+      "VDA ISA",
+      "Scope",
+      "Maturity",
+      "Assessment Objectives",
+      "Findings",
+      "Improvement Plan"
+    ],
+    "evidence_requests": [
+      "VDA ISA Self-assessment",
+      "Assessment Report",
+      "ENX Result Status",
+      "Corrective Actions"
+    ]
+  }
+]

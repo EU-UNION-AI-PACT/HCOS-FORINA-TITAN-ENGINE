@@ -1,0 +1,886 @@
+{
+  "system": "HCOS - FORINA TITAN MODULE CATALOG",
+  "version": "1.2.0",
+  "modules": [
+    {
+      "id": "01_agent_studio",
+      "name": "Agent Studio",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 1,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "mistralai/mistral-agents",
+          "url": "https://github.com/mistralai/mistral-agents"
+        },
+        {
+          "name": "microsoft/autogen",
+          "url": "https://github.com/microsoft/autogen"
+        },
+        {
+          "name": "crewAIInc/crewAI",
+          "url": "https://github.com/crewAIInc/crewAI"
+        }
+      ],
+      "features": [
+        "KI-Agenten erstellen, konfigurieren und orchestrieren",
+        "Mistral Agents SDK kompatible Rollen & Prompts",
+        "Failover Routing zwischen lokalen Modellen und Sovereign Gateway",
+        "Deterministische System-Prompts mit Governance-Filterung"
+      ]
+    },
+    {
+      "id": "02_workflow_orchestrator",
+      "name": "Workflow Orchestrator",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 2,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "temporalio/temporal",
+          "url": "https://github.com/temporalio/temporal"
+        },
+        {
+          "name": "prefecthq/prefect",
+          "url": "https://github.com/PrefectHQ/prefect"
+        },
+        {
+          "name": "langchain-ai/langgraph",
+          "url": "https://github.com/langchain-ai/langgraph"
+        }
+      ],
+      "features": [
+        "Mehrstufige DAG-Workflows koordinieren",
+        "Branching, Fehlerbehandlung und deterministische Schritte",
+        "Automatische Ausführung von Sovereign Release & Indexing Pipelines",
+        "Vollständige Überwachung jedes Einzelschritts"
+      ]
+    },
+    {
+      "id": "03_connector_marketplace",
+      "name": "Connector Marketplace",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 3,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "modelcontextprotocol/servers",
+          "url": "https://github.com/modelcontextprotocol/servers"
+        },
+        {
+          "name": "n8n-io/n8n",
+          "url": "https://github.com/n8n-io/n8n"
+        },
+        {
+          "name": "activepieces/activepieces",
+          "url": "https://github.com/activepieces/activepieces"
+        }
+      ],
+      "features": [
+        "Model Context Protocol (MCP v1.0) Standard-Konnektoren",
+        "GitHub, Cloudflare, Sentry, n8n und Plaid Gateway Anbindung",
+        "Lokale Sandboxed Tool-Ausführung",
+        "Live Roundtrip-Diagnose und Heartbeat"
+      ]
+    },
+    {
+      "id": "04_knowledge_rag",
+      "name": "Knowledge & RAG Engine",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 4,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "qdrant/qdrant",
+          "url": "https://github.com/qdrant/qdrant"
+        },
+        {
+          "name": "chroma-core/chroma",
+          "url": "https://github.com/chroma-core/chroma"
+        },
+        {
+          "name": "run-llama/llama_index",
+          "url": "https://github.com/run-llama/llama_index"
+        }
+      ],
+      "features": [
+        "Wissensbibliotheken und semantische Vektorsuche (128-1024 Dim)",
+        "Kosinus-Ähnlichkeitsberechnung mit Keyword-Boosting",
+        "Dokumenten-Chunking und Metadaten-Filterung",
+        "Lokale Speicherung ohne Cloud-Abhängigkeit"
+      ]
+    },
+    {
+      "id": "05_web_discovery",
+      "name": "Web Discovery Engine",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 5,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "mendableai/firecrawl",
+          "url": "https://github.com/mendableai/firecrawl"
+        },
+        {
+          "name": "unclecode/crawl4ai",
+          "url": "https://github.com/unclecode/crawl4ai"
+        },
+        {
+          "name": "scrapy/scrapy",
+          "url": "https://github.com/scrapy/scrapy"
+        }
+      ],
+      "features": [
+        "Webseiten erfassen, strukturieren und versionieren",
+        "Fail-Closed Domain-Sicherheitsprüfung für vertrauenswürdige Quellen",
+        "Offline Snapshotting und Text-Extraktion",
+        "Deterministische Snap-IDs und Topic-Erkennung"
+      ]
+    },
+    {
+      "id": "06_secrets_identity",
+      "name": "Secrets & Identity Manager",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 6,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "hashicorp/vault",
+          "url": "https://github.com/hashicorp/vault"
+        },
+        {
+          "name": "infisical/infisical",
+          "url": "https://github.com/Infisical/infisical"
+        },
+        {
+          "name": "pocket-id/pocket-id",
+          "url": "https://github.com/pocket-id/pocket-id"
+        }
+      ],
+      "features": [
+        "AES-256-GCM lokaler verschlüsselter Secrets-Tresor",
+        "Rollenbasierte Zugriffskontrolle (RBAC: Admin, Auditor, Operator)",
+        "SMS- & TOTP-Code-Generierung mit Verfallszeit",
+        "Zero-Cloud-Leak Garantie (vollständig isolierter Speicher)"
+      ]
+    },
+    {
+      "id": "07_trust_compliance",
+      "name": "Trust & Compliance Engine",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 7,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "guardrails-ai/guardrails",
+          "url": "https://github.com/guardrails-ai/guardrails"
+        },
+        {
+          "name": "confident-ai/deepeval",
+          "url": "https://github.com/confident-ai/deepeval"
+        },
+        {
+          "name": "open-policy-agent/opa",
+          "url": "https://github.com/open-policy-agent/opa"
+        }
+      ],
+      "features": [
+        "Sicherheitskontrollen und regulatorische Zuordnungen (EU AI Act)",
+        "NATO Strategic Defense Alignment & EU Governance Layer",
+        "Fail-Closed Guardrails gegen Sicherheitsverletzungen",
+        "Integritätsüberwachung für Dual-Layer Lizenzstrukturen"
+      ]
+    },
+    {
+      "id": "08_evidence_audit",
+      "name": "Evidence & Audit Engine",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 8,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "sigstore/cosign",
+          "url": "https://github.com/sigstore/cosign"
+        },
+        {
+          "name": "in-toto/in-toto",
+          "url": "https://github.com/in-toto/in-toto"
+        },
+        {
+          "name": "google/trillian",
+          "url": "https://github.com/google/trillian"
+        }
+      ],
+      "features": [
+        "Manipulationssichere Nachweise, Hashes und Ed25519-Signaturen",
+        "Merkle-Tree Integritätsbaum für Quellcode und Release-Artefakte",
+        "Unwiderruflicher Audit-Log-Puffer für Systemereignisse",
+        "Sovereign Certificate Attestierungs-Empfänger"
+      ]
+    },
+    {
+      "id": "09_monitoring_studio",
+      "name": "Monitoring Studio",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 9,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "open-telemetry/opentelemetry-python",
+          "url": "https://github.com/open-telemetry/opentelemetry-python"
+        },
+        {
+          "name": "prometheus/prometheus",
+          "url": "https://github.com/prometheus/prometheus"
+        },
+        {
+          "name": "Arize-ai/phoenix",
+          "url": "https://github.com/Arize-ai/phoenix"
+        }
+      ],
+      "features": [
+        "Echtzeit-Telemetrie, Latenzmessung und Ausführungsstatus",
+        "OpenTelemetry Traces für Agenten- und Pipeline-Durchläufe",
+        "P95 Latenz-Tracking und Fehlerraten-Überwachung",
+        "Lokale Speicher- und Performance-Metriken"
+      ]
+    },
+    {
+      "id": "10_voice_media",
+      "name": "Voice & Media Studio",
+      "version": "1.2.0",
+      "group": "Intelligence Suite",
+      "category_index": 10,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "openai/whisper",
+          "url": "https://github.com/openai/whisper"
+        },
+        {
+          "name": "coqui-ai/TTS",
+          "url": "https://github.com/coqui-ai/TTS"
+        },
+        {
+          "name": "ffmpegwasm/ffmpeg.wasm",
+          "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"
+        }
+      ],
+      "features": [
+        "Sprachverarbeitung, Spracherkennung (STT) und Synthese (TTS)",
+        "HTML5 Medien-Clipper für Promo- und Video-Streams",
+        "Lokale Audio-Transkription und Voice-Befehle",
+        "Realisierung multimodaler KI-Interaktionen im Cockpit"
+      ]
+    },
+    {
+      "id": "ai_media",
+      "name": "KI-Integration, Video-Clipping & Zeiterfassung",
+      "version": "1.2.0",
+      "group": "AI & Media",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Dify",
+          "url": "https://github.com/langgenius/dify"
+        },
+        {
+          "name": "Vercel AI SDK",
+          "url": "https://github.com/vercel/ai"
+        },
+        {
+          "name": "FFmpeg.wasm",
+          "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"
+        },
+        {
+          "name": "Video.js",
+          "url": "https://github.com/videojs/video.js"
+        },
+        {
+          "name": "Super Productivity",
+          "url": "https://github.com/johannesjo/super-productivity"
+        }
+      ],
+      "features": [
+        "Agent-Assist Chat-Modul fuer System- & Architekturabfragen",
+        "30-Sekunden Promo-Video Player (Pink/Blau/Rot Ästhetik)",
+        "Video-Clipper fuer Sequenzschnitte und Highlight-Exporte",
+        "Atomuhr (UTC/CET) gekoppelt mit Fokus- und Arbeitszeiterfassung",
+        "Animierte News-Timeline Ticker-Leiste"
+      ]
+    },
+    {
+      "id": "app_engine",
+      "name": "App-Engine, Build-Pipeline & Code-Schutz",
+      "version": "1.2.0",
+      "group": "Build & Release",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Tauri",
+          "url": "https://github.com/tauri-apps/tauri"
+        },
+        {
+          "name": "AppImageKit",
+          "url": "https://github.com/AppImage/AppImageKit"
+        },
+        {
+          "name": "JavaScript Obfuscator",
+          "url": "https://github.com/javascript-obfuscator/javascript-obfuscator"
+        },
+        {
+          "name": "BorgBackup",
+          "url": "https://github.com/borgbackup/borg"
+        }
+      ],
+      "features": [
+        "AppImage-Packaging fuer Linux mit Zeitstempel-Injektion",
+        "Automatisches tar.gz Vorab-Backup vor jedem Build",
+        "Code-Obfuskation gegen unbefugte Klartext-Einsicht",
+        "Integritaets-Pruefung mit SHA-256 Hashes"
+      ]
+    },
+    {
+      "id": "compliance_jmap",
+      "name": "Compliance, Audit-Engine & JMAP-Anbindung",
+      "version": "1.2.0",
+      "group": "Governance & Compliance",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Open Policy Agent",
+          "url": "https://github.com/open-policy-agent/opa"
+        },
+        {
+          "name": "JMAP Client TS",
+          "url": "https://github.com/audreyt/jmap-client-ts"
+        },
+        {
+          "name": "Stalwart Mail Server",
+          "url": "https://github.com/stalwartlabs/mail-server"
+        }
+      ],
+      "features": [
+        "EU-Audit- & Inspektoren-Portal mit transparenter Richtlinien-Pruefung",
+        "3 Originalitaets- & Werte-Badges (EU-Union, Original-Inhalt, Herzens-Güte)",
+        "Originalitaets-Pruefbutton fuer verifizierte Systemzertifikate",
+        "JMAP Partnerschafts-Request an world.banks.eyes.aether@globedynamicz.statesflowwishes.eu"
+      ]
+    },
+    {
+      "id": "iam_auth_otp",
+      "name": "Authentifizierung (IAM), Passkeys, OTP & Datenschutz",
+      "version": "1.2.0",
+      "group": "Identity & Security",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Pocket ID",
+          "url": "https://github.com/pocket-id/pocket-id"
+        },
+        {
+          "name": "Authelia",
+          "url": "https://github.com/authelia/authelia"
+        },
+        {
+          "name": "otplib",
+          "url": "https://github.com/yeojz/otplib"
+        },
+        {
+          "name": "node-qrcode",
+          "url": "https://github.com/soldair/node-qrcode"
+        },
+        {
+          "name": "CookieConsent",
+          "url": "https://github.com/orestbida/cookieconsent"
+        }
+      ],
+      "features": [
+        "Pocket ID OIDC Passkey-Forwarding ohne Passwortzwang",
+        "Magic-Link Generierung mit Ziel-URL Uebertragung",
+        "QR-Code Generator fuer TOTP-Apps (Google/Microsoft Authenticator)",
+        "SMS-OTP Mobilfunk-Verifikation mit Einmal-Token",
+        "Cookie-Banner & DSGVO GPS-Standort-Freigabe mit Widerruf-Toggle"
+      ]
+    },
+    {
+      "id": "interface_editor",
+      "name": "Kern-Interface, PiP-Browser & Redaktions-Editor",
+      "version": "1.2.0",
+      "group": "Interface & Editorial",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Tiptap",
+          "url": "https://github.com/ueberdosis/tiptap"
+        },
+        {
+          "name": "Editor.js",
+          "url": "https://github.com/codex-team/editor.js"
+        },
+        {
+          "name": "Motion",
+          "url": "https://github.com/framer/motion"
+        }
+      ],
+      "features": [
+        "3D-Flip-Board in der Sidebar fuer schnellen Perspektivwechsel",
+        "Picture-in-Picture (PiP) Browser-Fenster im Vordergrund",
+        "Inline-Text-Editor zur direkten Bearbeitung der UI-Beschriftungen",
+        "Journalisten-Thinking-Flow mit kategorisiertem Text-Export (.txt)"
+      ]
+    },
+    {
+      "id": "m01_trusted_registry",
+      "name": "M01: Trusted Module Registry & Loader",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 1,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "module-federation/core",
+          "url": "https://github.com/module-federation/core"
+        },
+        {
+          "name": "originjs/vite-plugin-federation",
+          "url": "https://github.com/originjs/vite-plugin-federation"
+        },
+        {
+          "name": "single-spa/single-spa",
+          "url": "https://github.com/single-spa/single-spa"
+        }
+      ],
+      "features": [
+        "Erweiterungen katalogisieren & Hash-Integrität erzwingen",
+        "Fail-Closed Gate bei unautorisierten Modulen",
+        "7-Stufen-Lifecycle von Entwurf bis Freigegeben"
+      ]
+    },
+    {
+      "id": "m02_secure_builder",
+      "name": "M02: Secure App Builder & Linux Delivery",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 2,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "tauri-apps/tauri",
+          "url": "https://github.com/tauri-apps/tauri"
+        },
+        {
+          "name": "AppImage/AppImageKit",
+          "url": "https://github.com/AppImage/AppImageKit"
+        },
+        {
+          "name": "AppImageCommunity/AppImageUpdate",
+          "url": "https://github.com/AppImageCommunity/AppImageUpdate"
+        }
+      ],
+      "features": [
+        "Deterministische PWA & AppImage Kompilierung",
+        "Lokale Staging-Pipeline ohne Host-Modifikation",
+        "Offline-First Ausführbarkeit auf Linux"
+      ]
+    },
+    {
+      "id": "m03_ui_composition",
+      "name": "M03: UI/UX Composition Studio",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 3,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "greensock/GSAP",
+          "url": "https://github.com/greensock/GSAP"
+        },
+        {
+          "name": "mrdoob/three.js",
+          "url": "https://github.com/mrdoob/three.js"
+        },
+        {
+          "name": "ueberdosis/tiptap",
+          "url": "https://github.com/ueberdosis/tiptap"
+        },
+        {
+          "name": "catdad/canvas-confetti",
+          "url": "https://github.com/catdad/canvas-confetti"
+        }
+      ],
+      "features": [
+        "Theatervorhang-Inszenierung & Blitz-Effekt",
+        "4-Sekunden-Scheibenwischer & Redaktions-Editor",
+        "Barrierefreie Tastaturnavigation & Sound-Opt-In"
+      ]
+    },
+    {
+      "id": "m04_identity_consent",
+      "name": "M04: Identity, Consent & Role Engine",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 4,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "pocket-id/pocket-id",
+          "url": "https://github.com/pocket-id/pocket-id"
+        },
+        {
+          "name": "authelia/authelia",
+          "url": "https://github.com/authelia/authelia"
+        },
+        {
+          "name": "yeojz/otplib",
+          "url": "https://github.com/yeojz/otplib"
+        },
+        {
+          "name": "orestbida/cookieconsent",
+          "url": "https://github.com/orestbida/cookieconsent"
+        }
+      ],
+      "features": [
+        "Pocket ID Passkey-Forwarding ohne Passwortzwang",
+        "QR-Code TOTP & SMS-OTP Mobilfunk-Authentifizierung",
+        "DSGVO-CookieConsent & Opt-in Standortfreigabe mit Widerruf"
+      ]
+    },
+    {
+      "id": "m05_ai_cost_router",
+      "name": "M05: AI Model, Cost & Router Gateway",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 5,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "vercel/ai",
+          "url": "https://github.com/vercel/ai"
+        },
+        {
+          "name": "langgenius/dify",
+          "url": "https://github.com/langgenius/dify"
+        },
+        {
+          "name": "off-grid-ai/OGAD",
+          "url": "https://github.com/off-grid-ai/OGAD"
+        }
+      ],
+      "features": [
+        "Dynamisches Modell-Routing (Local Offline, CompactifAI EU, Mistral)",
+        "Token-Budget-Überwachung & Kostenoptimierung",
+        "DSGVO-Datenresidenz-Prüfung vor API-Dispatch"
+      ]
+    },
+    {
+      "id": "m06_knowledge_search",
+      "name": "M06: Knowledge, Search & Local Data",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 6,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "pubkey/rxdb",
+          "url": "https://github.com/pubkey/rxdb"
+        },
+        {
+          "name": "qdrant/qdrant",
+          "url": "https://github.com/qdrant/qdrant"
+        },
+        {
+          "name": "chroma-core/chroma",
+          "url": "https://github.com/chroma-core/chroma"
+        }
+      ],
+      "features": [
+        "RxDB Offline-First lokale Datenbankhaltung",
+        "Quellen- und Ingest-Zeitstempelung mit Dokumenten-Hash",
+        "Lokale RAG-Vektorsuche ohne Cloud-Synchronisation"
+      ]
+    },
+    {
+      "id": "m07_domain_trust",
+      "name": "M07: FORINA Domain Trust & Compliance",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 7,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "caddyserver/caddy",
+          "url": "https://github.com/caddyserver/caddy"
+        },
+        {
+          "name": "nginx/nginx",
+          "url": "https://github.com/nginx/nginx"
+        },
+        {
+          "name": "open-policy-agent/opa",
+          "url": "https://github.com/open-policy-agent/opa"
+        },
+        {
+          "name": "cunnie/sslip.io",
+          "url": "https://github.com/cunnie/sslip.io"
+        }
+      ],
+      "features": [
+        "DNSSEC, TLS & RDAP technische Verifikation",
+        "Open Policy Agent (OPA) Validierung regulatorischer Governance",
+        "Strukturierte Domain-Audit-Records statt bloßer Badges"
+      ]
+    },
+    {
+      "id": "m08_financial_intelligence",
+      "name": "M08: Financial Intelligence & Money Leak Detector",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 8,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "pubkey/rxdb",
+          "url": "https://github.com/pubkey/rxdb"
+        },
+        {
+          "name": "plaid/plaid-python",
+          "url": "https://github.com/plaid/plaid-python"
+        }
+      ],
+      "features": [
+        "Read-Only Transaktionsanalyse & Erkennung von Kostenfressern",
+        "Doppelbuchungs-Erkennung (Double-Charge Heuristik)",
+        "Subscription Price-Creep & Zombie-Abo Detektor",
+        "Strikte Zero-Settlement Guardrail (Keine Abbuchungs-/Überweisungsrechte)"
+      ]
+    },
+    {
+      "id": "m09_communication_hub",
+      "name": "M09: JMAP, Messaging & Calendar Hub",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 9,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "linagora/jmap-client-ts",
+          "url": "https://github.com/linagora/jmap-client-ts"
+        },
+        {
+          "name": "stalwartlabs/mail-server",
+          "url": "https://github.com/stalwartlabs/mail-server"
+        },
+        {
+          "name": "calcom/cal.com",
+          "url": "https://github.com/calcom/cal.com"
+        },
+        {
+          "name": "johannesjo/super-productivity",
+          "url": "https://github.com/johannesjo/super-productivity"
+        }
+      ],
+      "features": [
+        "JMAP-Partnerschaftsversand an autorisierte IONOS-Postfächer",
+        "Stalwart Mail-Server E-Mail-Relay & Audit-Protokoll",
+        "Termin- und Ressourcenbuchung mit Widerruf-Möglichkeit"
+      ]
+    },
+    {
+      "id": "m10_privacy_monitoring",
+      "name": "M10: Privacy-Respecting Monitoring",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 10,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "umami-software/umami",
+          "url": "https://github.com/umami-software/umami"
+        },
+        {
+          "name": "plausible/analytics",
+          "url": "https://github.com/plausible/analytics"
+        }
+      ],
+      "features": [
+        "Anonymisierte Session-IDs und aggregierte Kennzahlen",
+        "Strikter Ausschluss sensibler Text- und Scaninhalte aus Logs",
+        "Netzwerksperre unterbindet ungewollte Egress-Telemetrie"
+      ]
+    },
+    {
+      "id": "m11_media_voice",
+      "name": "M11: Media & Voice Studio",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 11,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "ffmpegwasm/ffmpeg.wasm",
+          "url": "https://github.com/ffmpegwasm/ffmpeg.wasm"
+        },
+        {
+          "name": "videojs/video.js",
+          "url": "https://github.com/videojs/video.js"
+        },
+        {
+          "name": "goldfire/howler.js",
+          "url": "https://github.com/goldfire/howler.js"
+        }
+      ],
+      "features": [
+        "30-Sekunden-Promo-Bühne & HTML5 Video-Clipper",
+        "Web-Audio 528 Hz 3-Sekunden-Glocke (3% Lautstärke)",
+        "Keine ungewollte Audioaufnahme / Mikrofon-Opt-In Zwang"
+      ]
+    },
+    {
+      "id": "m12_independent_assurance",
+      "name": "M12: Independent Assurance & BOBA Validator",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 12,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "amazon-agi/BOBA-bench",
+          "url": "https://github.com/amazon-agi/BOBA-bench"
+        }
+      ],
+      "features": [
+        "BOBA-Bench Fehlerketten-Bremse für Multi-Agenten-Pipelines",
+        "Unabhängige Verifikation von Zwischenschritten vor Weitergabe",
+        "Automatischer Abbruch bei unbestätigten Vorgängerergebnissen"
+      ]
+    },
+    {
+      "id": "m13_agent_security_scanner",
+      "name": "M13: Agent Security & Stroq Leak Scanner",
+      "version": "1.2.0",
+      "group": "13-Module Masterkonzept",
+      "category_index": 13,
+      "lifecycle_state": "Freigegeben",
+      "open_source_repos": [
+        {
+          "name": "AGGIB/Stroq",
+          "url": "https://github.com/AGGIB/Stroq"
+        },
+        {
+          "name": "borgbackup/borg",
+          "url": "https://github.com/borgbackup/borg"
+        }
+      ],
+      "features": [
+        "Stroq Secret-Leak Detection vor externer Weiterleitung",
+        "Gefährliche Befehle (rm -rf, sudo, curl|sh) blockieren",
+        "Ausschluss von privaten Schlüsseln und Zugangsdaten"
+      ]
+    },
+    {
+      "id": "network_dns",
+      "name": "Netzwerk, Reverse Proxy & Wildcard-DNS",
+      "version": "1.2.0",
+      "group": "Infrastructure & Routing",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Caddy",
+          "url": "https://github.com/caddyserver/caddy"
+        },
+        {
+          "name": "NGINX",
+          "url": "https://github.com/nginx/nginx"
+        },
+        {
+          "name": "sslip.io",
+          "url": "https://github.com/cunnie/sslip.io"
+        },
+        {
+          "name": "nip.io",
+          "url": "https://github.com/exentriquesolutions/nip.io"
+        }
+      ],
+      "features": [
+        "Caddyfile mit automatischer Forward-Auth und TLS",
+        "NGINX Lastverteilung und Reverse Proxy",
+        "sslip.io und nip.io Wildcard-DNS fuer persistente Domaenen",
+        "Zero-Configuration Domain Resolution fuer lokale und entfernte Dienste"
+      ]
+    },
+    {
+      "id": "telemetry_calendar",
+      "name": "Anonyme Telemetrie, Statistik & Buchungssystem",
+      "version": "1.2.0",
+      "group": "Telemetry & Scheduling",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "Umami",
+          "url": "https://github.com/umami-software/umami"
+        },
+        {
+          "name": "Plausible Analytics",
+          "url": "https://github.com/plausible/analytics"
+        },
+        {
+          "name": "Cal.com",
+          "url": "https://github.com/calcom/cal.com"
+        }
+      ],
+      "features": [
+        "Anonymisiertes Logging auf Basis zufaelliger Request- & Session-IDs",
+        "Persistente Echtzeit-Views und Nutzungsstatistik",
+        "Termin-Buchungskalender mit direkter Synchronisation in Postfach",
+        "Programm- & Arbeits-Nachfrage-Kalender fuer Modul- und Slot-Registrierung",
+        "Live-Spec Realisierungs-Radar mit Light Blink Buttons & Statistic Glow Points"
+      ]
+    },
+    {
+      "id": "ui_inszenierung",
+      "name": "UI/UX-Engines, Effekte & Start-Inszenierung",
+      "version": "1.2.0",
+      "group": "UI & Presentation",
+      "status": "active",
+      "open_source_repos": [
+        {
+          "name": "GSAP",
+          "url": "https://github.com/greensock/GSAP"
+        },
+        {
+          "name": "Three.js",
+          "url": "https://github.com/mrdoob/three.js"
+        },
+        {
+          "name": "Canvas Confetti",
+          "url": "https://github.com/catdad/canvas-confetti"
+        },
+        {
+          "name": "Howler.js",
+          "url": "https://github.com/goldfire/howler.js"
+        },
+        {
+          "name": "React Grid Layout",
+          "url": "https://github.com/react-grid-layout/react-grid-layout"
+        }
+      ],
+      "features": [
+        "Roter Wellen-Theatervorhang mit animiertem Oeffnen und Schliessen",
+        "Web-Audio Synthesizer: 3s Glocke auf exakt 3% Lautstaerke (528Hz Solfeggio)",
+        "Feuermelder-Alarmsirene und Vorhang-Sperre bei Kopiervorgaengen",
+        "Scheibenwischer-Effekt alle 4 Sekunden mit Ebenen-Aufleuchten",
+        "Lichtblitz & Happy Overshine Konfetti-Regen beim Systemstart"
+      ]
+    }
+  ]
+}

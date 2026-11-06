@@ -1,0 +1,3244 @@
+{
+  "A": [
+    {
+      "title": "Executive Target Architecture",
+      "code": "ETA",
+      "problem": "Die bestehende Plattform besitzt viele Funktionsgruppen, jedoch fehlt ein verbindlicher Gesamtnutzen mit Grenzen je Betriebszone.",
+      "goal": "Ein öffentlich lesbares Zielbild unterscheidet Portal, Engine, offline geschützte lokale Werkzeuge und nur autorisierte Föderation.",
+      "interface": "Capability-Karte mit Owner, Betriebszone, Datenklasse, Kritikalität, Vertrag und Systemgrenze.",
+      "risk": "Feature-Wildwuchs, unklare Zuständigkeit und unbewiesene Produktivfreigaben.",
+      "accept": "Jede Capability hat Owner, API-Vertrag, Evidenzstatus und Rückbaupfad.",
+      "example": "Ein Dashboard-Wechsel darf niemals automatisch eine Zahlungs- oder Föderationsberechtigung erteilen."
+    },
+    {
+      "title": "Informationsarchitektur IA",
+      "code": "IA",
+      "problem": "Verschiedene Tabs und Modulregister zeigen Fähigkeiten, aber Nutzer suchen nach Aufgaben statt Dateinamen.",
+      "goal": "Task-first-Navigation nach Prüfen, Erforschen, Bauen, Freigeben und Beobachten ersetzt ein flaches Menü.",
+      "interface": "Navigationsschema aus Arbeitsbereich, Objekt, Aktivität, Sicherheitsstatus und zuletzt genutztem Kontext.",
+      "risk": "Verwechslung von Read-only- und Aktionsmodi führt zu gefährlichen Klickpfaden.",
+      "accept": "Ein neuer Benutzer findet den Prüfbericht ohne Einarbeitung und erkennt vor jeder Aktion die Folgen.",
+      "example": "Ein Prüfer sucht Belege für M07 und gelangt in höchstens drei Schritten zum passenden Evidence-Graphen."
+    },
+    {
+      "title": "Experience Design XD",
+      "code": "XD",
+      "problem": "Das Portal wirkt technisch, aber Statusmeldungen und Aufgabenfolgen sind nicht durchgängig verständlich.",
+      "goal": "Ein konsistentes Interaktionsmodell verbindet Sprache, Feedback, Vorschau, Widerruf und sichtbare Systemgrenzen.",
+      "interface": "Experience-Tokens für Zustände, Aufgaben, Warnungen, Eingaben, Fehler und leere Ansichten.",
+      "risk": "Schöne Animationen dürfen keinen falschen Sicherheitszustand visualisieren.",
+      "accept": "Jeder entscheidende Workflow besitzt Start, Vorschau, Folgenhinweis, Bestätigung, Ergebnis und Rückweg.",
+      "example": "Bei fehlendem Evidence-Datensatz zeigt der Bildschirm neutral unbekannt statt grünes Erfolgslicht."
+    },
+    {
+      "title": "Papier 4A: Intelligent Automation",
+      "code": "4A",
+      "problem": "Automatisierte Agenten und Prüfpipelines sind vorhanden, ihr Entscheidungsspielraum ist jedoch nicht konsequent formalisiert.",
+      "goal": "IA bedeutet hier Intelligent Automation: Planen, Prüfen, Wiederholen mit deterministischen Freigabegrenzen.",
+      "interface": "ActionContract mit erlaubter Aktion, Eignern, Ressourcenbudget, Testoracle und Schadensklasse.",
+      "risk": "Selbstreferenzierende Aktionen oder ungeprüfte autonome Änderungen können sich hochschaukeln.",
+      "accept": "Die Automationsschleife stoppt bei unklarer Autorität oder fehlendem Beleg und verlangt Menschenentscheidung.",
+      "example": "Ein Agent schlägt einen Fix vor; nur isolierte Tests und explizite Freigabe lassen ihn in einen Release gelangen."
+    },
+    {
+      "title": "Papier 4B: Design-System und Microinteractions",
+      "code": "4B",
+      "problem": "Leuchtende Statusanzeigen und interaktive Module benötigen gemeinsame visuelle Regeln statt Einzelgestaltung.",
+      "goal": "Eine UI-Bibliothek definiert Typografie, Kontrast, Fokus, Raster, Motion, Schrift und barrierearme Semantik.",
+      "interface": "Design-Tokens als versionierte JSON-Schemata; Komponenten für EvidenceCard, GateStatus, ScopeBanner und SafeAction.",
+      "risk": "Ablenkende Daueranimation und unzureichender Kontrast beeinträchtigen Vertrauen und Barrierefreiheit.",
+      "accept": "Jedes UI-Element hat Tastaturpfad, Screenreader-Name, Disabled-Zustand und nachvollziehbare Fehlermeldung.",
+      "example": "Eine Prüfstufe wechselt nur dann auf grün, wenn die Backend-Signatur einer gültigen Audit-Entscheidung vorliegt."
+    },
+    {
+      "title": "Gesamtmodell der 13 Module",
+      "code": "M01-M13",
+      "problem": "Im Registry-Modell sind 13 Kernmodule und weitere Funktionsgruppen vorhanden; die Grenzen sind teilweise implizit.",
+      "goal": "Ein Capability-Graph definiert exakt, wer Daten lesen, Mutationen ausführen oder nur Vorschläge generieren darf.",
+      "interface": "module_id, capability_id, input_schema, output_schema, permission, zone, evidence_ref und dependency_hash.",
+      "risk": "Import-seitige Effekte und transitive Abhängigkeiten können die Sicherheitsgrenze unterlaufen.",
+      "accept": "Alle 13 Module haben maschinenlesbare Verträge mit Negativtests und signierten Versionsfreigaben.",
+      "example": "M08 darf Zahlungsdaten auswerten, aber keine Überweisung oder Schreibberechtigung erlangen."
+    },
+    {
+      "title": "50-Repository-Katalog als Source of Truth",
+      "code": "REPO",
+      "problem": "Der neue Explorer listet 50 Projekte, doch Namensmapping ist kein Supply-Chain-Nachweis.",
+      "goal": "Ein verifizierter Katalog trennt Fundstelle, Lizenz-Behauptung, geprüfte Lizenz, Schwachstellen und tatsächliche Einbindung.",
+      "interface": "Repository-URL, Commit-SHA, Tag, Lizenzbeleg, SBOM, Herkunft und Freigabeidentität je Eintrag.",
+      "risk": "Namensaliase, ungesicherte Links und unbewiesene Security-Labels verwässern Aussagen.",
+      "accept": "Kein Repo erhält VERIFIED ohne versionierte Primärquelle, Befund und zuständige Freigabe.",
+      "example": "Eine neue Katalogzeile landet zunächst in Quarantäne und nicht in Sovereign."
+    },
+    {
+      "title": "Governance und Verantwortlichkeiten",
+      "code": "RACI",
+      "problem": "Technische Freigabefunktionen existieren, ohne durchgehendes Rollenmodell für Risikoakzeptanz und externe Aussagen.",
+      "goal": "RACI und Vier-Augen-Prinzip trennen Entwickler, Prüfer, Freigebende und Betreiber.",
+      "interface": "RoleBinding verknüpft Person oder Dienstidentität mit Scope, Zeit, Zweck und dokumentiertem Widerruf.",
+      "risk": "Eine Selbstzertifizierung kann sonst unbeabsichtigt als externe Bescheinigung erscheinen.",
+      "accept": "Zwei unabhängig autorisierte Rollen bestätigen kritische Produktionseingriffe und Audit-Veröffentlichungen.",
+      "example": "Ein Entwickler darf einen Kontrollbefund korrigieren, aber nicht seinen eigenen Hochrisiko-Befund abschließend abnehmen."
+    },
+    {
+      "title": "Portal-Startseite und Nutzerführung",
+      "code": "HOME",
+      "problem": "Ein Feature-Tab ist kein verlässlicher Einstieg in komplexe Prüf- und Finanzabläufe.",
+      "goal": "Eine rollenabhängige Startseite zeigt offene Aufgaben, Risiken, unabhängige Prüfnachweise und gesperrte Aktionen.",
+      "interface": "HomeView aggregiert ReadModel statt direkte Schreibrechte aus M01 bis M13.",
+      "risk": "Echte Risiken können in dekorativen Karten verschwinden, wenn Priorität falsch gesetzt ist.",
+      "accept": "Top-Risiken, ausstehende Freigaben und Revisionsstand sind ohne Scrollen erreichbar.",
+      "example": "Anstelle allgemeiner 100-Prozent-Balken erscheint ein überprüfbarer Status mit Erhebungszeit und Geltungsbereich."
+    },
+    {
+      "title": "Evidenzzentriertes Statusmodell",
+      "code": "EVID",
+      "problem": "Die Oberfläche kann feste PASS-Texte ausgeben, die nicht dem tatsächlichen Gate-Ergebnis entsprechen.",
+      "goal": "Der Status wird aus signierter Evaluation und Gültigkeitsfenster berechnet, nicht aus UI-Konstanten.",
+      "interface": "EvidenceStatus: UNKNOWN, OPEN, BLOCKED, PASS_INTERNAL, REVIEWED, EXTERNAL_ATTESTED, EXPIRED.",
+      "risk": "Ein alter PASS nach neuer Codeversion ist eine Fehlfreigabe.",
+      "accept": "Statuswechsel sind transaktional und an Artifact-Hash, Signer, Scope und Zeit gebunden.",
+      "example": "Ein geänderter Build-Hash setzt zuvor erteilte Freigaben automatisch auf erneute Prüfung."
+    },
+    {
+      "title": "Souveräner Offline-Launcher",
+      "code": "LAUNCH",
+      "problem": "Python-interne Netzwerksperren verhindern keine externen Prozess- oder Bibliothekspfade.",
+      "goal": "Ein unabhängiger Launcher validiert Dateisignaturen, genehmigte Pfade und technische Isolationsfähigkeit vor dem Start.",
+      "interface": "LaunchManifest mit executable_hash, approved_roots, namespace_attestation, no_egress und policy_version.",
+      "risk": "Wenn keine isolierende Hostfähigkeit ohne Systemänderung verfügbar ist, muss das Programm nicht starten.",
+      "accept": "Positivtest mit synthetischer Datei und negativer Egress-Test außerhalb des Scannerprozesses bestehen.",
+      "example": "Ohne messbaren No-Egress-Nachweis wird der Start abgelehnt, nicht still auf Python-Monkeypatch reduziert."
+    },
+    {
+      "title": "Host-Neutralität und sichere Distribution",
+      "code": "HOST",
+      "problem": "Der lokale Scanner darf bestehende Arch-Konfiguration weder installieren noch verändern.",
+      "goal": "Eine rein portable Auslieferung nutzt genehmigte Ordner, prüft Bibliotheken und deklariert ihre Laufzeitanforderungen.",
+      "interface": "Staging-Metadaten mit Hashes, Schreibpfad-Whitelist, Uninstall-Prozedur und keinerlei Hostservice.",
+      "risk": "Automatisches Paketmanagement, Cron oder Firewall-Änderungen verletzen die Betriebsbedingung.",
+      "accept": "Tests protokollieren nur Metadaten und zeigen keine Hostmutationen bei Probe und Rückbau.",
+      "example": "Nach Ausführung unterscheiden sich System-Konfigurationsdateien und Quell-Timestamps nicht."
+    },
+    {
+      "title": "Identität, Einwilligung und Berechtigung",
+      "code": "IAM",
+      "problem": "OIDC und Consent-Komponenten bilden noch keinen einheitlichen globalen Berechtigungsentscheid.",
+      "goal": "Eine Policy Decision Point trennt Authentication, Authorization und Consent für jede sensible Operation.",
+      "interface": "Subject, purpose, resource, action, jurisdiction, credential_age und grant_id bilden den Policy-Kontext.",
+      "risk": "Verwechselte Nutzeridentität oder widerrufene Einwilligung ermöglichen unzulässigen Zugriff.",
+      "accept": "Jeder Zugriff ist default deny und erfordert ein aktuelles, zweckgebundenes Grant.",
+      "example": "Bei Entzug einer Datenfreigabe verschwindet die Berechtigung aus Cache, Connector und UI."
+    },
+    {
+      "title": "Schlüssel, Signaturen und Rotation",
+      "code": "KMS",
+      "problem": "Ed25519-Bescheinigungen liefern Integrität, aber eigene Signaturen sind keine unabhängigen Zertifizierungen.",
+      "goal": "Das Key-Lifecycle-Modell trennt Signierzwecke, Verwahrung, Rotation, Sperrung und Bestätigung der Schlüsselhoheit.",
+      "interface": "KeyRecord mit key_id, usage, custodian, created_at, expires_at, revoke_ref und verification_scope.",
+      "risk": "Ein kompromittierter Schlüssel kann scheinbar gültige Artefakte produzieren.",
+      "accept": "Gesonderte Schlüssel für Build, Audit und Nutzer-Freigabe; keine privaten Schlüssel in ZIP oder Logs.",
+      "example": "Ein gesperrter Schlüssel macht alle davon abhängigen Statuskarten ungültig."
+    },
+    {
+      "title": "Privacy by Design und Datenminimierung",
+      "code": "PRIV",
+      "problem": "Katalog, Finanzanalyse und Agentensitzungen berühren verschiedene Personen- und Geheimnisklassen.",
+      "goal": "Datentypen werden vor Verarbeitung klassifiziert; synthetische Demos und reale Daten bleiben hart getrennt.",
+      "interface": "DataClass, purpose, lawful_basis, retention, residency, deletion_job und access_policy an jedem Datensatz.",
+      "risk": "Protokolle oder Testfixtures könnten reale Kontodaten und Zugangsgeheimnisse aufnehmen.",
+      "accept": "Export und Debugger maskieren vertrauliche Felder; Lösch- und Auskunftswege sind nachweisbar.",
+      "example": "Ein Support-Report enthält niemals IBAN, Token oder Credential-Klartext."
+    },
+    {
+      "title": "Banking Read-only und Settlement-Grenzen",
+      "code": "FIN",
+      "problem": "Die Transaktionsanalyse besitzt Code-Sperren, aber Namensfilter ersetzen keine bankenrechtliche Berechtigungstrennung.",
+      "goal": "Ausschließlich getrennte Read-only-Zugangsdaten und capability-minimierte Connectoren bedienen M08.",
+      "interface": "AccountLinkId, consent_scope, provider, expiry, read_only_assertion und audit_receipt.",
+      "risk": "Ein neu angeschlossener Zahlungsprovider darf keine latenten Schreibrechte übernehmen.",
+      "accept": "Negative API-Tests beweisen, dass Auszahlungen und Lastschriften unabhängig von Aktionsnamen blockiert bleiben.",
+      "example": "Die UI kann verdächtige Abos markieren, aber niemals Geld verschieben."
+    },
+    {
+      "title": "Finanzanomalien und Erklärung",
+      "code": "ANOM",
+      "problem": "Doppelbelastung, Preissteigerung und Zombie-Abos können legitime Zahlungen falsch einordnen.",
+      "goal": "Ein erklärbares Regelwerk zeigt Annahmen, Vertrauenswerte, Gegenbeispiele und Nutzerfeedback.",
+      "interface": "Finding mit rule_version, evidence_refs, confidence_band, currency, period und reversible_label.",
+      "risk": "Unbegründete Ersparnisbehauptungen könnten finanzielle Entscheidungen verfälschen.",
+      "accept": "Befunde gelten als Hinweise mit Rücknahmeoption und werden auf synthetischen Testfällen kalibriert.",
+      "example": "Zwei gleiche Kaffeezahlungen bleiben zunächst Verdacht, solange keine Händler-ID oder Buchungskorrektur geklärt ist."
+    },
+    {
+      "title": "FORINA Domain Trust",
+      "code": "TRUST",
+      "problem": "Technischer DNS/TLS-Erfolg ist keine Organisationsverifizierung und kein Föderationsrecht.",
+      "goal": "Eine gestufte Trust-Kette behandelt Discovery, Kontrolle, Organisation, Compliance und explizite Autorisierung getrennt.",
+      "interface": "DomainTrustRecord mit proofs, claim_type, registrar_check, legal_entity_ref, scope und valid_until.",
+      "risk": "Einfache URL-Scans dürfen keine staatliche Zugehörigkeit oder Akkreditierung suggerieren.",
+      "accept": "Statuswerte werden nie übersprungen; Federation beginnt nur nach dokumentierter Einwilligung der Organisation.",
+      "example": "Eine .gov-Domain ohne belegte Delegation erhält kein Organisationszertifikat."
+    },
+    {
+      "title": "API- und Ereignisarchitektur",
+      "code": "API",
+      "problem": "Viele Dienste lassen sich anbinden, aber undokumentierte Eventverträge verursachen verdeckte Nebenwirkungen.",
+      "goal": "Schema Registry, versionierte Events, Idempotenz und Replay-Schutz werden zum verbindlichen Integrationskern.",
+      "interface": "OpenAPI/AsyncAPI Verträge für command_id, correlation_id, policy_ref, schema_version und idempotency_key.",
+      "risk": "Event-Duplikate, Ausführungsreihenfolge und inkonsistente Retries gefährden Datenzustände.",
+      "accept": "Contract-Tests und Dead-letter-Queues sind für jede asynchrone Verbindung definiert.",
+      "example": "Eine doppelte Nachricht löst dieselbe fachliche Aktion höchstens einmal aus."
+    },
+    {
+      "title": "Knowledge Graph und Provenienz",
+      "code": "GRAPH",
+      "problem": "Dokumente, URLs, Frameworks und Repo-Evidenz bleiben sonst in mehreren Listen isoliert.",
+      "goal": "Ein gerichteter Evidence Graph verbindet Anforderungen mit Assets, Kontrollen, Tests und verantwortlichen Prüfern.",
+      "interface": "Nodes für Source, Requirement, Control, Artifact, TestRun und Approval; Edges mit signierter Herkunft.",
+      "risk": "Automatisch abgeleitete Beziehungen könnten als offizielle Referenz durchgehen.",
+      "accept": "Jeder inferierte Mapping-Edge besitzt Konfidenz, Begründung und menschliche Freigabestufe.",
+      "example": "Eine OWASP-Prüfung führt per Klick zu Code-Test, Prüflauf und konkreter Anforderung."
+    },
+    {
+      "title": "Agenten-Orchestrierung und Toolrechte",
+      "code": "AGENT",
+      "problem": "Ein Agent, der Tools frei ausführen darf, kann Sicherheitsgrenzen umgehen, auch wenn sein Text harmlos aussieht.",
+      "goal": "Capabilities werden außerhalb des Prompt-Kontexts technisch erzwungen; Agenten liefern zunächst Vorschläge.",
+      "interface": "AgentTask mit inputs, output_schema, budget, tool_allowlist, approved_workspace und risk_class.",
+      "risk": "Prompt-Injection über Repos, Mails oder Webseiten darf keine neue Toolberechtigung erzeugen.",
+      "accept": "Jede Agentenaktion ist einer expliziten Policy zugeordnet; nicht erlaubte Toolaufrufe werden abgewiesen.",
+      "example": "Ein Webseitenhinweis auf sudo-Befehle bleibt Dateninhalt und niemals Handlungsanweisung."
+    },
+    {
+      "title": "Harness Loop und kontrollierte Autonomie",
+      "code": "LOOP",
+      "problem": "Eine schnelle Implementationsserie benötigt reproduzierbare Kontrollpunkte statt unendlicher Selbstbestätigung.",
+      "goal": "Plan-Build-Test-Audit-Review-Release-Monitor bildet eine begrenzte, policy-gesteuerte Verbesserungsfolge.",
+      "interface": "LoopRecord mit iteration, task_id, state, input_hash, test_oracle, evidence_hash und stop_reason.",
+      "risk": "Endlosschleifen, unsichere Selbstfreigabe und Modelldrift müssen ausdrücklich verhindert werden.",
+      "accept": "Maximale Iterationen, Budget, Freigabepflicht und negativer Test gehören in jede Arbeitsdefinition.",
+      "example": "Wenn ein Test dreimal nicht besteht, stoppt die Schleife und erstellt ein handlungsfähiges Defect-Dossier."
+    },
+    {
+      "title": "Evidence Bus und Audit-Pipeline",
+      "code": "AUD",
+      "problem": "Ein grüner Test ist nicht automatisch beweiskräftig, wenn Ausführer und Prüfer identisch sind.",
+      "goal": "Ein Evidence Bus versieht jede Entscheidung mit Quelle, Hash, Scope, Zeit und Prüferidentität.",
+      "interface": "EvidenceEnvelope als kanonisches JSON mit Schema-Id, input/output digest, issuer und signer_role.",
+      "risk": "Unvollständige Logs oder nachträgliche Änderungen entwerten Revisionssicherheit.",
+      "accept": "Für jedes Gate existiert ein reproduzierbarer Datensatz mit unabhängiger Prüfroutine.",
+      "example": "Auditoren können eine Freigabe offline anhand von Paket, Manifest und Public Key überprüfen."
+    },
+    {
+      "title": "Audit-Cockpit und Live-Status",
+      "code": "GATEUI",
+      "problem": "Statische PASS-Aufschriften können fail-closed Entscheidungen im Backend visuell überdecken.",
+      "goal": "Das Cockpit zeigt pro Gate Ergebnis, Beleg, Prüfer, Ausführungsdatum, Gültigkeit und Fehlergrund.",
+      "interface": "GateView wird ausschließlich aus signierten Status-Events und nicht aus hartcodierter Farbe erzeugt.",
+      "risk": "Ein einzelner unbekannter Gate-Status kann sonst fälschlich als Systemfreigabe erscheinen.",
+      "accept": "FAILED, UNKNOWN und EXPIRED sind sichtbar verschieden und blockieren kritische Buttons.",
+      "example": "Ein G08-Mismatch erzeugt eine rote Sperrkarte mit betroffener Datei und Recheck-Aktion."
+    },
+    {
+      "title": "Nachweis-Abzeichen und Markenschutz",
+      "code": "BADGE",
+      "problem": "Ein intern erzeugtes Zertifikat kann unbeabsichtigt wie ein offizielles ISO- oder EU-Siegel wirken.",
+      "goal": "Interne Prüfmarken unterscheiden sich sichtbar von externen Zertifizierungszeichen und zeigen ihren Aussteller.",
+      "interface": "BadgeRecord mit assertion_type, scope, issuer, issued_at, expiry, evidence_url und revocation_endpoint.",
+      "risk": "Falsche Zertifikatsbehauptungen erzeugen Rechts- und Vertrauensrisiken.",
+      "accept": "Offizielle Marken erscheinen nur mit erlaubter Nutzung und einem überprüfbaren Zertifikat.",
+      "example": "Das Portal zeigt INTERN AUDITIERT statt ISO ZERTIFIZIERT, wenn keine akkreditierte Stelle beteiligt war."
+    },
+    {
+      "title": "Barrierefreiheit und Performance-Budget",
+      "code": "A11Y",
+      "problem": "Komplexe Graphiken, animierte Dashboards und Kontrastfarben können Nutzergruppen ausschließen.",
+      "goal": "WCAG-orientierte Komponenten mit reduzierter Bewegung, Tastaturführung und verständlichen Fehlermeldungen.",
+      "interface": "Token für Farbkontrast, focus-visible, aria-label, reduced-motion und lokalisierte Statusnamen.",
+      "risk": "Screenreader erhalten möglicherweise eine falsche Reihenfolge oder rein dekorative Warnungen.",
+      "accept": "Automatisierte Axe-Prüfung und manuelle Tastaturtests bestehen auf zentralen Use Cases.",
+      "example": "Eine Warnung ist mit Text und Symbol wahrnehmbar und nicht nur rot gefärbt."
+    },
+    {
+      "title": "Mehrsprachigkeit und Rechtsräume",
+      "code": "L10N",
+      "problem": "Internationale Normen und Mandate unterscheiden sich nach Rechtsraum und Nutzerrolle.",
+      "goal": "Jurisdiction Resolver wählt Texte, Rechtsgrundlagen und Anforderungen anhand belegter Anwendbarkeit.",
+      "interface": "LegalApplicability mit country, sector, legal_role, legal_basis, version und review_date.",
+      "risk": "Eine generische EU-Regel könnte fälschlich auf USA oder CH übertragen werden.",
+      "accept": "Jede länderspezifische Aussage besitzt einen Normverweis und letzten Reviewzeitpunkt.",
+      "example": "DE, EN und FR zeigen dieselbe technische Prüfung, aber korrekte regionale Rechtskontexte."
+    },
+    {
+      "title": "Observability ohne Datenleckage",
+      "code": "OBS",
+      "problem": "Telemetrie ist nützlich, darf aber sensible Nutzdaten, Prompts oder Schlüssel nicht exponieren.",
+      "goal": "Metriken und strukturelle Ereignisse werden ohne Payloads, mit Sampling und striktem Redaction-Schema erhoben.",
+      "interface": "EventSchema mit severity, request_id, elapsed_ms, control_id und secret_scrub_result.",
+      "risk": "Selbst gut gemeinte Debug-Protokolle könnten echte Bankdaten enthalten.",
+      "accept": "Redaction-Fuzzing bestätigt, dass keine Test-Token oder personenbezogenen Werte gespeichert werden.",
+      "example": "Eine Fehlermeldung nennt einen anonymen Referenzcode statt einer IBAN."
+    },
+    {
+      "title": "Threat Modeling und Red Team",
+      "code": "THREAT",
+      "problem": "Die bisherige Regex-Erkennung ist hilfreich, aber gegen Toolmissbrauch und Supply-Chain-Angriffe unvollständig.",
+      "goal": "STRIDE, ATT&CK-Mapping und Missbrauchsszenarien werden pro Integrationsgrenze modelliert.",
+      "interface": "ThreatRecord mit actor, trust_boundary, abuse_case, impact, mitigation, test und residual_risk.",
+      "risk": "Insbesondere URI-Schemas, Archive, dynamische Imports und Agenten-Tools erlauben Umgehungen.",
+      "accept": "Jede High-Risk-Grenze hat mindestens einen Negativtest und dokumentierte Restrestrisiken.",
+      "example": "Eine manipulierte URL mit javascript-Schema wird im Webkatalog blockiert."
+    },
+    {
+      "title": "Supply Chain und sichere Builds",
+      "code": "SLSA",
+      "problem": "Eine Liste von Projektnamen sagt nichts über den tatsächlich ausgelieferten Binärinhalt aus.",
+      "goal": "Build-Provenienz, SBOM, gepinnte Abhängigkeiten und signierte Artefakte bilden eine gemeinsame Kette.",
+      "interface": "ReleaseManifest mit commit, dependency_lock, builder_id, SBoM_digest, build_hash und verification_method.",
+      "risk": "Ungeprüfte Netzwerkdownloads und Binary-Replacement gefährden die portable Distribution.",
+      "accept": "Ein externer Prüfer kann das Paket auf exakt definierte Quellen und Binärhashes zurückführen.",
+      "example": "Ein AppImage wird nur veröffentlicht, wenn Hash, Signatur und vorab geprüftes Manifest übereinstimmen."
+    },
+    {
+      "title": "Backup und Recovery als Fertigkeit",
+      "code": "BCP",
+      "problem": "Ein Backup, das sich extrahieren lässt, belegt noch nicht die vollständige Wiederanlaufbarkeit.",
+      "goal": "Restore-Drills testen Integrität, Anwendungen, Datenkonsistenz und geheimnisfreie Wiederherstellung.",
+      "interface": "RestoreRun mit archive_digest, restoration_scope, RTO, RPO, file_parity und verified_by.",
+      "risk": "Ein Archiv kann unvollständige Tabellen oder unsichere Symlinks enthalten.",
+      "accept": "Vollständiger Hashvergleich, kontrollierte Extraktion und simuliertes Anlaufen mit synthetischen Daten.",
+      "example": "Eine monatliche Testwiederherstellung erreicht das definierte RTO, ohne den Host zu verändern."
+    },
+    {
+      "title": "Releasemanagement und Rollback",
+      "code": "REL",
+      "problem": "Häufige Commits und Tags brauchen klare Stufen zwischen Experiment, Pilot und Veröffentlichung.",
+      "goal": "A signiertes Release-Promotionsmodell trennt Dev, Synthetic, Audit und Production mit Rollbackbedingungen.",
+      "interface": "ReleaseRecord mit stage, artifact_digest, approvals, gate_results, rollback_image und change_window.",
+      "risk": "Feste Produktivlabels könnten bei neuen Fehlern unverändert bestehen bleiben.",
+      "accept": "Ein neues Release ist ohne unabhängige Gate- und Policy-Nachweise nicht promotierbar.",
+      "example": "Bei Fehlalarm wird das zuletzt freigegebene Paket ohne Neuinstallation wiederhergestellt."
+    },
+    {
+      "title": "Finanzplanung und Betriebsmodell",
+      "code": "OPS",
+      "problem": "Viele Module erhöhen den Nutzen, erzeugen aber auch laufende Wartungs- und Prüflasten.",
+      "goal": "Kosten- und Kapazitätsbudgets werden pro Service, Datenzone und externem Connector geplant.",
+      "interface": "BudgetCard mit unit_cost, usage_cap, license_obligation, maintenance_owner und cost_ceiling.",
+      "risk": "Ein scheinbar kostenloser Dienst kann teure Nutzung, Datenabfluss oder Lizenzpflichten auslösen.",
+      "accept": "Keine Funktion verlässt die Pilotphase ohne Kostendeckel, Exit-Plan und vollständige Abhängigkeiten.",
+      "example": "Ein neuer Open-Banking-Connector hat getrennte monatliche Kosten- und Risikoobergrenzen."
+    },
+    {
+      "title": "Roadmap, KPIs und Governance-Rhythmus",
+      "code": "ROAD",
+      "problem": "Die technische Breite verlangt eine klare Reihenfolge und messbare Qualitätsdefinitionen.",
+      "goal": "Eine priorisierte 90/180/365-Tage-Roadmap ordnet Sicherheitsgrenzen vor UI-Politur und optionalen Integrationen.",
+      "interface": "RoadmapItem mit value, dependency, effort, risk_reduction, owner, milestone und evidence_target.",
+      "risk": "Arbeit an attraktiven Oberflächen kann existenzielle Sicherheitsblocker verdrängen.",
+      "accept": "In jedem Sprint wird nach negativen Tests, Belegabdeckung und Nutzbarkeit statt Featurezahl priorisiert.",
+      "example": "Sprint 1 beseitigt irreversible Risiken; Sprint 2 verbessert die Bedienung; Sprint 3 skaliert Integrationen."
+    }
+  ],
+  "B": [
+    {
+      "title": "Requirements Engineering",
+      "challenge": "Abnahmekriterien statt Wunschlisten",
+      "scenario": "Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests",
+      "terms": [
+        [
+          "REQ",
+          "Requirement"
+        ],
+        [
+          "NFR",
+          "Nonfunctional Requirement"
+        ],
+        [
+          "SLO",
+          "Service Level Objective"
+        ],
+        [
+          "SLI",
+          "Service Level Indicator"
+        ],
+        [
+          "DoD",
+          "Definition of Done"
+        ],
+        [
+          "AC",
+          "Acceptance Criteria"
+        ],
+        [
+          "RACI",
+          "Responsible Accountable Consulted Informed"
+        ],
+        [
+          "ADR",
+          "Architecture Decision Record"
+        ],
+        [
+          "RFC",
+          "Request for Comments"
+        ]
+      ]
+    },
+    {
+      "title": "Information Architecture",
+      "challenge": "Nutzeraufgaben über Organisationsmodule stellen",
+      "scenario": "Suche nach Auditbelegen statt Navigation nach Python-Datei",
+      "terms": [
+        [
+          "IA",
+          "Information Architecture"
+        ],
+        [
+          "JTBD",
+          "Jobs To Be Done"
+        ],
+        [
+          "Sitemap",
+          "Navigation Map"
+        ],
+        [
+          "Taxonomy",
+          "Klassifikation"
+        ],
+        [
+          "Ontology",
+          "Begriffsmodell"
+        ],
+        [
+          "Facet",
+          "Suchfiltermerkmal"
+        ],
+        [
+          "Breadcrumb",
+          "Navigationspfad"
+        ],
+        [
+          "ContentType",
+          "Inhaltsmodell"
+        ],
+        [
+          "CardSort",
+          "Karten-Sortierung"
+        ]
+      ]
+    },
+    {
+      "title": "Experience Design",
+      "challenge": "Konsequenzen vor attraktiven Animationen sichtbar machen",
+      "scenario": "Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau",
+      "terms": [
+        [
+          "XD",
+          "Experience Design"
+        ],
+        [
+          "UX",
+          "User Experience"
+        ],
+        [
+          "UI",
+          "User Interface"
+        ],
+        [
+          "CX",
+          "Customer Experience"
+        ],
+        [
+          "HCD",
+          "Human-Centered Design"
+        ],
+        [
+          "UCD",
+          "User-Centered Design"
+        ],
+        [
+          "HE",
+          "Heuristic Evaluation"
+        ],
+        [
+          "SUS",
+          "System Usability Scale"
+        ],
+        [
+          "UXR",
+          "User Experience Research"
+        ]
+      ]
+    },
+    {
+      "title": "Design Systems",
+      "challenge": "Barrierefreie wiederverwendbare Komponenten und Tokens",
+      "scenario": "Statuskarte mit Fehler- und Unbekanntzustand",
+      "terms": [
+        [
+          "DT",
+          "Design Token"
+        ],
+        [
+          "DS",
+          "Design System"
+        ],
+        [
+          "A11Y",
+          "Accessibility"
+        ],
+        [
+          "ARIA",
+          "Accessible Rich Internet Applications"
+        ],
+        [
+          "RTL",
+          "Right-to-Left"
+        ],
+        [
+          "WCAG",
+          "Web Content Accessibility Guidelines"
+        ],
+        [
+          "L10N",
+          "Localization"
+        ],
+        [
+          "I18N",
+          "Internationalization"
+        ],
+        [
+          "Figma",
+          "Design Collaboration Tool"
+        ]
+      ]
+    },
+    {
+      "title": "Frontend Architecture",
+      "challenge": "Sichere Rendering-Grenzen für untrusted CSV",
+      "scenario": "Repository-Karten ohne riskante href-Schemas",
+      "terms": [
+        [
+          "SPA",
+          "Single Page Application"
+        ],
+        [
+          "SSR",
+          "Server-Side Rendering"
+        ],
+        [
+          "SSG",
+          "Static Site Generation"
+        ],
+        [
+          "CSP",
+          "Content Security Policy"
+        ],
+        [
+          "DOM",
+          "Document Object Model"
+        ],
+        [
+          "XSS",
+          "Cross-Site Scripting"
+        ],
+        [
+          "CSRF",
+          "Cross-Site Request Forgery"
+        ],
+        [
+          "SRI",
+          "Subresource Integrity"
+        ],
+        [
+          "CORS",
+          "Cross-Origin Resource Sharing"
+        ]
+      ]
+    },
+    {
+      "title": "Backend Services",
+      "challenge": "Trennung von Read Models und Befehlsausführung",
+      "scenario": "Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte",
+      "terms": [
+        [
+          "REST",
+          "Representational State Transfer"
+        ],
+        [
+          "RPC",
+          "Remote Procedure Call"
+        ],
+        [
+          "DTO",
+          "Data Transfer Object"
+        ],
+        [
+          "BFF",
+          "Backend for Frontend"
+        ],
+        [
+          "CQRS",
+          "Command Query Responsibility Segregation"
+        ],
+        [
+          "DDD",
+          "Domain-Driven Design"
+        ],
+        [
+          "ORM",
+          "Object Relational Mapping"
+        ],
+        [
+          "CRUD",
+          "Create Read Update Delete"
+        ],
+        [
+          "HTTP",
+          "Hypertext Transfer Protocol"
+        ]
+      ]
+    },
+    {
+      "title": "Data Contracts",
+      "challenge": "Versionierte JSON-Nachrichten und Validatoren",
+      "scenario": "Audit-Event bleibt bei UI-Update rückwärtskompatibel",
+      "terms": [
+        [
+          "JSON",
+          "JavaScript Object Notation"
+        ],
+        [
+          "JSONS",
+          "JSON Schema"
+        ],
+        [
+          "YAML",
+          "YAML Ain't Markup Language"
+        ],
+        [
+          "CSV",
+          "Comma-Separated Values"
+        ],
+        [
+          "XML",
+          "Extensible Markup Language"
+        ],
+        [
+          "XSD",
+          "XML Schema Definition"
+        ],
+        [
+          "Protobuf",
+          "Protocol Buffers"
+        ],
+        [
+          "Avro",
+          "Apache Avro"
+        ],
+        [
+          "IDL",
+          "Interface Definition Language"
+        ]
+      ]
+    },
+    {
+      "title": "API Governance",
+      "challenge": "Explizite Connector-Autorisierung ohne implizite Rechte",
+      "scenario": "Read-only Banking Vertrag und stufenweise Versionierung",
+      "terms": [
+        [
+          "OpenAPI",
+          "OpenAPI Specification"
+        ],
+        [
+          "AsyncAPI",
+          "AsyncAPI Specification"
+        ],
+        [
+          "SDK",
+          "Software Development Kit"
+        ],
+        [
+          "API",
+          "Application Programming Interface"
+        ],
+        [
+          "SemVer",
+          "Semantic Versioning"
+        ],
+        [
+          "OAuth",
+          "Open Authorization"
+        ],
+        [
+          "OIDC",
+          "OpenID Connect"
+        ],
+        [
+          "JWT",
+          "JSON Web Token"
+        ],
+        [
+          "IdemKey",
+          "Idempotency Key"
+        ]
+      ]
+    },
+    {
+      "title": "Event-Driven Design",
+      "challenge": "Doppelte Events führen nicht zu doppelten Aktionen",
+      "scenario": "Signiertes Gate-Ergebnis über eine Event-Schnittstelle",
+      "terms": [
+        [
+          "EDA",
+          "Event-Driven Architecture"
+        ],
+        [
+          "DLQ",
+          "Dead Letter Queue"
+        ],
+        [
+          "CDC",
+          "Change Data Capture"
+        ],
+        [
+          "Outbox",
+          "Transactional Outbox"
+        ],
+        [
+          "Saga",
+          "Distributed Transaction Coordination"
+        ],
+        [
+          "ETag",
+          "Entity Tag"
+        ],
+        [
+          "TTL",
+          "Time To Live"
+        ],
+        [
+          "ACK",
+          "Acknowledgment"
+        ],
+        [
+          "NACK",
+          "Negative Acknowledgment"
+        ]
+      ]
+    },
+    {
+      "title": "Identity & Access",
+      "challenge": "Rechte auf Session, Zweck und Ressource begrenzen",
+      "scenario": "Einwilligung wird bei Sperrung überall widerrufen",
+      "terms": [
+        [
+          "IAM",
+          "Identity and Access Management"
+        ],
+        [
+          "RBAC",
+          "Role-Based Access Control"
+        ],
+        [
+          "ABAC",
+          "Attribute-Based Access Control"
+        ],
+        [
+          "PDP",
+          "Policy Decision Point"
+        ],
+        [
+          "PEP",
+          "Policy Enforcement Point"
+        ],
+        [
+          "MFA",
+          "Multi-Factor Authentication"
+        ],
+        [
+          "TOTP",
+          "Time-Based One-Time Password"
+        ],
+        [
+          "SSO",
+          "Single Sign-On"
+        ],
+        [
+          "SCIM",
+          "System for Cross-domain Identity Management"
+        ]
+      ]
+    },
+    {
+      "title": "Secrets & Cryptography",
+      "challenge": "Schlüssel nicht in Chat, ZIP oder Telemetrie exportieren",
+      "scenario": "Trennung von Signier- und Authentifikationsschlüsseln",
+      "terms": [
+        [
+          "KMS",
+          "Key Management Service"
+        ],
+        [
+          "HSM",
+          "Hardware Security Module"
+        ],
+        [
+          "PKI",
+          "Public Key Infrastructure"
+        ],
+        [
+          "KDF",
+          "Key Derivation Function"
+        ],
+        [
+          "AEAD",
+          "Authenticated Encryption with Associated Data"
+        ],
+        [
+          "AES",
+          "Advanced Encryption Standard"
+        ],
+        [
+          "Ed25519",
+          "Edwards-curve Digital Signature"
+        ],
+        [
+          "SHA-256",
+          "Secure Hash Algorithm 256"
+        ],
+        [
+          "JWK",
+          "JSON Web Key"
+        ]
+      ]
+    },
+    {
+      "title": "Software Supply Chain",
+      "challenge": "Quellcode- und Binary-Provenienz nachweisen",
+      "scenario": "AppImage-Hash, SBOM und Repo-SHA nachvollziehbar",
+      "terms": [
+        [
+          "SBOM",
+          "Software Bill of Materials"
+        ],
+        [
+          "SLSA",
+          "Supply-chain Levels for Software Artifacts"
+        ],
+        [
+          "SCA",
+          "Software Composition Analysis"
+        ],
+        [
+          "SAST",
+          "Static Application Security Testing"
+        ],
+        [
+          "DAST",
+          "Dynamic Application Security Testing"
+        ],
+        [
+          "IAST",
+          "Interactive Application Security Testing"
+        ],
+        [
+          "VEX",
+          "Vulnerability Exploitability eXchange"
+        ],
+        [
+          "CVE",
+          "Common Vulnerabilities and Exposures"
+        ],
+        [
+          "CWE",
+          "Common Weakness Enumeration"
+        ]
+      ]
+    },
+    {
+      "title": "Testing Strategy",
+      "challenge": "Eigenschaften und Risiken testen statt nur Demo-Erfolg",
+      "scenario": "Manipulierter SHA oder falsche Banking-Permission muss scheitern",
+      "terms": [
+        [
+          "UT",
+          "Unit Test"
+        ],
+        [
+          "IT",
+          "Integration Test"
+        ],
+        [
+          "E2E",
+          "End-to-End Test"
+        ],
+        [
+          "UAT",
+          "User Acceptance Test"
+        ],
+        [
+          "PBT",
+          "Property-Based Testing"
+        ],
+        [
+          "Fuzz",
+          "Fuzz Testing"
+        ],
+        [
+          "MutTest",
+          "Mutation Testing"
+        ],
+        [
+          "Snapshot",
+          "Snapshot Testing"
+        ],
+        [
+          "TDD",
+          "Test-Driven Development"
+        ]
+      ]
+    },
+    {
+      "title": "Continuous Delivery",
+      "challenge": "Releases ohne stilles Rechtewachstum freigeben",
+      "scenario": "Signierte Stufen Dev bis Release mit Rollback",
+      "terms": [
+        [
+          "CI",
+          "Continuous Integration"
+        ],
+        [
+          "CD",
+          "Continuous Delivery"
+        ],
+        [
+          "GitOps",
+          "Git Operations Model"
+        ],
+        [
+          "IaC",
+          "Infrastructure as Code"
+        ],
+        [
+          "CICD",
+          "CI/CD Pipeline"
+        ],
+        [
+          "Canary",
+          "Incremental Rollout"
+        ],
+        [
+          "BlueGreen",
+          "Blue-Green Deployment"
+        ],
+        [
+          "Rollback",
+          "Release Reversal"
+        ],
+        [
+          "RC",
+          "Release Candidate"
+        ]
+      ]
+    },
+    {
+      "title": "Runtime Isolation",
+      "challenge": "Air-Gap nur behaupten wenn unabhängig erzwungen",
+      "scenario": "Launcher lehnt fehlendes No-Egress-Evidence ab",
+      "terms": [
+        [
+          "AirGap",
+          "Physically or Technically Isolated Network"
+        ],
+        [
+          "Egress",
+          "Outbound Network Traffic"
+        ],
+        [
+          "Seccomp",
+          "Linux Syscall Filtering"
+        ],
+        [
+          "MAC",
+          "Mandatory Access Control"
+        ],
+        [
+          "DAC",
+          "Discretionary Access Control"
+        ],
+        [
+          "LSM",
+          "Linux Security Module"
+        ],
+        [
+          "UID",
+          "User Identifier"
+        ],
+        [
+          "FUSE",
+          "Filesystem in Userspace"
+        ],
+        [
+          "Rootless",
+          "Without Elevated Privileges"
+        ]
+      ]
+    },
+    {
+      "title": "Resilience and Backup",
+      "challenge": "Wiederherstellung aller kritischen Dateien nachvollziehen",
+      "scenario": "Borg-Archiv auf synthetischen Daten wiederherstellen",
+      "terms": [
+        [
+          "BCP",
+          "Business Continuity Plan"
+        ],
+        [
+          "DRP",
+          "Disaster Recovery Plan"
+        ],
+        [
+          "RTO",
+          "Recovery Time Objective"
+        ],
+        [
+          "RPO",
+          "Recovery Point Objective"
+        ],
+        [
+          "MTTR",
+          "Mean Time To Recovery"
+        ],
+        [
+          "MTBF",
+          "Mean Time Between Failures"
+        ],
+        [
+          "HA",
+          "High Availability"
+        ],
+        [
+          "PITR",
+          "Point-in-Time Recovery"
+        ],
+        [
+          "3-2-1",
+          "Backup Copy Rule"
+        ]
+      ]
+    },
+    {
+      "title": "Observability",
+      "challenge": "Keine personenbezogenen Zahlungsdaten in Logs",
+      "scenario": "Request-Latenz und Gate-Fails anonym korrelieren",
+      "terms": [
+        [
+          "OTel",
+          "OpenTelemetry"
+        ],
+        [
+          "SIEM",
+          "Security Information and Event Management"
+        ],
+        [
+          "SOAR",
+          "Security Orchestration Automation and Response"
+        ],
+        [
+          "APM",
+          "Application Performance Monitoring"
+        ],
+        [
+          "RUM",
+          "Real User Monitoring"
+        ],
+        [
+          "P95",
+          "95th Percentile"
+        ],
+        [
+          "RED",
+          "Rate Errors Duration"
+        ],
+        [
+          "USE",
+          "Utilization Saturation Errors"
+        ],
+        [
+          "SRE",
+          "Site Reliability Engineering"
+        ]
+      ]
+    },
+    {
+      "title": "Threat Modeling",
+      "challenge": "Angriffspfade als Tests statt nur Text",
+      "scenario": "Agent-Prompt darf keine Tools freischalten",
+      "terms": [
+        [
+          "STRIDE",
+          "Spoofing Tampering Repudiation Information disclosure Denial of service Elevation of privilege"
+        ],
+        [
+          "DREAD",
+          "Damage Reproducibility Exploitability Affected users Discoverability"
+        ],
+        [
+          "ATTACK",
+          "MITRE ATT&CK"
+        ],
+        [
+          "TTP",
+          "Tactics Techniques Procedures"
+        ],
+        [
+          "KEV",
+          "Known Exploited Vulnerabilities"
+        ],
+        [
+          "IOC",
+          "Indicator of Compromise"
+        ],
+        [
+          "TLP",
+          "Traffic Light Protocol"
+        ],
+        [
+          "STIX",
+          "Structured Threat Information Expression"
+        ],
+        [
+          "TAXII",
+          "Trusted Automated Exchange of Intelligence Information"
+        ]
+      ]
+    },
+    {
+      "title": "Privacy Engineering",
+      "challenge": "Datenzwecke und Retention vor Implementierung",
+      "scenario": "Löschauftrag propagiert in Read Models und Backups",
+      "terms": [
+        [
+          "PII",
+          "Personally Identifiable Information"
+        ],
+        [
+          "DPIA",
+          "Data Protection Impact Assessment"
+        ],
+        [
+          "ROPA",
+          "Record of Processing Activities"
+        ],
+        [
+          "DSAR",
+          "Data Subject Access Request"
+        ],
+        [
+          "PET",
+          "Privacy Enhancing Technology"
+        ],
+        [
+          "DLP",
+          "Data Loss Prevention"
+        ],
+        [
+          "Pseudonymization",
+          "Reversible Identifier Separation"
+        ],
+        [
+          "Anonymization",
+          "Non-Reidentifiable Processing"
+        ],
+        [
+          "TOM",
+          "Technical and Organizational Measures"
+        ]
+      ]
+    },
+    {
+      "title": "GRC and Compliance",
+      "challenge": "Normanforderung direkt mit Test und Beweis verbinden",
+      "scenario": "M07 Domain Trust erfordert autorisierte Herkunftsnachweise",
+      "terms": [
+        [
+          "GRC",
+          "Governance Risk Compliance"
+        ],
+        [
+          "ISMS",
+          "Information Security Management System"
+        ],
+        [
+          "AIMS",
+          "AI Management System"
+        ],
+        [
+          "PIMS",
+          "Privacy Information Management System"
+        ],
+        [
+          "BCMS",
+          "Business Continuity Management System"
+        ],
+        [
+          "SoA",
+          "Statement of Applicability"
+        ],
+        [
+          "CAPA",
+          "Corrective and Preventive Action"
+        ],
+        [
+          "KRI",
+          "Key Risk Indicator"
+        ],
+        [
+          "KPI",
+          "Key Performance Indicator"
+        ]
+      ]
+    },
+    {
+      "title": "Evidence Engineering",
+      "challenge": "Belege unveränderbar und scopegebunden halten",
+      "scenario": "Gate PASS verfällt nach geänderter Binary",
+      "terms": [
+        [
+          "Merkle",
+          "Merkle Tree"
+        ],
+        [
+          "HashChain",
+          "Chained Digest Log"
+        ],
+        [
+          "Attest",
+          "Signed Attestation"
+        ],
+        [
+          "Provenance",
+          "Artifact Origin Proof"
+        ],
+        [
+          "WORM",
+          "Write Once Read Many"
+        ],
+        [
+          "Timestamp",
+          "Trusted Time Evidence"
+        ],
+        [
+          "OCSP",
+          "Online Certificate Status Protocol"
+        ],
+        [
+          "CRL",
+          "Certificate Revocation List"
+        ],
+        [
+          "ETSI",
+          "European Telecommunications Standards Institute"
+        ]
+      ]
+    },
+    {
+      "title": "Agents & LLM Integration",
+      "challenge": "Modellvorschläge und Rechte durch getrennte Ebenen",
+      "scenario": "Harness Loop mit unabhängigen Testorakeln",
+      "terms": [
+        [
+          "LLM",
+          "Large Language Model"
+        ],
+        [
+          "RAG",
+          "Retrieval-Augmented Generation"
+        ],
+        [
+          "MCP",
+          "Model Context Protocol"
+        ],
+        [
+          "A2A",
+          "Agent-to-Agent Protocol"
+        ],
+        [
+          "ReAct",
+          "Reasoning and Acting Pattern"
+        ],
+        [
+          "RBA",
+          "Risk-Based Approval"
+        ],
+        [
+          "HITL",
+          "Human in the Loop"
+        ],
+        [
+          "HCL",
+          "Harness Control Loop"
+        ],
+        [
+          "ToolGate",
+          "External Tool Policy Gate"
+        ]
+      ]
+    },
+    {
+      "title": "Model Evaluation",
+      "challenge": "Keine errechnete Modellqualität ohne Benchmark",
+      "scenario": "BOBA-Kette reproduzierbar mit Negativfällen messen",
+      "terms": [
+        [
+          "Eval",
+          "Model Evaluation"
+        ],
+        [
+          "GoldenSet",
+          "Curated Reference Dataset"
+        ],
+        [
+          "Drift",
+          "Model Distribution Shift"
+        ],
+        [
+          "ECE",
+          "Expected Calibration Error"
+        ],
+        [
+          "FPR",
+          "False Positive Rate"
+        ],
+        [
+          "FNR",
+          "False Negative Rate"
+        ],
+        [
+          "TPR",
+          "True Positive Rate"
+        ],
+        [
+          "Confidence",
+          "Calibrated Confidence"
+        ],
+        [
+          "Oracle",
+          "Independent Test Oracle"
+        ]
+      ]
+    },
+    {
+      "title": "Search and Knowledge",
+      "challenge": "Dokumentantwort mit Quelle statt Halluzination",
+      "scenario": "Normen-Crosswalk mit markierten Unsicherheiten",
+      "terms": [
+        [
+          "IR",
+          "Information Retrieval"
+        ],
+        [
+          "BM25",
+          "Best Matching 25"
+        ],
+        [
+          "ANN",
+          "Approximate Nearest Neighbor"
+        ],
+        [
+          "RRF",
+          "Reciprocal Rank Fusion"
+        ],
+        [
+          "KG",
+          "Knowledge Graph"
+        ],
+        [
+          "RDF",
+          "Resource Description Framework"
+        ],
+        [
+          "SPARQL",
+          "SPARQL Protocol and RDF Query Language"
+        ],
+        [
+          "Rerank",
+          "Search Result Re-ranking"
+        ],
+        [
+          "Citation",
+          "Source Reference"
+        ]
+      ]
+    },
+    {
+      "title": "Data Storage",
+      "challenge": "Souveräne lokale Daten und definierte TTL",
+      "scenario": "Replikation ausschließlich nach freigegebener Zone",
+      "terms": [
+        [
+          "OLTP",
+          "Online Transaction Processing"
+        ],
+        [
+          "OLAP",
+          "Online Analytical Processing"
+        ],
+        [
+          "ACID",
+          "Atomicity Consistency Isolation Durability"
+        ],
+        [
+          "BASE",
+          "Basically Available Soft state Eventual consistency"
+        ],
+        [
+          "MVCC",
+          "Multi-Version Concurrency Control"
+        ],
+        [
+          "WAL",
+          "Write-Ahead Log"
+        ],
+        [
+          "ETL",
+          "Extract Transform Load"
+        ],
+        [
+          "ELT",
+          "Extract Load Transform"
+        ],
+        [
+          "CDC",
+          "Change Data Capture"
+        ]
+      ]
+    },
+    {
+      "title": "Networking & DNS",
+      "challenge": "Domains verifizieren ohne Hoheitsrechte abzuleiten",
+      "scenario": "DNSSEC TLS RDAP werden als technische Nachweise getrennt",
+      "terms": [
+        [
+          "DNS",
+          "Domain Name System"
+        ],
+        [
+          "DNSSEC",
+          "DNS Security Extensions"
+        ],
+        [
+          "TLS",
+          "Transport Layer Security"
+        ],
+        [
+          "mTLS",
+          "Mutual TLS"
+        ],
+        [
+          "RDAP",
+          "Registration Data Access Protocol"
+        ],
+        [
+          "HSTS",
+          "HTTP Strict Transport Security"
+        ],
+        [
+          "PKIX",
+          "Public Key Infrastructure X.509"
+        ],
+        [
+          "CT",
+          "Certificate Transparency"
+        ],
+        [
+          "ACME",
+          "Automated Certificate Management Environment"
+        ]
+      ]
+    },
+    {
+      "title": "Open Banking",
+      "challenge": "Expliziter Kontozugriff ohne Zahlungsrecht",
+      "scenario": "Nur lesende Transaktionen an M08 senden",
+      "terms": [
+        [
+          "AIS",
+          "Account Information Service"
+        ],
+        [
+          "AISP",
+          "Account Information Service Provider"
+        ],
+        [
+          "PIS",
+          "Payment Initiation Service"
+        ],
+        [
+          "PISP",
+          "Payment Initiation Service Provider"
+        ],
+        [
+          "SCA",
+          "Strong Customer Authentication"
+        ],
+        [
+          "PSD2",
+          "Payment Services Directive 2"
+        ],
+        [
+          "SEPA",
+          "Single Euro Payments Area"
+        ],
+        [
+          "IBAN",
+          "International Bank Account Number"
+        ],
+        [
+          "BIC",
+          "Business Identifier Code"
+        ]
+      ]
+    },
+    {
+      "title": "Payment Integration",
+      "challenge": "Transaktionszustände und Risiko sauber modellieren",
+      "scenario": "Keine Zahlungsausführung durch Analysemodul",
+      "terms": [
+        [
+          "PSP",
+          "Payment Service Provider"
+        ],
+        [
+          "EMI",
+          "Electronic Money Institution"
+        ],
+        [
+          "PI",
+          "Payment Institution"
+        ],
+        [
+          "RTGS",
+          "Real-Time Gross Settlement"
+        ],
+        [
+          "ACH",
+          "Automated Clearing House"
+        ],
+        [
+          "SCT",
+          "SEPA Credit Transfer"
+        ],
+        [
+          "SCTInst",
+          "SEPA Instant Credit Transfer"
+        ],
+        [
+          "RTP",
+          "Real-Time Payments"
+        ],
+        [
+          "SWIFT",
+          "Society for Worldwide Interbank Financial Telecommunication"
+        ]
+      ]
+    },
+    {
+      "title": "Blockchain Integration",
+      "challenge": "Smart Contracts nur über genehmigte Grenzen anbinden",
+      "scenario": "Read-only Chain-Events getrennt von Signaturaktionen",
+      "terms": [
+        [
+          "DLT",
+          "Distributed Ledger Technology"
+        ],
+        [
+          "EVM",
+          "Ethereum Virtual Machine"
+        ],
+        [
+          "RPC",
+          "Remote Procedure Call"
+        ],
+        [
+          "ABI",
+          "Application Binary Interface"
+        ],
+        [
+          "SC",
+          "Smart Contract"
+        ],
+        [
+          "DID",
+          "Decentralized Identifier"
+        ],
+        [
+          "VC",
+          "Verifiable Credential"
+        ],
+        [
+          "ZKP",
+          "Zero-Knowledge Proof"
+        ],
+        [
+          "MPC",
+          "Multi-Party Computation"
+        ]
+      ]
+    },
+    {
+      "title": "Crypto Asset Risk",
+      "challenge": "Tokenklassifikation vor Wallet-Verbindung prüfen",
+      "scenario": "Wallet ist nicht automatisch reguliertes Konto",
+      "terms": [
+        [
+          "CASP",
+          "Crypto-Asset Service Provider"
+        ],
+        [
+          "VASP",
+          "Virtual Asset Service Provider"
+        ],
+        [
+          "MiCA",
+          "Markets in Crypto-Assets Regulation"
+        ],
+        [
+          "AML",
+          "Anti-Money Laundering"
+        ],
+        [
+          "KYC",
+          "Know Your Customer"
+        ],
+        [
+          "KYB",
+          "Know Your Business"
+        ],
+        [
+          "TravelRule",
+          "Crypto Transfer Information Rule"
+        ],
+        [
+          "CDD",
+          "Customer Due Diligence"
+        ],
+        [
+          "EDD",
+          "Enhanced Due Diligence"
+        ]
+      ]
+    },
+    {
+      "title": "Smart Contract Assurance",
+      "challenge": "Unveränderliche Ausführung benötigt Extra-Vorsicht",
+      "scenario": "Simulierter Settlement-Fail-Test vor Deployment",
+      "terms": [
+        [
+          "Reentrancy",
+          "Recursive Contract Entry"
+        ],
+        [
+          "CEI",
+          "Checks Effects Interactions"
+        ],
+        [
+          "EIP",
+          "Ethereum Improvement Proposal"
+        ],
+        [
+          "ERC",
+          "Ethereum Request for Comments"
+        ],
+        [
+          "Slither",
+          "Static Contract Analyzer"
+        ],
+        [
+          "Foundry",
+          "EVM Testing Toolkit"
+        ],
+        [
+          "Hardhat",
+          "Ethereum Development Environment"
+        ],
+        [
+          "Timelock",
+          "Delayed Administrative Action"
+        ],
+        [
+          "Multisig",
+          "Multi-Signature Authorization"
+        ]
+      ]
+    },
+    {
+      "title": "Web3 UX",
+      "challenge": "Transaktions- und Berechtigungsrisiken sichtbar machen",
+      "scenario": "Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger",
+      "terms": [
+        [
+          "SIWE",
+          "Sign-In with Ethereum"
+        ],
+        [
+          "EIP712",
+          "Typed Structured Data Signing"
+        ],
+        [
+          "Nonce",
+          "Single-Use Random Value"
+        ],
+        [
+          "ChainID",
+          "Blockchain Network Identifier"
+        ],
+        [
+          "Gas",
+          "Transaction Execution Fee"
+        ],
+        [
+          "MEV",
+          "Maximal Extractable Value"
+        ],
+        [
+          "AA",
+          "Account Abstraction"
+        ],
+        [
+          "Paymaster",
+          "Gas Sponsorship Contract"
+        ],
+        [
+          "WalletConnect",
+          "Wallet Connection Protocol"
+        ]
+      ]
+    },
+    {
+      "title": "Release Metadata",
+      "challenge": "Semantik von Zertifizierung und Label unterscheiden",
+      "scenario": "Intern PASS ist nicht extern zertifiziert",
+      "terms": [
+        [
+          "SPDX",
+          "Software Package Data Exchange"
+        ],
+        [
+          "CycloneDX",
+          "SBOM Format"
+        ],
+        [
+          "OSCAL",
+          "Open Security Controls Assessment Language"
+        ],
+        [
+          "SARIF",
+          "Static Analysis Results Interchange Format"
+        ],
+        [
+          "JWS",
+          "JSON Web Signature"
+        ],
+        [
+          "DSSE",
+          "Dead Simple Signing Envelope"
+        ],
+        [
+          "Sigstore",
+          "Open Source Signing Project"
+        ],
+        [
+          "Rekor",
+          "Transparency Log"
+        ],
+        [
+          "SCEP",
+          "Simple Certificate Enrollment Protocol"
+        ]
+      ]
+    },
+    {
+      "title": "Operations Language",
+      "challenge": "Störung, Risiko und Verantwortlichkeit schnell kommunizieren",
+      "scenario": "P1-Vorfall wechselt Status aller betroffenen Belege",
+      "terms": [
+        [
+          "P0",
+          "Critical Incident Priority"
+        ],
+        [
+          "P1",
+          "High Incident Priority"
+        ],
+        [
+          "SOP",
+          "Standard Operating Procedure"
+        ],
+        [
+          "Runbook",
+          "Operational Step Guide"
+        ],
+        [
+          "OnCall",
+          "Incident Response Duty"
+        ],
+        [
+          "RCA",
+          "Root Cause Analysis"
+        ],
+        [
+          "Postmortem",
+          "Incident Learning Review"
+        ],
+        [
+          "ChangeFreeze",
+          "Temporary Release Stop"
+        ],
+        [
+          "SLA",
+          "Service Level Agreement"
+        ]
+      ]
+    }
+  ],
+  "C": [
+    {
+      "title": "Ledger-Boundary und Verantwortlichkeit",
+      "terms": [
+        "DLT",
+        "On-chain",
+        "Off-chain",
+        "Merkle",
+        "Finality",
+        "Nonce",
+        "Indexer",
+        "Reorg"
+      ],
+      "problem": "Ein Blockchain-Ledger besitzt andere Finalitäts- und Datenschutzannahmen als eine Bankdatenbank.",
+      "implementation": "Trenne Beobachtungsadapter, validierten Chain-Index und genehmigte Schreibkommandos durch getrennte Prozesse und Schlüssel.",
+      "risk": "Reorganisationen, unbestätigte Events und unbeabsichtigte Publikation personenbezogener Daten.",
+      "accept": "Ein Read-only Chain-Event kann keine Wallet-Signatur oder Fiat-Überweisung auslösen.",
+      "evidence": "Signiertes Chain-Snapshot, Blockhöhe, Reorg-Test, Kontroll-Hash und Data-Lineage-Protokoll.",
+      "scope": "M08 erhält ausschließlich normalisierte Finanzbeobachtungen; aktive Chain-Operationen gehören in einen anderen genehmigten Capability-Bereich."
+    },
+    {
+      "title": "Wallet-Architektur und Mandantentrennung",
+      "terms": [
+        "Wallet",
+        "HD",
+        "Seed",
+        "MPC",
+        "Multisig",
+        "Smart Account",
+        "AA",
+        "Signer"
+      ],
+      "problem": "Wallet-Adressen und Konten sind nicht identisch; Vermögensinhaber, Betreiber und Schlüsselverwahrer müssen trennbar sein.",
+      "implementation": "Führe Watch-only-Wallets, custodial und non-custodial Varianten als getrennte Produkttypen mit unterschiedlichen Freigaben.",
+      "risk": "Seed-Leaks, unklare Eigentümerschaft und unbemerkte Signaturdelegationen.",
+      "accept": "Ohne ausdrückliche Signaturberechtigung zeigt das Portal Salden an, aber kann keine Assets versenden.",
+      "evidence": "WalletPolicy, Schlüssel-RACI, hardwareisolierte Signaturtests und Recovery-Plan.",
+      "scope": "Eine read-only Aggregation darf weder Seed Phrase noch Private Keys abfragen oder speichern."
+    },
+    {
+      "title": "Schlüsselverwahrung und digitale Signatur",
+      "terms": [
+        "HSM",
+        "KMS",
+        "MPC",
+        "Ed25519",
+        "ECDSA",
+        "ECDH",
+        "Rotation",
+        "Revocation"
+      ],
+      "problem": "Eine technisch gültige Signatur sagt nichts über die rechtliche Berechtigung ihres Unterzeichners aus.",
+      "implementation": "Verwende getrennte Schlüsselhierarchien für Build, Audit, Identität, Blockchain und Zahlung; protokolliere Scope und Laufzeit.",
+      "risk": "Key-Reuse, unkontrollierte Exporte und falsch dargestellte Zertifikatsgüte.",
+      "accept": "Jeder Schlüssel ist an Zweck, Autorität und Widerrufsstatus gebunden; nicht autorisierte Cross-Use-Tests scheitern.",
+      "evidence": "Key Inventory, Rotation Drill, Sperrlisten-Evidence und unabhängige Public-Key-Verifikation.",
+      "scope": "Für reale Custody-Angebote sind die jeweils anwendbaren regulatorischen und vertraglichen Anforderungen zusätzlich zu prüfen."
+    },
+    {
+      "title": "Dezentrale Identität und Wallet-Login",
+      "terms": [
+        "DID",
+        "VC",
+        "OIDC4VC",
+        "SIOP",
+        "SIWE",
+        "SD-JWT",
+        "Nonce",
+        "Proof"
+      ],
+      "problem": "Ein Wallet-Login ist nicht automatisch eine amtliche Identitäts- oder Organisationsprüfung.",
+      "implementation": "Trenne kryptografischen Besitznachweis, Identitätsattribut, Verifiable Credential und organisierte Freigabeprozesse.",
+      "risk": "Replay, Phishing und falsche Interpretation selbstsignierter Claims.",
+      "accept": "Ein DID-Claim verleiht niemals ungeprüft regulatorische Rolle oder Zugriffsrecht.",
+      "evidence": "Issuer-DID, VC-Schema, Ablaufdatum, Revocation-Check, Nonce-Test und Consent-Receipt.",
+      "scope": "FORINA kann verifizierte Claims speichern, ohne daraus unberechtigt einen Behördenstatus abzuleiten."
+    },
+    {
+      "title": "On-chain Event Ingestion und Oracle-Risiko",
+      "terms": [
+        "RPC",
+        "WebSocket",
+        "Indexer",
+        "Oracle",
+        "TWAP",
+        "Reorg",
+        "BlockTag",
+        "ABI"
+      ],
+      "problem": "Blockchain-Knoten melden Ereignisse mit Bestätigungsstufen; off-chain Preis-Orakel besitzen zusätzliche Vertrauensrisiken.",
+      "implementation": "Nutze redundante unabhängige Beobachtungsquellen, Mindestbestätigungen und eindeutige Chain-ID.",
+      "risk": "Manipulierte Orakelpreise und Reorgs führen zu falschen Finanzindikatoren.",
+      "accept": "Preis- und Statusangaben enthalten Quelle, Latenz, Finalitätsgrad und Confidence-Band.",
+      "evidence": "Reorg-Fuzztest, Oracle-Abweichungsbericht, Block-Hash-Protokoll und Retry-Trace.",
+      "scope": "Das Modul darf in unsicheren Netzphasen keine selbstständige Handels- oder Auszahlungsempfehlung als sicher melden."
+    },
+    {
+      "title": "AML- und Sanktionsscreening",
+      "terms": [
+        "AML",
+        "KYC",
+        "KYB",
+        "PEP",
+        "Sanctions",
+        "CDD",
+        "EDD",
+        "TravelRule"
+      ],
+      "problem": "Regulierte Finanzfunktionen verlangen gegebenenfalls Kundenprüfung und risikobasierte Kontrollen.",
+      "implementation": "Definiere zunächst Produkt, Jurisdiktion und Rolle; nutze dann nur rechtmäßige Datenquellen und dokumentierte Trefferprüfung.",
+      "risk": "Falsch-positive Sanktionstreffer können ungerechte Sperren verursachen; falsch-negative gefährden Compliance.",
+      "accept": "Kein automatisch endgültiger Rechts- oder Sanktionsentscheid ohne anwendbare Grundlage und menschliche Prüfung.",
+      "evidence": "Screening-Policy, Data-Provenance, Audit-Review, Trefferklassifizierung und Beschwerdeweg.",
+      "scope": "Die Funktion bleibt in der Pilotphase mit synthetischen Personen-/Entitätsdaten."
+    },
+    {
+      "title": "Organisationsprüfung mit LEI und Register",
+      "terms": [
+        "LEI",
+        "vLEI",
+        "RDAP",
+        "KYB",
+        "UBO",
+        "Registry",
+        "DID",
+        "Credential"
+      ],
+      "problem": "Eine Domain oder Wallet kann ohne belegte juristische Zuordnung nicht als vertrauenswürdige Organisation gelten.",
+      "implementation": "Verbinde kontrollierten Domainnachweis mit amtlichem Register oder LEI und prüfe Identitätsberechtigung und Zeitgültigkeit.",
+      "risk": "Veraltete Registerdaten, Namensgleichheit und unzulässige Amtsbehauptungen.",
+      "accept": "Jeder Organisationsstatus ist reproduzierbar, befristet und an einen geprüften Quellenbeleg gebunden.",
+      "evidence": "Registerauszug-Referenz, Identitäts-Claim, Freigabe-Scope und Prüfzeitpunkt.",
+      "scope": "Kein Trust-Badge für unbekannte Domaininhaber; sichtbarer Status lautet ungeprüft."
+    },
+    {
+      "title": "Privacy-Preserving Proofs und ZKP",
+      "terms": [
+        "ZKP",
+        "ZK-SNARK",
+        "ZK-STARK",
+        "Selective Disclosure",
+        "Commitment",
+        "Nullifier",
+        "Privacy",
+        "DPIA"
+      ],
+      "problem": "Öffentliche Ledger sind für persönliche Kontodaten ungeeignet; Beweiswissen darf keine Identität rekonstruieren.",
+      "implementation": "Prüfe, ob bestimmte Berechtigungseigenschaften ohne Offenlegung der Primärdaten nachweisbar sind.",
+      "risk": "Fehlerhafte Schaltkreise und Linkability untergraben Datenschutzversprechen.",
+      "accept": "Ein Proof wird kryptografisch geprüft; Zugriffe auf Rohdaten bleiben nach Zweck beschränkt.",
+      "evidence": "Proof-Testvektor, Datenschutzauswirkung, Linkability-Test und unabhängiges Audit.",
+      "scope": "ZKP ergänzt DSGVO-Bewertung, ersetzt aber keine Rechtsgrundlage und Löschstrategie."
+    },
+    {
+      "title": "Tokenisierung und rechtliche Asset-Klasse",
+      "terms": [
+        "RWA",
+        "Token",
+        "Claim",
+        "Issuer",
+        "Holder",
+        "Registry",
+        "Rights",
+        "CorporateAction"
+      ],
+      "problem": "Ein Token kann technische Übertragbarkeit besitzen, ohne einen wirksamen Eigentums- oder Forderungsanspruch zu vermitteln.",
+      "implementation": "Erstelle vor Token-Design eine juristische Rechte-Matrix für Asset, Emittent, Verwahrung, Rechtsraum und Investorengruppe.",
+      "risk": "Irreführende Eigentumsversprechen und fehlende Transferbeschränkungen.",
+      "accept": "Jeder Token ist verlinkt mit Rechtsgrundlage, Vertragsbedingungen und zulässigem Inhaberkreis.",
+      "evidence": "Rechte-Matrix, Transferregeln, Corporate-Actions-Test und Rechtsgutachtenstatus.",
+      "scope": "Nur synthetische Assets bis rechtliche Bewertung abgeschlossen ist."
+    },
+    {
+      "title": "Stablecoins und E-Geld-Token",
+      "terms": [
+        "EMT",
+        "ART",
+        "MiCA",
+        "Issuer",
+        "Reserve",
+        "Redemption",
+        "CASP",
+        "Attestation"
+      ],
+      "problem": "Stablecoin-Funktionen sind in der EU nicht pauschal gleichbehandelt; EMT und ART können unterschiedliche Regeln auslösen.",
+      "implementation": "Ordne Token und Tätigkeit zuerst unter MiCA und einschlägiges Zahlungsrecht ein, bevor on-chain Produktivschnittstellen entstehen.",
+      "risk": "Unzureichende Rückzahlungsrechte, Reserven oder Emittenteninformationen.",
+      "accept": "Kein Stablecoin-Badge ohne belegte Klassifikation, Emittenten- und Rechtsstatusprüfung.",
+      "evidence": "Whitepaper-Metadaten, Aufsichtsregisterquelle, Reserve-/Redemption-Anforderung und Risikohinweis.",
+      "scope": "Portal kann Tokens beobachten, aber keine unlizenzierte Ausgabe oder Custody anbieten."
+    },
+    {
+      "title": "Fiat-Konten und IBAN-Aggregation",
+      "terms": [
+        "IBAN",
+        "BIC",
+        "AIS",
+        "AISP",
+        "PSD2",
+        "SCA",
+        "SEPA",
+        "Consent"
+      ],
+      "problem": "Ein Wallet-Anbieter, eine Bank und eine Zahlungsinstitution besitzen unterschiedliche Rollen und Haftung.",
+      "implementation": "Connector-Registry führt IBAN-Kontoarten, Verfügbarkeit, Währungen, consent scopes und Providerspezifikationen getrennt.",
+      "risk": "Datenverwechslungen bei Mehrwährung und versehentlich freigegebene Zahlungsauslösung.",
+      "accept": "Alle Kontoansichten bleiben nachweisbar read-only und erlauben selektives Entfernen eines Providers.",
+      "evidence": "Consent Receipt, Scope-Test, Fx-Datum und Account-Link-Dossier.",
+      "scope": "IBAN-Formate können angezeigt werden, aber keine echten Testkonten in Build-Artefakte kopieren."
+    },
+    {
+      "title": "SEPA und Instant Payment Read Models",
+      "terms": [
+        "SCT",
+        "SCTInst",
+        "SEPA",
+        "ISO20022",
+        "PACS",
+        "PAIN",
+        "CAMT",
+        "PSP"
+      ],
+      "problem": "Instant Payments erfordern präzise Zustands- und Zeitbegriffe; eine Ansicht ist nicht gleich eine Ausführung.",
+      "implementation": "Leseweg verarbeitet normierte Zahlungsereignisse, Settlement-Timestamps und Rückweisungsgründe ohne Schreibrecht.",
+      "risk": "Duplikate, verspätete Events und Inkonsistenzen zwischen PSP und Ledger.",
+      "accept": "Die Finanzansicht zeigt Statusherkunft und klare Unterscheidung von initiated, accepted, settled und failed.",
+      "evidence": "ISO-20022-Mapping, Event-Finality-Test und doppelte Nachrichtenprüfung.",
+      "scope": "Produktive Payment-Initiation bleibt in einer getrennten genehmigten Lösung."
+    },
+    {
+      "title": "Reconciliation und Buchungsabgleich",
+      "terms": [
+        "Reconciliation",
+        "Ledger",
+        "DoubleEntry",
+        "CAMT",
+        "Clearing",
+        "Suspense",
+        "MatchScore",
+        "Fx"
+      ],
+      "problem": "Bank- und Blockchain-Buchungen lassen sich selten nur über Betrag und Händler eindeutig abgleichen.",
+      "implementation": "Nutze mehrstufige Zuordnung über Kontoreferenz, Zeitfenster, Währung, Gegenpartei und belegtes Event.",
+      "risk": "Falsches Zusammenführen oder Doppelerfassung verzerrt Finanzberichte.",
+      "accept": "Abweichungen werden als offene Fälle geführt; es erfolgen keine automatischen Gegenbuchungen.",
+      "evidence": "Reconciliation Run, Match-Confidence, Abweichungsbericht und Prüfprotokoll.",
+      "scope": "Die gleiche Kartenzahlung an zwei Tagen darf nicht automatisch als Double Charge gebucht werden."
+    },
+    {
+      "title": "Zero-Settlement Guardrail",
+      "terms": [
+        "ZeroSettlement",
+        "ReadOnly",
+        "Capability",
+        "PDP",
+        "PEP",
+        "DryRun",
+        "DualControl",
+        "LedgerLock"
+      ],
+      "problem": "Namenslisten zur Blockierung von transfer oder debit sind keine ausreichende technische Schranke.",
+      "implementation": "Entkopple Beobachtungs- und Transaktionszugangsdaten auf Provider-, Prozess- und Policy-Ebene.",
+      "risk": "Umbenannte Zahlungs-APIs oder neue Provider könnten Wörterfilter umgehen.",
+      "accept": "Negativtests für jede bekannte Schreiboperation bestätigen ein tatsächliches Permission Denied vor dem Netzaufruf.",
+      "evidence": "Policy Evaluation, Provider Scope Snapshot, abgelehnte Request-Traces ohne Payloads.",
+      "scope": "Alle echten Geldbewegungen sind außerhalb des Analysemoduls nur mit separater Autorisierung möglich."
+    },
+    {
+      "title": "Smart-Contract-Verifikation",
+      "terms": [
+        "EVM",
+        "ABI",
+        "Foundry",
+        "Slither",
+        "Invariant",
+        "Fuzz",
+        "Timelock",
+        "Audit"
+      ],
+      "problem": "Smart Contracts sind nach Deployment schwierig zu korrigieren und können irreversible Schäden auslösen.",
+      "implementation": "Formuliere Invarianten, Property Tests, unabhängige Reviews und Upgrade- beziehungsweise Pause-Strategie.",
+      "risk": "Reentrancy, Access-Control-Fehler, Oracle-Abhängigkeit, ungeprüfte Upgrades.",
+      "accept": "Keine Produktivfreigabe ohne überprüfbares Bytecode-Source-Match und unabhängige Sicherheitsprüfung.",
+      "evidence": "Proof of Compilation, Testnet-Report, Security Findings, signed approval und timelock configuration.",
+      "scope": "Ein Demo-Contract nutzt ausschließlich synthetische Tokens und keine echten Schlüssel."
+    },
+    {
+      "title": "DeFi-Protokollrisiken",
+      "terms": [
+        "DeFi",
+        "AMM",
+        "LP",
+        "DEX",
+        "Liquidity",
+        "Slippage",
+        "MEV",
+        "Oracle"
+      ],
+      "problem": "DeFi erbt Risiken durch Liquidität, Smart Contracts, Governance und Preisfeeds.",
+      "implementation": "Führe Risikoklassen für Protokolle, Router, Pools, Schlüssel und zugelassene Chains ein.",
+      "risk": "Liquidity Drain, Flash-Loan-Manipulation und Sandwich-Angriffe.",
+      "accept": "Anzeige enthält Risiko, Gebühren, Vertrag und Ausführungszustand, ohne unautorisiert Trades auszulösen.",
+      "evidence": "Pool-Simulation, Slippage-Tests, Oracle-Failure und Benutzerbestätigung.",
+      "scope": "Trading-Simulation ist getrennt von realen Asset-Transfers."
+    },
+    {
+      "title": "Atomic Swaps und HTLC",
+      "terms": [
+        "HTLC",
+        "AtomicSwap",
+        "Hashlock",
+        "Timelock",
+        "Secret",
+        "Refund",
+        "CrossChain",
+        "Finality"
+      ],
+      "problem": "Cross-Chain-Tausch muss unterschiedliche Finalität und Zeitfenster sicher behandeln.",
+      "implementation": "Erstelle in synthetischer Testumgebung eine Zustandsmaschine mit Timeout, Refund und Wiederholschutz.",
+      "risk": "Secret-Leaks und ungleich lange Timelocks können Assets blockieren.",
+      "accept": "Jeder Zustand ist idempotent; Refund ist getestet, bevor Hauptnetzfreigabe denkbar ist.",
+      "evidence": "State-Transition-Tabelle, Timeout-Test und Recovery-Simulation.",
+      "scope": "Ein fehlgeschlagener Tausch darf nicht automatisch über eine zweite Route wiederholt werden."
+    },
+    {
+      "title": "Blockchain Bridges und Wrapped Assets",
+      "terms": [
+        "Bridge",
+        "Wrapped",
+        "Custody",
+        "Validator",
+        "Proof",
+        "Replay",
+        "MintBurn",
+        "Quorum"
+      ],
+      "problem": "Bridges bündeln Vermögenswerte und Vertrauen in wenige Komponenten.",
+      "implementation": "Bewerte Proof-System, Validierungsquorum, Pausenrechte, Custody und Vorfallhistorie vor jeder Integration.",
+      "risk": "Bridge-Hacks, Replay und Doppelprägungen erzeugen systemische Verluste.",
+      "accept": "Standardstatus bleibt Beobachtung; Wertbewegung nur nach separater Risiko- und Rechtsfreigabe.",
+      "evidence": "Bridge Risk File, Multi-Chain Invariant Report und Independent Review.",
+      "scope": "Dashboard zeigt Bridge-Risiken, aber startet keine Brückenübertragung aus M08."
+    },
+    {
+      "title": "DeFi-Lending und Liquidation",
+      "terms": [
+        "LTV",
+        "Collateral",
+        "Borrow",
+        "APR",
+        "Liquidation",
+        "HealthFactor",
+        "Oracle",
+        "Margin"
+      ],
+      "problem": "Leihe und Sicherheiten können Nutzer unerwarteten Liquidationen aussetzen.",
+      "implementation": "Modelliere Kreditpositionen mit Pricing-Staleness, Liquidationsschwelle und Sensitivitätsanalyse.",
+      "risk": "Preisfehler und Hebelwirkung erhöhen Verlustrisiken.",
+      "accept": "Warnungen kennzeichnen Szenarien, nicht garantierte Zukunftsergebnisse.",
+      "evidence": "Stress-Matrix, synthetische Portfoliofälle und Erklärung des Health Factors.",
+      "scope": "Die Plattform empfiehlt ohne geeignete Lizenz und Prüfung keine individuelle Kredit- oder Anlageentscheidung."
+    },
+    {
+      "title": "RWA-Register und Corporate Actions",
+      "terms": [
+        "RWA",
+        "Custodian",
+        "CSD",
+        "RecordDate",
+        "Dividend",
+        "KYC",
+        "TransferAgent",
+        "CapTable"
+      ],
+      "problem": "Tokenisierte Vermögenswerte erfordern Abgleich von Rechtsregister und technischem Ledger.",
+      "implementation": "Verknüpfe Transfer-Agent, Sperrfristen, Berechtigte und Corporate-Action-Ereignisse über geprüfte Interfaces.",
+      "risk": "Widerspruch zwischen on-chain Besitz und rechtlicher Inhaberschaft.",
+      "accept": "Ein Token-Transfer beeinflusst Rechtsstatus nur innerhalb freigegebener Prozesse.",
+      "evidence": "Rechte-Register, Audit Trail, Corporate Action Simulation, Abstimmungsprotokoll.",
+      "scope": "Keine generischen Eigentumssiegel für RWA ohne verifizierte Verträge."
+    },
+    {
+      "title": "DAO-Governance und Fondsgrenzen",
+      "terms": [
+        "DAO",
+        "Proposal",
+        "Quorum",
+        "Voting",
+        "Timelock",
+        "Treasury",
+        "Multisig",
+        "Snapshot"
+      ],
+      "problem": "DAO-Steuerung kann über reine Community-Abstimmungen hinaus rechtliche Pflichten auslösen.",
+      "implementation": "Trenne Governance-Beschlüsse, Ausführung, Aufsicht und Risikoreserven; definiere Quoren und Vetorechte.",
+      "risk": "Governance-Capture und anonyme Stimmen dürfen Finanzrechte nicht automatisch erteilen.",
+      "accept": "Jede Änderung an Funds, Wallets oder Berechtigungen erfordert dokumentierte Regel und Autorisierung.",
+      "evidence": "Proposal-Dossier, Quorum-Proof, Timelock-Status und Approver Evidence.",
+      "scope": "Ein Vorschlag über Treasury-Transfer bleibt bis zur separaten rechtskonformen Freigabe im Entwurf."
+    },
+    {
+      "title": "Treasury und Multi-Currency Exposure",
+      "terms": [
+        "Treasury",
+        "FX",
+        "VaR",
+        "Limit",
+        "Hedge",
+        "Reserve",
+        "Runway",
+        "Cashflow"
+      ],
+      "problem": "Fiat, E-Geld und Crypto lassen sich nicht einfach als gleich sichere Liquidität addieren.",
+      "implementation": "Definiere getrennte Bewertungs- und Liquiditätsklassen mit FX-Quelle, Haircuts und Konzentrationsgrenzen.",
+      "risk": "Kurs- und Gegenparteirisiken können eine scheinbar ausreichende Reserve entwerten.",
+      "accept": "Dashboard weist Valuation-Methodik, Quellzeitpunkt und Stressband aus.",
+      "evidence": "Mark-to-Market-Snapshot, FX-Source, Liquiditätsstress und historische Volatilität.",
+      "scope": "Finanzanalysen bleiben informativ und erzeugen keine automatischen Trades."
+    },
+    {
+      "title": "Digitaler Euro: Integrationsbereitschaft",
+      "terms": [
+        "CBDC",
+        "DigitalEuro",
+        "Wallet",
+        "Privacy",
+        "Offline",
+        "Intermediary",
+        "Settlement",
+        "API"
+      ],
+      "problem": "Digitale-Euro-Schnittstellen dürfen nicht als bereits verfügbare Produktivdienste behauptet werden.",
+      "implementation": "Isoliere ein experimentelles Adapterinterface, dessen Aktivierung von offiziellen Spezifikationen und Berechtigungen abhängt.",
+      "risk": "Scheinbare Kompatibilität kann Verbraucher und Partner täuschen.",
+      "accept": "UI zeigt Forschungs- oder Entwurfsmodus und kennzeichnet unbekannte Integrationsbedingungen.",
+      "evidence": "Compatibility Matrix, Authority Source, Mock-Adapter und deaktivierter Launch Flag.",
+      "scope": "Keine behauptete ECB-Akkreditierung oder EU-Wallet-Zertifizierung."
+    },
+    {
+      "title": "CBDC und Interoperabilitätsmodelle",
+      "terms": [
+        "CBDC",
+        "RTGS",
+        "DvP",
+        "PvP",
+        "ISO20022",
+        "CentralBank",
+        "Token",
+        "DLT"
+      ],
+      "problem": "Zentralbankgeld ist institutionell und technisch von privaten Stablecoins und Tokens zu unterscheiden.",
+      "implementation": "Entwickle abstrakte Message- und Settlement-Modelle mit Rollen-/Jurisdiktionsparametern.",
+      "risk": "Falsche Annahmen über Zahlungsfinalität oder Zentralbankzugang.",
+      "accept": "Prototyp validiert synthetische Transaktionen, ohne reale Zentralbankendpunkte zu berühren.",
+      "evidence": "Sequence-Diagram, Rollenmatrix, ISO20022-Mapping und Finalitätsmatrix.",
+      "scope": "Jeder produktive Adapter setzt eine offizielle Zulassung voraus."
+    },
+    {
+      "title": "Tokenomics und Emissionssteuerung",
+      "terms": [
+        "Supply",
+        "Burn",
+        "Mint",
+        "Vesting",
+        "Inflation",
+        "Unlock",
+        "Governance",
+        "Reserve"
+      ],
+      "problem": "Tokenomics kann Anlegerinteressen, Liquidität und Governance langfristig verändern.",
+      "implementation": "Definiere Emissionsobergrenzen, Vesting, Unlocks, Rechte und Offenlegung unabhängig vom UI-Narrativ.",
+      "risk": "Unklare Token-Rechte oder unrealistische Renditeannahmen.",
+      "accept": "Alle Parameter sind reproduzierbar simulierbar; Auszahlungen oder Anlageratschläge sind separat geregelt.",
+      "evidence": "Supply-Invariant, Governance-Vote, Sensitivität, Risikoerklärung.",
+      "scope": "Demo-Token besitzt keinen wirtschaftlichen Anspruch und wird ausdrücklich als synthetisch markiert."
+    },
+    {
+      "title": "Gas, Gebühren und Gebührenobergrenzen",
+      "terms": [
+        "Gas",
+        "EIP1559",
+        "BaseFee",
+        "PriorityFee",
+        "MEV",
+        "Slippage",
+        "Paymaster",
+        "Estimate"
+      ],
+      "problem": "Gebühren schwanken mit Chain-Zustand und komplexen Smart-Contract-Pfaden.",
+      "implementation": "Zeige Gebühren vor jeder freigegebenen Signaturaktion mit Obergrenze, Ablauf und Anstiegsszenario.",
+      "risk": "Eine falsche Gas-Schätzung kann zu Abbruch oder unerwarteten Kosten führen.",
+      "accept": "Kein Signing ohne aktualisierte Kostenprognose und Nutzerbestätigung der maximalen Kosten.",
+      "evidence": "Gas-Stress-Test, Zeitstempel, Quote-Source, Fallback-Verhalten.",
+      "scope": "Read-only Views zeigen Kosten hypothetisch ohne Nutzerwallet zu belasten."
+    },
+    {
+      "title": "Chain Analytics und Address-Risk",
+      "terms": [
+        "Graph",
+        "Cluster",
+        "Address",
+        "Entity",
+        "Mixer",
+        "RiskScore",
+        "FalsePositive",
+        "Provenance"
+      ],
+      "problem": "Transaktionsgraphen können nützliche Muster zeigen, aber Personen nicht sicher identifizieren.",
+      "implementation": "Erklärung, Unsicherheit und Herkunft jeder Risikoheuristik werden ausgewiesen.",
+      "risk": "Falschzuordnungen schädigen legitime Nutzer oder Partner.",
+      "accept": "Risk Score führt nie ohne unabhängige Prüfung zu endgültiger Sperre oder Identitätsbehauptung.",
+      "evidence": "Attribution-Source, Confidence, Appeal, Bias-Test und Privacy Review.",
+      "scope": "Eine Wallet-Verbindung wird nicht als belegte juristische Person ausgegeben."
+    },
+    {
+      "title": "Betrugs- und Anomalieerkennung",
+      "terms": [
+        "Fraud",
+        "Velocity",
+        "Device",
+        "Behavior",
+        "Anomaly",
+        "Rule",
+        "Model",
+        "Chargeback"
+      ],
+      "problem": "Crypto und Fiat-Betrugsmuster überlappen, verlangen aber unterschiedliche Daten- und Rechtsgrundlagen.",
+      "implementation": "Nutze explizite Regeln und kalibrierte Modelle mit Interventionsstufen und Reviewprozess.",
+      "risk": "Zu viele Fehlalarme untergraben die Nutzbarkeit; Logdaten können sensible Profile erzeugen.",
+      "accept": "Eine Sperrmaßnahme ist begründet, reversibel und in zuständiger Rolle überprüft.",
+      "evidence": "Precision/Recall, Drift-Monitoring, synthetische Angriffsbeispiele, Case Dossier.",
+      "scope": "Anomaliehinweise bleiben ohne Freigabe reine Warnungen."
+    },
+    {
+      "title": "Market Risk und Szenarien",
+      "terms": [
+        "VaR",
+        "CVaR",
+        "Drawdown",
+        "Volatility",
+        "Stress",
+        "Liquidity",
+        "Correlation",
+        "Exposure"
+      ],
+      "problem": "Automatisierte Risikoanzeigen können bei Modellfehlern falsche Sicherheit vermitteln.",
+      "implementation": "Beschreibe Datenherkunft, Prognosezeitraum, Modellgrenzen und konservative Schockszenarien.",
+      "risk": "Regimewechsel und dünne Märkte machen historische Schätzungen instabil.",
+      "accept": "Jeder Wert hat Modell-ID, Zeitraum und Risikohinweis; kein garantierter Ertrag.",
+      "evidence": "Backtesting, Sensitivitätskurven, Out-of-sample-Resultate und Governance-Freigabe.",
+      "scope": "Keine individualisierte Anlageberatung im Read-only Research Mode."
+    },
+    {
+      "title": "Steuern und Reporting",
+      "terms": [
+        "Tax",
+        "CostBasis",
+        "FIFO",
+        "LIFO",
+        "Lot",
+        "RealizedPnL",
+        "Jurisdiction",
+        "AuditTrail"
+      ],
+      "problem": "Krypto-Steuerlogiken hängen von Sachverhalt, Rechtsraum und Bewertungsmethode ab.",
+      "implementation": "Trenne Rohdaten, Transaktionsklassifikation, Bewertungsregel und steuerlichen Export.",
+      "risk": "Automatische Steuerberechnungen können juristisch falsch sein oder Buchungsfehler fortschreiben.",
+      "accept": "Export wird als prüfpflichtige Arbeitsunterlage gekennzeichnet, nicht als amtlich bestätigte Steuererklärung.",
+      "evidence": "Lot-Reconciliation, Methodendokument, Source Attribution, Korrekturprotokoll.",
+      "scope": "Persönliche steuerliche Beratung erfordert gegebenenfalls zugelassene Fachleute."
+    },
+    {
+      "title": "Kryptografische Attestation und Audit Trail",
+      "terms": [
+        "Attestation",
+        "Merkle",
+        "Ed25519",
+        "DSSE",
+        "JWS",
+        "Timestamp",
+        "Revocation",
+        "TrustAnchor"
+      ],
+      "problem": "Eine Hashliste allein beweist nicht, wer einen Zustand autorisiert hat.",
+      "implementation": "Signiere kanonische Evidence-Envelopes und führe Version, Zweck, Aussteller und Widerrufsstatus mit.",
+      "risk": "Selbstsignierte Nachweise können fälschlich wie Drittzertifikate aussehen.",
+      "accept": "Jede interne Marke trägt intern sichtbar, eine externe Marke nur verifizierten Aussteller.",
+      "evidence": "Replay-Test, Chain of Custody, Public-Key-Check, Zertifikatsverzeichnis.",
+      "scope": "Eine neue Binary entwertet frühere Build-Integritätsnachweise."
+    },
+    {
+      "title": "Incident Response und Schlüsselnotfall",
+      "terms": [
+        "IR",
+        "SOC",
+        "CSIRT",
+        "Playbook",
+        "Rotate",
+        "Revoke",
+        "Pause",
+        "Forensics"
+      ],
+      "problem": "Finanz- und Web3-Vorfälle benötigen sofortige klar autorisierte Deaktivierung.",
+      "implementation": "Plane Freeze, Key Revocation, Connector Shutdown und forensische Sicherung ohne Vollzugriff auf Privatdaten.",
+      "risk": "Verzögerte Alarmierung erhöht irreversible Verluste.",
+      "accept": "Ein synthetischer Kompromittierungsfall wird innerhalb definierter Reaktionszeit sicher gestoppt.",
+      "evidence": "Incident Timeline, Runbook, Kommunikationsmatrix und Lessons Learned.",
+      "scope": "Kein automatisch ungeprüftes Gegen-Trading als Vorfallreaktion."
+    },
+    {
+      "title": "Cross-Chain und Multi-Provider Interoperabilität",
+      "terms": [
+        "IBC",
+        "CCIP",
+        "Bridge",
+        "ChainID",
+        "ISO20022",
+        "Adapter",
+        "Gateway",
+        "Policy"
+      ],
+      "problem": "Technologien verschiedener Chains und Bankprovider bieten inkompatible Sicherheitsannahmen.",
+      "implementation": "Eine normalisierte Adapter-Ebene hält Schema, Rechte und Finalitätssemantik getrennt.",
+      "risk": "Ein Adapter darf keine eigenen privilegierten Aktionen erfinden.",
+      "accept": "Integrationsvertrag enthält Read/Write Scope, Ausfallmodus und unabhängige Tests.",
+      "evidence": "Contract-Test-Suite, Version Matrix, Rollback-Plan, Simulation.",
+      "scope": "Neue Chain wird zuerst read-only, dann extern geprüft und nur danach optional aktionsfähig."
+    },
+    {
+      "title": "Produktive Einführung und Zulassungspfad",
+      "terms": [
+        "Launch",
+        "MiCA",
+        "DORA",
+        "GDPR",
+        "PSD2",
+        "AML",
+        "GoLive",
+        "Certification"
+      ],
+      "problem": "Funktionsfähiger Code ist nicht gleich rechtlich zulässiges Finanzprodukt oder zertifizierte Infrastruktur.",
+      "implementation": "Entscheide zuerst Produktrolle, Berechtigungsumfang, Lizenzerfordernisse und verfügbare Prüfpartner.",
+      "risk": "Falsche Zulassungs- oder Zertifizierungsbehauptungen sind ein eigenständiges Risiko.",
+      "accept": "Go-live nur nach Dokumentation, unabhängiger Sicherheit, Rechtsprüfung und genehmigter Betriebszone.",
+      "evidence": "Launch Checklist, Legal Memo, External Attestation, Disaster Drill und Exit-Plan.",
+      "scope": "Bis dahin Synthetic Research und Read-only Integration statt Echtgeldbewegungen."
+    }
+  ],
+  "D": [
+    {
+      "title": "EU-DSGVO / GDPR (EU) 2016/679",
+      "kind": "GESETZ",
+      "issuer": "Europäische Union / Datenschutzaufsichten",
+      "url": "https://eur-lex.europa.eu/eli/reg/2016/679/oj",
+      "scope": "Personenbezogene Daten in Accounts, Finanzanalyse, Support und Telemetrie",
+      "controls": [
+        "Rechtsgrundlage und Zweckbindung",
+        "Datenminimierung",
+        "Betroffenenrechte",
+        "TOMs",
+        "Auftragsverarbeitung",
+        "Löschfristen"
+      ],
+      "evidence": [
+        "RoPA",
+        "Datenschutzhinweise",
+        "DPIA-Entscheidung",
+        "Consent-Receipt",
+        "Löschtest",
+        "Zugriffsprotokoll"
+      ],
+      "caution": "Interner DSGVO-Nachweis ist kein staatliches DSGVO-Zertifikat; etwaige Zertifizierungsverfahren sind von zuständigen Stellen und Artikel 42 abhängig."
+    },
+    {
+      "title": "DORA Verordnung (EU) 2022/2554",
+      "kind": "GESETZ",
+      "issuer": "EU / ESAs und zuständige nationale Finanzaufsicht",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2554/oj",
+      "scope": "Finanzunternehmen und ICT-Drittparteien je konkretem persönlichen und sachlichen Anwendungsbereich",
+      "controls": [
+        "ICT-Risikomanagement",
+        "Vorfallmanagement",
+        "Resilienztests",
+        "Drittparteirisiko",
+        "Governance",
+        "Informationsaustausch"
+      ],
+      "evidence": [
+        "ICT-Asset-Register",
+        "kritische Dienstekette",
+        "Vorfallplan",
+        "Exit-Strategie",
+        "Testprotokoll",
+        "Dienstleisterverträge"
+      ],
+      "caution": "Keine allgemeine DORA-Zertifizierung aus Eigenprüfung; Regulierung und behördliche Aufsicht je Norm und Rolle."
+    },
+    {
+      "title": "NIS2 Richtlinie (EU) 2022/2555",
+      "kind": "GESETZ",
+      "issuer": "EU-Mitgliedstaaten / nationale zuständige Behörden",
+      "url": "https://eur-lex.europa.eu/eli/dir/2022/2555/oj",
+      "scope": "Wesentliche oder wichtige Einrichtungen nach sektor- und größenbezogener nationaler Umsetzung",
+      "controls": [
+        "Risikomanagement",
+        "Lieferkette",
+        "Incident Handling",
+        "Meldewege",
+        "Geschäftsleitung",
+        "BCM"
+      ],
+      "evidence": [
+        "Anwendbarkeitsanalyse",
+        "Assetliste",
+        "Meldeplan",
+        "Lieferantenbeurteilungen",
+        "Awareness",
+        "Tests"
+      ],
+      "caution": "Kein offizielles EU-NIS2-Siegel durch Software; nationale Umsetzung und Fristen sind gesondert zu prüfen."
+    },
+    {
+      "title": "EU AI Act (EU) 2024/1689",
+      "kind": "GESETZ",
+      "issuer": "EU / AI Office und nationale Marktüberwachung",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1689",
+      "scope": "KI-Provider oder Deployer nach Rolle, Systemzweck, Risikoklasse und geltender gestaffelter Anwendungsphase",
+      "controls": [
+        "Risikoklassifizierung",
+        "Verbotstatbestände",
+        "Transparenz",
+        "High-Risk-Prozesse wo anwendbar",
+        "menschliche Aufsicht",
+        "Dokumentation"
+      ],
+      "evidence": [
+        "AI-Systeminventar",
+        "Use-Case-Factsheet",
+        "Risikoentscheidung",
+        "Daten-Governance",
+        "Testfälle",
+        "Nutzungsinformation"
+      ],
+      "caution": "Keine pauschale AI-Act-Zertifizierung; bei einschlägigen Konformitätsverfahren sind Rechtsgrundlage und Stelle nachzuweisen."
+    },
+    {
+      "title": "Cyber Resilience Act (EU) 2024/2847",
+      "kind": "GESETZ",
+      "issuer": "EU / Marktüberwachungs- und Konformitätsstellen",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/2847/oj",
+      "scope": "Produkte mit digitalen Elementen, die in Anwendungsbereich und Übergangsfristen fallen",
+      "controls": [
+        "Secure by Design",
+        "Schwachstellenmanagement",
+        "Herstellerpflichten",
+        "technische Dokumentation",
+        "Update- und Meldewege"
+      ],
+      "evidence": [
+        "Produktklassifizierung",
+        "SBOM",
+        "Schwachstellenprozess",
+        "Sicherheitsupdates",
+        "technische Akte",
+        "Risikoanalyse"
+      ],
+      "caution": "CE-Zeichen nur bei nachweislich einschlägigem Produkt und korrekt durchlaufenem Konformitätsprozess, nicht für das Portal als Ganzes."
+    },
+    {
+      "title": "MiCA Verordnung (EU) 2023/1114",
+      "kind": "GESETZ",
+      "issuer": "EU / zuständige Finanzaufsicht, ESMA und EBA",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/1114/oj",
+      "scope": "Crypto-Asset-Dienstleistung, Emission oder bestimmte Tokenarten nach konkreter Tätigkeit",
+      "controls": [
+        "Token-Klassifikation",
+        "Whitepaper",
+        "Emittentenpflichten",
+        "CASP-Lizenzstatus",
+        "Beschwerdeweg",
+        "Marktmissbrauchsschutz"
+      ],
+      "evidence": [
+        "Token-Dossier",
+        "Registerauszug",
+        "Whitepaper-Referenz",
+        "Custody-Rechte",
+        "Compliance-Mapping",
+        "Freigabeprotokoll"
+      ],
+      "caution": "Kein MiCA-Approved-Badge ohne amtlichen Status; Selbstbewertung ist maximal eine vorbereitende Prüfdokumentation."
+    },
+    {
+      "title": "eIDAS 2 / EU Digital Identity (EU) 2024/1183",
+      "kind": "GESETZ",
+      "issuer": "EU-Mitgliedstaaten / Vertrauensdiensteaufsicht",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1183/oj",
+      "scope": "Digitale Identitäten, Vertrauensdienste, Wallet-Ökosystem und qualifizierte Dienste je Rolle",
+      "controls": [
+        "Identitätsbindung",
+        "Wallet-Vertrauensmodell",
+        "Verifizierbarkeit",
+        "Attributfreigabe",
+        "Widerruf",
+        "Interoperabilität"
+      ],
+      "evidence": [
+        "DID-/VC-Profile",
+        "Vertrauensliste",
+        "Issuer-Evidence",
+        "Wallet-Tests",
+        "Signaturprüfung",
+        "Scope"
+      ],
+      "caution": "Eine eigene Wallet oder eine Ed25519-Signatur ist nicht automatisch ein qualifizierter Vertrauensdienst."
+    },
+    {
+      "title": "PSD2 Richtlinie (EU) 2015/2366",
+      "kind": "GESETZ",
+      "issuer": "EU / nationale Finanzaufsichten",
+      "url": "https://eur-lex.europa.eu/eli/dir/2015/2366/oj",
+      "scope": "Account Information oder Payment Initiation Services, einschlägige Zahlungsvorgänge und zugelassene Anbieter",
+      "controls": [
+        "Starke Kundenauthentifizierung",
+        "Kundeneinwilligung",
+        "Schnittstellenrechte",
+        "Sicherheitsmaßnahmen",
+        "Providerrolle",
+        "Beschwerdeweg"
+      ],
+      "evidence": [
+        "Consent-Scope",
+        "SCA-Test",
+        "Rollen-/Lizenzanalyse",
+        "Providervertrag",
+        "Access Log",
+        "Widerrufstest"
+      ],
+      "caution": "Nur Read-only-Kontodatenzugriff ist technisch und rechtlich sauber von Zahlungsauslösung zu trennen."
+    },
+    {
+      "title": "EU AML-Regelwerk / AMLR (EU) 2024/1624",
+      "kind": "GESETZ",
+      "issuer": "EU / AMLA, Finanzaufsichten und FIUs",
+      "url": "https://eur-lex.europa.eu/eli/reg/2024/1624/oj",
+      "scope": "Verpflichtete Unternehmen und einschlägige Tätigkeiten unter abgestuften Anwendungsdaten",
+      "controls": [
+        "Kundensorgfalt",
+        "wirtschaftlich Berechtigte",
+        "Monitoring",
+        "Verdachtsmeldungen",
+        "Aufbewahrung",
+        "Kontrollen"
+      ],
+      "evidence": [
+        "Produktrollenmatrix",
+        "AML-Policy",
+        "synthetische Screening-Fälle",
+        "Eskalationsprozess",
+        "Trainingsbeleg"
+      ],
+      "caution": "Automatisierte Analyse ersetzt nicht behördliche Anforderungen, professionelle Beurteilung oder gesetzlich gebotene Meldungen."
+    },
+    {
+      "title": "DLT-Pilotverordnung (EU) 2022/858",
+      "kind": "GESETZ",
+      "issuer": "EU / ESMA und nationale Finanzmarktaufsichten",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/858/oj",
+      "scope": "Bestimmte DLT-Marktinfrastrukturen und Finanzinstrumente nach Ausnahme- und Zulassungsrahmen",
+      "controls": [
+        "Rechtliche Klassifikation",
+        "Betriebsmodell",
+        "DLT-Risiken",
+        "Marktinfrastruktur-Governance",
+        "Teilnehmerrechte",
+        "Exit"
+      ],
+      "evidence": [
+        "DLT-Architektur",
+        "Zulassungspfad",
+        "Aufsichtsentscheid",
+        "Settlement-Finality-Matrix",
+        "Testnet-Protokoll"
+      ],
+      "caution": "Kein automatischer DLT-Pilot-Status allein aufgrund technischer Tokenisierung."
+    },
+    {
+      "title": "European Accessibility Act (EU) 2019/882",
+      "kind": "GESETZ",
+      "issuer": "EU-Mitgliedstaaten / Marktüberwachung",
+      "url": "https://eur-lex.europa.eu/eli/dir/2019/882/oj",
+      "scope": "Bestimmte Produkte und Dienstleistungen mit Barrierefreiheitsanforderungen",
+      "controls": [
+        "Bedienbarkeit",
+        "Verständlichkeit",
+        "Eingabehilfe",
+        "Dokumentation",
+        "Supportzugang",
+        "zugängliche Interaktion"
+      ],
+      "evidence": [
+        "WCAG-Mapping",
+        "Tastaturtest",
+        "Screenreader-Test",
+        "Kontrastbericht",
+        "Fehlerbehebungsplan"
+      ],
+      "caution": "Ein internes Accessibility-Label ist keine amtliche Marktfreigabe oder pauschale EAA-Konformität."
+    },
+    {
+      "title": "EU Data Act (EU) 2023/2854",
+      "kind": "GESETZ",
+      "issuer": "Europäische Union / nationale zuständige Stellen",
+      "url": "https://eur-lex.europa.eu/eli/reg/2023/2854/oj",
+      "scope": "Zugriff auf bestimmte Produkt- und Dienstdaten, Cloudwechsel und Datennutzung nach Anwendbarkeit",
+      "controls": [
+        "Datenzugangsrechte",
+        "Fairness",
+        "Portabilität",
+        "Schutz von Geschäftsgeheimnissen",
+        "Interoperabilität",
+        "Vertragspflichten"
+      ],
+      "evidence": [
+        "Data Inventory",
+        "API-Export-Test",
+        "Data-Sharing-Kontrakt",
+        "Lösch-/Wechselplan",
+        "Jurisdiktionsanalyse"
+      ],
+      "caution": "Ein universeller Datenfreigabeanspruch folgt nicht aus dem Namen Data Act; konkrete Regeln sind zu prüfen."
+    },
+    {
+      "title": "Data Governance Act (EU) 2022/868",
+      "kind": "GESETZ",
+      "issuer": "EU / zuständige nationale Behörden",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/868/oj",
+      "scope": "Besondere Datenvermittlungsdienste, geschützte öffentliche Daten und Datenaltruismus",
+      "controls": [
+        "Intermediary-Rollen",
+        "Zwecktrennung",
+        "organisatorische Unabhängigkeit",
+        "Vertrauen",
+        "Transparenz",
+        "Register"
+      ],
+      "evidence": [
+        "Vermittlungsmodell",
+        "Data-Sharing-Katalog",
+        "Governance-Regeln",
+        "Anbieter-Status",
+        "Nutzungsbedingungen"
+      ],
+      "caution": "Keine amtliche Datenvermittler-Anerkennung durch selbstgeneriertes Badge."
+    },
+    {
+      "title": "Digital Services Act (EU) 2022/2065",
+      "kind": "GESETZ",
+      "issuer": "EU / Digital Services Coordinators und Kommission",
+      "url": "https://eur-lex.europa.eu/eli/reg/2022/2065/oj",
+      "scope": "Vermittlungsdienste oder Plattformdienste entsprechend ihrer tatsächlichen Funktion",
+      "controls": [
+        "Kontaktstellen",
+        "Transparenz",
+        "Meldungsbearbeitung",
+        "Beschwerdewege",
+        "ggf. zusätzliche Plattformpflichten"
+      ],
+      "evidence": [
+        "Serviceklassifizierung",
+        "Notice-and-Action-Prozess",
+        "Moderationsaudit",
+        "Berichtspflichtenentscheidung"
+      ],
+      "caution": "Ein internes Moderationsboard beweist keine Erfüllung aller DSA-Pflichten."
+    },
+    {
+      "title": "EU Taxonomy (EU) 2020/852 / ESG",
+      "kind": "GESETZ",
+      "issuer": "EU / Finanz- und Nachhaltigkeitsaufsicht",
+      "url": "https://eur-lex.europa.eu/eli/reg/2020/852/oj",
+      "scope": "Bestimmte Finanzprodukte, Unternehmen und Nachhaltigkeitsangaben nach anwendbaren Offenlegungspflichten",
+      "controls": [
+        "Technische Bewertung",
+        "Tätigkeitsklassifikation",
+        "DNSH",
+        "Mindestschutz",
+        "Nachweise",
+        "Datenqualität"
+      ],
+      "evidence": [
+        "Asset-Taxonomy Map",
+        "Prüfmethoden",
+        "Quellen-Datum",
+        "Nichtanwendbarkeitsentscheidung",
+        "Review"
+      ],
+      "caution": "Ein grün gefärbtes ESG-Symbol ist kein geprüfter Taxonomie-Konformitätsnachweis."
+    },
+    {
+      "title": "ISO/IEC 27001:2022 Informationssicherheitsmanagement",
+      "kind": "NORM",
+      "issuer": "ISO/IEC / akkreditierte Zertifizierungsstelle",
+      "url": "https://www.iso.org/standard/27001",
+      "scope": "ISMS für den festgelegten organisatorischen und technischen Geltungsbereich",
+      "controls": [
+        "Kontext und Risiken",
+        "ISMS-Führung",
+        "Anwendbarkeitserklärung",
+        "Maßnahmen",
+        "Audits",
+        "kontinuierliche Verbesserung"
+      ],
+      "evidence": [
+        "Scope Statement",
+        "Risk Register",
+        "SoA",
+        "interne Audits",
+        "Management Review",
+        "Wirksamkeitsbelege"
+      ],
+      "caution": "„ISO-zertifiziert“ nur mit gültigem Zertifikat einer zuständigen Stelle im nachgewiesenen Scope; ISO-Logo nicht frei nutzbar."
+    },
+    {
+      "title": "ISO/IEC 27002:2022 Security Controls",
+      "kind": "NORM",
+      "issuer": "ISO/IEC",
+      "url": "https://www.iso.org/standard/75652.html",
+      "scope": "Leitfaden für Informationssicherheitsmaßnahmen und deren Umsetzung",
+      "controls": [
+        "Organisatorische Kontrollen",
+        "personelle Kontrollen",
+        "physische Kontrollen",
+        "technische Kontrollen",
+        "Wirksamkeit"
+      ],
+      "evidence": [
+        "Control Catalogue",
+        "Maßnahmenbelege",
+        "Verantwortliche",
+        "Audit-Proben",
+        "Gap-Analyse"
+      ],
+      "caution": "27002 selbst ist ein Controls-Leitfaden; daraus folgt kein eigenständiges Unternehmenszertifikat."
+    },
+    {
+      "title": "ISO/IEC 27701:2025 PIMS",
+      "kind": "NORM",
+      "issuer": "ISO/IEC / ggf. Zertifizierungsstelle",
+      "url": "https://committee.iso.org/standard/27701",
+      "scope": "Privacy Information Management System für Controller und Processor nach scope",
+      "controls": [
+        "PII-Governance",
+        "Rollen",
+        "Privacy Risks",
+        "Rechteprozesse",
+        "Datenschutzkontrollen",
+        "Verbesserung"
+      ],
+      "evidence": [
+        "PIMS Scope",
+        "Dateninventar",
+        "Datenschutzprüfung",
+        "Betroffenenrechte",
+        "Prozessaudit"
+      ],
+      "caution": "2025er Ausgabe getrennt von 2019er Ausgabe behandeln; externe Zertifizierung nur bei bestehendem Prüfweg behaupten."
+    },
+    {
+      "title": "ISO/IEC 42001:2023 AIMS",
+      "kind": "NORM",
+      "issuer": "ISO/IEC / Zertifizierungsstelle",
+      "url": "https://www.iso.org/standard/42001",
+      "scope": "AI Management System für Entwicklung oder Nutzung von KI im festgelegten Scope",
+      "controls": [
+        "AI-Governance",
+        "Risiko- und Wirkungsbewertung",
+        "Systeminventar",
+        "Prozesse",
+        "Evaluierung",
+        "Verbesserung"
+      ],
+      "evidence": [
+        "AI Policy",
+        "Systemliste",
+        "Risikodossier",
+        "Modelltests",
+        "Managementreview",
+        "Human Oversight"
+      ],
+      "caution": "Ein KI-Projekt erhält kein ISO/IEC-42001-Siegel durch eigenen Testbericht."
+    },
+    {
+      "title": "ISO 9001:2026 Qualitätsmanagement",
+      "kind": "NORM",
+      "issuer": "ISO / Zertifizierungsstelle",
+      "url": "https://www.iso.org/9001-2026",
+      "scope": "QMS mit Prozessqualität, Kundenbezug und kontinuierlicher Verbesserung",
+      "controls": [
+        "Führung",
+        "Qualitätsziele",
+        "Prozesssteuerung",
+        "Risiko und Chance",
+        "Nichtkonformität",
+        "Managementreview"
+      ],
+      "evidence": [
+        "Prozesskarte",
+        "KPIs",
+        "Abweichungen",
+        "Korrekturmaßnahmen",
+        "Auditkalender",
+        "Managementreview"
+      ],
+      "caution": "Die 2026er Ausgabe ersetzt 2015; Übergangsbedingungen sind mit Zertifizierern zu klären."
+    },
+    {
+      "title": "ISO 22301:2019 Business Continuity",
+      "kind": "NORM",
+      "issuer": "ISO / Zertifizierungsstelle",
+      "url": "https://www.iso.org/standard/75106.html",
+      "scope": "Business Continuity Management für definierte kritische Dienstleistungen",
+      "controls": [
+        "Business Impact Analysis",
+        "RTO/RPO",
+        "Fortführungsstrategien",
+        "Übungen",
+        "Notfallkommunikation",
+        "Verbesserungen"
+      ],
+      "evidence": [
+        "BIA",
+        "Recovery-Pläne",
+        "Restore-Test",
+        "Übungsbericht",
+        "Krisenrollen",
+        "Recovery-KPIs"
+      ],
+      "caution": "Ein Backup allein beweist kein zertifiziertes BCMS; Geltungsbereich und Wirksamkeit zählen."
+    },
+    {
+      "title": "ISO/IEC 20000-1:2018 Service Management",
+      "kind": "NORM",
+      "issuer": "ISO/IEC / Zertifizierungsstelle",
+      "url": "https://www.iso.org/standard/70636.html",
+      "scope": "Servicemanagementsystem für definierte IT-Dienstleistungen",
+      "controls": [
+        "Service Design",
+        "Incident- und Change-Management",
+        "Supplier Control",
+        "Service Levels",
+        "Continual Improvement"
+      ],
+      "evidence": [
+        "Service-Katalog",
+        "SLA/SLO",
+        "Incident Records",
+        "Change Freigaben",
+        "Lieferantenreview"
+      ],
+      "caution": "Nur ein externer, scopegebundener Prüfprozess kann eine Zertifizierungsbehauptung tragen."
+    },
+    {
+      "title": "ISO/IEC 27017:2015 Cloud Controls",
+      "kind": "NORM",
+      "issuer": "ISO/IEC",
+      "url": "https://www.iso.org/standard/43757.html",
+      "scope": "Sicherheitsmaßnahmen für Cloud-Service-Provider und Cloud-Kunden als ergänzende Orientierung",
+      "controls": [
+        "Shared Responsibility",
+        "Provisioning",
+        "Virtualization Security",
+        "Cloud Logging",
+        "Asset Return",
+        "Tenant Isolation"
+      ],
+      "evidence": [
+        "Responsibility Matrix",
+        "Cloud Config",
+        "Access Review",
+        "Third Party Contract",
+        "Log Hygiene"
+      ],
+      "caution": "Eine Umsetzung einzelner Cloud-Controls ist nicht automatisch ein ISO-27017-Zertifikat."
+    },
+    {
+      "title": "ISO/IEC 27018:2019 Public Cloud Privacy",
+      "kind": "NORM",
+      "issuer": "ISO/IEC",
+      "url": "https://www.iso.org/standard/76559.html",
+      "scope": "Schutz personenbezogener Informationen bei Public-Cloud-Verarbeitung nach anwendbarer Rolle",
+      "controls": [
+        "PII Handling",
+        "Löschung",
+        "Transparenz",
+        "Subprocessing",
+        "Zugriffskontrolle",
+        "Auditing"
+      ],
+      "evidence": [
+        "Cloud Processing Agreement",
+        "Löschbestätigung",
+        "PII Inventory",
+        "Supplier Assessment"
+      ],
+      "caution": "Cloud-Nutzung durch einzelne Funktionen wird nicht pauschal durch ein Selbstbadge datenschutzkonform."
+    },
+    {
+      "title": "ISO 31000:2018 Risikomanagement",
+      "kind": "NORM",
+      "issuer": "ISO",
+      "url": "https://www.iso.org/standard/65694.html",
+      "scope": "Allgemeines Management von Risiken und Chancen ohne spezialisiertes Zertifizierungsversprechen",
+      "controls": [
+        "Risikokontext",
+        "Identifizierung",
+        "Analyse",
+        "Bewertung",
+        "Behandlung",
+        "Monitoring"
+      ],
+      "evidence": [
+        "Risk Method",
+        "Risk Register",
+        "Treatments",
+        "Monitoring Review",
+        "Decision Minutes"
+      ],
+      "caution": "ISO 31000 ist ein Leitfaden; es besteht keine klassische ISO-Zertifizierung nach dieser Norm."
+    },
+    {
+      "title": "NIST Cybersecurity Framework 2.0",
+      "kind": "FRAMEWORK",
+      "issuer": "NIST / USA",
+      "url": "https://www.nist.gov/cyberframework",
+      "scope": "Cybersicherheits-Governance und Funktionsmapping für Organisationen",
+      "controls": [
+        "Govern",
+        "Identify",
+        "Protect",
+        "Detect",
+        "Respond",
+        "Recover"
+      ],
+      "evidence": [
+        "CSF Profile",
+        "Gap Analysis",
+        "Risk Register",
+        "Control Trace",
+        "KPIs"
+      ],
+      "caution": "NIST CSF Alignment ist eine interne Methodenaussage, kein NIST-Zertifikat."
+    },
+    {
+      "title": "NIST SSDF SP 800-218",
+      "kind": "FRAMEWORK",
+      "issuer": "NIST / USA",
+      "url": "https://csrc.nist.gov/pubs/sp/800/218/final",
+      "scope": "Sicherer Softwareentwicklungsprozess und Lieferkettenkontrolle",
+      "controls": [
+        "Prepare Organization",
+        "Protect Software",
+        "Produce Well-Secured Software",
+        "Respond to Vulnerabilities"
+      ],
+      "evidence": [
+        "Secure SDLC",
+        "Build Provenance",
+        "Training",
+        "Code Review",
+        "Vulnerability Response",
+        "Evidence"
+      ],
+      "caution": "Kein offizieller NIST-SSDF-Zertifikatsstatus durch selbst erstellten Bericht."
+    },
+    {
+      "title": "NIST SP 800-53 Rev. 5",
+      "kind": "FRAMEWORK",
+      "issuer": "NIST / USA",
+      "url": "https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final",
+      "scope": "Sicherheits- und Datenschutz-Control-Katalog für anspruchsvolle Systeme",
+      "controls": [
+        "Access Control",
+        "Audit",
+        "Configuration",
+        "Incident Response",
+        "System Integrity",
+        "Privacy Controls"
+      ],
+      "evidence": [
+        "System Security Plan",
+        "Control Assessment",
+        "POA&M",
+        "Risk Evidence",
+        "Independent Test"
+      ],
+      "caution": "Kontrollmapping ist keine staatliche NIST-Autorisierung oder Betriebsfreigabe."
+    },
+    {
+      "title": "OWASP ASVS 5.0.0",
+      "kind": "FRAMEWORK",
+      "issuer": "OWASP Foundation",
+      "url": "https://asvs.owasp.org/",
+      "scope": "Technische Sicherheitsanforderungen für Webanwendungen und Webservices",
+      "controls": [
+        "Authentication",
+        "Session",
+        "Access Control",
+        "Input Validation",
+        "API Security",
+        "Data Protection"
+      ],
+      "evidence": [
+        "ASVS Matrix",
+        "PenTest Results",
+        "Source Review",
+        "Negative API Tests",
+        "Defect Evidence"
+      ],
+      "caution": "OWASP ASVS 5.0 hat Referenzanforderungen; eine eigene Software kann Alignment darstellen, aber kein erfundenes OWASP-Zertifikat."
+    },
+    {
+      "title": "OWASP SAMM",
+      "kind": "FRAMEWORK",
+      "issuer": "OWASP Foundation",
+      "url": "https://owaspsamm.org/",
+      "scope": "Reifegrad sicherer Softwareentwicklung mit wiederholbarer Assessment-Struktur",
+      "controls": [
+        "Governance",
+        "Design",
+        "Implementation",
+        "Verification",
+        "Operations"
+      ],
+      "evidence": [
+        "SAMM Assessment",
+        "Improvement Backlog",
+        "Maturity Profile",
+        "Sprint Evidence",
+        "Review"
+      ],
+      "caution": "Ein SAMM-Score ist eine Bewertungsgröße, nicht automatisch eine Zertifizierung."
+    },
+    {
+      "title": "CIS Controls v8.1",
+      "kind": "FRAMEWORK",
+      "issuer": "Center for Internet Security",
+      "url": "https://www.cisecurity.org/controls/v8-1",
+      "scope": "Priorisierte technische und organisatorische Cybersicherheitsmaßnahmen",
+      "controls": [
+        "Asset Control",
+        "Data Protection",
+        "Secure Configuration",
+        "Vulnerability Management",
+        "Incident Response",
+        "PenTest"
+      ],
+      "evidence": [
+        "Control-to-Safeguard Matrix",
+        "Asset Inventory",
+        "Scan",
+        "Response Exercise",
+        "KPI"
+      ],
+      "caution": "CIS Controls Implementierung und CIS-Akkreditierung sind unterschiedliche Dinge; kein eigenes offizielles Label erfinden."
+    },
+    {
+      "title": "BSI IT-Grundschutz",
+      "kind": "FRAMEWORK",
+      "issuer": "Bundesamt für Sicherheit in der Informationstechnik",
+      "url": "https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html",
+      "scope": "Deutsche Informationssicherheit und gegebenenfalls BSI-Zertifizierungsweg",
+      "controls": [
+        "Strukturanalyse",
+        "Schutzbedarf",
+        "Modellierung",
+        "Basisabsicherung",
+        "Sicherheitscheck",
+        "Revision"
+      ],
+      "evidence": [
+        "Grundschutz-Konzept",
+        "IT-Verbund",
+        "Maßnahmenliste",
+        "Dokumentation",
+        "Audit-Report"
+      ],
+      "caution": "Ein BSI-Zertifikat benötigt die zuständige externe Prüfung und erteilte Zertifizierung; selbst generiertes BSI-Siegel verboten."
+    },
+    {
+      "title": "PCI DSS 4.0.1",
+      "kind": "SCHEME",
+      "issuer": "PCI Security Standards Council",
+      "url": "https://www.pcisecuritystandards.org/document_library/",
+      "scope": "Karteninhaberdatenumgebung nach PCI-Scope und Rollen",
+      "controls": [
+        "Scope Minimization",
+        "Network Segmentation",
+        "Encryption",
+        "Access",
+        "Logging",
+        "Penetration Tests"
+      ],
+      "evidence": [
+        "Cardholder Data Flow",
+        "SAQ/ROC je Typ",
+        "AOC",
+        "ASV Reports",
+        "PenTest",
+        "Policies"
+      ],
+      "caution": "Validierungsart und Attestation folgen PCI-Vorgaben; interne PASS-Karte ist keine PCI-AOC."
+    },
+    {
+      "title": "TISAX / VDA ISA",
+      "kind": "SCHEME",
+      "issuer": "ENX Association / zugelassener Prüfdienstleister",
+      "url": "https://portal.enx.com/en-us/TISAX/ISA/",
+      "scope": "Information Security Assessment für Automotive-Lieferketten gemäß Teilnehmeranforderungen",
+      "controls": [
+        "VDA ISA",
+        "Scope",
+        "Maturity",
+        "Assessment Objectives",
+        "Findings",
+        "Improvement Plan"
+      ],
+      "evidence": [
+        "VDA ISA Self-assessment",
+        "Assessment Report",
+        "ENX Result Status",
+        "Corrective Actions"
+      ],
+      "caution": "Nur ENX-Prozess und berechtigte Assessment-Provider können gültige TISAX-Ergebnisse erzeugen."
+    }
+  ]
+}

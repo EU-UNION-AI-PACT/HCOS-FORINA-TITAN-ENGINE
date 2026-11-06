@@ -1,0 +1,19 @@
+{
+  "id": "03_connector_marketplace",
+  "name": "Connector Marketplace",
+  "version": "1.2.0",
+  "group": "Intelligence Suite",
+  "category_index": 3,
+  "lifecycle_state": "Freigegeben",
+  "open_source_repos": [
+    {"name": "modelcontextprotocol/servers", "url": "https://github.com/modelcontextprotocol/servers"},
+    {"name": "n8n-io/n8n", "url": "https://github.com/n8n-io/n8n"},
+    {"name": "activepieces/activepieces", "url": "https://github.com/activepieces/activepieces"}
+  ],
+  "features": [
+    "Model Context Protocol (MCP v1.0) Standard-Konnektoren",
+    "GitHub, Cloudflare, Sentry, n8n und Plaid Gateway Anbindung",
+    "Lokale Sandboxed Tool-Ausführung",
+    "Live Roundtrip-Diagnose und Heartbeat"
+  ]
+}

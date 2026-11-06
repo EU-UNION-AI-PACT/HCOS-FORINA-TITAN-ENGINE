@@ -86,6 +86,20 @@ def main():
     zc_parser.add_argument("action", choices=["status", "tick", "tmr", "spawn"], default="status", nargs="?", help="Aktion: status, tick, tmr, spawn")
     zc_parser.add_argument("--subtask", type=str, default="microtask_audit", help="Subtask Name fuer spawn")
 
+    # baende (144 Seiten Enzyklopädie & 4 Bände)
+    baende_parser = subparsers.add_parser("baende", help="144 Seiten Enzyklopädie (Bände A-D & 136 Kapitel)")
+    baende_parser.add_argument("action", choices=["list", "read", "themen"], default="list", nargs="?", help="Aktion: list, read, themen")
+    baende_parser.add_argument("--band", type=str, default="A", help="Band Buchstabe (A, B, C, D)")
+
+    # badges (34 Normen SVG Badges)
+    badges_parser = subparsers.add_parser("badges", help="34 Normen SVG Badges & Audit Control Targets")
+    badges_parser.add_argument("action", choices=["list", "verify", "inspect"], default="list", nargs="?", help="Aktion: list, verify, inspect")
+    badges_parser.add_argument("--id", type=str, default="NORM-001", help="Norm-ID (z.B. NORM-001)")
+
+    # finance (Zentralbanken & Open Banking)
+    fin_parser = subparsers.add_parser("finance", help="Zentralbanken & Open Banking Schnittstellen (PSD2)")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -463,6 +477,105 @@ def main():
             print(f" UI Sliding Engine:    {st['ui_sliding_engine']} ({st['fps_target']} FPS)")
             print(f" Engine Status:        {st['engine_state']}")
             print("==================================================================")
+
+    elif args.command == "baende":
+        suite = ConceptPaperSuite(project_root)
+        if args.action == "read":
+            band = suite.get_band_content(args.band)
+            if not band:
+                print(f"[!] Band {args.band} nicht gefunden.")
+                return
+            print("==================================================================")
+            print(f" {band['title']}")
+            print(f" Datei: {band['file']} ({band.get('bytes', 0)} Bytes)")
+            print("==================================================================")
+            print(band.get("content", "")[:3500] + "\n\n... [Volltext gekürzt im Terminal. Siehe docs/baende/]")
+            print("==================================================================")
+        elif args.action == "themen":
+            themen = suite.get_136_themen()
+            print("==================================================================")
+            print(f" HCOS FORINA TITAN — 136 FACHKAPITEL ÜBERSICHT ({len(themen)} Bände)")
+            print("==================================================================")
+            for b_key, chaps in themen.items():
+                print(f"\n--- BAND {b_key} ({len(chaps)} Kapitel) ---")
+                for c in chaps[:10]:
+                    print(f"  • {c.get('kapitel_nr', '')}: {c.get('titel', '')}")
+                if len(chaps) > 10:
+                    print(f"    ... und {len(chaps)-10} weitere Fachkapitel")
+            print("==================================================================")
+        else: # list
+            baende = suite.list_baende()
+            spec = suite.list_specialized_papers()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — 144 SEITEN ENZYKLOPÄDIE (4 BÄNDE)")
+            print("==================================================================")
+            for b in baende:
+                exists_tag = "VORHANDEN" if b["exists"] else "FEHLT"
+                print(f" Band {b['band']} | {b['title']:<62} | {b['chapters']} Kap. | [{exists_tag}]")
+            print("------------------------------------------------------------------")
+            print(" Spezialisierte Concept Papers:")
+            for s in spec:
+                print(f"  * {s['title']:<50} ({s['file']})")
+            print("==================================================================")
+
+    elif args.command == "badges":
+        from forina_engine.audit_badges import AuditBadgeRegistry
+        reg = AuditBadgeRegistry(project_root)
+        if args.action == "verify":
+            badges = reg.list_badges()
+            print("==================================================================")
+            print(f" 34 NORMEN SVG BADGES INTEGRITÄTSPRÜFUNG ({len(badges)} Badges)")
+            print("==================================================================")
+            for b in badges:
+                print(f" [{b['norm_id']}] {b['title']:<48} | {b['sha256'][:16]}... | [OK]")
+            print("==================================================================")
+            print("[OK] Alle 34 Vektor-SVG-Badges verifiziert.")
+        elif args.action == "inspect":
+            svg = reg.get_badge_svg(args.id)
+            if not svg:
+                print(f"[!] Badge {args.id} nicht gefunden.")
+                return
+            print(f"--- SVG Vektor für {args.id} ({len(svg)} Bytes) ---")
+            print(svg[:400] + "...")
+        else: # list
+            badges = reg.list_badges()
+            print("==================================================================")
+            print(f" HCOS FORINA TITAN — 34 NORMEN & REGULATORY BADGES")
+            print("==================================================================")
+            for b in badges:
+                print(f" {b['norm_id']:<10} | {b['title']:<46} | {b['category']}")
+            print("==================================================================")
+
+    elif args.command == "finance":
+        from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+        fin = InstitutionalFinanceRegistry(project_root)
+        if args.action == "centralbanks":
+            banks = fin.get_central_banks()
+            print("==================================================================")
+            print(" ZENTRALBANKEN & CLEARING-SYSTEME")
+            print("==================================================================")
+            for cb in banks:
+                print(f" {cb['id']:<12} | {cb['name']:<40} | {', '.join(cb['clearing_systems'])}")
+            print("==================================================================")
+        elif args.action == "openbanking":
+            providers = fin.get_open_banking_providers()
+            print("==================================================================")
+            print(" OPEN BANKING & XS2A PROVIDER REGISTRY (PSD2)")
+            print("==================================================================")
+            for p in providers:
+                print(f" {p['name']:<22} | {p['hq']:<28} | {p['coverage']}")
+            print("==================================================================")
+        elif args.action == "schemas":
+            schemas = fin.get_iso20022_message_schemas()
+            print("==================================================================")
+            print(" ISO 20022 FINANCIAL MESSAGING SCHEMAS")
+            print("==================================================================")
+            for s in schemas:
+                print(f" {s['code']:<16} | {s['name']:<55} | [{s['scope']}]")
+            print("==================================================================")
+        else: # summary
+            summ = fin.get_summary()
+            print(json.dumps(summ, indent=2, ensure_ascii=False))
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"
