@@ -599,7 +599,7 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
@@ -608,6 +608,8 @@ function switchAiTab(tabName) {
   if (tabName === 'finance') loadFinancialLeaks();
   if (tabName === 'gates') loadAssuranceGates();
   if (tabName === 'repos') loadRepositoriesCatalog();
+  if (tabName === 'concepts') loadConceptPapers();
+  if (tabName === 'harness') loadHarnessLoopStatus();
 }
 
 async function sendAgentMessage() {
@@ -1140,6 +1142,178 @@ async function loadRepositoriesCatalog(zoneFilter = '') {
 function filterReposByZone(zone) {
   loadRepositoriesCatalog(zone);
 }
+
+async function loadConceptPapers(category = '', search = '') {
+  const container = document.getElementById('concepts-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade 34 Concept Papers...</div>';
+
+  try {
+    let url = '/api/concepts/papers';
+    const params = [];
+    if (category) params.push(`category=${encodeURIComponent(category)}`);
+    if (search) params.push(`q=${encodeURIComponent(search)}`);
+    if (params.length) url += `?${params.join('&')}`;
+
+    const res = await fetch(url);
+    const data = await res.json();
+    const papers = data.papers || [];
+
+    if (!papers.length) {
+      container.innerHTML = '<div style="color:var(--silver);">Keine Concept Papers für diesen Filter gefunden.</div>';
+      return;
+    }
+
+    container.innerHTML = papers.map(p => {
+      const safeTitle = escapeHtml(p.title);
+      const safeCode = escapeHtml(p.code);
+      const safeCat = escapeHtml(p.category);
+      const safeSummary = escapeHtml(p.summary);
+      const safeModules = escapeHtml((p.modules || []).join(', '));
+      const safeStandards = escapeHtml((p.standards || []).join(' · '));
+
+      return `
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,215,0,0.2); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+              <span style="color:var(--gold); font-weight:700;">A4 #${String(p.nr).padStart(2, '0')}</span>
+              <span style="font-size:0.60rem; color:var(--neon-blue); border:1px solid var(--neon-blue); padding:1px 5px; border-radius:4px;">
+                ${safeCode}
+              </span>
+            </div>
+            <div style="margin-top:4px; font-weight:700; color:#fff; font-size:0.75rem;">
+              ${safeTitle}
+            </div>
+            <div style="color:var(--gold); font-size:0.62rem; margin-top:2px;">
+              Kategorie: ${safeCat}
+            </div>
+            <div style="color:#cbd5e1; font-size:0.64rem; margin-top:4px; line-height:1.3;">
+              ${safeSummary}
+            </div>
+          </div>
+          <div style="margin-top:6px; padding-top:4px; border-top:1px solid rgba(255,255,255,0.06); font-size:0.60rem; color:#94a3b8;">
+            <div><strong style="color:var(--neon-pink);">Module:</strong> ${safeModules}</div>
+            <div style="margin-top:2px;"><strong style="color:var(--neon-green);">Normen:</strong> ${safeStandards}</div>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">34 Concept Papers lokal in docs/CONCEPT-PAPERS-SUITE-34.md</div>';
+  }
+}
+
+let _conceptsSearchDebounce = null;
+function searchConceptPapers(q) {
+  clearTimeout(_conceptsSearchDebounce);
+  _conceptsSearchDebounce = setTimeout(() => {
+    loadConceptPapers('', q);
+  }, 250);
+}
+
+async function loadConceptStandards() {
+  const container = document.getElementById('concepts-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade Normen- und Standards-Katalog...</div>';
+
+  try {
+    const res = await fetch('/api/concepts/standards');
+    const data = await res.json();
+    const standards = data.standards || [];
+
+    container.innerHTML = standards.map(s => {
+      const safeName = escapeHtml(s.name);
+      const safeDomain = escapeHtml(s.domain);
+      const safeCat = escapeHtml(s.category);
+      const safeUrl = sanitizeGitHubUrl(s.url);
+      const isExternal = s.url && s.url.startsWith('https://');
+
+      return `
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(0,255,136,0.25); border-radius:6px; padding:8px; font-size:0.7rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--neon-green); font-size:0.78rem;">${safeName}</strong>
+            <span style="font-size:0.60rem; color:var(--silver);">${safeCat}</span>
+          </div>
+          <div style="color:#e2e8f0; font-size:0.68rem; margin-top:4px;">
+            ${safeDomain}
+          </div>
+          ${isExternal ? `
+            <div style="margin-top:4px; font-size:0.62rem;">
+              <a href="${escapeHtml(s.url)}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); text-decoration:none;">
+                Offizielle Normenspezifikation ↗
+              </a>
+            </div>
+          ` : ''}
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Standards-Katalog verfügbar.</div>';
+  }
+}
+
+async function loadHarnessLoopStatus() {
+  const container = document.getElementById('harness-stages-container');
+  if (!container) return;
+
+  try {
+    const res = await fetch('/api/harness/status');
+    const data = await res.json();
+    const state = data.state || {};
+    const stages = data.stages || [];
+    const results = state.stage_results || {};
+
+    container.innerHTML = stages.map(st => {
+      const stepRes = results[st.id] || {};
+      const status = typeof stepRes === 'string' ? stepRes : (stepRes.status || 'PENDING');
+      
+      let badge = '<span style="color:var(--silver); font-size:0.62rem;">PENDING</span>';
+      let border = 'rgba(255,255,255,0.1)';
+      if (status === 'PASS') {
+        badge = '<span style="color:var(--neon-green); font-weight:700; font-size:0.62rem;">✓ PASS</span>';
+        border = 'rgba(0,255,136,0.3)';
+      } else if (status === 'FAIL') {
+        badge = '<span style="color:#ef4444; font-weight:700; font-size:0.62rem;">✗ FAIL</span>';
+        border = 'rgba(239,68,68,0.5)';
+      }
+
+      return `
+        <div style="background:rgba(255,255,255,0.03); border:1px solid ${border}; border-radius:6px; padding:6px; font-size:0.68rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--neon-pink);">${st.stage}. ${st.id}</strong>
+            ${badge}
+          </div>
+          <div style="color:#fff; margin-top:2px; font-weight:600;">${escapeHtml(st.name)}</div>
+          <div style="color:#94a3b8; font-size:0.60rem; margin-top:2px; line-height:1.2;">${escapeHtml(st.details)}</div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Harness-Loop lokal aktiv in forina_engine/harness_loop.py</div>';
+  }
+}
+
+async function runHarnessLoopIteration() {
+  const feedbackEl = document.getElementById('harness-live-feedback');
+  if (feedbackEl) {
+    feedbackEl.style.display = 'block';
+    feedbackEl.innerHTML = '>>> Führe 8-Stufen Harness-Loop Zyklus aus (Plan ➔ Build ➔ Test ➔ Audit ➔ Certify ➔ Release ➔ Monitor ➔ Improve)...';
+  }
+
+  try {
+    const res = await fetch('/api/harness/run', { method: 'POST' });
+    const data = await res.json();
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `<span style="color:var(--neon-green); font-weight:700;">✓ Harness-Loop Zyklus #${data.cycle_id - 1} erfolgreich abgeschlossen!</span> Status: ${data.status} · Durchläufe: ${data.history_cycles_completed}`;
+    }
+    loadHarnessLoopStatus();
+  } catch (e) {
+    if (feedbackEl) {
+      feedbackEl.innerHTML = `<span style="color:#ef4444;">Fehler bei Harness-Loop Ausführung: ${escapeHtml(e.message)}</span>`;
+    }
+  }
+}
+
 
 
 

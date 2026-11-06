@@ -23,6 +23,8 @@ from .boba_validator import BobaErrorChainValidator
 from .stroq_scanner import StroqAgentSecurityScanner
 from .assurance_gates import AssuranceGatePipeline
 from .repo_catalog import RepositoryEvaluationCatalog
+from .concept_suite import ConceptPaperSuite
+from .harness_loop import HarnessLoopEngine
 
 CURRENT_VERSION = "1.2.0"
 
@@ -255,12 +257,60 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 11. 34 CONCEPT PAPERS SUITE & STANDARDS
+        if parsed.path == "/api/concepts/papers":
+            suite = ConceptPaperSuite(self.project_root)
+            cat_filter = query.get("category", [""])[0]
+            search_query = query.get("q", [""])[0]
+            if search_query:
+                papers = suite.search_papers(search_query)
+            else:
+                papers = suite.list_papers(cat_filter)
+            payload = {
+                "summary": suite.get_summary(),
+                "count": len(papers),
+                "category_filter": cat_filter or "all",
+                "papers": papers
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/concepts/standards":
+            suite = ConceptPaperSuite(self.project_root)
+            payload = {
+                "count": len(suite.standards),
+                "standards": suite.standards
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 12. AUTOMATED HARNESS LOOP
+        if parsed.path == "/api/harness/status":
+            engine = HarnessLoopEngine(self.project_root)
+            payload = {
+                "state": engine.get_state(),
+                "stages": engine.get_stages()
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
     def do_POST(self):
         parsed = urlparse(self.path)
         master_api_key = _load_or_generate_api_key(self.project_root)
+
+        # HARNESS LOOP ITERATION
+        if parsed.path == "/api/harness/run":
+            engine = HarnessLoopEngine(self.project_root)
+            result = engine.run_cycle_iteration()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(result, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
 
         # 6. JMAP PARTNER INQUIRY (Redacted Logging for Privacy & GDPR)
         if parsed.path == "/api/jmap/partner-inquiry":

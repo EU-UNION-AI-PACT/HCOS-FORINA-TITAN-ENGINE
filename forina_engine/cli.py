@@ -16,6 +16,8 @@ from .server import run_engine_server
 from .spec_sync import SpecSyncEngine
 from .certification import SovereignCertifier
 from .module_loader import ModuleLoader
+from .concept_suite import ConceptPaperSuite
+from .harness_loop import HarnessLoopEngine
 
 
 def main():
@@ -65,6 +67,16 @@ def main():
     repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect")
     repo_parser.add_argument("--zone", type=str, default="", help="Zone Filter: sovereign, dev, federation")
     repo_parser.add_argument("--nr", type=int, default=1, help="Repository Nummer fuer inspect (1-50)")
+
+    # concepts (34 Concept Papers Suite)
+    concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite & Normenabdeckung v2.0")
+    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "standards"], default="list", nargs="?", help="Aktion: list, summary, inspect, standards")
+    concept_parser.add_argument("--nr", type=int, default=1, help="Papier-Nummer (1-34)")
+    concept_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Concept Papers")
+
+    # harness (Automated Harness Loop)
+    harness_parser = subparsers.add_parser("harness", help="Automatisierter 8-Stufen Harness-Loop")
+    harness_parser.add_argument("action", choices=["status", "run", "stages"], default="status", nargs="?", help="Aktion: status, run, stages")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -263,6 +275,96 @@ def main():
                 print(f" #{r['nr']:02d} | {r['repository']:<36} | {r['module_id']} | [{zone_tag:<10}] | {r['integration_decision']}")
             print("==================================================================")
             print(f" [Tipp] Ausführliches Dossier ansehen mit: python3 forina.py repos inspect --nr 47")
+
+    elif args.command == "concepts":
+        suite = ConceptPaperSuite(project_root)
+
+        if args.action == "summary":
+            summ = suite.get_summary()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — CONCEPT PAPER SUITE v2.0 (33+ A4)")
+            print("==================================================================")
+            print(f" Gesamtanzahl Concept Papers: {summ['total_papers']}")
+            print(f" Abgedeckte Normen & Standards: {summ['total_standards']}")
+            print(f" Governance: {summ['sovereign_governance']}")
+            print("------------------------------------------------------------------")
+            print(" Themenkategorien:")
+            for cat, count in summ['categories_breakdown'].items():
+                print(f"   * {cat:<32}: {count:2d} Papiere")
+            print("==================================================================")
+
+        elif args.action == "inspect":
+            paper = suite.get_paper(args.nr)
+            if not paper:
+                print(f"[!] Concept Paper #{args.nr} nicht gefunden.")
+                return
+            print("==================================================================")
+            print(f" CONCEPT PAPER #{paper['nr']:02d}: {paper['title']}")
+            print("==================================================================")
+            print(f" Kürzel / Codes:       {paper['code']}")
+            print(f" Kategorie:            {paper['category']}")
+            print(f" Relevante Module:     {', '.join(paper['modules'])}")
+            print(f" Normen & Standards:   {', '.join(paper['standards'])}")
+            print("------------------------------------------------------------------")
+            print(f" Zusammenfassung:\n {paper['summary']}")
+            print("==================================================================")
+
+        elif args.action == "standards":
+            print("==================================================================")
+            print(f" HCOS FORINA TITAN — NORMEN- & ZERTIFIZIERUNGSKATALOG ({len(suite.standards)} Standards)")
+            print("==================================================================")
+            for std in suite.standards:
+                print(f" - {std['name']:<22} | {std['category']:<22} | {std['domain']}")
+            print("==================================================================")
+
+        else: # list
+            if args.search:
+                papers = suite.search_papers(args.search)
+                print(f">>> Gefundene Papiere für '{args.search}': {len(papers)}")
+            else:
+                papers = suite.list_papers()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — 34 A4 CONCEPT PAPERS SUITE")
+            print("==================================================================")
+            for p in papers:
+                print(f" #{p['nr']:02d} | {p['title']:<42} | [{p['code']:<14}] | {p['category']}")
+            print("==================================================================")
+            print(f" [Tipp] Detailansicht mit: python3 forina.py concepts inspect --nr <1-34>")
+
+    elif args.command == "harness":
+        harness = HarnessLoopEngine(project_root)
+
+        if args.action == "run":
+            print(">>> Starte vollständigen 8-Stufen Harness-Loop Durchlauf...")
+            state = harness.run_cycle_iteration()
+            print("==================================================================")
+            print(f" HARNESS-LOOP ZYKLUS #{state['cycle_id']-1} ERFOLGREICH ABGESCHLOSSEN")
+            print("==================================================================")
+            for s_id, s_res in state['stage_results'].items():
+                print(f" Stufe {s_id:<8} : [{s_res.get('status')}] {s_res.get('details', s_res.get('message', 'OK'))}")
+            print("==================================================================")
+            print(f" Status: {state['status']} -> Neuer Zielzustand: {state['current_stage']}")
+
+        elif args.action == "stages":
+            stages = harness.get_stages()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — 8 STUFEN DES AUTOMATISIERTEN HARNESS-LOOPS")
+            print("==================================================================")
+            for s in stages:
+                print(f" {s['stage']}. {s['id']:<8} | {s['name']:<35} | {s['details']}")
+            print("==================================================================")
+
+        else: # status
+            st = harness.get_state()
+            print("==================================================================")
+            print(f" HARNESS-LOOP STATUS: {st['status']}")
+            print("==================================================================")
+            print(f" Aktueller Zyklus:             #{st.get('cycle_id', 1)}")
+            print(f" Letzter Durchlauf:            {st.get('last_cycle_timestamp')}")
+            print(f" Abgeschlossene Zyklen gesamt: {st.get('history_cycles_completed', 0)}")
+            print("------------------------------------------------------------------")
+            print(" [Tipp] Ausführen mit: python3 forina.py harness run")
+            print("==================================================================")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

@@ -201,6 +201,8 @@
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('finance')">💰 Money Leaks (M08)</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('boba')">🛡️ BOBA & Stroq (M12/M13)</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('gates')">🏛 13-Gates (G00-G12)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--gold);" onclick="switchAiTab('concepts')">📜 34 Concept Papers (v2.0)</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-pink);" onclick="switchAiTab('harness')">🔄 Harness Loop</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('skills')">📚 Skills</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('mcp')">🔌 MCP</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 RAG</button>
@@ -358,6 +360,56 @@
           <div id="repos-catalog-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(260px, 1fr)); gap:8px; max-height:260px; overflow-y:auto; padding-right:4px;">
             <!-- Dynamisch via loadRepositoriesCatalog() -->
           </div>
+        </div>
+
+        <!-- TAB 9: 34 CONCEPT PAPERS SUITE v2.0 (33+ A4) -->
+        <div id="ai-tab-concepts" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--gold);">📜 34 A4 Concept Papers Suite v2.0 — Masterkonzept</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Architektur · IA & XD · DevSecOps · Web3 & Finance · ISO/BSI/DSGVO Normen · 8-Stufen Harness-Loop
+              </p>
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap; align-items:center;">
+              <input type="text" id="concepts-search-input" placeholder="Suchen (z.B. Zero-Trust, DeFi, Air-Gap)..." style="font-size:0.7rem; padding:3px 8px; max-width:220px;" oninput="searchConceptPapers(this.value)" />
+              <button class="titan-btn" style="padding:2px 8px; font-size:0.7rem;" onclick="loadConceptPapers()">Alle (34)</button>
+              <button class="titan-btn" style="padding:2px 8px; font-size:0.7rem; border-color:var(--neon-green);" onclick="loadConceptStandards()">Normen & ISO</button>
+            </div>
+          </div>
+          <!-- Normen-Banner -->
+          <div id="standards-badges-banner" style="display:flex; gap:4px; flex-wrap:wrap; margin-bottom:8px; font-size:0.62rem;">
+            <span style="background:rgba(255,215,0,0.1); border:1px solid var(--gold); color:var(--gold); padding:1px 6px; border-radius:4px;">ISO 27001</span>
+            <span style="background:rgba(0,255,136,0.1); border:1px solid var(--neon-green); color:var(--neon-green); padding:1px 6px; border-radius:4px;">ISO 9001</span>
+            <span style="background:rgba(0,240,255,0.1); border:1px solid var(--neon-blue); color:var(--neon-blue); padding:1px 6px; border-radius:4px;">BSI IT-Grundschutz</span>
+            <span style="background:rgba(255,0,85,0.1); border:1px solid var(--neon-pink); color:var(--neon-pink); padding:1px 6px; border-radius:4px;">TISAX AL3</span>
+            <span style="background:rgba(255,255,255,0.06); border:1px solid #94a3b8; color:#cbd5e1; padding:1px 6px; border-radius:4px;">DSGVO / GDPR</span>
+            <span style="background:rgba(255,255,255,0.06); border:1px solid #94a3b8; color:#cbd5e1; padding:1px 6px; border-radius:4px;">NIS2 & DORA</span>
+            <span style="background:rgba(255,255,255,0.06); border:1px solid #94a3b8; color:#cbd5e1; padding:1px 6px; border-radius:4px;">MiCA (Crypto)</span>
+          </div>
+          <div id="concepts-catalog-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:8px; max-height:260px; overflow-y:auto; padding-right:4px;">
+            <!-- Dynamisch via loadConceptPapers() -->
+          </div>
+        </div>
+
+        <!-- TAB 10: AUTOMATED HARNESS LOOP (END-TO-END CONTINUOUS ASSURANCE) -->
+        <div id="ai-tab-harness" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:8px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--neon-pink);">🔄 Automatisierter 8-Stufen Harness-Loop (Endless Assurance Cycle)</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Plan ➔ Build ➔ Test ➔ Audit ➔ Certify ➔ Release ➔ Monitor ➔ Improve ➔ Loop!
+              </p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="padding:4px 12px; font-size:0.75rem; border-color:var(--neon-pink); background:rgba(255,0,85,0.15);" onclick="runHarnessLoopIteration()">▶ Loop-Zyklus starten</button>
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.75rem;" onclick="loadHarnessLoopStatus()">↻ Status</button>
+            </div>
+          </div>
+          <div id="harness-stages-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(200px, 1fr)); gap:8px; margin-top:8px;">
+            <!-- Dynamisch via loadHarnessLoopStatus() -->
+          </div>
+          <div id="harness-live-feedback" style="display:none; margin-top:8px; background:#070b12; border:1px solid var(--neon-pink); border-radius:6px; padding:8px; font-size:0.72rem; color:#cbd5e1;"></div>
         </div>
       </section>
 

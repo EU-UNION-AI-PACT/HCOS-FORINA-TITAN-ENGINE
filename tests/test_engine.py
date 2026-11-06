@@ -21,6 +21,8 @@ from forina_engine.stroq_scanner import StroqAgentSecurityScanner, SecurityScann
 from forina_engine.assurance_gates import AssuranceGatePipeline
 from forina_engine.repo_catalog import RepositoryEvaluationCatalog
 from forina_engine.network_guard import SovereignNetworkGuard, SovereignNetworkViolation
+from forina_engine.concept_suite import ConceptPaperSuite
+from forina_engine.harness_loop import HarnessLoopEngine
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -328,6 +330,38 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertTrue(g12_result["passed"])
         self.assertIn("100% Bit-for-Bit Hash-Parität", g12_result["details"])
         self.assertGreaterEqual(g12_result["files_hash_verified"], 100)
+
+    def test_34_concept_papers_suite(self):
+        suite = ConceptPaperSuite(self.root)
+        papers = suite.list_papers()
+        self.assertEqual(len(papers), 34, "Muss exakt 34 Concept Papers umfassen")
+        summary = suite.get_summary()
+        self.assertEqual(summary["total_papers"], 34)
+        self.assertEqual(summary["total_standards"], 14)
+
+        # Check Papers #4 (IA) and #5 (XD)
+        p4 = suite.get_paper(4)
+        self.assertIn("Intelligent Automation", p4["title"])
+        self.assertEqual(p4["code"], "IA, RPA, AGT")
+        p5 = suite.get_paper(5)
+        self.assertIn("eXperience Design", p5["title"])
+        self.assertEqual(p5["code"], "XD, UX, UI")
+
+        # Check search functionality
+        search_res = suite.search_papers("Zero-Trust")
+        self.assertGreaterEqual(len(search_res), 1)
+        self.assertEqual(search_res[0]["nr"], 9)
+
+    def test_automated_harness_loop_lifecycle(self):
+        harness = HarnessLoopEngine(self.root)
+        stages = harness.get_stages()
+        self.assertEqual(len(stages), 8, "Muss exakt 8 Harness-Loop Stufen besitzen")
+        stage_ids = [s["id"] for s in stages]
+        expected_ids = ["PLAN", "BUILD", "TEST", "AUDIT", "CERTIFY", "RELEASE", "MONITOR", "IMPROVE"]
+        self.assertEqual(stage_ids, expected_ids)
+
+        state = harness.get_state()
+        self.assertIn("cycle_id", state)
 
 
 if __name__ == "__main__":
