@@ -60,6 +60,12 @@ def main():
     mod_parser.add_argument("action", choices=["list", "verify", "test", "promote"], default="list", nargs="?", help="Aktion: list, verify, test, promote")
     mod_parser.add_argument("--id", type=str, default="", help="Modul-ID fuer Einzelpruefung")
 
+    # repos (50 Repositories Explorer)
+    repo_parser = subparsers.add_parser("repos", help="Erforscht die 50 Open-Source Repositories der Spezifikation")
+    repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect")
+    repo_parser.add_argument("--zone", type=str, default="", help="Zone Filter: sovereign, dev, federation")
+    repo_parser.add_argument("--nr", type=int, default=1, help="Repository Nummer fuer inspect (1-50)")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -196,6 +202,64 @@ def main():
             res = loader.promote_all_to_freigegeben()
             print(">>> Alle Module verifiziert und auf 'Freigegeben' befördert:")
             print(json.dumps(res, indent=2, ensure_ascii=False))
+
+    elif args.command == "repos":
+        from .repo_catalog import RepositoryEvaluationCatalog
+        catalog = RepositoryEvaluationCatalog(project_root)
+        if args.action == "summary":
+            summary = catalog.get_summary()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — 50 OPEN-SOURCE REPOSITORIES OVERVIEW")
+            print("==================================================================")
+            print(f" Gesamtanzahl Repositories: {summary['total_repositories']}")
+            print(f"  - Local Sovereign Zone:      {summary['sovereign_local_count']}")
+            print(f"  - Development & Research:    {summary['development_count']}")
+            print(f"  - Federation & Integration:  {summary['federation_count']}")
+            print("------------------------------------------------------------------")
+            print(" Integrationsentscheide:")
+            for k, v in sorted(summary['decision_breakdown'].items(), key=lambda x: -x[1]):
+                print(f"   * {k:<25}: {v}")
+            print("==================================================================")
+
+        elif args.action == "inspect":
+            r = catalog.get_by_nr(args.nr)
+            if not r:
+                print(f"[ERROR] Repository #{args.nr} nicht gefunden (Bereich: 1-50).")
+                sys.exit(1)
+            print("==================================================================")
+            print(f" REPOSITORY DOSSIER #{r['nr']:02d}: {r['repository']}")
+            print("==================================================================")
+            print(f" URL:                     {r['url']}")
+            print(f" Modul-Zuordnung:         {r['module_id']} ({r['module_role']})")
+            print(f" Betriebszone:            {r['zone']}")
+            print(f" Integrationsentscheid:   {r['integration_decision']}")
+            print(f" PDF-Fundstelle:          {r['pdf_source']} (Seite {r['pdf_page']})")
+            print(f" Geplante Rolle:          {r['planned_role']}")
+            print(f" Herkunftsnotiz:          {r['origin_note']}")
+            print(f" Lizenzprüfung:           {r['license_check']}")
+            print(f" Sicherheitsprüfung:      {r['security_check']}")
+            print("==================================================================")
+
+        elif args.action == "zone":
+            zone_filter = args.zone or "sovereign"
+            filtered = catalog.filter_by_zone(zone_filter)
+            print("==================================================================")
+            print(f" REPOSITORIES IN ZONE: '{zone_filter.upper()}' ({len(filtered)} Einträge)")
+            print("==================================================================")
+            for r in filtered:
+                print(f" #{r['nr']:02d} | {r['repository']:<38} | {r['module_id']:<4} | [{r['integration_decision']:<15}]")
+            print("==================================================================")
+
+        else: # list
+            all_repos = catalog.list_all()
+            print("==================================================================")
+            print(" HCOS FORINA TITAN — 50 OPEN-SOURCE REPOSITORIES (MASTERKATALOG)")
+            print("==================================================================")
+            for r in all_repos:
+                zone_tag = "SOVEREIGN" if "Sovereign" in r['zone'] else ("DEV" if "Dev" in r['zone'] else "FEDERATION")
+                print(f" #{r['nr']:02d} | {r['repository']:<36} | {r['module_id']} | [{zone_tag:<10}] | {r['integration_decision']}")
+            print("==================================================================")
+            print(f" [Tipp] Ausführliches Dossier ansehen mit: python3 forina.py repos inspect --nr 47")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

@@ -22,6 +22,7 @@ from .financial_engine import FinancialIntelligenceEngine, SettlementViolationEr
 from .boba_validator import BobaErrorChainValidator
 from .stroq_scanner import StroqAgentSecurityScanner
 from .assurance_gates import AssuranceGatePipeline
+from .repo_catalog import RepositoryEvaluationCatalog
 
 CURRENT_VERSION = "1.2.0"
 
@@ -234,6 +235,24 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             audit = pipeline.audit_all_gates()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(audit, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 10. 50-REPOSITORY EVALUATION CATALOG
+        if parsed.path == "/api/repos/catalog":
+            catalog = RepositoryEvaluationCatalog(self.project_root)
+            zone_filter = query.get("zone", [""])[0]
+            if zone_filter:
+                items = catalog.filter_by_zone(zone_filter)
+            else:
+                items = catalog.list_all()
+            payload = {
+                "summary": catalog.get_summary(),
+                "count": len(items),
+                "zone_filter": zone_filter or "all",
+                "repositories": items
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         # Fallback to static file serving

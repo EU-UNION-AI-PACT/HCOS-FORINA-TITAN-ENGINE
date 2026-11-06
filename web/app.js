@@ -599,7 +599,7 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
@@ -607,6 +607,7 @@ function switchAiTab(tabName) {
   if (tabName === 'mcp') loadMcpConnectors();
   if (tabName === 'finance') loadFinancialLeaks();
   if (tabName === 'gates') loadAssuranceGates();
+  if (tabName === 'repos') loadRepositoriesCatalog();
 }
 
 async function sendAgentMessage() {
@@ -1012,6 +1013,62 @@ async function loadAssuranceGates() {
     container.innerHTML = '<div style="color:var(--silver);">13-Gates lokal aktiv in forina_engine/assurance_gates.py</div>';
   }
 }
+
+async function loadRepositoriesCatalog(zoneFilter = '') {
+  const container = document.getElementById('repos-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade Repository-Katalog...</div>';
+
+  try {
+    const url = zoneFilter ? `/api/repos/catalog?zone=${encodeURIComponent(zoneFilter)}` : '/api/repos/catalog';
+    const res = await fetch(url);
+    const data = await res.json();
+    const repos = data.repositories || [];
+
+    if (!repos.length) {
+      container.innerHTML = '<div style="color:var(--silver);">Keine Repositories für diesen Filter gefunden.</div>';
+      return;
+    }
+
+    container.innerHTML = repos.map(r => {
+      let zoneBadgeColor = 'var(--neon-green)';
+      if (r.zone.includes('Development')) zoneBadgeColor = 'var(--neon-blue)';
+      if (r.zone.includes('Federation')) zoneBadgeColor = 'var(--gold)';
+
+      return `
+        <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+              <span style="color:var(--gold); font-weight:700;">#${String(r.nr).padStart(2, '0')}</span>
+              <span style="font-size:0.62rem; color:${zoneBadgeColor}; border:1px solid ${zoneBadgeColor}; padding:1px 5px; border-radius:4px;">
+                ${r.zone.replace(' Zone', '')}
+              </span>
+            </div>
+            <div style="margin-top:4px;">
+              <a href="${r.url}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">
+                ${r.repository} ↗
+              </a>
+            </div>
+            <div style="color:#e2e8f0; font-size:0.68rem; margin-top:3px;">
+              <strong style="color:var(--neon-pink);">${r.module_id}:</strong> ${r.module_role}
+            </div>
+          </div>
+          <div style="margin-top:6px; pt-2; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; color:#a0aec0;">
+            <span>Entscheid: <strong style="color:#fff;">${r.integration_decision}</strong></span>
+            <span>${r.pdf_source.includes('Claude') ? 'TAAFT' : 'Spec S.' + r.pdf_page}</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">50 Repositories im Katalog: docs/repository_evaluation_matrix.csv</div>';
+  }
+}
+
+function filterReposByZone(zone) {
+  loadRepositoriesCatalog(zone);
+}
+
 
 
 

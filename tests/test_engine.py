@@ -19,6 +19,7 @@ from forina_engine.financial_engine import FinancialIntelligenceEngine, Settleme
 from forina_engine.boba_validator import BobaErrorChainValidator, ChainStepVerificationFailed
 from forina_engine.stroq_scanner import StroqAgentSecurityScanner, SecurityScannerViolation
 from forina_engine.assurance_gates import AssuranceGatePipeline
+from forina_engine.repo_catalog import RepositoryEvaluationCatalog
 
 
 class TestForinaTitanEngine(unittest.TestCase):
@@ -238,6 +239,26 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertTrue((self.root / "dist" / "app.js").exists())
         self.assertTrue((self.root / "dist" / "spec-status.json").exists())
         self.assertTrue((self.root / "dist" / "AetherTitan.AppDir" / "AppRun").exists())
+
+    def test_50_repository_evaluation_catalog(self):
+        catalog = RepositoryEvaluationCatalog(self.root)
+        repos = catalog.list_all()
+        self.assertEqual(len(repos), 50, "Muss exakt 50 Open-Source Repositories umfassen")
+        summary = catalog.get_summary()
+        self.assertEqual(summary["total_repositories"], 50)
+        self.assertEqual(summary["sovereign_local_count"], 25)
+        self.assertEqual(summary["development_count"], 15)
+        self.assertEqual(summary["federation_count"], 10)
+        # Check specific entries
+        tauri = catalog.get_by_nr(1)
+        self.assertEqual(tauri["repository"], "tauri-apps/tauri")
+        self.assertEqual(tauri["module_id"], "M02")
+        boba = catalog.get_by_nr(47)
+        self.assertEqual(boba["repository"], "amazon-agi/BOBA-bench")
+        self.assertEqual(boba["module_id"], "M12")
+        stroq = catalog.get_by_nr(50)
+        self.assertEqual(stroq["repository"], "AGGIB/Stroq")
+        self.assertEqual(stroq["module_id"], "M13")
 
 
 if __name__ == "__main__":
