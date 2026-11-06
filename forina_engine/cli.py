@@ -110,6 +110,10 @@ def main():
     fin_parser.add_argument("--company", type=str, default="", help="Unternehmensfilter für C-Level")
     fin_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern")
 
+    # upuia (Universal Project & URL Intelligence Archive)
+    upuia_parser = subparsers.add_parser("upuia", help="UPUIA URL & Project Intelligence Archive (10 Grundregeln)")
+    upuia_parser.add_argument("action", choices=["status", "preflight"], default="status", nargs="?", help="Aktion: status, preflight")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -700,6 +704,34 @@ def main():
                 print(f" #{r.get('Nr', '?'):<3} | {r.get('Repository', '')[:35]:<35} | Modul: {r.get('Modul', '')} | {r.get('Lizenz', '')}")
             if len(rows) > 15:
                 print(f" ... und {len(rows) - 15} weitere Repositories in der Quellenmatrix.")
+            print("==================================================================")
+
+    elif args.command == "upuia":
+        from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
+        upuia = UpuiaIntelligenceArchive(project_root)
+        if args.action == "preflight":
+            pf = upuia.run_preflight_check()
+            print("==================================================================")
+            print(" UPUIA INDEPENDENT SECURITY GATE PREFLIGHT")
+            print("==================================================================")
+            print(f" Status:               {'[PASS]' if pf['preflight_passed'] else '[FAIL]'}")
+            print(f" System-Immutable:     {pf['rule_1_system_immutable']}")
+            print(f" 100% Offline Lokal:   {pf['rule_2_local_only']}")
+            print(f" Datenablage Ordner:   {pf['rule_3_separate_data_dir']}")
+            print(f" Secret-Filter:        {pf['rule_5_secrets_filter_ready']}")
+            print(f" Air-Gap Egress-Sperre: {pf['rule_8_airgap_status']}")
+            print("==================================================================")
+        else: # status
+            summ = upuia.get_summary()
+            print("==================================================================")
+            print(" UPUIA — UNIVERSAL PROJECT & URL INTELLIGENCE ARCHIVE")
+            print("==================================================================")
+            print(f" Status:               {summ['status']}")
+            print(f" Grundregeln:          {summ['security_directiv_compliance']}")
+            print(f" Zielplattform:        EndeavourOS / Arch Linux Native")
+            print(f" Speicherort:          {summ['storage_location']}")
+            print(f" Secret-Ausschluss:    {summ['secret_exclusion']}")
+            print(f" Unveränderte Quellen: {summ['immutable_originals']}")
             print("==================================================================")
 
     elif args.command == "push-repo":

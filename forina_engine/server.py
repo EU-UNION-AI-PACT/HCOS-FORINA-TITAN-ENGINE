@@ -486,6 +486,21 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(outcome.to_dict(), indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 16. UPUIA UNIVERSAL PROJECT INTELLIGENCE ARCHIVE
+        if parsed.path == "/api/upuia/status":
+            from .upuia_scanner import UpuiaIntelligenceArchive
+            upuia = UpuiaIntelligenceArchive(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(upuia.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/upuia/preflight":
+            from .upuia_scanner import UpuiaIntelligenceArchive
+            upuia = UpuiaIntelligenceArchive(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(upuia.run_preflight_check(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 

@@ -489,6 +489,15 @@ class TestForinaTitanEngine(unittest.TestCase):
         specs = suite.list_specialized_papers()
         self.assertEqual(len(specs), 15, "Muss alle 15 spezialisierten Papiere erfassen")
 
+    def test_upuia_engine_integration(self):
+        from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
+        upuia = UpuiaIntelligenceArchive(self.root)
+        pf = upuia.run_preflight_check()
+        self.assertTrue(pf["preflight_passed"])
+        summ = upuia.get_summary()
+        self.assertEqual(summ["status"], "OPERATIONAL_OFFLINE")
+        self.assertIn("10/10 Grundregeln", summ["security_directiv_compliance"])
+
 
 if __name__ == "__main__":
     unittest.main()
