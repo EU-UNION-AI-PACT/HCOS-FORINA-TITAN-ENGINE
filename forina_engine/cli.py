@@ -104,8 +104,9 @@ def main():
 
     # finance (Zentralbanken & Open Banking)
     fin_parser = subparsers.add_parser("finance", help="Zentralbanken, EZB Pontes & Open Banking Schnittstellen (PSD2)")
-    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas", "pontes", "portals", "clevel"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas, pontes, portals, clevel")
-    fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale oder C-Level")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp")
+    fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale, C-Level oder ASPSP-Banken")
+    fin_parser.add_argument("--country", type=str, default="", help="Länderkürzel für ASPSP-Banken (DE, AT, CH, FR, etc.)")
     fin_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für Portale")
     fin_parser.add_argument("--company", type=str, default="", help="Unternehmensfilter für C-Level")
     fin_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern")
@@ -688,6 +689,38 @@ def main():
                 seit = r.get("Seit", "")
                 print(f" {comp:<18} | {pos:<24} | {name:<26} | Seit {seit}")
             print("==================================================================")
+        elif args.action == "enablebanking":
+            apps = fin.get_enable_banking_apps()
+            print("==================================================================")
+            print(" ENABLE BANKING · WORLDBANKEYES APPLICATION REGISTRY")
+            print("==================================================================")
+            for a in apps:
+                print(f" [{a['status']}] {a['app_name']}")
+                print(f"   App ID:      {a['app_id']}")
+                print(f"   Environment: {a['environment']} | Services: {', '.join(a['services'])}")
+                print(f"   Privacy:     {a.get('privacy_url', 'N/A')}")
+                print(f"   Redirect:    {a.get('redirect_url', 'N/A')}")
+                print(f"   Key Storage: {a['key_storage']}")
+                print("------------------------------------------------------------------")
+            print(f" Sovereign Governance: {apps[0]['sovereign_governance']}")
+            print("==================================================================")
+        elif args.action == "aspsp":
+            stats = fin.get_aspsp_stats()
+            results = fin.search_aspsp_banks(
+                query=getattr(args, "search", ""),
+                country=getattr(args, "country", ""),
+                limit=getattr(args, "limit", 25)
+            )
+            print("==================================================================")
+            print(f" ASPSP EU-BANKEN KATALOG ({stats['unique_brands']} Banken / {stats['countries_count']} Länder)")
+            print(f" Status: {stats['status_distribution'].get('green', 0)} Green, {stats['status_distribution'].get('red', 0)} Red")
+            print("==================================================================")
+            for r in results:
+                status_symbol = "[OK]" if r.get("current_status") == "green" else "[WARN]"
+                print(f" {status_symbol:<6} {r.get('country', '??'):<4} | {r.get('brand', 'Unbekannt')[:32]:<32} | {r.get('psu_type', ''):<10} | {r.get('service', '')}")
+            print("==================================================================")
+            print(f" Treffer: {len(results)} (Limit: {getattr(args, 'limit', 25)})")
+            print(f" [Tipp] Filter: python3 forina.py finance aspsp --search Sparkasse --country DE")
         else: # summary
             summ = fin.get_summary()
             print(json.dumps(summ, indent=2, ensure_ascii=False))

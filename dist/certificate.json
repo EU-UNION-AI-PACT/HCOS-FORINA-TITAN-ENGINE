@@ -44,7 +44,7 @@
     "license_type": "PROPRIETARY LICENSE - ALL RIGHTS RESERVED"
   },
   "codebase_attestation": {
-    "merkle_root": "4ea0f98d99909832bdb10c934a71284d1e0e5459ec1104a7be81276d58b7dc7e",
+    "merkle_root": "28092e1726711fe6a638818a396eb5202172dc07b9c9a63649df66567ea7ddf5",
     "file_hashes": {
       "Tool-Build-Processing-Security-Spec.txt": "975af43e05306318b3b48d2d9cc8c9a3f9bce9f7eb0ef806d8cd6105c9c64597",
       "config/pipeline.json": "21372155405d95519a1b17a97d4efce0454a73e9fd90481120a100e02ac61472",
@@ -52,10 +52,10 @@
       "forina_engine/certification.py": "1c3ee8298b53f8906d2a3ca389b8ddb42e0524e31ea7c3d4ed01d6583154b722",
       "forina_engine/engine.py": "041bedb6bfbf5c063a514f72e4917f17e1db2f970fa314e1018e96640d0990ea",
       "forina_engine/security.py": "f5fc51e21ead8b6397c1e6fc890a362cdd4649748a5f225d77b40c31f0f45d88",
-      "forina_engine/server.py": "0b2d0465178d7d11a7e3d72a058365e3eb1dc9964af7beb6f8ab459fb16cd85b",
+      "forina_engine/server.py": "f6423d311e430089d95ed16d6c059601211f2c76e503ac76ed05177e2b01fd91",
       "forina_engine/spec_sync.py": "57bbb0e3257d30e8de91bf1719dbca6ef3998de0fb4b81582521d304871db3b6",
-      "web/app.js": "ea29ed15b56b96f86c9451c3180ee7d929cdbb8cd9c544a4e2411943d5ac792f",
-      "web/index.html": "127d35fcc1954d8096375a1fa851694f2fe19f689ea25f4566748e0fa02dce93",
+      "web/app.js": "f8cb9ea86681b37ff1676172d1d97284e077c00c4adde76d70b07f0baa1d834e",
+      "web/index.html": "f31a1bfa7777543c126857e150aaacb2f11b790d5105fc39cf1e2f720961dcac",
       "web/styles.css": "4ac931c7b12e3a83210b0af79db039f7cb2ada28b3907d0f543addc2a4281bd0",
       "web/sw.js": "c7b3bc47e9d328b40490b0ca307b12f92e13c1e36f6a14d1e4648205d3e6b76b"
     },
@@ -64,15 +64,15 @@
   "cryptographic_signatures": {
     "algorithm": "Ed25519 (RFC 8032 Asymmetric Signature) + Merkle SHA-256",
     "signer_identity": "Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)",
-    "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"4ea0f98d99909832bdb10c934a71284d1e0e5459ec1104a7be81276d58b7dc7e\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
-    "ed25519_signature_hex": "ed8cea7a871f7322d3ec44efa320da7921518139dc1818782279760520b01b5ad71559020155cbdc45bdf0f7a43d79edc69c6bdf4069364532605e54138c600c",
-    "ed25519_signature_b64": "7YzqeocfcyLT7ETvoyDaeSFRgTncGBh4Inl2BSCwG1rXFVkCAVXL3EW98PekPXntxpxr30BpNkUyYF5UE4xgDA==",
+    "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"28092e1726711fe6a638818a396eb5202172dc07b9c9a63649df66567ea7ddf5\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
+    "ed25519_signature_hex": "5524871386187136843b2ea0a71cbdc6d1b1e8bfe97a79cd5d9fbd42a4c72e430c75e12e905633b5f7da046fd023c069b45d1acc9661c9512191944e63085000",
+    "ed25519_signature_b64": "VSSHE4YYcTaEOy6gpxy9xtGx6L/pennNXZ+9QqTHLkMMdeEukFYztffaBG/QI8BptF0azJZhyVEhkZROYwhQAA==",
     "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATWV5uSOc23vB5bGWRaz+owF0TPxGuiChtSJ+nBuEdhk=\n-----END PUBLIC KEY-----\n",
     "validation_status": "ASYMMETRIC_SIGNATURE_VERIFIED",
     "assurance_tier": "PRODUCTION_ASSURED"
   },
   "audit_trail": {
-    "generated_at": "2026-11-06T13:31:23.072306+00:00",
+    "generated_at": "2026-11-06T13:43:07.594445+00:00",
     "spec_compliance": "100% Tool Build Processing - Securty - So Baut man.txt Compliant",
     "production_assurance_level": "Tier-4 Production Assured",
     "eu_compliance_badge": "VALIDATED",

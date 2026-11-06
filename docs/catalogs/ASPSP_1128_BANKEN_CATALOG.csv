@@ -1,0 +1,1368 @@
+brand,country,psu_type,service,previous_status,current_status
+3S Money,LU,business,AIS,yellow,green
+ABN AMRO,NL,business,AIS,yellow,green
+AIB,IE,personal,AIS,yellow,green
+ASN Bank,NL,personal,AIS,yellow,green
+AXA Banque,FR,personal,AIS,yellow,green
+Aachener Bank,DE,business,AIS,green,red
+Aasen Sparebank,NO,personal,AIS,green,red
+Abanca,ES,personal,AIS,yellow,green
+Abanca,PT,business,AIS,yellow,red
+Activo Bank,PT,personal,AIS,yellow,green
+Addiko Bank,HR,business,AIS,green,red
+Addiko Bank,SI,business,AIS,green,red
+Airwallex,CY,business,AIS,green,red
+Airwallex,NL,business,AIS,green,red
+Aktia,FI,personal,AIS,yellow,red
+Alior Bank,PL,business,AIS,red,green
+Alisa Pankki,FI,personal,AIS,green,red
+Allianz Bank Financial Advisors,IT,personal,AIS,yellow,red
+Alpha Bank,GR,business,AIS,yellow,green
+American Express,FR,personal,AIS,yellow,green
+Andelskassen Fælleskassen,DK,business,AIS,yellow,green
+Arbejdernes Landsbank,DK,personal,AIS,yellow,green
+Argenta,BE,business,AIS,yellow,green
+Arion banki,IS,personal,AIS,green,red
+Arkea Banking Services,FR,business,AIS,red,green
+Arkea Banque Entreprises,FR,business,AIS,red,green
+Arkea Banque Privee,FR,personal,AIS,yellow,red
+Arquia Bank,ES,personal,AIS,red,green
+Artea,LT,business,AIS,yellow,green
+Askim og Spydeberg Sparebank,NO,personal,AIS,yellow,green
+Aurskog Sparebank,NO,personal,AIS,yellow,green
+BAWAG,AT,business,AIS,yellow,green
+BBBank,DE,personal,AIS,yellow,green
+BBVA,BE,business,AIS,yellow,green
+BBVA,DE,personal,AIS,green,red
+BBVA,ES,personal,AIS,yellow,green
+BBVA,IT,personal,AIS,yellow,green
+BCC Agrobresciano,IT,personal,AIS,green,red
+BCC Ancona e Falconara Marittima,IT,business,AIS,green,red
+BCC Appulo Lucana,IT,business,AIS,green,red
+BCC Bari e Taranto,IT,business,AIS,green,red
+BCC Basciano,IT,personal,AIS,green,red
+BCC Bergamasca e Orobica,IT,personal,AIS,green,red
+BCC Binasco,IT,business,AIS,green,red
+BCC Busto Garolfo e Buguggiate,IT,business,AIS,yellow,green
+BCC Cantù,IT,business,AIS,green,red
+BCC Carate Brianza,IT,business,AIS,green,red
+BCC Caravaggio,IT,business,AIS,green,red
+BCC Castiglione Messer Raimondo e Pianella,IT,personal,AIS,green,red
+BCC Cremasca e Mantovana,IT,business,AIS,green,red
+BCC Fano,IT,personal,AIS,green,red
+BCC Filottrano,IT,business,AIS,green,red
+BCC Garda,IT,business,AIS,green,red
+BCC Leverano,IT,business,AIS,green,red
+BCC Lezzeno,IT,personal,AIS,green,red
+BCC Longi Valle del Fitalia,IT,business,AIS,green,red
+BCC Mediocrati,IT,personal,AIS,green,red
+BCC Milano,IT,business,AIS,green,red
+BCC Monte Pruno di Roscigno e di Laurino,IT,business,AIS,green,red
+BCC Montepaone,IT,business,AIS,green,red
+BCC Napoli,IT,business,AIS,green,red
+BCC Oglio e Serio,IT,business,AIS,green,red
+BCC Ostra Vetere,IT,business,AIS,green,red
+BCC Ostuni,IT,business,AIS,green,red
+BCC Pachino,IT,business,AIS,green,red
+BCC Pesaro,IT,business,AIS,green,red
+BCC Pordenonese e Monsile,IT,personal,AIS,green,red
+BCC Pratola Peligna,IT,business,AIS,green,red
+BCC Putignano,IT,business,AIS,green,red
+BCC Roma,IT,business,AIS,yellow,green
+BCC Romagnolo,IT,personal,AIS,green,red
+BCC Terra d'Otranto,IT,business,AIS,green,red
+BCC Terra di Lavoro,IT,business,AIS,green,red
+BCC Valdostana,IT,personal,AIS,green,red
+BCC Valle del Torto,IT,personal,AIS,green,red
+BCC Veneta,IT,business,AIS,green,red
+BCC Venezia Padova e Rovigo,IT,business,AIS,green,red
+BCC Vicentino Pojana Maggiore,IT,personal,AIS,green,red
+BCC degli Ulivi Terra di Bari,IT,business,AIS,green,red
+BCC dei Castelli Romani,IT,business,AIS,green,red
+BCC della Romagna Occidentale,IT,business,AIS,green,red
+BCC della Valle del Trigno,IT,business,AIS,green,red
+BCC delle Prealpi,IT,business,AIS,green,red
+BCC di Alberobello e Sammichele di Bari,IT,business,AIS,green,red
+BCC di Barlassina,IT,business,AIS,green,red
+BCC di Brescia,IT,personal,AIS,yellow,green
+BCC di Cherasco,IT,business,AIS,yellow,green
+BCC di Flumeri,IT,business,AIS,green,red
+BCC di Locorotondo,IT,personal,AIS,green,red
+BCC di Pianfei e Rocca De' Baldi,IT,business,AIS,green,red
+BCC di San Marzano di San Giuseppe,IT,business,AIS,yellow,green
+BCC la Riscossa di Regalbuto,IT,personal,AIS,green,red
+BCC ravennate forlivese e imolese,IT,business,AIS,green,red
+BGL BNP Paribas,LU,business,AIS,yellow,red
+BKS Bank,AT,personal,AIS,red,green
+BN Bank,NO,personal,AIS,yellow,green
+BNG Bank,NL,business,AIS,green,red
+BNL Corporate,IT,business,AIS,yellow,green
+BNP Paribas,FR,personal,AIS,yellow,green
+BNP Paribas,PL,business,AIS,yellow,green
+BNP Paribas Fortis,BE,personal,AIS,yellow,green
+BPER Banca,IT,personal,AIS,yellow,green
+BPI,PT,personal,AIS,yellow,green
+BRD,RO,personal,AIS,green,red
+Banca Adria Colli Euganei,IT,business,AIS,yellow,green
+Banca Alpi Marittime Carrù,IT,business,AIS,green,red
+Banca Cassa di Risparmio di Savigliano,IT,business,AIS,yellow,green
+Banca Centro Toscana-Umbria,IT,business,AIS,green,red
+Banca Comerciala Romana,RO,personal,AIS,green,red
+Banca Credito Attivo,IT,business,AIS,green,red
+Banca Etica,IT,business,AIS,green,red
+Banca Euromobiliare,IT,business,AIS,yellow,green
+Banca Ifis,IT,business,AIS,green,red
+Banca Lazio Nord Credito Cooperativo,IT,business,AIS,yellow,green
+Banca Malatestiana Credito Cooperativo,IT,business,AIS,yellow,green
+Banca March,ES,business,AIS,yellow,green
+Banca Mediolanum,IT,personal,AIS,yellow,green
+Banca Monte dei Paschi di Siena,IT,business,AIS,green,red
+Banca Nazionale del Lavoro,IT,personal,AIS,green,red
+Banca Passadore,IT,business,AIS,yellow,green
+Banca Patrimoni Sella & C.,IT,personal,AIS,yellow,green
+Banca Popolare Dell'Alto Adige,IT,business,AIS,yellow,green
+Banca Popolare Pugliese,IT,personal,AIS,green,red
+Banca Popolare del Cassinate,IT,personal,AIS,green,red
+Banca Popolare di Cortona,IT,business,AIS,green,red
+Banca Popolare di Puglia e Basilicata,IT,personal,AIS,red,green
+Banca Progetto,IT,personal,AIS,yellow,green
+Banca Sella,IT,personal,AIS,yellow,red
+Banca TEMA,IT,business,AIS,green,red
+Banca Territori del Monviso,IT,personal,AIS,green,red
+Banca Transilvania,RO,business,AIS,yellow,green
+Banca Valsabbina,IT,business,AIS,yellow,green
+Banca Widiba,IT,personal,AIS,green,red
+Banca d'Alba,IT,business,AIS,green,red
+Banca del Fucino,IT,business,AIS,green,red
+Banca del Piemonte,IT,personal,AIS,red,green
+Banca della Marca,IT,business,AIS,green,red
+Banca delle Terre Venete,IT,personal,AIS,green,red
+Banca di Bologna,IT,personal,AIS,green,red
+Banca di Caraglio del Cuneese e della Riviera dei Fiori,IT,personal,AIS,yellow,green
+Banca di Credito Popolare,IT,business,AIS,green,red
+Banca di Macerata,IT,business,AIS,green,red
+Banca di Magna Grecia,IT,business,AIS,green,red
+Banca di Udine,IT,personal,AIS,green,red
+Banca don Rizzo,IT,business,AIS,green,red
+Banco BNI Europa,PT,personal,AIS,yellow,red
+Banco BPM,IT,business,AIS,yellow,green
+Banco Cetelem,ES,personal,AIS,green,red
+Banco Comercial Portugues,PT,personal,AIS,yellow,green
+Banco Desio,IT,personal,AIS,red,green
+Banco Di Sardegna,IT,business,AIS,green,red
+Banco Fiorentino,IT,business,AIS,yellow,green
+Banco Pichincha,ES,personal,AIS,yellow,green
+Banco Santander,ES,business,AIS,yellow,green
+Banco de Sabadell,ES,business,AIS,yellow,green
+BancoPosta,IT,personal,AIS,green,red
+BancoPosta Business Link,IT,business,AIS,yellow,green
+Bank 1 Saar,DE,personal,AIS,yellow,green
+Bank Millennium,PL,personal,AIS,yellow,green
+Bank Norwegian,DE,personal,AIS,green,red
+Bank Norwegian,DK,personal,AIS,green,red
+Bank Norwegian,ES,personal,AIS,green,red
+Bank Norwegian,FI,personal,AIS,yellow,green
+Bank Norwegian,NO,personal,AIS,yellow,green
+Bank Norwegian,SE,personal,AIS,yellow,green
+Bank Of Valetta,MT,personal,AIS,yellow,green
+Bank Pekao,PL,personal,AIS,yellow,red
+Bank Van Breda,BE,personal,AIS,yellow,green
+Bank de Kremer,BE,business,AIS,green,red
+Bank für Sozialwirtschaft,DE,business,AIS,red,green
+Bank of Cyprus,CY,business,AIS,yellow,red
+Bank of Ireland,IE,business,AIS,green,red
+Bankhaus Bauer,DE,business,AIS,yellow,red
+Bankhaus Max Flessa,DE,business,AIS,yellow,green
+Bankhaus Rautenschlein,DE,business,AIS,yellow,green
+Bankhaus Spängler,AT,business,AIS,green,red
+Bankinter,ES,personal,AIS,yellow,green
+Bankinter,PT,personal,AIS,yellow,green
+Banque CPH,BE,personal,AIS,yellow,green
+Banque Chalus,FR,personal,AIS,green,red
+Banque Européenne du Crédit Mutuel,FR,business,AIS,green,red
+Banque Palatine,FR,business,AIS,green,red
+Banque Populaire Alsace Lorraine Champagne,FR,business,AIS,red,green
+Banque Populaire Aquitaine Centre Atlantique,FR,personal,AIS,green,red
+Banque Populaire Auvergne Rhône Alpes,FR,business,AIS,yellow,green
+Banque Populaire Bourgogne Franche Comté,FR,business,AIS,yellow,green
+Banque Populaire Grand Ouest,FR,personal,AIS,yellow,green
+Banque Populaire Méditerranée,FR,business,AIS,yellow,green
+Banque Populaire Occitane,FR,business,AIS,yellow,green
+Banque Populaire Rives de Paris,FR,business,AIS,yellow,green
+Banque Populaire Val de France,FR,personal,AIS,yellow,green
+Banque Populaire du Nord,FR,personal,AIS,yellow,green
+Banque Populaire du Sud,FR,personal,AIS,yellow,green
+Banque Transatlantique,FR,business,AIS,yellow,red
+Banque de Luxembourg,LU,business,AIS,yellow,green
+Bdm Banca,IT,business,AIS,yellow,green
+Belfius,BE,personal,AIS,yellow,green
+Beobank,BE,business,AIS,yellow,green
+Berg Sparebank,NO,personal,AIS,yellow,green
+Bergslagens Sparbank,SE,business,AIS,yellow,green
+Berliner Sparkasse,DE,personal,AIS,yellow,green
+Berliner Volksbank,DE,business,AIS,green,red
+Betri,DK,personal,AIS,yellow,green
+BiG,PT,business,AIS,yellow,green
+Bien Sparebank,NO,personal,AIS,green,red
+Bigbank,EE,personal,AIS,red,green
+Bigbank,LT,personal,AIS,yellow,green
+Bjugn Sparebank,NO,personal,AIS,yellow,red
+Bjursås Sparbank,SE,personal,AIS,yellow,green
+Borbjerg Sparekasse,DK,personal,AIS,green,red
+Bordesholmer Sparkasse Aktiengesellschaft,DE,business,AIS,green,red
+Boursorama Banque,FR,business,AIS,yellow,green
+Bred Banque Populaire,FR,business,AIS,yellow,green
+Bremische Volksbank,DE,business,AIS,yellow,green
+Buddy Bank,IT,personal,AIS,yellow,green
+Bulder,NO,personal,AIS,yellow,green
+C24,DE,personal,AIS,yellow,green
+CBC,BE,business,AIS,yellow,green
+CBNK,ES,personal,AIS,yellow,green
+CEC Bank,RO,personal,AIS,yellow,green
+CIB Bank,HU,personal,AIS,yellow,red
+CIC,FR,personal,AIS,yellow,green
+CIC Banque Privée,FR,personal,AIS,green,red
+CRA Castellana Grotte,IT,business,AIS,green,red
+Caisse d'Epargne Aquitaine Poitou-Charentes,FR,business,AIS,yellow,green
+Caisse d'Epargne Auvergne et Limousin,FR,personal,AIS,green,red
+Caisse d'Epargne Bourgogne Franche-Comté,FR,personal,AIS,yellow,red
+Caisse d'Epargne Bretagne-Pays De Loire,FR,business,AIS,yellow,red
+Caisse d'Epargne Côte d'Azur,FR,business,AIS,green,red
+Caisse d'Epargne Grand Est Europe,FR,personal,AIS,yellow,green
+Caisse d'Epargne Hauts de France,FR,business,AIS,yellow,green
+Caisse d'Epargne Ile De France,FR,personal,AIS,yellow,green
+Caisse d'Epargne Languedoc-Roussillon,FR,personal,AIS,yellow,green
+Caisse d'Epargne Loire Drôme Ardèche,FR,personal,AIS,green,red
+Caisse d'Epargne Loire-Centre,FR,personal,AIS,green,red
+Caisse d'Epargne Midi-Pyrénées,FR,business,AIS,yellow,green
+Caisse d'Epargne Normandie,FR,personal,AIS,green,red
+Caisse d'Epargne Provence Alpes Corse,FR,personal,AIS,yellow,green
+Caisse d'Epargne Rhône Alpes,FR,personal,AIS,yellow,green
+Caixa Central de Crédito Agrícola Mutuo,PT,personal,AIS,yellow,green
+Caixa Económica Montepio Geral,PT,personal,AIS,yellow,green
+Caixa Económica da Misericórdia de Angra do Heroísmo,PT,business,AIS,yellow,green
+Caixa Geral de Depósitos,PT,personal,AIS,yellow,green
+Caixa Guissona,ES,business,AIS,green,red
+Caixa Popular,ES,business,AIS,yellow,green
+Caixa Rural Altea,ES,personal,AIS,red,green
+Caixa Rural La Vall,ES,personal,AIS,yellow,green
+Caixa Rural Torrent,ES,personal,AIS,red,green
+Caixa de Crédito Agrícola Mútuo de Mafra,PT,business,AIS,red,green
+CaixaBank,ES,business,AIS,yellow,green
+Caja Rural Central en Orihuela,ES,business,AIS,green,red
+Caja Rural Granada,ES,personal,AIS,red,green
+Caja Rural de Aragón,ES,business,AIS,green,red
+Caja Rural de Asturias,ES,business,AIS,yellow,green
+Caja Rural de Extremadura,ES,personal,AIS,green,red
+Caja Rural de Jaén,ES,business,AIS,yellow,green
+Caja Rural de L'Alcúdia,ES,business,AIS,green,red
+Caja Rural de Navarra,ES,business,AIS,yellow,green
+Caja Rural de Onda,ES,business,AIS,yellow,green
+Caja Rural de Salamanca,ES,business,AIS,yellow,green
+Caja Rural de Soria,ES,business,AIS,yellow,red
+Caja Rural de Villamalea,ES,business,AIS,green,red
+Caja Rural de Zamora,ES,business,AIS,yellow,red
+Caja Rural del Sur,ES,business,AIS,red,green
+Caja Viva,ES,business,AIS,yellow,green
+Cajamar Caja Rural,ES,personal,AIS,yellow,green
+Cajasieste,ES,business,AIS,yellow,green
+CartaBCC,IT,business,AIS,green,red
+Cassa Padana Banca di Credito Cooperativo,IT,business,AIS,green,red
+Cassa Rurale Alto Garda,IT,personal,AIS,green,red
+Cassa Rurale Renon,IT,business,AIS,yellow,green
+Cassa Rurale Vallagarina,IT,business,AIS,green,red
+Cassa Rurale di Trento Banca di Credito Cooperativo,IT,business,AIS,green,red
+Cassa Rurale ed Artigiana Di Borgo San Giacomo,IT,business,AIS,green,red
+Cassa Rurale ed Artigiana del Friuli Venezia Giulia,IT,personal,AIS,green,red
+Cassa Rurale ed Artigiana di Boves,IT,business,AIS,yellow,green
+Cassa Rurale ed Artigiana di Cortina d'Ampezzo e delle Dolomiti,IT,business,AIS,green,red
+Cassa di Risparmio di Asti,IT,personal,AIS,yellow,green
+Cassa di Risparmio di Bolzano,IT,business,AIS,green,red
+Cassa di Risparmio di Fossano,IT,business,AIS,green,red
+Cassa di Risparmio di Volterra,IT,business,AIS,yellow,green
+CentroMarca Banca Credito Cooperativo di Treviso e Venezia,IT,business,AIS,green,red
+Cherry Bank,IT,business,AIS,green,red
+ChiantiBanca,IT,personal,AIS,green,red
+Circle K EXTRA Mastercard,SE,personal,AIS,green,red
+Citadele,EE,personal,AIS,yellow,green
+Citadele,LT,business,AIS,yellow,green
+Citadele,LV,business,AIS,yellow,red
+Cofidis,PT,personal,AIS,yellow,green
+Comdirect,DE,business,AIS,green,red
+Commerzbank,DE,personal,AIS,yellow,green
+Consors Finanz,DE,personal,AIS,yellow,red
+Consorsbank,DE,personal,AIS,green,red
+Coop Bank,DK,personal,AIS,yellow,green
+Coop Mastercard,SE,personal,AIS,yellow,green
+Coop Pank,EE,business,AIS,green,red
+CrediFriuli,IT,business,AIS,green,red
+Credia Bank,GR,business,AIS,yellow,red
+Credit Agricole,PL,personal,AIS,red,green
+Credit Agricole Cariparma,IT,business,AIS,green,red
+Credito Cooperativo Centro Calabria,IT,business,AIS,yellow,green
+Credito Emiliano,IT,personal,AIS,yellow,green
+Credito Padano,IT,business,AIS,green,red
+Crelan,BE,business,AIS,green,red
+Crédit Agricole Alpes Provence,FR,business,AIS,green,red
+Crédit Agricole Alsace Vosges,FR,personal,AIS,yellow,green
+Crédit Agricole Atlantique Vendée,FR,personal,AIS,green,red
+Crédit Agricole Brie Picardie,FR,personal,AIS,green,red
+Crédit Agricole Champagne-Bourgogne,FR,business,AIS,yellow,green
+Crédit Agricole Charente Périgord,FR,personal,AIS,yellow,red
+Crédit Agricole Charente-Maritime Deux-Sèvres,FR,business,AIS,yellow,green
+Crédit Agricole Nord Midi-Pyrénées,FR,business,AIS,green,red
+Crédit Agricole Nord de France,FR,business,AIS,yellow,green
+Crédit Agricole Pyrénées Gascogne,FR,business,AIS,green,red
+Crédit Agricole Sud Méditerranée,FR,personal,AIS,green,red
+Crédit Agricole Sud Rhône-Alpes,FR,personal,AIS,yellow,green
+Crédit Agricole Toulouse 31,FR,business,AIS,green,red
+Crédit Agricole Val de France,FR,personal,AIS,yellow,red
+Crédit Agricole d'Aquitaine,FR,personal,AIS,yellow,green
+Crédit Agricole d'Ille et Vilaine,FR,personal,AIS,yellow,green
+Crédit Agricole de Centre France,FR,business,AIS,yellow,green
+Crédit Agricole de Centre Loire,FR,business,AIS,yellow,green
+Crédit Agricole de Centre-Est,FR,personal,AIS,yellow,green
+Crédit Agricole de Franche-Comté,FR,business,AIS,green,red
+Crédit Agricole de Guadeloupe,FR,business,AIS,yellow,green
+Crédit Agricole de Loire Haute-Loire,FR,personal,AIS,yellow,green
+Crédit Agricole de Lorraine,FR,personal,AIS,yellow,green
+Crédit Agricole de Normandie,FR,business,AIS,yellow,green
+Crédit Agricole de Normandie Seine,FR,personal,AIS,green,red
+Crédit Agricole de Paris et d'Ile de France,FR,personal,AIS,yellow,green
+Crédit Agricole de Provence Côtes d'Azur,FR,business,AIS,yellow,green
+Crédit Agricole de l'Anjou et du Maine,FR,personal,AIS,red,green
+Crédit Agricole de la Corse,FR,personal,AIS,yellow,red
+Crédit Agricole de la Martinique et de la Guyane,FR,business,AIS,green,red
+Crédit Agricole de la Réunion,FR,business,AIS,green,red
+Crédit Agricole de la Touraine et du Poitou,FR,personal,AIS,yellow,green
+Crédit Agricole des Côtes d'Armor,FR,business,AIS,yellow,green
+Crédit Agricole des Savoie,FR,personal,AIS,yellow,green
+Crédit Agricole du Centre Ouest,FR,personal,AIS,green,red
+Crédit Agricole du Finistère,FR,personal,AIS,green,red
+Crédit Agricole du Languedoc,FR,personal,AIS,yellow,green
+Crédit Agricole du Morbihan,FR,personal,AIS,yellow,green
+Crédit Agricole du Nord Est,FR,business,AIS,yellow,green
+Crédit Commercial de France,FR,personal,AIS,yellow,green
+Crédit Coopératif,FR,business,AIS,yellow,green
+Crédit Mutuel,FR,business,AIS,yellow,green
+Crédit Mutuel de Bretagne,FR,personal,AIS,green,red
+Crédit Mutuel du Sud-Ouest,FR,personal,AIS,red,green
+Crédit maritime Mutuel Grand Ouest,FR,business,AIS,yellow,green
+Crédito Agrícola,PT,business,AIS,green,red
+Cultura,NO,business,AIS,yellow,green
+DBS Bank,SI,business,AIS,green,red
+DKB,DE,personal,AIS,yellow,green
+DNB,NO,personal,AIS,yellow,green
+DNB,SE,business,AIS,yellow,green
+DSK Bank,BG,personal,AIS,yellow,green
+Dalslands Sparbank,SE,personal,AIS,yellow,green
+Danske Andelskassers Bank,DK,business,AIS,yellow,red
+Danske Bank,DK,personal,AIS,yellow,green
+Danske Bank,FI,personal,AIS,yellow,green
+Danske Bank,NO,business,AIS,yellow,green
+Danske Bank,PL,business,AIS,green,red
+Danske Bank,SE,business,AIS,yellow,green
+Delavska Hranilnica,SI,business,AIS,green,red
+Deutsche Bank,BE,personal,AIS,red,green
+Deutsche Bank,DE,personal,AIS,yellow,green
+Deutsche Bank,ES,personal,AIS,yellow,green
+Deutsche Bank,IT,business,AIS,yellow,green
+Djurslands Bank,DK,personal,AIS,yellow,green
+Dolomiten Bank,AT,personal,AIS,yellow,green
+Donau-Iller Bank,DE,personal,AIS,yellow,green
+Donner & Reuschel,DE,business,AIS,yellow,green
+Dortmunder Volksbank,DE,personal,AIS,yellow,green
+Dragsholm Sparekasse,DK,personal,AIS,yellow,green
+Drangedal Sparebank,NO,personal,AIS,green,red
+Eckernförder Bank Volksbank-Raiffeisenbank,DE,business,AIS,yellow,green
+Eika Digitalbank,NO,personal,AIS,red,green
+Ekeby Sparbank,SE,personal,AIS,yellow,green
+Ekobanken Medlemsbank,SE,business,AIS,yellow,green
+Emil Banca,IT,personal,AIS,yellow,green
+Erste & Steiermärkische Bank,HR,personal,AIS,yellow,green
+Erste Bank,AT,business,AIS,yellow,green
+Erste Bank,HU,personal,AIS,yellow,green
+Erste Bank Polska,PL,personal,AIS,yellow,green
+Erzgebirgssparkasse,DE,personal,AIS,yellow,red
+EthikBank,DE,personal,AIS,green,red
+Etnedal Sparebank,NO,personal,AIS,yellow,green
+Eurobank,GR,personal,AIS,yellow,green
+Eurobank (ex-Hellenic Bank),CY,business,AIS,yellow,green
+Eurocaja Rural,ES,business,AIS,yellow,green
+Europabank,BE,business,AIS,green,red
+Evangelische Bank,DE,business,AIS,yellow,green
+Evje og Hornnes Sparebank,NO,personal,AIS,red,green
+Exim Banca Românească,RO,business,AIS,yellow,green
+FYRST,DE,business,AIS,yellow,green
+Falkenbergs Sparbank,SE,personal,AIS,yellow,green
+Fana Sparebank,NO,personal,AIS,yellow,green
+Faster Andelskasse,DK,personal,AIS,yellow,green
+Ferratum Bank,MT,personal,AIS,green,red
+Fiare Banca Etica,ES,business,AIS,yellow,green
+Fibank,BG,business,AIS,yellow,green
+Fideuram,IT,personal,AIS,yellow,green
+Findomestic,IT,personal,AIS,yellow,green
+FinecoBank,IT,personal,AIS,yellow,green
+Finom,AT,business,AIS,green,red
+Finom,BE,business,AIS,yellow,green
+Finom,DE,business,AIS,yellow,green
+Finom,EE,business,AIS,yellow,green
+Finom,ES,business,AIS,yellow,green
+Finom,FR,business,AIS,green,red
+Finom,IT,business,AIS,yellow,green
+Finom,NL,business,AIS,yellow,red
+Fintro,BE,personal,AIS,yellow,green
+Flekkefjord Sparebank,NO,personal,AIS,yellow,red
+Fortuneo,FR,personal,AIS,red,green
+Frankfurter Sparkasse,DE,business,AIS,green,red
+Frankfurter Volksbank,DE,business,AIS,green,red
+Fryksdalens Sparbank,SE,personal,AIS,yellow,green
+Frørup Andelskasse,DK,business,AIS,yellow,green
+Fynske Bank,DK,business,AIS,green,red
+Förde Sparkasse,DE,personal,AIS,yellow,green
+Føroya Banki,DK,personal,AIS,yellow,green
+Fürst Fugger Privatbank,DE,personal,AIS,yellow,green
+Fürstlich Castell'sche Bank Credit-Casse,DE,personal,AIS,green,red
+GLS Gemeinschaftsbank,DE,personal,AIS,yellow,green
+Gildeskål Sparebank,NO,personal,AIS,green,red
+Gladbacher Bank von 1922,DE,business,AIS,green,red
+Globalcaja,ES,personal,AIS,green,red
+Gorenjska banka,SI,personal,AIS,yellow,green
+Grong Sparebank,NO,personal,AIS,yellow,green
+Grue Sparebank,NO,personal,AIS,yellow,red
+Gránit Bank,HU,personal,AIS,yellow,green
+GrønlandsBANKEN,DK,business,AIS,yellow,green
+HPB,HR,personal,AIS,yellow,green
+HSBC,FR,business,AIS,green,red
+HSBC,MT,personal,AIS,green,red
+HSBC,NL,business,AIS,green,red
+HYPE,IT,personal,AIS,yellow,green
+HYPO NOE,AT,personal,AIS,green,red
+HYPO OOE,AT,business,AIS,red,green
+HYPO-BANK BURGENLAND,AT,business,AIS,green,red
+Haltdalen Sparebank,NO,personal,AIS,yellow,green
+Hamburger Sparkasse,DE,personal,AIS,yellow,green
+Hamburger Volksbank,DE,personal,AIS,green,red
+Handelsbanken,NO,personal,AIS,yellow,green
+Handelsbanken,SE,business,AIS,yellow,green
+Hannoversche Volksbank,DE,personal,AIS,yellow,green
+Harzsparkasse,DE,personal,AIS,red,green
+Haufe-Lexware,DE,business,AIS,green,red
+Haugesund Sparebank,NO,personal,AIS,yellow,red
+Hegra Sparebank,NO,personal,AIS,green,red
+Hello Bank,BE,personal,AIS,green,red
+Hello Bank,FR,personal,AIS,yellow,green
+Hello Bank!,IT,personal,AIS,red,green
+Holvi,DE,business,AIS,yellow,green
+Holvi,FI,business,AIS,yellow,green
+Hvidbjerg Bank,DK,personal,AIS,yellow,green
+Hypo Tirol,AT,business,AIS,yellow,red
+Hypo Vorarlberg,AT,business,AIS,yellow,green
+HypoVereinsbank,DE,personal,AIS,yellow,green
+Hälsinglands Sparbank,SE,personal,AIS,yellow,green
+Häradssparbanken Mönsterås,SE,personal,AIS,yellow,green
+Högsby Sparbank,SE,personal,AIS,yellow,green
+Høland og Setskog Sparebank,NO,business,AIS,yellow,green
+Hümmlinger Volksbank,DE,business,AIS,green,red
+IBL Banca,IT,personal,AIS,green,red
+ICA Banken,SE,personal,AIS,yellow,green
+ING,BE,business,AIS,yellow,green
+ING,DE,personal,AIS,yellow,green
+ING,ES,personal,AIS,yellow,green
+ING,IT,personal,AIS,yellow,green
+ING,LU,business,AIS,yellow,green
+ING,NL,business,AIS,yellow,red
+ING,RO,personal,AIS,yellow,green
+ING Bank Śląski,PL,business,AIS,yellow,green
+ING Wholesale Banking,NL,business,AIS,green,red
+Ibercaja Banco,ES,personal,AIS,yellow,green
+Ihre Volksbank Neckar Odenwald Main Tauber,DE,personal,AIS,red,green
+Ikano Bank,SE,personal,AIS,green,red
+Indo,IS,personal,AIS,yellow,green
+Intesa Sanpaolo,IT,business,AIS,yellow,green
+Intesa Sanpaolo Bank,SI,business,AIS,yellow,green
+Intesa Sanpaolo Private Banking,IT,personal,AIS,green,red
+Isybank,IT,personal,AIS,yellow,green
+Ivetofta Sparbank i Bromölla,SE,business,AIS,yellow,green
+JAK Medlemsbank,SE,business,AIS,green,red
+Jbf,NO,personal,AIS,yellow,red
+Juni,SE,business,AIS,red,green
+Jyske Bank,DK,personal,AIS,green,red
+Jæren Sparebank,NO,personal,AIS,green,red
+K&H,HU,personal,AIS,yellow,green
+KBC,BE,personal,AIS,yellow,green
+KBC Brussels,BE,personal,AIS,green,red
+KLP Banken,NO,personal,AIS,yellow,green
+Kasseler Sparkasse,DE,business,AIS,green,red
+Keytrade Bank,BE,business,AIS,yellow,green
+Kieler Volksbank,DE,business,AIS,yellow,green
+Kinda-Ydre Sparbank,SE,personal,AIS,yellow,red
+Klarna,DE,personal,AIS,yellow,green
+Klarna,ES,personal,AIS,yellow,green
+Klarna,FI,personal,AIS,red,green
+Klarna,FR,personal,AIS,red,green
+Klarna,IT,personal,AIS,red,green
+Klarna,NL,personal,AIS,yellow,green
+Klarna,PT,personal,AIS,yellow,green
+Klarna,SE,personal,AIS,green,red
+Klim Sparekasse,DK,personal,AIS,green,red
+Knab,NL,personal,AIS,yellow,green
+Kontist,DE,business,AIS,red,green
+Kreditbanken,DK,business,AIS,green,red
+Kreissparkasse Biberach,DE,personal,AIS,yellow,green
+Kreissparkasse Böblingen,DE,business,AIS,yellow,green
+Kreissparkasse Börde,DE,personal,AIS,yellow,green
+Kreissparkasse Düsseldorf,DE,personal,AIS,yellow,green
+Kreissparkasse Esslingen-Nürtingen,DE,personal,AIS,yellow,green
+Kreissparkasse Euskirchen,DE,business,AIS,red,green
+Kreissparkasse Freudenstadt,DE,personal,AIS,yellow,green
+Kreissparkasse Groß-Gerau,DE,personal,AIS,yellow,green
+Kreissparkasse Göppingen,DE,business,AIS,green,red
+Kreissparkasse Heilbronn,DE,business,AIS,yellow,green
+Kreissparkasse Heinsberg,DE,personal,AIS,yellow,green
+Kreissparkasse Kaiserslautern,DE,personal,AIS,red,green
+Kreissparkasse Kusel,DE,personal,AIS,yellow,green
+Kreissparkasse Köln,DE,personal,AIS,yellow,green
+Kreissparkasse Limburg,DE,personal,AIS,yellow,green
+Kreissparkasse Ludwigsburg,DE,personal,AIS,yellow,green
+Kreissparkasse Melle,DE,personal,AIS,yellow,green
+Kreissparkasse Miesbach-Tegernsee,DE,business,AIS,green,red
+Kreissparkasse München Starnberg Ebersberg,DE,personal,AIS,yellow,red
+Kreissparkasse Northeim,DE,personal,AIS,green,red
+Kreissparkasse Ostalb,DE,personal,AIS,yellow,green
+Kreissparkasse Ravensburg,DE,personal,AIS,yellow,green
+Kreissparkasse Reutlingen,DE,business,AIS,green,red
+Kreissparkasse Rhein-Hunsrück,DE,personal,AIS,yellow,green
+Kreissparkasse Rottweil,DE,personal,AIS,green,red
+Kreissparkasse Saarlouis,DE,personal,AIS,yellow,green
+Kreissparkasse Saarpfalz,DE,business,AIS,green,red
+Kreissparkasse Schlüchtern,DE,business,AIS,green,red
+Kreissparkasse Schwalm-Eder,DE,personal,AIS,yellow,red
+Kreissparkasse Soltau,DE,personal,AIS,yellow,red
+Kreissparkasse Stade,DE,personal,AIS,yellow,green
+Kreissparkasse Steinfurt,DE,business,AIS,red,green
+Kreissparkasse Tübingen,DE,personal,AIS,yellow,green
+Kreissparkasse Waiblingen,DE,business,AIS,yellow,red
+Kutxabank,ES,personal,AIS,yellow,green
+Kvinesdal Sparebank,NO,personal,AIS,green,red
+LCL,FR,personal,AIS,yellow,green
+LHV Pank,EE,business,AIS,yellow,green
+LKU,LT,personal,AIS,red,green
+LON,SI,personal,AIS,green,red
+La Banque Postale,FR,personal,AIS,yellow,green
+Laboral Kutxa,ES,business,AIS,yellow,green
+Laholms Sparbank,SE,personal,AIS,yellow,green
+Landesbank Baden-Württemberg,DE,business,AIS,yellow,red
+Landessparkasse Oldenburg,DE,personal,AIS,yellow,green
+Landkreditt Bank,NO,personal,AIS,yellow,red
+Landsbankinn,IS,personal,AIS,yellow,red
+Leipziger Volksbank,DE,business,AIS,green,red
+Lekebergs Sparbank,SE,personal,AIS,green,red
+Leksands Sparbank,SE,business,AIS,yellow,green
+Libra Internet Bank,RO,business,AIS,yellow,green
+Lillesands Sparebank,NO,personal,AIS,yellow,green
+Lollands Bank,DK,personal,AIS,yellow,green
+Louvre Banque Privée,FR,personal,AIS,green,red
+Luminor,EE,personal,AIS,green,red
+Luminor,LT,business,AIS,yellow,green
+Luminor,LV,personal,AIS,green,red
+Lunar,DK,personal,AIS,yellow,green
+Lunar,NO,personal,AIS,yellow,red
+Lunar,SE,personal,AIS,yellow,green
+Luster Sparebank,NO,personal,AIS,yellow,green
+Länsförsäkringar Bank,SE,business,AIS,yellow,green
+Lån & Spar Bank,DK,personal,AIS,yellow,green
+Lån & Spar Bank,SE,personal,AIS,yellow,red
+Lægernes Bank,DK,personal,AIS,yellow,green
+Lönneberga-Tuna-Vena Sparbank,SE,personal,AIS,yellow,green
+M.M. Warburg & CO,DE,business,AIS,yellow,green
+MBH Bank (ex-MKB Bank),HU,personal,AIS,yellow,green
+MBH Bank (ex-Takarékbank),HU,personal,AIS,yellow,green
+MLP Finanzdienstleistungen,DE,personal,AIS,yellow,green
+MagNet Bank,HU,personal,AIS,red,green
+Magnetiq Bank,LV,business,AIS,yellow,red
+Marchfelder Bank,AT,business,AIS,yellow,green
+Marginalen Bank,SE,personal,AIS,yellow,green
+Markaryds Sparbank,SE,personal,AIS,yellow,green
+Marker og Eidsberg Sparebank,NO,business,AIS,yellow,green
+Mediobanca,IT,personal,AIS,green,red
+Mediobanca Premier,IT,personal,AIS,yellow,green
+Melhusbanken,NO,personal,AIS,red,green
+Merkur Andelskasse,DK,personal,AIS,yellow,green
+Middelfart Sparekasse,DK,business,AIS,yellow,red
+Milleis Banque,FR,personal,AIS,yellow,green
+Millennium BCP,PT,business,AIS,yellow,green
+Mittelbrandenburgische Sparkasse in Potsdam,DE,personal,AIS,yellow,green
+Mjöbäcks Sparbank,SE,personal,AIS,yellow,green
+Monabanq,FR,personal,AIS,yellow,green
+Mooney,IT,personal,AIS,green,red
+Morrow Bank,FI,personal,AIS,red,green
+Morrow Bank,NO,personal,AIS,yellow,green
+Morrow Bank,SE,personal,AIS,yellow,green
+Møns Bank,DK,personal,AIS,red,green
+N26,AT,personal,AIS,yellow,green
+N26,BE,personal,AIS,yellow,green
+N26,DE,personal,AIS,yellow,green
+N26,DK,personal,AIS,yellow,green
+N26,ES,personal,AIS,yellow,green
+N26,FI,personal,AIS,green,red
+N26,FR,personal,AIS,yellow,green
+N26,GR,personal,AIS,yellow,green
+N26,IE,personal,AIS,yellow,red
+N26,IT,personal,AIS,yellow,green
+N26,NL,personal,AIS,yellow,green
+N26,PL,personal,AIS,yellow,green
+N26,PT,personal,AIS,yellow,green
+N26,SE,personal,AIS,yellow,green
+N26,SI,personal,AIS,yellow,green
+NEXI,IT,business,AIS,yellow,green
+NLB,SI,business,AIS,yellow,red
+NORD/LB,DE,business,AIS,green,red
+Nagelmackers,BE,personal,AIS,red,green
+Nassauische Sparkasse,DE,personal,AIS,yellow,green
+National Bank of Greece,GR,personal,AIS,yellow,green
+National-Bank,DE,business,AIS,green,red
+Nest Bank,PL,personal,AIS,yellow,red
+Neuflize OBC,FR,business,AIS,green,red
+Nidaros Sparebank,NO,personal,AIS,yellow,green
+Niederrheinische Sparkasse RheinLippe,DE,personal,AIS,yellow,green
+Nord-Ostsee Sparkasse,DE,business,AIS,green,red
+Nordea,DK,personal,AIS,yellow,green
+Nordea,FI,personal,AIS,green,red
+Nordea,NO,business,AIS,green,red
+Nordea,SE,business,AIS,yellow,green
+Nordea Corporate,DK,business,AIS,green,red
+Nordea Corporate,FI,business,AIS,green,red
+Nordea Corporate,NO,business,AIS,yellow,green
+Nordea Corporate,SE,business,AIS,red,green
+Nordea First Card,FI,business,AIS,green,red
+Nordea First Card,SE,business,AIS,green,red
+Nordfyns Bank,DK,business,AIS,green,red
+Nordoyar Sparikassi,DK,business,AIS,yellow,green
+Norisbank,DE,personal,AIS,yellow,green
+Norrbärke Sparbank,SE,personal,AIS,yellow,green
+Northmill,SE,personal,AIS,yellow,green
+Nykredit Bank,DK,business,AIS,yellow,green
+Nørre Nebel Sparekasse,DK,personal,AIS,yellow,green
+OBOS-Banken,NO,personal,AIS,yellow,green
+OKQ8 Bank,SE,personal,AIS,red,green
+OLB Bank,DE,business,AIS,yellow,green
+OP,FI,personal,AIS,yellow,green
+OTP Bank,HU,personal,AIS,yellow,green
+OTP banka,HR,personal,AIS,red,green
+OTP banka,SI,personal,AIS,yellow,green
+Oberbank,AT,business,AIS,yellow,green
+Oberbank,DE,business,AIS,red,green
+Oberbank,HU,business,AIS,yellow,green
+Odal Sparebank,NO,personal,AIS,green,red
+Oldenburger Volksbank,DE,personal,AIS,yellow,green
+Oma Säästöpankki,FI,personal,AIS,yellow,green
+Openbank,ES,business,AIS,green,red
+Openbank,NL,personal,AIS,green,red
+Openbank,PT,personal,AIS,green,red
+Optima bank,GR,business,AIS,green,red
+Orkla Sparebank,NO,personal,AIS,green,red
+Orusts Sparbank,SE,personal,AIS,yellow,green
+Ostfriesische Volksbank,DE,business,AIS,green,red
+OstseeSparkasse Rostock,DE,personal,AIS,yellow,green
+Ostsächsische Sparkasse Dresden,DE,personal,AIS,yellow,green
+PBZ,HR,personal,AIS,yellow,green
+PKO Bank Polski,PL,personal,AIS,yellow,green
+POP Pankki,FI,business,AIS,yellow,green
+PSD Bank München,DE,personal,AIS,yellow,green
+PSD Bank Nürnberg,DE,personal,AIS,green,red
+Pareto Bank,NO,business,AIS,green,red
+PayPal,AT,personal,AIS,yellow,green
+PayPal,BE,personal,AIS,yellow,green
+PayPal,DE,business,AIS,yellow,red
+PayPal,ES,business,AIS,yellow,green
+PayPal,FR,personal,AIS,yellow,green
+PayPal,IT,personal,AIS,yellow,green
+PayPal,LT,business,AIS,green,red
+PayPal,LU,personal,AIS,yellow,green
+PayPal,NL,personal,AIS,yellow,green
+PayPal,NO,personal,AIS,yellow,green
+PayPal,PL,personal,AIS,yellow,green
+PayPal,PT,personal,AIS,yellow,green
+PayPal,SE,personal,AIS,yellow,green
+Paysera,LT,business,AIS,yellow,green
+Paysera,LV,business,AIS,green,red
+Permanent TSB,IE,personal,AIS,yellow,green
+Piraeus Bank,GR,business,AIS,yellow,green
+Pleo,AT,business,AIS,yellow,green
+Pleo,BE,business,AIS,yellow,green
+Pleo,DE,business,AIS,yellow,green
+Pleo,DK,business,AIS,yellow,green
+Pleo,ES,business,AIS,yellow,green
+Pleo,IE,business,AIS,green,red
+Pleo,LU,business,AIS,yellow,green
+Pleo,NL,business,AIS,yellow,green
+Post Luxembourg,LU,personal,AIS,yellow,green
+Postbank,BG,business,AIS,yellow,green
+Postbank,DE,personal,AIS,yellow,green
+Postepay,IT,personal,AIS,green,red
+PrimaCassa,IT,business,AIS,green,red
+Primorska hranilnica Vipava,SI,personal,AIS,green,red
+ProCredit Bank,BG,business,AIS,green,red
+Qonto,DE,personal,AIS,yellow,green
+Qonto,ES,business,AIS,green,red
+Qonto,FR,personal,AIS,yellow,green
+Qonto,IT,business,AIS,yellow,red
+Rabobank,NL,business,AIS,yellow,green
+Raiffeisen,HR,personal,AIS,green,red
+Raiffeisen,HU,business,AIS,yellow,green
+Raiffeisen,LU,business,AIS,yellow,red
+Raiffeisen,RO,business,AIS,yellow,green
+Raiffeisen Bank,AT,business,AIS,yellow,green
+Raiffeisen Bank,SK,personal,AIS,yellow,green
+Raiffeisen Landesbank Suedtirol,IT,business,AIS,green,red
+Raiffeisen-Volksbank Ebersberg,DE,business,AIS,yellow,green
+Raiffeisen-Volksbank Fresena,DE,personal,AIS,yellow,green
+Raiffeisen-Volksbank Haßberge,DE,business,AIS,yellow,green
+Raiffeisenbank Aresing-Gerolsbach,DE,business,AIS,green,red
+Raiffeisenbank Bad Saulgau,DE,business,AIS,yellow,green
+Raiffeisenbank Baunatal,DE,personal,AIS,yellow,green
+Raiffeisenbank Deggendorf-Plattling-Sonnenwald,DE,personal,AIS,yellow,green
+Raiffeisenbank Ems-Vechte,DE,personal,AIS,yellow,green
+Raiffeisenbank Frankenhardt-Stimpfach,DE,business,AIS,green,red
+Raiffeisenbank Gilching,DE,business,AIS,green,red
+Raiffeisenbank Hardt-Bruhrain,DE,personal,AIS,green,red
+Raiffeisenbank Höchberg,DE,personal,AIS,yellow,green
+Raiffeisenbank Knoblauchsland-Bibertgrund,DE,business,AIS,yellow,green
+Raiffeisenbank Lech-Donau,DE,business,AIS,yellow,green
+Raiffeisenbank Leezen,DE,business,AIS,yellow,green
+Raiffeisenbank München-Süd,DE,business,AIS,green,red
+Raiffeisenbank Ottenbach,DE,business,AIS,green,red
+Raiffeisenbank Pfaffenwinkel,DE,business,AIS,green,red
+Raiffeisenbank Schwaben Mitte,DE,personal,AIS,yellow,red
+Raiffeisenbank Südstormarn Mölln,DE,business,AIS,green,red
+Raiffeisenbank Unteres Vilstal,DE,business,AIS,yellow,green
+Raiffeisenbank im Breisgau,DE,business,AIS,green,red
+Raiffeisenbank im Nürnberger Land,DE,personal,AIS,green,red
+Raiffeisenbank in Rheinhessen,DE,business,AIS,yellow,green
+Raiffeisenkasse Bozen,IT,personal,AIS,yellow,green
+Raiffeisenkasse Bruneck,IT,business,AIS,yellow,green
+Raiffeisenkasse Eisacktal,IT,business,AIS,yellow,green
+Raiffeisenkasse Meran,IT,personal,AIS,yellow,green
+Raiffeisenkasse Passeier,IT,personal,AIS,yellow,green
+Raiffeisenkasse Untervinschgau,IT,business,AIS,yellow,green
+Raiffeisenkasse Val Badia,IT,personal,AIS,red,green
+Regio Bank,NL,personal,AIS,green,red
+Renta 4 Banco,ES,personal,AIS,yellow,green
+Resurs Bank,FI,personal,AIS,red,green
+Resurs Bank,SE,personal,AIS,yellow,green
+Revolut,AT,personal,AIS,yellow,green
+Revolut,BE,personal,AIS,yellow,green
+Revolut,BG,personal,AIS,yellow,green
+Revolut,CY,personal,AIS,yellow,green
+Revolut,DE,personal,AIS,yellow,green
+Revolut,DK,personal,AIS,yellow,green
+Revolut,EE,business,AIS,red,green
+Revolut,ES,business,AIS,yellow,green
+Revolut,FI,personal,AIS,yellow,green
+Revolut,FR,personal,AIS,yellow,green
+Revolut,GR,personal,AIS,yellow,green
+Revolut,HR,personal,AIS,yellow,green
+Revolut,HU,business,AIS,yellow,green
+Revolut,IE,personal,AIS,yellow,green
+Revolut,IS,personal,AIS,red,green
+Revolut,IT,personal,AIS,yellow,green
+Revolut,LI,business,AIS,green,red
+Revolut,LT,business,AIS,yellow,green
+Revolut,LU,personal,AIS,yellow,green
+Revolut,LV,business,AIS,yellow,red
+Revolut,MT,business,AIS,red,green
+Revolut,NL,business,AIS,yellow,green
+Revolut,NO,personal,AIS,yellow,green
+Revolut,PL,personal,AIS,yellow,green
+Revolut,PT,personal,AIS,yellow,green
+Revolut,RO,personal,AIS,yellow,green
+Revolut,SE,business,AIS,red,green
+Revolut,SI,personal,AIS,yellow,green
+Revolut,SK,personal,AIS,yellow,green
+Ringkjøbing Landbobank,DK,personal,AIS,green,red
+RivieraBanca,IT,business,AIS,green,red
+Rogaland Sparebank,NO,personal,AIS,yellow,red
+RomagnaBanca,IT,business,AIS,green,red
+Romerike Sparebank,NO,personal,AIS,yellow,green
+Roslagens Sparbank,SE,personal,AIS,yellow,green
+Ruralnostra,ES,business,AIS,green,red
+RørosBanken,NO,personal,AIS,yellow,green
+S-Pankki,FI,business,AIS,yellow,green
+SAS EuroBonus Mastercard,DK,personal,AIS,yellow,green
+SAS EuroBonus Mastercard,FI,personal,AIS,red,green
+SAS EuroBonus Mastercard,NO,personal,AIS,yellow,green
+SAS EuroBonus Mastercard,SE,personal,AIS,yellow,green
+SBAB Bank,SE,personal,AIS,yellow,green
+SEB,EE,business,AIS,red,green
+SEB,LT,personal,AIS,yellow,red
+SEB,LV,business,AIS,yellow,red
+SEB,SE,business,AIS,yellow,green
+SJ Prio Mastercard,SE,personal,AIS,green,red
+SNS Bank,NL,personal,AIS,yellow,green
+Saalesparkasse,DE,business,AIS,red,green
+Sala Sparbank,SE,personal,AIS,yellow,green
+Salzlandsparkasse,DE,personal,AIS,yellow,green
+Santander,DE,personal,AIS,red,green
+Santander Bank Polska,PL,business,AIS,yellow,green
+Santander Totta,PT,personal,AIS,yellow,green
+Saxo Bank,DK,personal,AIS,red,green
+Scandic Mastercard,SE,personal,AIS,green,red
+Schelhammer Capital,AT,personal,AIS,green,red
+Schoellerbank,AT,business,AIS,green,red
+Schrobenhausener Bank,DE,business,AIS,green,red
+Self Bank,ES,personal,AIS,yellow,green
+Shine,FR,business,AIS,yellow,red
+Sidensjö Sparbank,SE,personal,AIS,yellow,green
+Skagerrak Sparebank,NO,personal,AIS,yellow,green
+Skandia,SE,business,AIS,yellow,green
+Skjern Bank,DK,personal,AIS,yellow,green
+Skudenes & Aakra Sparebank,NO,personal,AIS,yellow,green
+Skue Sparebank,NO,personal,AIS,yellow,green
+Skurups Sparbank,SE,personal,AIS,yellow,green
+Slovenská sporiteľňa,SK,personal,AIS,yellow,green
+Snapphanebygdens Sparbank,SE,business,AIS,yellow,green
+Société Générale,FR,personal,AIS,yellow,green
+Société Générale Entreprises,FR,business,AIS,yellow,green
+Société Générale Global Cash,PL,business,AIS,green,red
+Société Générale Professionnels,FR,business,AIS,yellow,green
+Sogn Sparebank,NO,personal,AIS,green,red
+Soknedal Sparebank,NO,personal,AIS,green,red
+Spar Nord Bank,DK,business,AIS,yellow,green
+Spar- und Darlehnskasse Bockum-Hövel,DE,personal,AIS,yellow,green
+Sparbanken Alingsås,SE,personal,AIS,yellow,green
+Sparbanken Boken,SE,personal,AIS,yellow,green
+Sparbanken Eken,SE,personal,AIS,yellow,green
+Sparbanken Gotland,SE,personal,AIS,yellow,green
+Sparbanken Göinge,SE,business,AIS,yellow,green
+Sparbanken Lidköping,SE,personal,AIS,yellow,green
+Sparbanken Nord,SE,business,AIS,green,red
+Sparbanken Rekarne,SE,personal,AIS,yellow,green
+Sparbanken Sjuhärad,SE,business,AIS,yellow,green
+Sparbanken Skaraborg,SE,business,AIS,yellow,green
+Sparbanken Skåne,SE,business,AIS,yellow,green
+Sparbanken Spira,SE,business,AIS,green,red
+Sparbanken Syd,SE,personal,AIS,yellow,green
+Sparbanken Tanum,SE,business,AIS,green,red
+Sparbanken Tranemo,SE,personal,AIS,yellow,green
+Sparbanken Västra Mälardalen,SE,personal,AIS,yellow,green
+Sparbanken i Enköping,SE,personal,AIS,yellow,green
+Sparbanken i Karlshamn,SE,personal,AIS,yellow,green
+Sparda-Bank Baden-Württemberg,DE,personal,AIS,yellow,green
+Sparda-Bank Berlin,DE,personal,AIS,yellow,green
+Sparda-Bank Hamburg,DE,personal,AIS,green,red
+Sparda-Bank Hannover,DE,personal,AIS,green,red
+Sparda-Bank Hessen,DE,personal,AIS,yellow,red
+Sparda-Bank München,DE,personal,AIS,yellow,green
+Sparda-Bank Nürnberg,DE,personal,AIS,yellow,green
+Sparda-Bank Ostbayern,DE,personal,AIS,green,red
+Sparda-Bank Südwest,DE,personal,AIS,yellow,green
+SpareBank 1 Gudbrandsdal,NO,personal,AIS,yellow,green
+SpareBank 1 Hallingdal Valdres,NO,personal,AIS,yellow,green
+SpareBank 1 Helgeland,NO,business,AIS,yellow,green
+SpareBank 1 Lom og Skjåk,NO,business,AIS,yellow,green
+SpareBank 1 Nord-Norge,NO,personal,AIS,yellow,green
+SpareBank 1 Nordmøre,NO,personal,AIS,yellow,green
+SpareBank 1 Ringerike Hadeland,NO,personal,AIS,yellow,green
+SpareBank 1 SMN,NO,personal,AIS,yellow,green
+SpareBank 1 Sogn og Fjordane,NO,personal,AIS,yellow,green
+SpareBank 1 Sør-Norge,NO,business,AIS,yellow,red
+SpareBank 1 Østfold Akershus,NO,personal,AIS,yellow,red
+SpareBank 1 Østlandet,NO,business,AIS,yellow,green
+Sparebank 68 Nord,NO,business,AIS,yellow,green
+Sparebanken DIN,NO,personal,AIS,yellow,green
+Sparebanken Møre,NO,business,AIS,yellow,green
+Sparebanken Narvik,NO,personal,AIS,yellow,green
+Sparebanken Norge,NO,personal,AIS,yellow,green
+Sparebanken Sør,NO,personal,AIS,yellow,green
+Sparebanken Vest,NO,personal,AIS,yellow,green
+Sparebanken Øst,NO,personal,AIS,yellow,green
+Sparekasse Bredebro,DK,personal,AIS,yellow,green
+Sparekassen Danmark,DK,business,AIS,yellow,green
+Sparekassen Kronjylland,DK,personal,AIS,green,red
+Sparekassen Sjælland-Fyn,DK,personal,AIS,yellow,green
+Sparekassen Thy,DK,business,AIS,green,red
+Spareskillingsbanken,NO,personal,AIS,yellow,green
+Sparkasse,SI,personal,AIS,yellow,green
+Sparkasse Aachen,DE,personal,AIS,yellow,green
+Sparkasse Aichach-Schrobenhausen,DE,business,AIS,green,red
+Sparkasse Allgäu,DE,business,AIS,yellow,green
+Sparkasse Altmark West,DE,business,AIS,yellow,red
+Sparkasse Altötting-Mühldorf,DE,business,AIS,yellow,green
+Sparkasse Ansbach,DE,personal,AIS,green,red
+Sparkasse Arnsberg-Sundern,DE,business,AIS,green,red
+Sparkasse Aschaffenburg-Alzenau,DE,personal,AIS,yellow,green
+Sparkasse Aurich-Norden,DE,personal,AIS,yellow,green
+Sparkasse Bad Tölz-Wolfratshausen,DE,business,AIS,red,green
+Sparkasse Baden-Baden Gaggenau,DE,personal,AIS,yellow,green
+Sparkasse Bamberg,DE,business,AIS,green,red
+Sparkasse Barnim,DE,personal,AIS,yellow,red
+Sparkasse Bensheim,DE,business,AIS,yellow,green
+Sparkasse Berchtesgadener Land,DE,business,AIS,green,red
+Sparkasse Bergkamen-Bönen,DE,personal,AIS,green,red
+Sparkasse Bielefeld,DE,personal,AIS,yellow,green
+Sparkasse Bochum,DE,personal,AIS,green,red
+Sparkasse Bodensee,DE,personal,AIS,yellow,green
+Sparkasse Bremen,DE,personal,AIS,yellow,green
+Sparkasse Burbach-Neunkirchen,DE,business,AIS,green,red
+Sparkasse Chemnitz,DE,personal,AIS,yellow,green
+Sparkasse Dachau,DE,business,AIS,green,red
+Sparkasse Darmstadt,DE,business,AIS,green,red
+Sparkasse Deggendorf,DE,personal,AIS,yellow,green
+Sparkasse Dillenburg,DE,business,AIS,green,red
+Sparkasse Dortmund,DE,personal,AIS,yellow,red
+Sparkasse Duisburg,DE,personal,AIS,yellow,green
+Sparkasse Düren,DE,personal,AIS,yellow,green
+Sparkasse Elbe-Elster,DE,personal,AIS,yellow,green
+Sparkasse Emsland,DE,personal,AIS,yellow,green
+Sparkasse Erding-Dorfen,DE,business,AIS,yellow,green
+Sparkasse Erlangen Höchstadt Herzogenaurach,DE,business,AIS,yellow,green
+Sparkasse Eschenbach Neustadt (a.d. Waldnaab),DE,personal,AIS,green,red
+Sparkasse Essen,DE,business,AIS,green,red
+Sparkasse Freiburg-Nördlicher Breisgau,DE,personal,AIS,yellow,green
+Sparkasse Freising,DE,personal,AIS,yellow,green
+Sparkasse Fulda,DE,personal,AIS,yellow,green
+Sparkasse Fürstenfeldbruck,DE,personal,AIS,yellow,green
+Sparkasse Fürth,DE,personal,AIS,red,green
+Sparkasse Gelsenkirchen,DE,personal,AIS,yellow,green
+Sparkasse Gera-Greiz,DE,business,AIS,yellow,green
+Sparkasse Gummersbach,DE,business,AIS,yellow,green
+Sparkasse Göttingen,DE,personal,AIS,yellow,green
+Sparkasse Gütersloh-Rietberg,DE,personal,AIS,yellow,green
+Sparkasse HagenHerdecke,DE,personal,AIS,green,red
+Sparkasse Hameln-Weserbergland,DE,personal,AIS,green,red
+Sparkasse Hamm,DE,business,AIS,green,red
+Sparkasse Hanau,DE,business,AIS,green,red
+Sparkasse Hannover,DE,personal,AIS,yellow,green
+Sparkasse Harburg-Buxtehude,DE,personal,AIS,yellow,green
+Sparkasse Hattingen,DE,personal,AIS,yellow,green
+Sparkasse Hegau-Bodensee,DE,business,AIS,green,red
+Sparkasse Heidelberg,DE,personal,AIS,yellow,green
+Sparkasse Hellweg-Lippe,DE,business,AIS,yellow,green
+Sparkasse Herford,DE,personal,AIS,yellow,green
+Sparkasse Hilden-Ratingen-Velbert,DE,business,AIS,green,red
+Sparkasse Hildesheim Goslar Peine,DE,personal,AIS,green,red
+Sparkasse Holstein,DE,personal,AIS,green,red
+Sparkasse IngolstadtEichstätt,DE,personal,AIS,yellow,green
+Sparkasse Jena-Saale-Holzland,DE,personal,AIS,green,red
+Sparkasse Karlsruhe,DE,personal,AIS,yellow,green
+Sparkasse Kinzigtal,DE,business,AIS,yellow,red
+Sparkasse Koblenz,DE,personal,AIS,yellow,green
+Sparkasse Kraichgau,DE,personal,AIS,yellow,green
+Sparkasse Krefeld,DE,business,AIS,yellow,green
+Sparkasse Kulmbach-Kronach,DE,business,AIS,red,green
+Sparkasse KölnBonn,DE,personal,AIS,yellow,green
+Sparkasse Landsberg-Dießen,DE,business,AIS,green,red
+Sparkasse Landshut,DE,business,AIS,green,red
+Sparkasse Langen-Seligenstadt,DE,business,AIS,green,red
+Sparkasse LeerWittmund,DE,personal,AIS,yellow,green
+Sparkasse Leverkusen,DE,personal,AIS,red,green
+Sparkasse Lörrach-Rheinfelden,DE,business,AIS,red,green
+Sparkasse Lüneburg,DE,business,AIS,green,red
+Sparkasse Mainfranken Würzburg,DE,business,AIS,yellow,green
+Sparkasse Mansfeld-Südharz,DE,personal,AIS,yellow,red
+Sparkasse Marburg-Biedenkopf,DE,personal,AIS,yellow,green
+Sparkasse Markgräflerland,DE,personal,AIS,yellow,red
+Sparkasse Mecklenburg-Nordwest,DE,business,AIS,green,red
+Sparkasse Mecklenburg-Schwerin,DE,business,AIS,yellow,green
+Sparkasse Memmingen-Lindau-Mindelheim,DE,personal,AIS,green,red
+Sparkasse Merzig-Wadern,DE,business,AIS,yellow,green
+Sparkasse Minden-Lübbecke,DE,business,AIS,green,red
+Sparkasse Mittelfranken-Süd,DE,business,AIS,yellow,green
+Sparkasse Mittelmosel-Eifel-Mosel-Hunsrück,DE,business,AIS,green,red
+Sparkasse Mittelsachsen,DE,business,AIS,green,red
+Sparkasse Mittelthüringen,DE,personal,AIS,yellow,green
+Sparkasse Münsterland-Ost,DE,personal,AIS,yellow,green
+Sparkasse Neckartal-Odenwald,DE,personal,AIS,yellow,green
+Sparkasse Neubrandenburg-Demmin,DE,business,AIS,green,red
+Sparkasse Neunkirchen,DE,business,AIS,yellow,green
+Sparkasse Neuss,DE,business,AIS,yellow,green
+Sparkasse Neuwied,DE,personal,AIS,yellow,green
+Sparkasse Nürnberg,DE,personal,AIS,yellow,green
+Sparkasse Oberhessen,DE,personal,AIS,yellow,green
+Sparkasse Oberlausitz-Niederschlesien,DE,business,AIS,green,red
+Sparkasse Oberpfalz Nord,DE,business,AIS,green,red
+Sparkasse Odenwaldkreis,DE,business,AIS,green,red
+Sparkasse Offenburg/Ortenau,DE,personal,AIS,yellow,green
+Sparkasse Osnabrück,DE,business,AIS,yellow,green
+Sparkasse Paderborn-Detmold,DE,personal,AIS,yellow,green
+Sparkasse Passau,DE,business,AIS,yellow,red
+Sparkasse Pfaffenhofen,DE,personal,AIS,green,red
+Sparkasse Pforzheim Calw,DE,personal,AIS,yellow,green
+Sparkasse Rastatt-Gernsbach,DE,personal,AIS,yellow,red
+Sparkasse Regensburg,DE,business,AIS,green,red
+Sparkasse Rhein Neckar Nord,DE,business,AIS,yellow,green
+Sparkasse Rhein-Haardt,DE,personal,AIS,green,red
+Sparkasse Rhein-Maas,DE,personal,AIS,red,green
+Sparkasse Rhein-Nahe,DE,personal,AIS,yellow,green
+Sparkasse Rosenheim-Bad Aibling,DE,business,AIS,green,red
+Sparkasse Rotenburg Osterholz,DE,personal,AIS,yellow,green
+Sparkasse Saarbrücken,DE,business,AIS,yellow,green
+Sparkasse Schaumburg,DE,personal,AIS,yellow,green
+Sparkasse Schwarzwald-Baar,DE,business,AIS,green,red
+Sparkasse Schweinfurt-Haßberge,DE,business,AIS,green,red
+Sparkasse Siegen,DE,business,AIS,yellow,green
+Sparkasse Staufen-Breisach,DE,business,AIS,green,red
+Sparkasse Südholstein,DE,business,AIS,yellow,green
+Sparkasse Südpfalz,DE,personal,AIS,green,red
+Sparkasse Tauberfranken,DE,personal,AIS,green,red
+Sparkasse Trier,DE,personal,AIS,yellow,green
+Sparkasse Ulm,DE,business,AIS,yellow,green
+Sparkasse UnnaKamen,DE,business,AIS,yellow,green
+Sparkasse Unstrut-Hainich,DE,personal,AIS,yellow,green
+Sparkasse Vest Recklinghausen,DE,business,AIS,yellow,green
+Sparkasse Vorderpfalz,DE,personal,AIS,yellow,green
+Sparkasse Vorpommern,DE,personal,AIS,yellow,green
+Sparkasse Waldeck-Frankenberg,DE,personal,AIS,yellow,green
+Sparkasse Werra-Meißner,DE,personal,AIS,yellow,green
+Sparkasse Westerwald-Sieg,DE,personal,AIS,yellow,green
+Sparkasse Westholstein,DE,business,AIS,yellow,green
+Sparkasse Westmünsterland,DE,business,AIS,yellow,green
+Sparkasse Wetzlar,DE,personal,AIS,yellow,green
+Sparkasse Wiesental,DE,business,AIS,yellow,green
+Sparkasse Witten,DE,business,AIS,red,green
+Sparkasse Wittenberg,DE,business,AIS,red,green
+Sparkasse Worms-Alzey-Ried,DE,personal,AIS,green,red
+Sparkasse Zollernalb,DE,business,AIS,green,red
+Sparkasse Zwickau,DE,personal,AIS,yellow,green
+Sparkasse am Niederrhein,DE,personal,AIS,yellow,green
+Sparkasse im Landkreis Schwandorf,DE,personal,AIS,yellow,red
+Sparkasse zu Lübeck Aktiengesellschaft,DE,personal,AIS,red,green
+Sparkasse Celle-Gifhorn-Wolfsburg,DE,personal,AIS,yellow,green
+Spuerkeess,LU,personal,AIS,yellow,green
+Stadsbygd Sparebank,NO,personal,AIS,yellow,red
+Stadt- und Kreissparkasse Leipzig,DE,personal,AIS,yellow,green
+Stadtsparkasse Augsburg,DE,business,AIS,green,red
+Stadtsparkasse Düsseldorf,DE,personal,AIS,yellow,green
+Stadtsparkasse Langenfeld (Rheinland),DE,personal,AIS,red,green
+Stadtsparkasse Magdeburg,DE,personal,AIS,yellow,green
+Stadtsparkasse Mönchengladbach,DE,personal,AIS,yellow,green
+Stadtsparkasse München,DE,personal,AIS,yellow,green
+Stadtsparkasse Offenbach,DE,personal,AIS,red,green
+Stadtsparkasse Rahden,DE,business,AIS,green,red
+Stadtsparkasse Rheine,DE,personal,AIS,green,red
+Stadtsparkasse Solingen,DE,business,AIS,yellow,green
+Stadtsparkasse Wuppertal,DE,personal,AIS,yellow,green
+Storebrand,NO,personal,AIS,yellow,green
+Strawberry Mastercard,NO,personal,AIS,yellow,green
+Strømmen Sparebank,NO,personal,AIS,yellow,green
+SumUp,AT,business,AIS,yellow,green
+SumUp,BE,business,AIS,green,red
+SumUp,DE,business,AIS,yellow,green
+SumUp,DK,business,AIS,yellow,green
+SumUp,ES,business,AIS,yellow,green
+SumUp,FI,business,AIS,yellow,green
+SumUp,FR,business,AIS,yellow,green
+SumUp,IE,business,AIS,yellow,green
+SumUp,IT,business,AIS,yellow,green
+SumUp,LT,business,AIS,yellow,green
+SumUp,LU,business,AIS,yellow,green
+SumUp,LV,business,AIS,green,red
+SumUp,NL,business,AIS,yellow,green
+SumUp,PT,business,AIS,yellow,green
+SumUp,SI,business,AIS,yellow,red
+Svea Bank,SE,personal,AIS,yellow,green
+Swan,DE,business,AIS,yellow,green
+Swan,ES,business,AIS,green,red
+Swan,FR,business,AIS,yellow,green
+Swan,IT,business,AIS,yellow,green
+Swan,NL,business,AIS,yellow,green
+Swedbank,EE,business,AIS,yellow,green
+Swedbank,LT,business,AIS,yellow,green
+Swedbank,LV,personal,AIS,yellow,green
+Swedbank,SE,business,AIS,yellow,green
+Swedbank Mastercard,SE,personal,AIS,yellow,green
+Sydbank,DK,personal,AIS,yellow,green
+Sydjysk Sparekasse,DK,business,AIS,yellow,green
+Säästöpankki,FI,personal,AIS,yellow,green
+Södra Hestra Sparbank,SE,personal,AIS,yellow,green
+Sölvesborg-Mjällby Sparbank,SE,personal,AIS,yellow,green
+Sörmlands Sparbank,SE,personal,AIS,yellow,green
+Søgne og Greipstad Sparebank,NO,personal,AIS,green,red
+Targobank,DE,personal,AIS,red,green
+Tatra banka,SK,personal,AIS,yellow,green
+Taunus Sparkasse,DE,business,AIS,yellow,green
+Tidaholms Sparbank,SE,personal,AIS,yellow,green
+Tinde Sparebank,NO,personal,AIS,yellow,red
+Tjörns Sparbank,SE,personal,AIS,yellow,green
+Tolga-Os Sparebank,NO,business,AIS,yellow,green
+Tomorrow,DE,personal,AIS,green,red
+Trade Republic,AT,personal,AIS,yellow,green
+Trade Republic,BE,personal,AIS,yellow,red
+Trade Republic,DE,personal,AIS,yellow,green
+Trade Republic,EE,personal,AIS,yellow,green
+Trade Republic,ES,personal,AIS,yellow,green
+Trade Republic,FR,personal,AIS,yellow,green
+Trade Republic,IE,personal,AIS,green,red
+Trade Republic,IT,personal,AIS,yellow,green
+Trade Republic,NL,personal,AIS,green,red
+Trade Republic,PT,personal,AIS,yellow,green
+Triodos Bank,BE,business,AIS,red,green
+Triodos Bank,DE,business,AIS,green,red
+Triodos Bank,ES,personal,AIS,green,red
+Triodos Bank,NL,business,AIS,yellow,green
+Trøgstad Sparebank,NO,personal,AIS,yellow,green
+Trøndelag Sparebank,NO,personal,AIS,yellow,green
+Tyche Bank,IT,personal,AIS,green,red
+Tysnes Sparebank,NO,personal,AIS,yellow,green
+UBS,DE,business,AIS,green,red
+UBS,LU,business,AIS,green,red
+Ulricehamns Sparbank,SE,personal,AIS,yellow,green
+UmweltBank,DE,business,AIS,yellow,green
+UniCredit,BE,business,AIS,yellow,green
+UniCredit,IT,personal,AIS,green,red
+UniCredit,PL,personal,AIS,yellow,green
+UniCredit Bank,HU,business,AIS,green,red
+UniCredit Bank,RO,business,AIS,green,red
+UniCredit Bank,SI,personal,AIS,yellow,green
+UniCredit Bank,SK,personal,AIS,green,red
+UniCredit Bank Austria,AT,business,AIS,green,red
+UniCredit Bulbank,BG,business,AIS,green,red
+Unicaja Banco,ES,personal,AIS,yellow,green
+Unicre,PT,personal,AIS,yellow,green
+Union-Bank,DE,business,AIS,red,green
+United Bulgarian Bank,BG,personal,AIS,yellow,green
+Urbo,LT,business,AIS,green,red
+VBU Volksbank im Unterland,DE,personal,AIS,green,red
+VR Bank Augsburg-Ostallgäu,DE,personal,AIS,yellow,green
+VR Bank Bad Orb-Gelnhausen,DE,business,AIS,yellow,green
+VR Bank Bamberg-Forchheim,DE,personal,AIS,yellow,green
+VR Bank Dreieich-Offenbach,DE,business,AIS,yellow,green
+VR Bank Lahn-Dill,DE,business,AIS,yellow,green
+VR Bank Main-Kinzig-Büdingen,DE,business,AIS,green,red
+VR Bank Metropolregion Nürnberg,DE,business,AIS,green,red
+VR Bank Monheim am Rhein,DE,business,AIS,green,red
+VR Bank Neuburg-Rain,DE,business,AIS,yellow,green
+VR Bank Nord,DE,business,AIS,green,red
+VR Bank Rhein-Neckar,DE,business,AIS,yellow,green
+VR Bank RheinAhrEifel,DE,business,AIS,yellow,green
+VR Bank Südliche Weinstraße-Wasgau,DE,business,AIS,green,red
+VR Bank Südpfalz,DE,personal,AIS,green,red
+VR Bank Westfalen-Lippe,DE,personal,AIS,yellow,green
+VR Bank in Holstein,DE,business,AIS,green,red
+VR Bank zwischen den Meeren,DE,personal,AIS,green,red
+VR RegionalBank,DE,business,AIS,green,red
+VR-Bank Altenburger Land,DE,personal,AIS,green,red
+VR-Bank Bonn Rhein-Sieg,DE,business,AIS,yellow,green
+VR-Bank Erding,DE,personal,AIS,yellow,green
+VR-Bank Fichtelgebirge- Frankenwald,DE,personal,AIS,yellow,green
+VR-Bank Fläming-Elsterland,DE,personal,AIS,yellow,red
+VR-Bank Ismaning Hallbergmoos Neufahrn,DE,business,AIS,yellow,green
+VR-Bank Ludwigsburg,DE,business,AIS,yellow,green
+VR-Bank Memmingen,DE,business,AIS,yellow,green
+VR-Bank Mittelfranken Mitte,DE,business,AIS,green,red
+VR-Bank NordRhön,DE,business,AIS,yellow,green
+VR-Bank Ostalb,DE,business,AIS,green,red
+VR-Bank Passau,DE,business,AIS,green,red
+VR-Bank Taufkirchen-Dorfen,DE,business,AIS,green,red
+VR-Bank Vilshofen-Pocking,DE,personal,AIS,green,red
+VR-Bank im südlichen Franken,DE,personal,AIS,green,red
+VR-Bank in Mittelbaden,DE,personal,AIS,red,green
+VR-Bank in Südoldenburg,DE,business,AIS,yellow,green
+VR-MainBank,DE,business,AIS,green,red
+Vadstena Sparbank,SE,personal,AIS,yellow,green
+Valdemarsviks Sparbank,SE,personal,AIS,yellow,green
+Valdres Sparebank,NO,personal,AIS,green,red
+Valpolicella Benaco Banca,IT,business,AIS,green,red
+Van Lanschot,BE,business,AIS,green,red
+Van Lanschot,NL,business,AIS,yellow,green
+Varbergs Sparbank,SE,business,AIS,yellow,green
+Vekselbanken,NO,personal,AIS,yellow,red
+VeloBank,PL,personal,AIS,yellow,green
+VerbundVolksbank OWL,DE,business,AIS,yellow,green
+Vereinigte Volksbank Brakel,DE,personal,AIS,green,red
+Vereinigte Volksbank Raiffeisenbank Reinheim,DE,business,AIS,yellow,green
+Vereinigte Volksbank Saarlouis - Losheim am See - Sulzbach/Saar,DE,business,AIS,green,red
+Vereinigte Volksbanken Sindelfingen,DE,business,AIS,yellow,green
+Vereinigte Volksbank Bramgau Osnabrück Wittlage,DE,business,AIS,yellow,green
+Vereinte Volksbank,DE,personal,AIS,green,red
+Vestjysk Bank,DK,business,AIS,yellow,green
+Vimmerby Sparbank,SE,personal,AIS,yellow,green
+Virserums Sparbank,SE,personal,AIS,yellow,green
+Viva.com,AT,business,AIS,yellow,green
+Viva.com,BE,business,AIS,yellow,green
+Viva.com,CY,business,AIS,yellow,green
+Viva.com,FR,business,AIS,yellow,green
+Viva.com,GR,business,AIS,green,red
+Viva.com,IT,business,AIS,red,green
+Vivid Money,DE,business,AIS,yellow,red
+Vivid Money,ES,business,AIS,yellow,green
+Vivid Money,FR,business,AIS,yellow,green
+Vivid Money,IT,business,AIS,yellow,green
+Vivid Money,LU,personal,AIS,green,red
+Volksbank Allgäu-Oberschwaben,DE,business,AIS,red,green
+Volksbank Alzey-Worms,DE,business,AIS,green,red
+Volksbank BRAWO,DE,personal,AIS,yellow,red
+Volksbank Bocholt,DE,business,AIS,yellow,green
+Volksbank Bochum Witten,DE,business,AIS,green,red
+Volksbank Bodensee-Oberschwaben,DE,personal,AIS,yellow,green
+Volksbank Breisgau- Markgräflerland,DE,business,AIS,red,green
+Volksbank Brenztal,DE,personal,AIS,green,red
+Volksbank Butzbach,DE,personal,AIS,yellow,green
+Volksbank Bühl,DE,personal,AIS,green,red
+Volksbank Chemnitz,DE,business,AIS,green,red
+Volksbank Darmstadt Mainz,DE,personal,AIS,green,red
+Volksbank Delitzsch,DE,business,AIS,green,red
+Volksbank Die Gestalterbank,DE,business,AIS,green,red
+Volksbank Dresden-Bautzen,DE,business,AIS,yellow,green
+Volksbank Düsseldorf Krefeld Neuss,DE,business,AIS,yellow,green
+Volksbank Düsseldorf Neuss,DE,business,AIS,green,red
+Volksbank Elsen-Wewer-Borchen,DE,personal,AIS,yellow,green
+Volksbank Erft,DE,personal,AIS,green,red
+Volksbank Ermstal-Alb,DE,personal,AIS,yellow,green
+Volksbank Euskirchen,DE,personal,AIS,green,red
+Volksbank Eutin Raiffeisenbank,DE,business,AIS,green,red
+Volksbank Filder,DE,personal,AIS,green,red
+Volksbank Friesoythe,DE,business,AIS,yellow,green
+Volksbank Gera · Jena · Rudolstadt,DE,business,AIS,green,red
+Volksbank Glan-Münchweiler,DE,business,AIS,green,red
+Volksbank Gronau-Ahaus,DE,business,AIS,green,red
+Volksbank Göppingen,DE,business,AIS,yellow,green
+Volksbank Hamm / Sieg,DE,personal,AIS,red,green
+Volksbank Heinsberg,DE,business,AIS,green,red
+Volksbank Hellweg,DE,personal,AIS,yellow,green
+Volksbank Hildesheim-Lehrte-Pattensen,DE,business,AIS,yellow,green
+Volksbank Hohenlohe,DE,business,AIS,yellow,green
+Volksbank Kaiserslautern,DE,personal,AIS,green,red
+Volksbank Kassel Göttingen,DE,business,AIS,green,red
+Volksbank Kleverland,DE,personal,AIS,yellow,green
+Volksbank Kraichgau,DE,business,AIS,green,red
+Volksbank Krefeld,DE,business,AIS,green,red
+Volksbank Kärnten,AT,business,AIS,green,red
+Volksbank Köln Bonn,DE,business,AIS,yellow,green
+Volksbank Lahr,DE,personal,AIS,green,red
+Volksbank Lohne-Dinklage-Steinfeld-Mühlen,DE,personal,AIS,yellow,green
+Volksbank Löningen,DE,business,AIS,yellow,green
+Volksbank Lübeck,DE,business,AIS,green,red
+Volksbank Lüneburger Heide,DE,personal,AIS,yellow,green
+Volksbank Mainspitze,DE,business,AIS,green,red
+Volksbank Mittelhessen,DE,personal,AIS,yellow,green
+Volksbank Mittlerer Neckar,DE,business,AIS,green,red
+Volksbank Mittweida,DE,personal,AIS,green,red
+Volksbank Niederrhein,DE,personal,AIS,red,green
+Volksbank Niederösterreich,AT,business,AIS,green,red
+Volksbank Nordschwarzwald,DE,business,AIS,yellow,green
+Volksbank Oberberg,DE,personal,AIS,yellow,green
+Volksbank Oberösterreich,AT,business,AIS,green,red
+Volksbank Ochtrup-Laer,DE,personal,AIS,yellow,green
+Volksbank Olpe-Wenden-Drolshagen,DE,business,AIS,yellow,green
+Volksbank Pirna,DE,personal,AIS,yellow,green
+Volksbank Raiffeisenbank Bayern Mitte,DE,personal,AIS,yellow,green
+Volksbank Raiffeisenbank Würzburg,DE,business,AIS,yellow,green
+Volksbank Rhein-Erft-Köln,DE,business,AIS,green,red
+Volksbank Rhein-Lahn-Limburg,DE,personal,AIS,yellow,red
+Volksbank Rhein-Nahe-Hunsrück,DE,business,AIS,yellow,green
+Volksbank Rhein-Ruhr,DE,business,AIS,yellow,green
+Volksbank Rottweil,DE,business,AIS,green,red
+Volksbank Salzburg,AT,business,AIS,yellow,red
+Volksbank Sauerland,DE,business,AIS,yellow,green
+Volksbank Schwarzwald-Donau-Neckar,DE,business,AIS,yellow,green
+Volksbank Stade-Cuxhaven,DE,business,AIS,yellow,green
+Volksbank Steiermark,AT,business,AIS,green,red
+Volksbank Stuttgart,DE,business,AIS,yellow,green
+Volksbank Sulmtal,DE,personal,AIS,green,red
+Volksbank Süd-Emsland,DE,personal,AIS,green,red
+Volksbank Südheide - Isenhagener Land - Altmark,DE,personal,AIS,yellow,green
+Volksbank Thüringen Mitte,DE,business,AIS,yellow,green
+Volksbank Tirol,AT,business,AIS,yellow,red
+Volksbank Trier Eifel,DE,business,AIS,yellow,green
+Volksbank Uelzen-Salzwedel,DE,business,AIS,green,red
+Volksbank Versmold,DE,personal,AIS,red,green
+Volksbank Vorarlberg,AT,business,AIS,yellow,green
+Volksbank Westmünsterland,DE,personal,AIS,yellow,green
+Volksbank Wien,AT,personal,AIS,green,red
+Volksbank Zollernalb,DE,business,AIS,green,red
+Volksbank im Bergischen Land,DE,personal,AIS,yellow,green
+Volksbank im Elbe-Weser-Dreieck,DE,personal,AIS,yellow,green
+Volksbank im Hochsauerland,DE,personal,AIS,green,red
+Volksbank im Münsterland,DE,personal,AIS,yellow,green
+Volksbank im Rheinland,DE,business,AIS,yellow,green
+Volksbank in Ostwestfalen,DE,personal,AIS,yellow,green
+Volksbank in Schaumburg und Nienburg,DE,business,AIS,green,red
+Volksbank in Südwestfalen,DE,business,AIS,green,red
+Volksbank in der Region,DE,business,AIS,green,red
+Volksbank pur,DE,business,AIS,green,red
+Volksbank Überherrn,DE,personal,AIS,yellow,green
+Volkswagen Bank,DE,personal,AIS,yellow,green
+Voss Sparebank,NO,business,AIS,yellow,green
+VÚB banka,SK,business,AIS,yellow,green
+Wamo,CY,business,AIS,yellow,green
+Wamo,EE,business,AIS,yellow,green
+Wamo,FI,business,AIS,red,green
+Wamo,IT,business,AIS,yellow,green
+Wamo,LU,business,AIS,yellow,green
+Wamo,PL,business,AIS,green,red
+Wamo,SE,business,AIS,yellow,green
+Webank,IT,personal,AIS,yellow,green
+Weser-Elbe Sparkasse,DE,business,AIS,green,red
+Westerwald Bank,DE,personal,AIS,yellow,green
+Westra Wermlands Sparbank,SE,personal,AIS,yellow,green
+Wiesbadener Volksbank,DE,business,AIS,yellow,green
+Wise,BE,business,AIS,yellow,green
+Wise,CY,business,AIS,yellow,green
+Wise,DE,business,AIS,yellow,red
+Wise,DK,personal,AIS,yellow,green
+Wise,EE,personal,AIS,yellow,green
+Wise,ES,personal,AIS,yellow,green
+Wise,FI,personal,AIS,yellow,green
+Wise,FR,personal,AIS,yellow,red
+Wise,HR,personal,AIS,yellow,green
+Wise,HU,business,AIS,yellow,green
+Wise,IE,business,AIS,yellow,green
+Wise,IT,business,AIS,yellow,green
+Wise,LT,personal,AIS,yellow,green
+Wise,LV,business,AIS,yellow,green
+Wise,NL,personal,AIS,yellow,green
+Wise,PL,personal,AIS,yellow,green
+Wise,PT,business,AIS,yellow,green
+Wise,RO,business,AIS,yellow,green
+Wise,SE,personal,AIS,yellow,green
+ZKB Credito Cooperativo,IT,personal,AIS,yellow,green
+Zagrebačka banka,HR,personal,AIS,yellow,green
+Ziklo Bank,SE,business,AIS,yellow,green
+Ziraat Bank,DE,business,AIS,green,red
+apoBank,DE,personal,AIS,red,green
+bank99,AT,personal,AIS,green,red
+bunq,BE,personal,AIS,yellow,green
+bunq,DE,personal,AIS,yellow,green
+bunq,ES,personal,AIS,yellow,red
+bunq,FI,personal,AIS,yellow,red
+bunq,FR,personal,AIS,green,red
+bunq,IE,personal,AIS,yellow,green
+bunq,IT,personal,AIS,yellow,red
+bunq,NL,personal,AIS,yellow,green
+bunq,SE,personal,AIS,green,red
+easybank,AT,personal,AIS,yellow,green
+iBanFirst,AT,business,AIS,green,red
+iBanFirst,BE,business,AIS,red,green
+iBanFirst,DE,business,AIS,green,red
+iBanFirst,ES,business,AIS,green,red
+iBanFirst,FR,business,AIS,yellow,red
+iBanFirst,HR,business,AIS,green,red
+iBanFirst,HU,business,AIS,red,green
+iBanFirst,IT,business,AIS,red,green
+iBanFirst,NL,business,AIS,yellow,green
+iBanFirst,PL,business,AIS,green,red
+iBanFirst,RO,business,AIS,green,red
+illimity Bank,IT,personal,AIS,yellow,green
+imagin,ES,personal,AIS,yellow,green
+levoBank,DE,personal,AIS,yellow,green
+mBank,PL,business,AIS,yellow,red
+mBank,SK,personal,AIS,yellow,red
+meine Volksbank Raiffeisenbank,DE,personal,AIS,green,red
+novobanco,PT,business,AIS,yellow,green
+novobanco dos Açores,PT,business,AIS,yellow,green
+re:member,NO,personal,AIS,yellow,green
+tbi bank,BG,personal,AIS,yellow,red
+vdk bank,BE,personal,AIS,yellow,green
+Ålandsbanken,FI,personal,AIS,yellow,green
+Ålandsbanken,SE,personal,AIS,yellow,green
+Ålems Sparbank,SE,personal,AIS,yellow,red
+Åse Viste Sparbank,SE,personal,AIS,yellow,green
+Íslandsbanki,IS,personal,AIS,yellow,green
+Ölands Bank,SE,personal,AIS,yellow,green
+Österreichische Ärzte- und Apothekerbank,AT,business,AIS,green,red
+Ørland Sparebank,NO,personal,AIS,yellow,green
+Ørskog Sparebank,NO,personal,AIS,yellow,green
+Østre Agder Sparebank,NO,personal,AIS,yellow,green
+ČSOB,SK,business,AIS,yellow,red

@@ -342,6 +342,35 @@
             </div>
             <div id="finance-portal-results" style="margin-top:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1;"></div>
           </div>
+
+          <!-- Enable Banking & ASPSP EU-Banken Explorer -->
+          <div style="margin-top:12px; background:rgba(0,255,136,0.03); border:1px solid rgba(0,255,136,0.25); border-radius:8px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                <strong style="color:var(--neon-green); font-size:0.8rem;">🏦 Enable Banking · WorldBankEyes App & 1.128 EU-Banken ASPSP Katalog</strong>
+                <p style="font-size:0.7rem; color:#94a3b8; margin:2px 0;">
+                  App: <code style="color:var(--gold);">aether.worldbankeyes.eu</code> (Sandbox: <span style="color:#00f0ff;">85550b82-143d-4b06-9aa1-d33c73584984</span>) · 29 EU/EWR-Länder · PSD2 AISP & PISP
+                </p>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <select id="aspsp-country-select" style="background:#070b12; border:1px solid #334155; color:#fff; padding:3px 6px; border-radius:4px; font-size:0.7rem;" onchange="searchAspspBanks()">
+                  <option value="">Alle Länder (29)</option>
+                  <option value="DE" selected>Deutschland (DE)</option>
+                  <option value="AT">Österreich (AT)</option>
+                  <option value="FR">Frankreich (FR)</option>
+                  <option value="NL">Niederlande (NL)</option>
+                  <option value="ES">Spanien (ES)</option>
+                  <option value="IT">Italien (IT)</option>
+                  <option value="IE">Irland (IE)</option>
+                  <option value="SE">Schweden (SE)</option>
+                  <option value="PL">Polen (PL)</option>
+                </select>
+                <input id="aspsp-bank-search" type="text" placeholder="Bank (z.B. Sparkasse, DKB, N26)..." style="background:#070b12; border:1px solid #334155; color:#fff; padding:3px 8px; border-radius:4px; font-size:0.7rem; width:170px;" onkeydown="if(event.key==='Enter') searchAspspBanks()">
+                <button class="titan-btn" style="padding:3px 8px; font-size:0.7rem; border-color:var(--neon-green);" onclick="searchAspspBanks()">Suchen</button>
+              </div>
+            </div>
+            <div id="aspsp-bank-results" style="margin-top:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1;"></div>
+          </div>
         </div>
 
         <!-- TAB 6: BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 & M13) -->

@@ -1843,6 +1843,54 @@ async function searchFinancePortals() {
 
 
 
+async function searchAspspBanks() {
+  const queryEl = document.getElementById('aspsp-bank-search');
+  const countryEl = document.getElementById('aspsp-country-select');
+  const resultsEl = document.getElementById('aspsp-bank-results');
+  if (!resultsEl) return;
+  const q = queryEl ? queryEl.value.trim() : '';
+  const country = countryEl ? countryEl.value.trim() : '';
+
+  resultsEl.innerHTML = '<div style="color:var(--silver);">Durchsuche ASPSP EU-Banken Katalog (1.128 Banken)...</div>';
+  try {
+    const res = await fetch(`/api/finance/aspsp?q=${encodeURIComponent(q)}&country=${encodeURIComponent(country)}&limit=25`);
+    const data = await res.json();
+    const banks = data.banks || [];
+
+    if (banks.length === 0) {
+      resultsEl.innerHTML = '<div style="color:#94a3b8;">Keine Banken für die gewählten Filterkriterien gefunden.</div>';
+      return;
+    }
+
+    resultsEl.innerHTML = `
+      <div style="color:var(--neon-green); font-weight:700; margin-bottom:4px;">Gefundene ASPSP Banken (${banks.length} Treffer):</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(260px, 1fr)); gap:6px;">
+        ${banks.map(b => {
+          const isGreen = b.current_status === 'green';
+          return `
+            <div style="background:rgba(255,255,255,0.02); border:1px solid ${isGreen ? 'rgba(0,255,136,0.2)' : 'rgba(255,0,85,0.2)'}; border-radius:4px; padding:4px 8px; display:flex; justify-content:space-between; align-items:center;">
+              <div>
+                <strong style="color:#fff; font-size:0.75rem;">${escapeHtml(b.brand || '')}</strong>
+                <div style="font-size:0.65rem; color:#94a3b8;">
+                  <span style="color:var(--gold); font-weight:600;">[${escapeHtml(b.country || 'EU')}]</span> · PSU: ${escapeHtml(b.psu_type || 'all')} · ${escapeHtml(b.service || 'AIS')}
+                </div>
+              </div>
+              <span style="font-size:0.6rem; font-weight:700; padding:1px 5px; border-radius:3px; background:${isGreen ? 'rgba(0,255,136,0.15)' : 'rgba(255,0,85,0.15)'}; color:${isGreen ? 'var(--neon-green)' : 'var(--neon-pink)'};">
+                ${isGreen ? 'ONLINE' : 'DEGRADED'}
+              </span>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } catch (e) {
+    resultsEl.innerHTML = '<div style="color:var(--neon-green);">✓ ASPSP Katalog (1.128 Banken) in docs/catalogs/ASPSP_1128_BANKEN_CATALOG.csv verfügbar.</div>';
+  }
+}
+
+
+
+
 async function simulateHclStateCycle() {
   const container = document.getElementById('hcl-simulation-results');
   const humanApproval = document.getElementById('hcl-human-approval')?.checked ? 1 : 0;

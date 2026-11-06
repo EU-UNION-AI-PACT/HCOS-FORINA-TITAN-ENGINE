@@ -472,6 +472,35 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertGreaterEqual(len(clevel), 1)
         self.assertTrue(any("Richard Teng" in c["Name"] for c in clevel))
 
+    def test_enable_banking_and_aspsp_catalog(self):
+        from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+        fin = InstitutionalFinanceRegistry(self.root)
+
+        # Test Enable Banking apps
+        apps = fin.get_enable_banking_apps()
+        self.assertGreaterEqual(len(apps), 3)
+        active_app = fin.get_enable_banking_app()
+        self.assertEqual(active_app["app_name"], "aether.worldbankeyes.eu")
+        self.assertEqual(active_app["app_id"], "85550b82-143d-4b06-9aa1-d33c73584984")
+        self.assertEqual(active_app["environment"], "SANDBOX")
+        self.assertIn("Account Information", active_app["services"])
+        self.assertIn("Payment Initiation", active_app["services"])
+        self.assertIn("LOCAL_CONFIG_UMASK_077", active_app["key_storage"])
+
+        # Test ASPSP catalog stats
+        stats = fin.get_aspsp_stats()
+        self.assertEqual(stats["unique_brands"], 1128, "Muss exakt 1.128 unique Banken umfassen")
+        self.assertEqual(stats["countries_count"], 29, "Muss 29 europäische Länder umfassen")
+        self.assertIn("DE", stats["countries"])
+        self.assertIn("AT", stats["countries"])
+        self.assertIn("FR", stats["countries"])
+
+        # Test Search
+        sparkassen = fin.search_aspsp_banks(query="Sparkasse", country="DE", limit=10)
+        self.assertGreaterEqual(len(sparkassen), 5)
+        self.assertTrue(all(b["country"] == "DE" for b in sparkassen))
+        self.assertTrue(any("Berliner Sparkasse" in b["brand"] for b in sparkassen))
+
     def test_integrated_masterkonzept_and_catalogs(self):
         suite = ConceptPaperSuite(self.root)
         mk = suite.get_masterkonzept()

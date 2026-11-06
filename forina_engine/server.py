@@ -420,6 +420,47 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(clevel), "company_filter": company, "directory": clevel}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        if parsed.path == "/api/finance/enablebanking/apps":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            apps = fin_reg.get_enable_banking_apps()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(apps), "applications": apps}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/enablebanking/app":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            app_id = qs.get("id", [None])[0]
+            app = fin_reg.get_enable_banking_app(app_id=app_id)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(app, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/aspsp":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            country = qs.get("country", [""])[0]
+            psu_type = qs.get("psu_type", [""])[0]
+            service = qs.get("service", [""])[0]
+            status = qs.get("status", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            banks = fin_reg.search_aspsp_banks(query=q, country=country, psu_type=psu_type, service=service, status=status, limit=limit)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(banks), "query": q, "country": country, "banks": banks}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/aspsp/stats":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            stats = fin_reg.get_aspsp_stats()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(stats, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 11e. 3D FLOW ENGINE VISUALISIERUNGEN
         if parsed.path == "/api/flow/list":
             flow_dir = self.project_root / "web" / "flow"
