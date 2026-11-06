@@ -271,6 +271,21 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(stroq["repository"], "AGGIB/Stroq")
         self.assertEqual(stroq["module_id"], "M13")
 
+        # Validate URL containment and separation of concerns (License vs Audit)
+        for r in repos:
+            self.assertTrue(r["url_valid"], f"URL für {r['repository']} muss HTTPS-validiert sein")
+            self.assertIn("https://", r["url"])
+            self.assertIn(r["license_type"], [
+                "SPDX_PERMISSIVE", "SPDX_COPYLEFT", "DUAL_SPDX",
+                "PROPRIETARY_NO_CHARGE", "COMMUNITY_EVALUATION"
+            ])
+            self.assertEqual(r["audit_type"], "INTERNAL_ZONE_GOVERNANCE_TIER")
+
+        # Test non-SPDX proprietary distinction (GSAP)
+        gsap = catalog.get_by_nr(9)
+        self.assertEqual(gsap["license_type"], "PROPRIETARY_NO_CHARGE")
+        self.assertIn("Non-SPDX", gsap["license_id"])
+
     def test_sovereign_network_guard_probes(self):
         # 1. Negative WAN Probes within Scoped Guard
         with SovereignNetworkGuard.sovereign_airgap_scope():

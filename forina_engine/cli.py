@@ -229,15 +229,18 @@ def main():
             print("==================================================================")
             print(f" REPOSITORY DOSSIER #{r['nr']:02d}: {r['repository']}")
             print("==================================================================")
-            print(f" URL:                     {r['url']}")
+            url_badge = "GÜLTIG (HTTPS)" if r.get("url_valid") else "BLOCKIERT"
+            print(f" URL:                     {r['url']} [{url_badge}]")
             print(f" Modul-Zuordnung:         {r['module_id']} ({r['module_role']})")
             print(f" Betriebszone:            {r['zone']}")
             print(f" Integrationsentscheid:   {r['integration_decision']}")
             print(f" PDF-Fundstelle:          {r['pdf_source']} (Seite {r['pdf_page']})")
             print(f" Geplante Rolle:          {r['planned_role']}")
             print(f" Herkunftsnotiz:          {r['origin_note']}")
-            print(f" Lizenzprüfung:           {r['license_check']}")
-            print(f" Sicherheitsprüfung:      {r['security_check']}")
+            print(f" Lizenz-ID:               {r.get('license_id')}")
+            print(f" Lizenz-Klassifikation:   {r.get('license_type')} ({r.get('license_source')})")
+            print(f" Sicherheits-Einstufung:  {r.get('security_profile')}")
+            print(f" Audit-Kategorie:         {r.get('audit_type')} (Review-Datum: {r.get('audit_date')})")
             print("==================================================================")
 
         elif args.action == "zone":

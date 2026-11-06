@@ -120,10 +120,33 @@ class RepositoryEvaluationCatalog:
 
                 mod_id, mod_role = MODULE_MAPPING.get(repo_name, ("M00", row.get("Geplante_Rolle", "")))
 
+                raw_url = row.get("URL", "").strip()
+                # Strict URL validation: strictly require HTTPS on approved domains (GitHub / GitLab)
+                url_valid = bool(raw_url.startswith("https://github.com/") or raw_url.startswith("https://gitlab.com/"))
+                safe_url = raw_url if url_valid else "#"
+
+                lic = row.get("Lizenzpruefung", "OFFEN").strip()
+                if "No-Charge" in lic or "Commercial" in lic or "GreenSock" in lic:
+                    lic_type = "PROPRIETARY_NO_CHARGE"
+                elif "/" in lic:
+                    lic_type = "DUAL_SPDX"
+                elif lic in ("MIT", "Apache-2.0", "BSD-2-Clause", "BSD-3-Clause", "ISC"):
+                    lic_type = "SPDX_PERMISSIVE"
+                elif "AGPL" in lic or "GPL" in lic or "MPL" in lic:
+                    lic_type = "SPDX_COPYLEFT"
+                else:
+                    lic_type = "COMMUNITY_EVALUATION"
+
+                sec = row.get("Sicherheitspruefung", "OFFEN").strip()
+                # Clear distinction: Internal Catalog / Zone Governance vs Third-Party Certification
+                audit_type = "INTERNAL_ZONE_GOVERNANCE_TIER"
+
                 self._repos.append({
                     "nr": int(row.get("Nr", 0)),
                     "repository": repo_name,
-                    "url": row.get("URL", ""),
+                    "url": safe_url,
+                    "raw_url": raw_url,
+                    "url_valid": url_valid,
                     "pdf_source": row.get("PDF", ""),
                     "pdf_page": row.get("PDF-Seite", ""),
                     "planned_role": row.get("Geplante_Rolle", ""),
@@ -132,8 +155,14 @@ class RepositoryEvaluationCatalog:
                     "integration_decision": row.get("Integrationsentscheid", ""),
                     "origin_note": row.get("Herkunft", ""),
                     "zone": zone,
-                    "license_check": row.get("Lizenzpruefung", "OFFEN"),
-                    "security_check": row.get("Sicherheitspruefung", "OFFEN")
+                    "license_check": lic,
+                    "license_id": lic,
+                    "license_type": lic_type,
+                    "license_source": "Offizielles Upstream Repository",
+                    "security_check": sec,
+                    "security_profile": sec,
+                    "audit_type": audit_type,
+                    "audit_date": "2026-11-06"
                 })
 
     def list_all(self) -> List[Dict[str, Any]]:

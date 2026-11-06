@@ -7,7 +7,7 @@ Nr,PDF,PDF-Seite,Repository,URL,Geplante_Rolle,Integrationsentscheid,Herkunft,Li
 6,Tool Build Processing,5,nginx/nginx,https://github.com/nginx/nginx,Reverse Proxy alternative,Online optional,Direkt im PDF verlinkt,BSD-2-Clause,HARDENED_PROXY
 7,Tool Build Processing,5,cunnie/sslip.io,https://github.com/cunnie/sslip.io,DNS development routing,Reference only,Direkt im PDF verlinkt,Apache-2.0,DNS_DEV_ONLY
 8,Tool Build Processing,5,exentriquesolutions/nip.io,https://github.com/exentriquesolutions/nip.io,DNS development routing alternative,Reference only,Direkt im PDF verlinkt,Apache-2.0,DNS_DEV_ONLY
-9,Tool Build Processing,5,greensock/GSAP,https://github.com/greensock/GSAP,UI animation,Optional,Direkt im PDF verlinkt,GreenSock Commercial/No-Charge,UI_ANIMATION_SAFE
+9,Tool Build Processing,5,greensock/GSAP,https://github.com/greensock/GSAP,UI animation,Optional,Direkt im PDF verlinkt,GreenSock Standard (Non-SPDX No-Charge),UI_ANIMATION_SAFE
 10,Tool Build Processing,5,mrdoob/three.js,https://github.com/mrdoob/three.js,3D interface,Optional,Direkt im PDF verlinkt,MIT,CLIENT_SANDBOXED
 11,Tool Build Processing,5,catdad/canvas-confetti,https://github.com/catdad/canvas-confetti,Decorative effects,Optional,Direkt im PDF verlinkt,ISC,PURE_DOM_SAFE
 12,Tool Build Processing,5,goldfire/howler.js,https://github.com/goldfire/howler.js,Audio UI,Optional,Direkt im PDF verlinkt,MIT,AUDIO_API_SAFE

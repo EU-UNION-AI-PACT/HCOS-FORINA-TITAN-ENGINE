@@ -990,18 +990,51 @@ async function loadAssuranceGates() {
   try {
     const res = await fetch('/api/assurance/gates');
     const data = await res.json();
-    container.innerHTML = (data.gates || []).map(g => `
-      <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(0,255,136,0.25); border-radius:6px; padding:6px; font-size:0.68rem;">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-          <strong style="color:var(--gold);">${g.gate}</strong>
-          <span style="color:var(--neon-green); font-weight:700;">✓ PASS</span>
+    const gates = data.gates || [];
+
+    if (!gates.length) {
+      container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Keine Gate-Daten verfügbar.</div>';
+      return;
+    }
+
+    container.innerHTML = gates.map(g => {
+      const status = String(g.status || 'UNKNOWN').toUpperCase();
+      const safeGate = escapeHtml(g.gate);
+      const safeName = escapeHtml(g.name);
+      const safeCriteria = escapeHtml(g.criteria);
+      const safeDetails = escapeHtml(g.details || '');
+
+      let statusBadge = '<span style="color:var(--neon-green); font-weight:700;">✓ PASS</span>';
+      let borderColor = 'rgba(0, 255, 136, 0.3)';
+      let bgColor = 'rgba(255, 255, 255, 0.04)';
+
+      if (status === 'FAIL') {
+        statusBadge = '<span style="color:#ef4444; font-weight:700; background:rgba(239,68,68,0.2); padding:2px 6px; border-radius:4px;">✗ FAIL</span>';
+        borderColor = 'rgba(239, 68, 68, 0.8)';
+        bgColor = 'rgba(239, 68, 68, 0.12)';
+      } else if (status === 'HALTED' || status === 'WARN') {
+        statusBadge = '<span style="color:#f59e0b; font-weight:700; background:rgba(245,158,11,0.2); padding:2px 6px; border-radius:4px;">⊘ HALTED</span>';
+        borderColor = 'rgba(245, 158, 11, 0.8)';
+        bgColor = 'rgba(245, 158, 11, 0.12)';
+      } else if (status !== 'PASS') {
+        statusBadge = `<span style="color:var(--silver); font-weight:700;">? ${escapeHtml(status)}</span>`;
+        borderColor = 'rgba(160, 174, 192, 0.3)';
+      }
+
+      return `
+        <div style="background:${bgColor}; border:1px solid ${borderColor}; border-radius:6px; padding:6px; font-size:0.68rem; margin-bottom:4px; transition:border-color 0.2s ease;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <strong style="color:var(--gold); font-size:0.72rem;">${safeGate}</strong>
+            ${statusBadge}
+          </div>
+          <div style="color:#fff; margin-top:2px; font-weight:600;">${safeName}</div>
+          <div style="color:#a0aec0; font-size:0.62rem; margin-top:2px;">${safeCriteria}</div>
+          ${safeDetails ? `<div style="color:#cbd5e1; font-size:0.60rem; margin-top:3px; border-top:1px dashed rgba(255,255,255,0.1); padding-top:2px; word-break:break-word;">${safeDetails}</div>` : ''}
         </div>
-        <div style="color:#fff; margin-top:2px;">${g.name}</div>
-        <div style="color:#a0aec0; font-size:0.62rem; margin-top:2px;">${g.criteria}</div>
-      </div>
-    `).join('');
+      `;
+    }).join('');
   } catch (e) {
-    container.innerHTML = '<div style="color:var(--silver);">13-Gates lokal aktiv in forina_engine/assurance_gates.py</div>';
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">13-Gates lokal aktiv in forina_engine/assurance_gates.py</div>';
   }
 }
 
@@ -1013,6 +1046,17 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;')
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&#039;');
+}
+
+function sanitizeGitHubUrl(rawUrl) {
+  if (!rawUrl || typeof rawUrl !== 'string') return '#';
+  const trimmed = rawUrl.trim();
+  
+  const allowedPattern = /^https:\/\/(github\.com|gitlab\.com)\/[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+(\/.*)?$/;
+  if (!allowedPattern.test(trimmed)) {
+    return '#';
+  }
+  return encodeURI(trimmed);
 }
 
 async function loadRepositoriesCatalog(zoneFilter = '') {
@@ -1037,13 +1081,16 @@ async function loadRepositoriesCatalog(zoneFilter = '') {
       if (r.zone.includes('Federation')) zoneBadgeColor = 'var(--gold)';
 
       const safeRepo = escapeHtml(r.repository);
-      const safeUrl = escapeHtml(r.url);
+      const safeUrl = sanitizeGitHubUrl(r.url);
+      const isSafeLink = safeUrl !== '#';
       const safeZone = escapeHtml(r.zone.replace(' Zone', ''));
       const safeModuleId = escapeHtml(r.module_id);
       const safeModuleRole = escapeHtml(r.module_role);
       const safeDecision = escapeHtml(r.integration_decision);
       const safeLicense = escapeHtml(r.license_check);
+      const safeLicenseType = escapeHtml(r.license_type || 'SPDX');
       const safeSecurity = escapeHtml(r.security_check);
+      const safeAuditType = escapeHtml(r.audit_type || 'INTERNAL_TIER');
       const safeOrigin = r.pdf_source.includes('Claude') ? 'TAAFT S.' + escapeHtml(r.pdf_page) : 'Spec S.' + escapeHtml(r.pdf_page);
 
       return `
@@ -1056,15 +1103,17 @@ async function loadRepositoriesCatalog(zoneFilter = '') {
               </span>
             </div>
             <div style="margin-top:4px;">
-              <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">
-                ${safeRepo} ↗
-              </a>
+              ${isSafeLink
+                ? `<a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">${safeRepo} ↗</a>`
+                : `<span style="color:var(--silver); font-weight:700; word-break:break-all;">${safeRepo} (URL blockiert)</span>`
+              }
             </div>
             <div style="color:#e2e8f0; font-size:0.68rem; margin-top:3px;">
               <strong style="color:var(--neon-pink);">${safeModuleId}:</strong> ${safeModuleRole}
             </div>
             <div style="margin-top:4px; font-size:0.62rem; color:#cbd5e0;">
-              <span style="color:var(--neon-green);">Lizenz:</span> ${safeLicense} · <span style="color:var(--gold);">Security:</span> ${safeSecurity}
+              <span style="color:var(--neon-green);">Lizenz:</span> ${safeLicense} <span style="font-size:0.56rem; color:#94a3b8;">[${safeLicenseType}]</span> · 
+              <span style="color:var(--gold);">Security:</span> ${safeSecurity} <span style="font-size:0.56rem; color:#94a3b8;">(${safeAuditType})</span>
             </div>
           </div>
           <div style="margin-top:6px; pt-2; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; color:#a0aec0;">
