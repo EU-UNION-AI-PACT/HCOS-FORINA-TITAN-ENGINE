@@ -44,7 +44,7 @@
     "license_type": "PROPRIETARY LICENSE - ALL RIGHTS RESERVED"
   },
   "codebase_attestation": {
-    "merkle_root": "bdc8f9f3f1b9a01f1dca02870e99d78d7eb2d824a9a1c0dbc41693b43dbd8a17",
+    "merkle_root": "337faf9bca633b0e98ea25c91a93f37de5c476e7329d2a5f95e736f8a9b0e3f8",
     "file_hashes": {
       "Tool-Build-Processing-Security-Spec.txt": "975af43e05306318b3b48d2d9cc8c9a3f9bce9f7eb0ef806d8cd6105c9c64597",
       "config/pipeline.json": "21372155405d95519a1b17a97d4efce0454a73e9fd90481120a100e02ac61472",
@@ -54,7 +54,7 @@
       "forina_engine/security.py": "f5fc51e21ead8b6397c1e6fc890a362cdd4649748a5f225d77b40c31f0f45d88",
       "forina_engine/server.py": "dac0d95e31b0a340f42e1e5ace5885786568e4c43308620c7fc1207183bc2435",
       "forina_engine/spec_sync.py": "57bbb0e3257d30e8de91bf1719dbca6ef3998de0fb4b81582521d304871db3b6",
-      "web/app.js": "165acee9daead6bcf490c4fec5a0ac48787c712a7e6f57cffa5e5197c474b6e4",
+      "web/app.js": "9ea78c0c0c1914e5830f72b4eef0bdfdb5ea1aa2b3ddf829c677f69ef79a1c57",
       "web/index.html": "4d74542ea363d51a0319d62632f4d5070f7792b83de4f0b973d5dcdeb28c24c3",
       "web/styles.css": "2a5f9c49606e0d2eb12de3b67c84faeb6ff02a54add5dd01ed46082b762d25b6",
       "web/sw.js": "c7b3bc47e9d328b40490b0ca307b12f92e13c1e36f6a14d1e4648205d3e6b76b"
@@ -64,15 +64,15 @@
   "cryptographic_signatures": {
     "algorithm": "Ed25519 (RFC 8032 Asymmetric Signature) + Merkle SHA-256",
     "signer_identity": "Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)",
-    "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"bdc8f9f3f1b9a01f1dca02870e99d78d7eb2d824a9a1c0dbc41693b43dbd8a17\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
-    "ed25519_signature_hex": "5fd98acf76756bac5b8ab1d3cef41e7855bc8cccaa405c7fe346cb536e956ec46adc6f6f4f479e6ec9aa5e8ea5a8e576fbd14cf3afe91f0f9da485b9878d830b",
-    "ed25519_signature_b64": "X9mKz3Z1a6xbirHTzvQeeFW8jMyqQFx/40bLU26VbsRq3G9vT0eebsmqXo6lqOV2+9FM86/pHw+dpIW5h42DCw==",
+    "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"337faf9bca633b0e98ea25c91a93f37de5c476e7329d2a5f95e736f8a9b0e3f8\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
+    "ed25519_signature_hex": "bd42e177f30076fb3c3472ecca3314c74e28a2b6442a1bd316fda7038c5ddf2ecf3d7bd6dbc2dafd67af02e2db2ecf6e0b4605ebd68323252a80c57a07e98200",
+    "ed25519_signature_b64": "vULhd/MAdvs8NHLsyjMUx04oorZEKhvTFv2nA4xd3y7PPXvW28La/WevAuLbLs9uC0YF69aDIyUqgMV6B+mCAA==",
     "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATWV5uSOc23vB5bGWRaz+owF0TPxGuiChtSJ+nBuEdhk=\n-----END PUBLIC KEY-----\n",
     "validation_status": "ASYMMETRIC_SIGNATURE_VERIFIED",
     "assurance_tier": "PRODUCTION_ASSURED"
   },
   "audit_trail": {
-    "generated_at": "2026-11-06T06:55:53.639926+00:00",
+    "generated_at": "2026-11-06T07:00:46.809417+00:00",
     "spec_compliance": "100% Tool Build Processing - Securty - So Baut man.txt Compliant",
     "production_assurance_level": "Tier-4 Production Assured",
     "eu_compliance_badge": "VALIDATED",

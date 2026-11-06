@@ -32,7 +32,7 @@ ZONE_MAPPING = {
     "Federation & Integration Zone": [
         "caddyserver/caddy", "nginx/nginx", "pocket-id/pocket-id",
         "authelia/authelia", "langgenius/dify", "vercel/ai",
-        "linagora/jmap-client-ts", "stalwartlabs/mail-server",
+        "linagora/jmap-client-ts", "audreyt/jmap-client-ts", "stalwartlabs/mail-server",
         "umami-software/umami", "plausible/analytics", "calcom/cal.com"
     ]
 }
@@ -66,6 +66,7 @@ MODULE_MAPPING = {
     "johannesjo/super-productivity": ("M09", "Time Tracking & Task Management"),
     "open-policy-agent/opa": ("M07", "Declarative Compliance & Gate Policy"),
     "linagora/jmap-client-ts": ("M09", "Modern JMAP Email Protocol Client"),
+    "audreyt/jmap-client-ts": ("M09", "Modern JMAP Email Protocol Client (Linagora / Audrey Tang)"),
     "stalwartlabs/mail-server": ("M09", "All-in-One Rust Mail Gateway"),
     "umami-software/umami": ("M10", "Cookie-Free Sovereign Telemetry"),
     "plausible/analytics": ("M10", "Privacy-Preserving Web Analytics"),
@@ -110,8 +111,8 @@ class RepositoryEvaluationCatalog:
             reader = csv.DictReader(f)
             for row in reader:
                 repo_name = row.get("Repository", "").strip()
-                # Determine Zone
-                zone = "Local Sovereign Zone"
+                # Determine Zone (Fail-Closed: unknown repos are NEVER assigned to Sovereign Zone)
+                zone = "Unassigned / Pending Review"
                 for z_name, z_repos in ZONE_MAPPING.items():
                     if repo_name in z_repos:
                         zone = z_name

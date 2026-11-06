@@ -1005,6 +1005,16 @@ async function loadAssuranceGates() {
   }
 }
 
+function escapeHtml(str) {
+  if (str === null || str === undefined) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
 async function loadRepositoriesCatalog(zoneFilter = '') {
   const container = document.getElementById('repos-catalog-container');
   if (!container) return;
@@ -1026,27 +1036,40 @@ async function loadRepositoriesCatalog(zoneFilter = '') {
       if (r.zone.includes('Development')) zoneBadgeColor = 'var(--neon-blue)';
       if (r.zone.includes('Federation')) zoneBadgeColor = 'var(--gold)';
 
+      const safeRepo = escapeHtml(r.repository);
+      const safeUrl = escapeHtml(r.url);
+      const safeZone = escapeHtml(r.zone.replace(' Zone', ''));
+      const safeModuleId = escapeHtml(r.module_id);
+      const safeModuleRole = escapeHtml(r.module_role);
+      const safeDecision = escapeHtml(r.integration_decision);
+      const safeLicense = escapeHtml(r.license_check);
+      const safeSecurity = escapeHtml(r.security_check);
+      const safeOrigin = r.pdf_source.includes('Claude') ? 'TAAFT S.' + escapeHtml(r.pdf_page) : 'Spec S.' + escapeHtml(r.pdf_page);
+
       return `
         <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
           <div>
             <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
               <span style="color:var(--gold); font-weight:700;">#${String(r.nr).padStart(2, '0')}</span>
               <span style="font-size:0.62rem; color:${zoneBadgeColor}; border:1px solid ${zoneBadgeColor}; padding:1px 5px; border-radius:4px;">
-                ${r.zone.replace(' Zone', '')}
+                ${safeZone}
               </span>
             </div>
             <div style="margin-top:4px;">
-              <a href="${r.url}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">
-                ${r.repository} ↗
+              <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-blue); font-weight:700; text-decoration:none; word-break:break-all;">
+                ${safeRepo} ↗
               </a>
             </div>
             <div style="color:#e2e8f0; font-size:0.68rem; margin-top:3px;">
-              <strong style="color:var(--neon-pink);">${r.module_id}:</strong> ${r.module_role}
+              <strong style="color:var(--neon-pink);">${safeModuleId}:</strong> ${safeModuleRole}
+            </div>
+            <div style="margin-top:4px; font-size:0.62rem; color:#cbd5e0;">
+              <span style="color:var(--neon-green);">Lizenz:</span> ${safeLicense} · <span style="color:var(--gold);">Security:</span> ${safeSecurity}
             </div>
           </div>
           <div style="margin-top:6px; pt-2; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; color:#a0aec0;">
-            <span>Entscheid: <strong style="color:#fff;">${r.integration_decision}</strong></span>
-            <span>${r.pdf_source.includes('Claude') ? 'TAAFT' : 'Spec S.' + r.pdf_page}</span>
+            <span>Entscheid: <strong style="color:#fff;">${safeDecision}</strong></span>
+            <span>${safeOrigin}</span>
           </div>
         </div>
       `;
