@@ -326,6 +326,21 @@
           <div id="financial-analysis-container" style="margin-top:10px; background:#080c14; border:1px solid rgba(255,215,0,0.3); border-radius:8px; padding:10px; font-size:0.75rem;">
             <div style="color:#a0aec0;">Klicke auf "Transaktionen analysieren", um die Heuristik zu starten...</div>
           </div>
+
+          <!-- EZB Pontes & Finance Portale Explorer -->
+          <div style="margin-top:12px; background:rgba(0,240,255,0.03); border:1px solid rgba(0,240,255,0.2); border-radius:8px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                <strong style="color:var(--neon-blue); font-size:0.8rem;">🏛 EZB Pontes DLT Wholesale Bridge & 2.745 Finance Portale</strong>
+                <p style="font-size:0.7rem; color:#94a3b8; margin:2px 0;">Offizieller Start 21.09.2026 · Digitales Zentralbankgeld (wCBDC) · DvP Tokenized Securities · C-Level Registry</p>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <input id="finance-portal-search" type="text" placeholder="Suche (z.B. Aave, Adyen, Binance)..." style="background:#070b12; border:1px solid #334155; color:#fff; padding:3px 8px; border-radius:4px; font-size:0.7rem; width:190px;" onkeydown="if(event.key==='Enter') searchFinancePortals()">
+                <button class="titan-btn" style="padding:3px 8px; font-size:0.7rem;" onclick="searchFinancePortals()">Suchen</button>
+              </div>
+            </div>
+            <div id="finance-portal-results" style="margin-top:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1;"></div>
+          </div>
         </div>
 
         <!-- TAB 6: BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 & M13) -->
@@ -462,6 +477,22 @@
             <!-- Dynamisch via loadHarnessLoopStatus() -->
           </div>
           <div id="harness-live-feedback" style="display:none; margin-top:8px; background:#070b12; border:1px solid var(--neon-pink); border-radius:6px; padding:8px; font-size:0.72rem; color:#cbd5e1;"></div>
+
+          <!-- Reference Harness Control Loop (HCL) Simulator -->
+          <div style="margin-top:12px; background:rgba(255,215,0,0.03); border:1px solid rgba(255,215,0,0.25); border-radius:8px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                <strong style="color:var(--gold); font-size:0.8rem;">🔒 Reference Harness Control Loop (HCL) State Machine</strong>
+                <p style="font-size:0.7rem; color:#94a3b8; margin:2px 0;">Fail-Closed Isolation Simulation: PLANNED ➔ BUILT ➔ TESTED ➔ AUDITED ➔ REVIEW_REQUIRED ➔ RELEASE</p>
+              </div>
+              <div style="display:flex; align-items:center; gap:8px; font-size:0.7rem;">
+                <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer;"><input type="checkbox" id="hcl-human-approval"> Human Approval</label>
+                <label style="display:inline-flex; align-items:center; gap:3px; cursor:pointer;"><input type="checkbox" id="hcl-external-isolation"> External Isolation</label>
+                <button class="titan-btn" style="padding:3px 10px; font-size:0.7rem; border-color:var(--gold); color:var(--gold);" onclick="simulateHclStateCycle()">⚡ Test-Zyklus ausführen</button>
+              </div>
+            </div>
+            <div id="hcl-simulation-results" style="display:none; margin-top:8px; background:#070b12; border:1px solid #334155; border-radius:6px; padding:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1;"></div>
+          </div>
         </div>
 
         <!-- TAB 11: 144 SEITEN ENZYKLOPÄDIE (BÄNDE A-D & 136 KAPITEL) -->

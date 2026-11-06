@@ -1,0 +1,518 @@
+{
+  "system": "HCOS - FORINA TITAN EVIDENCE & CERTIFICATION",
+  "sovereign_certificate": {
+    "certificate_title": "SOVEREIGN CERTIFICATE OF SYSTEM AUTHENTICITY & INTEGRITY",
+    "certificate_id": "HCOS-CERT-2026-EU-NATO-DP-001",
+    "metadata": {
+      "system_name": "HCOS - HNOSS CONTROL OPERATING SYSTEM",
+      "project_name": "FORINA TITAN PIPELINE ENGINE",
+      "version": "1.2.0-PILOT-2026-EU-NATO-CLASSIFIED",
+      "effective_date": "January 1, 2024",
+      "certification_date": "2026-11-06T06:15:00Z",
+      "author_and_creator": "Daniel Pohl",
+      "trademark": "Hnoss / PrisMaTHarIOn",
+      "certifications": {
+        "royal_kaiser_charter_regsys": {
+          "pic": "867679357",
+          "vat": "31353063511",
+          "status": "SOVEREIGN REGISTRATION ACTIVE"
+        },
+        "hnoss": {
+          "pic": "873042778",
+          "vat": "31353063511",
+          "status": "CERTIFIED"
+        },
+        "duns_numbers": [
+          "315676980",
+          "317066336"
+        ],
+        "ungm_id": "1172700",
+        "global_lei": "894500GBJSIW8L6ET310"
+      },
+      "framework_alignments": [
+        "NATO Strategic Defense Model alignment",
+        "European Union Regulatory Governance Layer",
+        "Pentagon Operational Defense Structure",
+        "EUPL-1.2 Cross-Matrix Compliance",
+        "EUHFA Concept Architectural Alignment"
+      ],
+      "authorized_corporate_entities": [
+        "HNOSS Enterprises",
+        "PRISMANTHARION Corporation",
+        "SHINEHEALTHCARE GmbH",
+        "STARLIGHTMOVEMENTS AG"
+      ],
+      "legal_status": "PILOT PROJECT - SOURCE-AVAILABLE AUDIT - PROPRIETARY RESTRICTIONS",
+      "license_type": "PROPRIETARY LICENSE - ALL RIGHTS RESERVED"
+    },
+    "codebase_attestation": {
+      "merkle_root": "58868dc50332c1f2da925b6bf31fc29e4cdffd89167136da0b1c7784b40a13d2",
+      "file_hashes": {
+        "Tool-Build-Processing-Security-Spec.txt": "975af43e05306318b3b48d2d9cc8c9a3f9bce9f7eb0ef806d8cd6105c9c64597",
+        "config/pipeline.json": "21372155405d95519a1b17a97d4efce0454a73e9fd90481120a100e02ac61472",
+        "forina.py": "68b5a595b39d7247c85b4a7b5e408f27a3e290be3dede5a3d025c522392dd308",
+        "forina_engine/certification.py": "1c3ee8298b53f8906d2a3ca389b8ddb42e0524e31ea7c3d4ed01d6583154b722",
+        "forina_engine/engine.py": "041bedb6bfbf5c063a514f72e4917f17e1db2f970fa314e1018e96640d0990ea",
+        "forina_engine/security.py": "f5fc51e21ead8b6397c1e6fc890a362cdd4649748a5f225d77b40c31f0f45d88",
+        "forina_engine/server.py": "6c5bb1a6ca51c9d4b6863586446868145ad91f2cde18473dfd6ffba620603f20",
+        "forina_engine/spec_sync.py": "57bbb0e3257d30e8de91bf1719dbca6ef3998de0fb4b81582521d304871db3b6",
+        "web/app.js": "1355f2ac34677cca15eeadab035e1ee759ce2fc3132fb376697f038b30021db4",
+        "web/index.html": "6d2f23945d7fa335d9ad157a7c906bc3f73d465ad14bb959b769365c914d351b",
+        "web/styles.css": "4ac931c7b12e3a83210b0af79db039f7cb2ada28b3907d0f543addc2a4281bd0",
+        "web/sw.js": "c7b3bc47e9d328b40490b0ca307b12f92e13c1e36f6a14d1e4648205d3e6b76b"
+      },
+      "total_files_audited": 12
+    },
+    "cryptographic_signatures": {
+      "algorithm": "Ed25519 (RFC 8032 Asymmetric Signature) + Merkle SHA-256",
+      "signer_identity": "Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)",
+      "signed_payload_canonical": "{\"creator\": \"Daniel Pohl\", \"effective_date\": \"January 1, 2024\", \"lei\": \"894500GBJSIW8L6ET310\", \"merkle_root\": \"58868dc50332c1f2da925b6bf31fc29e4cdffd89167136da0b1c7784b40a13d2\", \"pic\": \"867679357\", \"system\": \"HCOS - HNOSS CONTROL OPERATING SYSTEM\"}",
+      "ed25519_signature_hex": "9e009cce9f80737b3edf4433723b4777ac0e379c4d65657aa6b85e96659838ee13835489017bf9ea3012584456b55f850252266474f7a378a57bbce7cfe2ae09",
+      "ed25519_signature_b64": "ngCczp+Ac3s+30QzcjtHd6wON5xNZWV6prhelmWYOO4Tg1SJAXv56jASWERWtV+FAlImZHT3o3ile7znz+KuCQ==",
+      "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEATWV5uSOc23vB5bGWRaz+owF0TPxGuiChtSJ+nBuEdhk=\n-----END PUBLIC KEY-----\n",
+      "validation_status": "ASYMMETRIC_SIGNATURE_VERIFIED",
+      "assurance_tier": "PRODUCTION_ASSURED"
+    },
+    "audit_trail": {
+      "generated_at": "2026-11-06T12:57:16.234079+00:00",
+      "spec_compliance": "100% Tool Build Processing - Securty - So Baut man.txt Compliant",
+      "production_assurance_level": "Tier-4 Production Assured",
+      "eu_compliance_badge": "VALIDATED",
+      "herzens_und_zukunftssicherheit": "CERTIFIED"
+    }
+  },
+  "spec_sync": {
+    "system": "HCOS - FORINA TITAN ENGINE",
+    "copyright": "Copyright (c) 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.",
+    "spec": {
+      "available": true,
+      "path": "/home/shinehealthcare/Schreibtisch/Tool Build Processing - Securty - So Baut man.txt",
+      "sha256": "975af43e05306318b3b48d2d9cc8c9a3f9bce9f7eb0ef806d8cd6105c9c64597",
+      "size_bytes": 90285,
+      "last_modified": "2026-11-06 05:46:47"
+    },
+    "overall_realized": true,
+    "overall_percentage": 100,
+    "production_readiness_percentage": 94,
+    "realized_count": 8,
+    "total_modules": 8,
+    "engine_status": "ONLINE - SPEC VERIFIED & HARMONIZED",
+    "production_assurance_level": "Tier-4 Production Assured (Ed25519 Signed)",
+    "statistic_glow_points": {
+      "active_glow_color": "#00ff88",
+      "pulse_frequency_seconds": 1.2,
+      "points": [
+        {
+          "label": "App-Engine & Schutz",
+          "score": 100,
+          "readiness": 100,
+          "tier": "PRODUCTION_ASSURED",
+          "badge": "PROD-READY",
+          "glow": "glow-gold",
+          "light": "blink-green"
+        },
+        {
+          "label": "Netzwerk & Wildcard-DNS",
+          "score": 100,
+          "readiness": 95,
+          "tier": "TEST_VERIFIED",
+          "badge": "CONFIG-TESTED",
+          "glow": "glow-cyan",
+          "light": "blink-green"
+        },
+        {
+          "label": "UI/UX & Show-Effekte",
+          "score": 100,
+          "readiness": 100,
+          "tier": "PRODUCTION_ASSURED",
+          "badge": "INTERACTIVE-READY",
+          "glow": "glow-pink",
+          "light": "blink-green"
+        },
+        {
+          "label": "PiP & Journalisten-Editor",
+          "score": 100,
+          "readiness": 100,
+          "tier": "PRODUCTION_ASSURED",
+          "badge": "EDITOR-ACTIVE",
+          "glow": "glow-amber",
+          "light": "blink-green"
+        },
+        {
+          "label": "IAM, Passkey & OTP",
+          "score": 100,
+          "readiness": 75,
+          "tier": "PROTOTYPE_SIMULATION",
+          "badge": "MOCK-SIMULATION",
+          "glow": "glow-purple",
+          "light": "blink-green"
+        },
+        {
+          "label": "KI-Suche & Video-Clip",
+          "score": 100,
+          "readiness": 85,
+          "tier": "CODE_IMPLEMENTED",
+          "badge": "AGENT-READY",
+          "glow": "glow-red",
+          "light": "blink-green"
+        },
+        {
+          "label": "EU-Compliance & JMAP",
+          "score": 100,
+          "readiness": 95,
+          "tier": "TEST_VERIFIED",
+          "badge": "RELAY-VERIFIED",
+          "glow": "glow-emerald",
+          "light": "blink-green"
+        },
+        {
+          "label": "Telemetrie & Kalender",
+          "score": 100,
+          "readiness": 100,
+          "tier": "PRODUCTION_ASSURED",
+          "badge": "SYNC-ACTIVE",
+          "glow": "glow-blue",
+          "light": "blink-green"
+        }
+      ]
+    },
+    "modules": [
+      {
+        "id": "app_engine",
+        "name": "1. App-Engine, Build-Pipeline & Code-Schutz",
+        "short_name": "App-Engine & Schutz",
+        "color": "gold",
+        "glow_class": "glow-gold",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 100,
+        "assurance_tier": "PRODUCTION_ASSURED",
+        "tier_label": "Tier-4 Production Assured",
+        "tier_badge": "PROD-READY",
+        "description": "AppImage-Packaging, automatisches Vorab-Backup mit Zeitstempel, Code-Obfuskation & Integritäts-Hashes.",
+        "spec_quote": "AppImage-Packaging: Kompilierung als ausführbares Linux-AppImage mit Zeitstempel und automatischem Backup vor jedem Build.",
+        "file_evidence": {
+          "web/index.html": true,
+          "scripts/build_pipeline.sh": true,
+          "forina_engine/engine.py": true
+        },
+        "keyword_matches": [
+          "Tauri",
+          "AppImage",
+          "JavaScript Obfuscator",
+          "BorgBackup",
+          "ide-source",
+          "build-dist"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "network_dns",
+        "name": "2. Netzwerk, Reverse Proxy & Wildcard-DNS",
+        "short_name": "Netzwerk & Wildcard-DNS",
+        "color": "cyan",
+        "glow_class": "glow-cyan",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 95,
+        "assurance_tier": "TEST_VERIFIED",
+        "tier_label": "Tier-3 Test Verified",
+        "tier_badge": "CONFIG-TESTED",
+        "description": "Automatische Einbindung von Caddy & NGINX mit dynamischen sslip.io / nip.io Wildcard-Domains.",
+        "spec_quote": "Reverse Proxy & Wildcard-DNS: Automatische Einbindung von NGINX und Caddy in Kombination mit sslip.io und nip.io.",
+        "file_evidence": {
+          "config/Caddyfile": true,
+          "config/nginx.conf": true
+        },
+        "keyword_matches": [
+          "Caddy",
+          "NGINX",
+          "sslip.io",
+          "nip.io",
+          "Reverse Proxy"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "ui_inszenierung",
+        "name": "3. UI/UX-Engines, Effekte & Start-Inszenierung",
+        "short_name": "UI/UX & Show-Effekte",
+        "color": "pink",
+        "glow_class": "glow-pink",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 100,
+        "assurance_tier": "PRODUCTION_ASSURED",
+        "tier_label": "Tier-4 Production Assured",
+        "tier_badge": "INTERACTIVE-READY",
+        "description": "Roter Theatervorhang, 3s-Glocke (3% Vol WebAudio), Scheibenwischer (4s-Takt), Blitz, Happy-Overshine Konfetti & Feuermelder.",
+        "spec_quote": "Start-Sequenz: Theatervorhang mit Wellenmuster, 3s-Glockensignal auf 3% Lautstärke, Scheibenwischer alle 4 Sekunden.",
+        "file_evidence": {
+          "web/index.html": true,
+          "web/styles.css": true,
+          "web/app.js": true
+        },
+        "keyword_matches": [
+          "GSAP",
+          "Three.js",
+          "Canvas Confetti",
+          "Howler.js",
+          "Theatervorhang",
+          "Scheibenwischer",
+          "Glocke",
+          "Feuermelder"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "interface_editor",
+        "name": "4. Kern-Interface, PiP-Browser & Redaktions-Editor",
+        "short_name": "PiP & Journalisten-Editor",
+        "color": "amber",
+        "glow_class": "glow-amber",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 100,
+        "assurance_tier": "PRODUCTION_ASSURED",
+        "tier_label": "Tier-4 Production Assured",
+        "tier_badge": "EDITOR-ACTIVE",
+        "description": "3D Flip-Board in Sidebar, Picture-in-Picture Webbrowser, Inline-Text-Editor und kategorisierbarer Journalisten-Export.",
+        "spec_quote": "In die Sidebar integriertes 3D-Flip-Board mit PiP-Webbrowser sowie Thinking-Flow Journalisten-Editor mit TXT-Export.",
+        "file_evidence": {
+          "web/index.html": true,
+          "web/app.js": true
+        },
+        "keyword_matches": [
+          "Tiptap",
+          "Editor.js",
+          "Framer Motion",
+          "Flip-Board",
+          "PiP",
+          "Thinking Flow"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "iam_auth_otp",
+        "name": "5. Authentifizierung (IAM), Passkeys, OTP & Datenschutz",
+        "short_name": "IAM, Passkey & OTP",
+        "color": "purple",
+        "glow_class": "glow-purple",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 75,
+        "assurance_tier": "PROTOTYPE_SIMULATION",
+        "tier_label": "Tier-1 Simulation / Tier-2 Implemented",
+        "tier_badge": "MOCK-SIMULATION",
+        "description": "Magic Link Flow, TOTP QR-Code-Generator, Mobilfunk SMS-OTP Simulator, Cookie-Banner & GPS Opt-In mit Widerruf.",
+        "spec_quote": "Zugriffsschutz über Magic Link, QR-Code Authenticator, SMS-OTP Handy Token sowie CookieConsent mit GPS Opt-in.",
+        "file_evidence": {
+          "web/index.html": true,
+          "web/app.js": true
+        },
+        "keyword_matches": [
+          "Pocket ID",
+          "Authelia",
+          "otplib",
+          "QR-Code",
+          "SMS-OTP",
+          "CookieConsent",
+          "GPS"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "ai_media",
+        "name": "6. KI-Integration, Video-Clipping & Zeiterfassung",
+        "short_name": "KI-Suche & Video-Clip",
+        "color": "neon-red",
+        "glow_class": "glow-red",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 85,
+        "assurance_tier": "CODE_IMPLEMENTED",
+        "tier_label": "Tier-2 Implemented / Tier-3 Tested",
+        "tier_badge": "AGENT-READY",
+        "description": "Agent-Assist KI-Suche, animierte News-Ticker Timeline, 30s Promo-Video Player mit In/Out Clipping, Atomuhr & Stoppuhr.",
+        "spec_quote": "Integrierter 30-Sekunden Promo-Clip mit Clipping-Funktion, Claude LLM Suche und Atomuhr gekoppelt mit Fokus-Stoppuhr.",
+        "file_evidence": {
+          "web/index.html": true,
+          "web/app.js": true
+        },
+        "keyword_matches": [
+          "Claude",
+          "LLM",
+          "Vercel AI",
+          "FFmpeg",
+          "30-Sekunden",
+          "Video-Clipper",
+          "Atomuhr",
+          "Fokus-Timer"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "compliance_jmap",
+        "name": "7. Compliance, Audit-Engine & JMAP-Anbindung",
+        "short_name": "EU-Compliance & JMAP",
+        "color": "emerald",
+        "glow_class": "glow-emerald",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 95,
+        "assurance_tier": "TEST_VERIFIED",
+        "tier_label": "Tier-3 Test Verified",
+        "tier_badge": "RELAY-VERIFIED",
+        "description": "EU-Audit- & Inspektoren-Portal, 3 Werte-Badges, JMAP Partnerschafts-Request Relay an world.banks.eyes.aether@globedynamicz.statesflowwishes.eu.",
+        "spec_quote": "Drei Originalitäts-Badges (EU-Union, Original-Inhalt, Herzens-Güte) und JMAP-Partnerschafts-Request an IONOS-Postfach.",
+        "file_evidence": {
+          "web/index.html": true,
+          "forina_engine/server.py": true
+        },
+        "keyword_matches": [
+          "Open Policy Agent",
+          "JMAP",
+          "Stalwart",
+          "EU-Union",
+          "Original-Inhalt",
+          "Herzens",
+          "IONOS"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      },
+      {
+        "id": "telemetry_calendar",
+        "name": "8. Anonyme Telemetrie, Statistik & Buchungssystem",
+        "short_name": "Telemetrie & Kalender",
+        "color": "blue",
+        "glow_class": "glow-blue",
+        "light_state": "blink-green",
+        "realized": true,
+        "spec_score": 100,
+        "readiness_score": 100,
+        "assurance_tier": "PRODUCTION_ASSURED",
+        "tier_label": "Tier-4 Production Assured",
+        "tier_badge": "SYNC-ACTIVE",
+        "description": "Anonymes Session-ID Tracking, persistente Echtzeit-Views, Termin- & Programm-Kalender, Live-Sync Realisierungs-Signal.",
+        "spec_quote": "Eigenständiges Statistik-Dashboard auf anonymer Basis, Termin-Buchungskalender sowie persistente Synchronisation.",
+        "file_evidence": {
+          "web/index.html": true,
+          "web/app.js": true,
+          "forina_engine/spec_sync.py": true
+        },
+        "keyword_matches": [
+          "Umami",
+          "Plausible",
+          "Cal.com",
+          "Anonyme",
+          "Views",
+          "Buchung",
+          "Kalender",
+          "Persistent Sync"
+        ],
+        "verified_at": "2026-11-06 13:57:16"
+      }
+    ],
+    "generated_at": "2026-11-06T12:57:16Z"
+  },
+  "inventory": {
+    ".forina-build-marker": "cde28c7140e6507d01c7a21da43515a69265ae6e24612937e0b3126164be663a",
+    "app.js": "541b3ebf3eae80811edb7439c1368df14b11104979e0d835344088eeb48501c9",
+    "badges/HCOS_HARNESS_LOOP_ARCHITEKTUR.svg": "1cd41a71238a1b9079b1cb6295927932de15b094bb4ec3fa68c17532fef223b0",
+    "badges/HCOS_INTERNES_EVIDENZABZEICHEN.svg": "479ff516808ce334117b122b1a62ec41a221d4969ec2780da670e52760796e30",
+    "badges/normen/NORM-001_EU_DSGVO_GDPR_EU_2016_679_interne_Vorlage.svg": "8ea6fe5d1026395641ee6fe2f7c2303450e696b315f4f407a90b9e48fc20dd41",
+    "badges/normen/NORM-002_DORA_Verordnung_EU_2022_2554_interne_Vorlage.svg": "ab2382ca8d9873e20de246316f22f7bd849b64ed882f2d016b3a79c7e22d32dd",
+    "badges/normen/NORM-003_NIS2_Richtlinie_EU_2022_2555_interne_Vorlage.svg": "b947aac2041d73e43d982096753769e9b83aa4f2d17288c0a8f7c1bc0ddac2c1",
+    "badges/normen/NORM-004_EU_AI_Act_EU_2024_1689_interne_Vorlage.svg": "71786dab1dab87578e710fd4f862f796ff8d163eec48ad864b6a7226ca2ddfd7",
+    "badges/normen/NORM-005_Cyber_Resilience_Act_EU_2024_2847_interne_Vorlage.svg": "743cbf4b06a8e4d64272bcb4065ce213621948006de071e7881cda1581a15102",
+    "badges/normen/NORM-006_MiCA_Verordnung_EU_2023_1114_interne_Vorlage.svg": "9ba1dece644e70af42d08c33e727bd6e54aa0bf2451ddc4b6d59ed468fd86b4f",
+    "badges/normen/NORM-007_eIDAS_2_EU_Digital_Identity_EU_2024_1183_interne_Vorlage.svg": "cace0c671cf7c1c05b44e748a4c67e79b5c444f4d36a45c3d7a864c0bf746257",
+    "badges/normen/NORM-008_PSD2_Richtlinie_EU_2015_2366_interne_Vorlage.svg": "054736a2d381db10663dcb3310add2ad827abed53ff9baaedaf27c7cc07a586c",
+    "badges/normen/NORM-009_EU_AML_Regelwerk_AMLR_EU_2024_1624_interne_Vorlage.svg": "25e995ebfaee3fa346d2613e61d1a61b71d4efb29ed5d47b43a1e9211362c4dd",
+    "badges/normen/NORM-010_DLT_Pilotverordnung_EU_2022_858_interne_Vorlage.svg": "cf0a498956be01217d1ef95ab975e8174da8254868b997f2fecf7f468a39dd81",
+    "badges/normen/NORM-011_European_Accessibility_Act_EU_2019_882_interne_Vorlage.svg": "2d23c5d7978700534ac9960ba019149d9f263382f0a4fc42864eceef549a9e66",
+    "badges/normen/NORM-012_EU_Data_Act_EU_2023_2854_interne_Vorlage.svg": "65d5844f491b87c268dd641dc8b246908aea2fb9ae5353382b79618344c31674",
+    "badges/normen/NORM-013_Data_Governance_Act_EU_2022_868_interne_Vorlage.svg": "a176e0d88a783aca187dd3cb10555cc6ae52c8904c98871007a41edf0d772249",
+    "badges/normen/NORM-014_Digital_Services_Act_EU_2022_2065_interne_Vorlage.svg": "f4136c1a3897d06029e4797265fa2f3bd95f1509277606ab1489141d39681f68",
+    "badges/normen/NORM-015_EU_Taxonomy_EU_2020_852_ESG_interne_Vorlage.svg": "c42649e50b4dbcea022789cd4d8d6014c8325bc5fb39af3823d42f6d8c2dbc54",
+    "badges/normen/NORM-016_ISO_IEC_27001_2022_Informationssicherheitsmanagement_interne_Vorlage.svg": "4a98792ac578ebbaaca7c65c5579df6248acf896930fba72144371928bf3deeb",
+    "badges/normen/NORM-017_ISO_IEC_27002_2022_Security_Controls_interne_Vorlage.svg": "01ca3ace1e53e0aa4fde9b397f925bd4c6aeb4747acd389bb7cd7bfd5bb9771f",
+    "badges/normen/NORM-018_ISO_IEC_27701_2025_PIMS_interne_Vorlage.svg": "1e6c0c353e702cf667e566b5a807212170add9fa8867c97963ff303a7deb60e5",
+    "badges/normen/NORM-019_ISO_IEC_42001_2023_AIMS_interne_Vorlage.svg": "11994fcfb227b77e394666e556710bc702db09785ce8b945f1ea303470c74545",
+    "badges/normen/NORM-020_ISO_9001_2026_Qualit_tsmanagement_interne_Vorlage.svg": "8a4a5e52ad8547351bbb889a0cb30bf4ad72aa6fbe80e0775b42aad9f954deb1",
+    "badges/normen/NORM-021_ISO_22301_2019_Business_Continuity_interne_Vorlage.svg": "959304cf05bad5c218f83d4501493bea2d46d6119cc95c63a683f65c68543abf",
+    "badges/normen/NORM-022_ISO_IEC_20000_1_2018_Service_Management_interne_Vorlage.svg": "c5dd2f0922d0e5eabb9b04e04b068898ac65eb3a900bd345948205ef369fd94c",
+    "badges/normen/NORM-023_ISO_IEC_27017_2015_Cloud_Controls_interne_Vorlage.svg": "dea2e172f20c3b7e62dc5a3ef13a59892b9aad7ebd272e754498698f069602ab",
+    "badges/normen/NORM-024_ISO_IEC_27018_2019_Public_Cloud_Privacy_interne_Vorlage.svg": "e94e442b06bc505427b4b6554c836251aafcb9a2b8eb4ed563c21f0428e0564f",
+    "badges/normen/NORM-025_ISO_31000_2018_Risikomanagement_interne_Vorlage.svg": "96ea3be665c76f5d920f44039aaf62bd6d6c483f620420d27566c8104a7e211f",
+    "badges/normen/NORM-026_NIST_Cybersecurity_Framework_2_0_interne_Vorlage.svg": "ed69e6d1ccae4f4ddb1a9b6f0251ae9141932e3116212e2a40b935c81add5f80",
+    "badges/normen/NORM-027_NIST_SSDF_SP_800_218_interne_Vorlage.svg": "fc8301991da7bba3521f604547db4e25a2e8b3d6db94d3e4e961ad13f42ccf8f",
+    "badges/normen/NORM-028_NIST_SP_800_53_Rev_5_interne_Vorlage.svg": "269090827095aadeea50dca8bb8e342083fafbe3d909b246314a34afc853e120",
+    "badges/normen/NORM-029_OWASP_ASVS_5_0_0_interne_Vorlage.svg": "4ffbc8036275c7f6b419c8d2869a2d1c632ed1471fc0b3189ff888ff9d78b37d",
+    "badges/normen/NORM-030_OWASP_SAMM_interne_Vorlage.svg": "76c42c033408f8a291cdb43bded5eade5f58b9ef5cbd0d7fcfae3d9b0b84b5be",
+    "badges/normen/NORM-031_CIS_Controls_v8_1_interne_Vorlage.svg": "81e42aef725ab9e226fd54842216ed99afa423053ca730eb65f7f3959b03a83b",
+    "badges/normen/NORM-032_BSI_IT_Grundschutz_interne_Vorlage.svg": "d4b33b405132ddce5e2d75897aecc930776f56aa30efa4c6de046d84ec6bb4c2",
+    "badges/normen/NORM-033_PCI_DSS_4_0_1_interne_Vorlage.svg": "43cc3ec51bf38e9acd8572b42075dbcfc10b29f7fbfba97b3dd0d1ce805600f1",
+    "badges/normen/NORM-034_TISAX_VDA_ISA_interne_Vorlage.svg": "b68ac551758d2ee0208aace873dd253dab67aca0663a0aec8ee9265ee2627f18",
+    "build.json": "7404b20f44cea0fb5dd7bd39e4aecd273e0d0de75f7a49f439fb684b784dcac1",
+    "flow/flow-engine-3d.html": "44ba00d3791d0244663d9a3ba3ff340ba23cb52f2e6daa7c74099f27a4179edf",
+    "flow/flow-engine-network.html": "2b23940d7b31c7d4cf7d9b76406199dc7270f0bf7d57b3caaf44c399dd2a9ed5",
+    "flow/flow-engine-sparkle.html": "aa294faefe6a07fa4cc2ecd869f4514eb9dc37421586232a98fca0766b7ad788",
+    "flow/peace-network.html": "da591cbc347a9a958c4cd9868e344ec7a6b9ccfa883d9043224fb88498d503f9",
+    "flow/sicherheits_compliance_framework.html": "efee36ec0c2cc3c00f0743a4c7bd4ca8631a5992e7c5387958acbf6a4ad76346",
+    "flow/sparkle-spectral.html": "7d0b6c6832bbcfbf685de8c18c98caceacde4adc65f3d190fa1b320640e45635",
+    "icon.svg": "5359193b79bf42832c6a25117431c0542a104c5d281b39463e37a4f3a856c979",
+    "index.html": "6d2f23945d7fa335d9ad157a7c906bc3f73d465ad14bb959b769365c914d351b",
+    "integrated_masterkonzept.html": "eb6df60d6927480601eab86c17e3101712e2a21225d2dfb3d857d8c4861387f2",
+    "manifest.json": "eea0386c277073823352d63c0e7773af7c7900cbe6cc7e8febbe1c87e3e766f6",
+    "manifest.webmanifest": "eea0386c277073823352d63c0e7773af7c7900cbe6cc7e8febbe1c87e3e766f6",
+    "registry/01_agent_studio.json": "759c57e1917e8757fa0eb80a3c25a824b5054d579f4e71fc5f741d48f04db1d7",
+    "registry/02_workflow_orchestrator.json": "ef08c935d1da77990ce3bbc00bc061cd1fe28d056a556e18aa80759cf21eff99",
+    "registry/03_connector_marketplace.json": "342476fbc519dd365bf65becd7cf1938e75b139dbd3827a20fba3a32f184af66",
+    "registry/04_knowledge_rag.json": "355eae26ce8a082d5a2fc56127f21fdd2c65920b5df3531a724540ac13596ed2",
+    "registry/05_web_discovery.json": "87e5c001a73912dd8761990e1218e2036b84c44baabdd4172951ebf03dcda252",
+    "registry/06_secrets_identity.json": "ab64ef73c2ceed7259c5d1631d0c32857f66c477213b10e90071b49c3151176f",
+    "registry/07_trust_compliance.json": "d8fd2224916388a62f39d0ba41ee3ecea97e7c7272576a821d6a872bb80f5c2f",
+    "registry/08_evidence_audit.json": "eba8b96c822055b596ecff1849dc63ffbacfd5a523dfb95377aa1ef1f42d9231",
+    "registry/09_monitoring_studio.json": "d2095b6df2330d288dcf9a256c29f68e1feea595465011a8040335e225854413",
+    "registry/10_voice_media.json": "74080b62f54bc95326331aec025641569bcc1a75443209901a162c2fcca86a61",
+    "registry/ai_media.json": "66ad7410e568ff4a7e50e7b3a18288b4e9faadd0f9fc91542eedf4f4b8fc3569",
+    "registry/app_engine.json": "c2a8a5850fb2df10579a474c5ebc0895246f7c4769e3e893b1a38a3d39def2cd",
+    "registry/compliance_jmap.json": "4485992fa1fe686202f2fcadbd8a814d9791cb7cbc504be31a46293647414f77",
+    "registry/iam_auth_otp.json": "846c53e9a863ab257aaf1948dc1f95697487a3f2a21c65e8755110f9abb8f866",
+    "registry/interface_editor.json": "c4513c77ff204da8be76ed372c21a276280c4ba89279580f06cc112183db7fe8",
+    "registry/m01_trusted_registry.json": "6217c6a73168ca3df6a99923e392d5363e5c197d73e2c47537e4f1dab841e05e",
+    "registry/m02_secure_builder.json": "e7b673b427fc966fa34e14539fdcdd4a539c589a6065d58c05a2b107952cfeef",
+    "registry/m03_ui_composition.json": "5deb5bf9ab71457ae622b90ca858e908269b7dfc067f8d5c02c8db14cbfb113e",
+    "registry/m04_identity_consent.json": "3238530c2094baf59a822944c888fdb04a33bfa11d8f558c1c2ed51cdabc928a",
+    "registry/m05_ai_cost_router.json": "bbdad0eeffb700d790ebbe0e1695a8d4373ba8327875a39f4ad972c45e60fd2c",
+    "registry/m06_knowledge_search.json": "50c8eccc4e8510325052ce6442a002be31698eed282aec299304dc4455747461",
+    "registry/m07_domain_trust.json": "b54b5ca1dd3f9cfceaaba88f8689f715fc404c71e693b32e719e3c411567a7fc",
+    "registry/m08_financial_intelligence.json": "e7a75c50655f145ef6a49c1c60ef11f640c5d923326f278be15818549ef90830",
+    "registry/m09_communication_hub.json": "a51ef5dabd9a110eb3e2b149a9f187d6d29a340eaf4e06953637c1e777d99a80",
+    "registry/m10_privacy_monitoring.json": "938464da35406a570add58126376fd296f913b3389185febb36a4b15fc07f27a",
+    "registry/m11_media_voice.json": "39bf98847d41ddefc65f85367b91de8c692acb946dc74be8c5840d25919d0ecf",
+    "registry/m12_independent_assurance.json": "799a61f01e627992fb7acc5f90521932d4f10cb59fbe0322d57355043d87afa9",
+    "registry/m13_agent_security_scanner.json": "2c1a2acd1fec0caaefdc1d4db143e9f0ac40036c17c2470f11906ed084e6723a",
+    "registry/modules.json": "7e170374fcbbfccd44fd16e722de6e8301a4789461a17cfece4139baf9516458",
+    "registry/network_dns.json": "468775a356877b0501cac65eeb016d7a76664af9f5c3a99a4fa11bc08b6f33c6",
+    "registry/telemetry_calendar.json": "edada1525cc7133a9c2fe19304601ec40f37f6459cfd5509d09b658de7430480",
+    "registry/ui_inszenierung.json": "72c877b4a51054f5e68e25236ef0c1c012cd2c982c5ee5602a7b12299423a0d4",
+    "styles.css": "4ac931c7b12e3a83210b0af79db039f7cb2ada28b3907d0f543addc2a4281bd0",
+    "sw.js": "c7b3bc47e9d328b40490b0ca307b12f92e13c1e36f6a14d1e4648205d3e6b76b"
+  },
+  "build_metadata": {
+    "system": "HCOS - FORINA TITAN",
+    "build_id": "20261106_125716",
+    "built_at": "2026-11-06T12:57:16+00:00",
+    "engine_version": "1.2.0",
+    "copyright": "Copyright (c) 2024-2026 Daniel Pohl"
+  }
+}

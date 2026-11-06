@@ -103,8 +103,12 @@ def main():
     badges_parser.add_argument("--id", type=str, default="NORM-001", help="Norm-ID (z.B. NORM-001)")
 
     # finance (Zentralbanken & Open Banking)
-    fin_parser = subparsers.add_parser("finance", help="Zentralbanken & Open Banking Schnittstellen (PSD2)")
-    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas")
+    fin_parser = subparsers.add_parser("finance", help="Zentralbanken, EZB Pontes & Open Banking Schnittstellen (PSD2)")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas", "pontes", "portals", "clevel"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas, pontes, portals, clevel")
+    fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale oder C-Level")
+    fin_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für Portale")
+    fin_parser.add_argument("--company", type=str, default="", help="Unternehmensfilter für C-Level")
+    fin_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -628,6 +632,48 @@ def main():
             print("==================================================================")
             for s in schemas:
                 print(f" {s['code']:<16} | {s['name']:<55} | [{s['scope']}]")
+            print("==================================================================")
+        elif args.action == "pontes":
+            pontes = fin.get_pontes_spec()
+            print("==================================================================")
+            print(f" {pontes['protocol'].upper()}")
+            print("==================================================================")
+            print(f" Federführende Instanz:  {pontes['lead_entity']}")
+            print(f" Offizieller Start:      {pontes['official_launch']}")
+            print(f" Primärer Zweck:         {pontes['purpose']}")
+            print("------------------------------------------------------------------")
+            print(" Kernfähigkeiten:")
+            for c in pontes['key_capabilities']:
+                print(f"   * {c}")
+            print("------------------------------------------------------------------")
+            print(f" HCOS Integration:       {pontes['hcos_integration']}")
+            print("==================================================================")
+        elif args.action == "portals":
+            results = fin.search_portals(query=getattr(args, "search", ""), category=getattr(args, "category", ""), limit=getattr(args, "limit", 25))
+            print("==================================================================")
+            print(f" HCOS FINANCE PORTAL INDEX ({len(results)} Treffer)")
+            print("==================================================================")
+            for r in results:
+                name = r.get("Name", "Unbekannt")
+                domain = r.get("Domain", "")
+                cat = r.get("Kategorie", "")[:28]
+                themen = r.get("Themen", "")[:35]
+                top = "[TOP]" if r.get("Top_Rang") else "     "
+                print(f" {top} {name:<24} | {domain:<20} | {cat:<28} | {themen}")
+            print("==================================================================")
+            print(f" [Tipp] Gezielte Suche: python3 forina.py finance portals --search <Name>")
+        elif args.action == "clevel":
+            company = getattr(args, "company", "") or getattr(args, "search", "")
+            results = fin.get_clevel_directory(company_filter=company)
+            print("==================================================================")
+            print(f" HCOS FINANCE C-LEVEL EXECUTIVE DIRECTORY ({len(results)} Einträge)")
+            print("==================================================================")
+            for r in results:
+                comp = r.get("Unternehmen", "")
+                pos = r.get("Position", "")
+                name = r.get("Name", "")
+                seit = r.get("Seit", "")
+                print(f" {comp:<18} | {pos:<24} | {name:<26} | Seit {seit}")
             print("==================================================================")
         else: # summary
             summ = fin.get_summary()

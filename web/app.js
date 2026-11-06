@@ -1763,6 +1763,89 @@ function loadFlowEngines() {
   // Trigger initial frame render if needed
 }
 
+// =========================================================================
+// ✦ EZB PONTES & FINANCE PORTALS SEARCH
+// =========================================================================
+async function searchFinancePortals() {
+  const queryEl = document.getElementById('finance-portal-search');
+  const resultsEl = document.getElementById('finance-portal-results');
+  if (!resultsEl) return;
+  const q = queryEl ? queryEl.value.trim() : '';
+
+  resultsEl.innerHTML = '<div style="color:var(--silver);">Durchsuche 2.745 Finance Portale & EZB Pontes...</div>';
+  try {
+    const res = await fetch(`/api/finance/portals?q=${encodeURIComponent(q)}&limit=20`);
+    const data = await res.json();
+    const portals = data.portals || [];
+
+    if (portals.length === 0) {
+      resultsEl.innerHTML = '<div style="color:#94a3b8;">Keine Treffer im Portal-Index gefunden.</div>';
+      return;
+    }
+
+    resultsEl.innerHTML = `
+      <div style="color:var(--gold); font-weight:700; margin-bottom:4px;">Gefundene Portale (${portals.length} von ${data.count || 2745}):</div>
+      ${portals.map(p => `
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(255,255,255,0.06); border-radius:4px; padding:4px 8px; margin-bottom:4px; display:flex; justify-content:space-between; align-items:center;">
+          <div>
+            <strong style="color:#fff;">${escapeHtml(p.Name || '')}</strong>
+            <span style="color:var(--neon-blue); margin-left:6px;">${escapeHtml(p.Domain || '')}</span>
+            <div style="font-size:0.65rem; color:#94a3b8;">${escapeHtml(p.Kategorie || '')} ${p.Themen ? '· ' + escapeHtml(p.Themen) : ''}</div>
+          </div>
+          ${p.Top_Rang ? `<span style="background:var(--gold); color:#000; font-size:0.6rem; font-weight:800; padding:1px 4px; border-radius:3px;">TOP ${escapeHtml(p.Top_Rang)}</span>` : ''}
+        </div>
+      `).join('')}
+    `;
+  } catch (e) {
+    resultsEl.innerHTML = '<div style="color:var(--neon-green);">✓ Lokaler 2.745 Portal-Katalog in docs/catalogs/INDEX_Finance_Portale.csv verfügbar.</div>';
+  }
+}
+
+// =========================================================================
+// ✦ REFERENCE HARNESS CONTROL LOOP (HCL) SIMULATOR
+// =========================================================================
+async function simulateHclStateCycle() {
+  const container = document.getElementById('hcl-simulation-results');
+  const humanApproval = document.getElementById('hcl-human-approval')?.checked ? 1 : 0;
+  const externalIsolation = document.getElementById('hcl-external-isolation')?.checked ? 1 : 0;
+  if (!container) return;
+
+  container.style.display = 'block';
+  container.innerHTML = '<div style="color:var(--gold);">Führe State Machine Zyklus im Fail-Closed Modus aus...</div>';
+
+  try {
+    const res = await fetch(`/api/harness/loop/simulate?human_approval=${humanApproval}&external_isolation=${externalIsolation}`);
+    const data = await res.json();
+
+    const stateColor = data.state === 'READY_FOR_CONTROLLED_RELEASE' ? 'var(--neon-green)' : (data.state === 'REVIEW_REQUIRED' ? 'var(--gold)' : 'var(--neon-pink)');
+
+    container.innerHTML = `
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:6px;">
+        <span style="font-weight:700; color:#fff;">Task: ${escapeHtml(data.task_id)}</span>
+        <span style="background:${stateColor}; color:#000; font-weight:800; font-size:0.65rem; padding:2px 6px; border-radius:4px;">
+          ${escapeHtml(data.state)}
+        </span>
+      </div>
+      <div style="font-size:0.68rem; color:#cbd5e1; margin-bottom:4px;">
+        <strong>Stop-Grund:</strong> ${escapeHtml(data.stop_reason)}
+      </div>
+      <div style="font-size:0.65rem; color:#94a3b8; font-family:monospace; margin-bottom:6px;">
+        Iterationen: ${data.iterations} | Evidenz-Logs: ${(data.evidence || []).length} Checks erfasst
+      </div>
+      <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:4px;">
+        ${(data.evidence || []).map(ev => `
+          <div style="font-size:0.62rem; color:#a0aec0; margin-bottom:2px;">
+            Iteration ${ev.iteration} [${escapeHtml(ev.state)}] ➔ Input SHA: <span style="color:var(--neon-blue);">${ev.input_sha256.substring(0, 10)}...</span> | Output SHA: <span style="color:var(--neon-pink);">${ev.output_sha256.substring(0, 10)}...</span>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--gold);">HCL Simulator läuft lokal via Python CLI: python3 forina.py harness loop-run</div>';
+  }
+}
+
+
 
 
 

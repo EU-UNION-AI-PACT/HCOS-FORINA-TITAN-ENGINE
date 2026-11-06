@@ -19,8 +19,8 @@ CENTRAL_BANKS = [
         "name": "Europäische Zentralbank (EZB / ECB)",
         "jurisdiction": "Eurozone / EU",
         "iso_code": "EUR",
-        "clearing_systems": ["TARGET2", "T2S", "TIPS (TARGET Instant Payment Settlement)"],
-        "standards": ["ISO 20022", "SEPA Rulebook", "ESCB Public Key Infrastructure"],
+        "clearing_systems": ["TARGET2", "T2S", "TIPS (TARGET Instant Payment Settlement)", "Pontes DLT Wholesale Bridge"],
+        "standards": ["ISO 20022", "SEPA Rulebook", "ESCB Public Key Infrastructure", "DLT Wholesale Interoperability"],
         "status": "SOVEREIGN_MAPPED"
     },
     {
@@ -28,7 +28,7 @@ CENTRAL_BANKS = [
         "name": "Deutsche Bundesbank",
         "jurisdiction": "Deutschland",
         "iso_code": "EUR",
-        "clearing_systems": ["RCS (Retail Clearing Service)", "EMZ (Elektronischer Massenzahlungsverkehr)"],
+        "clearing_systems": ["RCS (Retail Clearing Service)", "EMZ (Elektronischer Massenzahlungsverkehr)", "Trigger-Lösung (DLT)"],
         "standards": ["FinTS 4.0", "EBICS 3.0", "ISO 20022"],
         "status": "SOVEREIGN_MAPPED"
     },
@@ -37,7 +37,7 @@ CENTRAL_BANKS = [
         "name": "Schweizerische Nationalbank (SNB)",
         "jurisdiction": "Schweiz",
         "iso_code": "CHF",
-        "clearing_systems": ["SIC (Swiss Interbank Clearing)", "euroSIC"],
+        "clearing_systems": ["SIC (Swiss Interbank Clearing)", "euroSIC", "Project Helvetia (wCBDC)"],
         "standards": ["SIC ISO 20022", "EBICS Switzerland"],
         "status": "SOVEREIGN_MAPPED"
     },
@@ -69,6 +69,20 @@ CENTRAL_BANKS = [
         "status": "FEDERATION_INTEGRATION"
     }
 ]
+
+EZB_PONTES_SPEC = {
+    "protocol": "EZB Pontes DLT Wholesale Settlement Bridge",
+    "lead_entity": "Europäische Zentralbank (Eurosystem)",
+    "official_launch": "2026-09-21 (Q3 2026)",
+    "purpose": "Verbindung privater Blockchain- und DLT-Netzwerke mit dem TARGET-Abwicklungssystem der Zentralbank zur Großbetragsabwicklung in digitalem Zentralbankgeld (wCBDC)",
+    "key_capabilities": [
+        "Delivery-versus-Payment (DvP) Abwicklung für tokenisierte Wertpapiere",
+        "Interoperabilitätsbrücke zwischen Distributed Ledger und klassischer TARGET-Infrastruktur",
+        "Wholesale-Settlement ohne Drittparteienrisiko in digitalem Zentralbankgeld",
+        "Schnittstellen-Mapping zu ISO 20022 camt/pain Schemata"
+    ],
+    "hcos_integration": "M08 Finance Engine · ReadOnlyTransactionScope (Beobachtung, Nachweiserfassung & Zero-Settlement Schutz)"
+}
 
 OPEN_BANKING_PROVIDERS = [
     {"name": "Tink", "hq": "Stockholm, Schweden", "coverage": "Europa (3.400+ Banken)", "protocols": ["Berlin Group", "PSD2 XS2A", "Open Banking UK"], "read_only": True},
@@ -105,11 +119,62 @@ class InstitutionalFinanceRegistry:
             {"code": "camt.054.001.08", "name": "Debit/Credit Notification (Einzel-Belastung/Gutschrift)", "scope": "AUDIT_PROVENANCE"}
         ]
 
+    def get_pontes_spec(self) -> Dict[str, Any]:
+        return dict(EZB_PONTES_SPEC)
+
+    def search_portals(self, query: str = "", category: str = "", limit: int = 50) -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "INDEX_Finance_Portale.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        results = []
+        q = query.lower().strip()
+        c = category.lower().strip()
+        try:
+            with open(csv_file, mode="r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f, delimiter=";")
+                for row in reader:
+                    name = row.get("Name", "").lower()
+                    domain = row.get("Domain", "").lower()
+                    cat = row.get("Kategorie", "").lower()
+                    themen = row.get("Themen", "").lower()
+
+                    if q and (q not in name and q not in domain and q not in themen):
+                        continue
+                    if c and c not in cat:
+                        continue
+                    results.append(row)
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+        return results
+
+    def get_clevel_directory(self, company_filter: str = "") -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "INDEX_Finance_CLevel.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        results = []
+        cf = company_filter.lower().strip()
+        try:
+            with open(csv_file, mode="r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f, delimiter=";")
+                for row in reader:
+                    unternehmensname = row.get("Unternehmen", "").lower()
+                    if cf and cf not in unternehmensname:
+                        continue
+                    results.append(row)
+        except Exception:
+            pass
+        return results
+
     def get_summary(self) -> Dict[str, Any]:
         return {
             "mapped_central_banks": len(self.central_banks),
             "open_banking_providers": len(self.open_banking_providers),
             "supported_iso20022_schemas": len(self.get_iso20022_message_schemas()),
+            "ezb_pontes_bridge": "INTEGRATED_SPEC_2026",
             "security_tier": "READ_ONLY_TRANSACTION_SCOPE (G05 Enforced)",
             "sovereign_governance": "Daniel Pohl, Royal Kaiser Charter RegSys"
         }

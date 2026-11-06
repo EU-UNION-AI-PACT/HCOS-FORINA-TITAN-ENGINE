@@ -371,10 +371,40 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
                 "summary": fin_reg.get_summary(),
                 "central_banks": fin_reg.get_central_banks(),
                 "open_banking_providers": fin_reg.get_open_banking_providers(),
-                "iso20022_schemas": fin_reg.get_iso20022_message_schemas()
+                "iso20022_schemas": fin_reg.get_iso20022_message_schemas(),
+                "ezb_pontes": fin_reg.get_pontes_spec()
             }
             self._set_json_headers(200)
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/pontes":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(fin_reg.get_pontes_spec(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/portals":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            cat = qs.get("category", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            portals = fin_reg.search_portals(query=q, category=cat, limit=limit)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(portals), "query": q, "category": cat, "portals": portals}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/clevel":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            company = qs.get("company", [""])[0]
+            clevel = fin_reg.get_clevel_directory(company_filter=company)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(clevel), "company_filter": company, "directory": clevel}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
         # 11e. 3D FLOW ENGINE VISUALISIERUNGEN

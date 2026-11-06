@@ -459,6 +459,19 @@ class TestForinaTitanEngine(unittest.TestCase):
         schemas = fin.get_iso20022_message_schemas()
         self.assertGreaterEqual(len(schemas), 5)
 
+        pontes = fin.get_pontes_spec()
+        self.assertIn("Pontes", pontes["protocol"])
+        self.assertEqual(pontes["official_launch"], "2026-09-21 (Q3 2026)")
+        self.assertTrue(len(pontes["key_capabilities"]) >= 4)
+
+        portals = fin.search_portals(query="Aave")
+        self.assertGreaterEqual(len(portals), 1)
+        self.assertEqual(portals[0]["Name"], "Aave")
+
+        clevel = fin.get_clevel_directory(company_filter="Binance")
+        self.assertGreaterEqual(len(clevel), 1)
+        self.assertTrue(any("Richard Teng" in c["Name"] for c in clevel))
+
     def test_integrated_masterkonzept_and_catalogs(self):
         suite = ConceptPaperSuite(self.root)
         mk = suite.get_masterkonzept()
