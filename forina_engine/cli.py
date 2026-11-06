@@ -71,15 +71,21 @@ def main():
 
     # concepts (34 Concept Papers Suite)
     concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite & Normenabdeckung v2.0")
-    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "read", "standards"], default="list", nargs="?", help="Aktion: list, summary, inspect, read, standards")
+    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "read", "standards", "masterkonzept", "specialized"], default="list", nargs="?", help="Aktion: list, summary, inspect, read, standards, masterkonzept, specialized")
     concept_parser.add_argument("--nr", type=int, default=1, help="Papier-Nummer (1-34)")
     concept_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Concept Papers")
     concept_parser.add_argument("--full", action="store_true", help="Gibt das vollständige Markdown-Dokument aus")
 
     # harness (Automated Harness Loop)
-    harness_parser = subparsers.add_parser("harness", help="Automatisierter 8-Stufen Harness-Loop")
-    harness_parser.add_argument("action", choices=["status", "run", "stage", "stages"], default="status", nargs="?", help="Aktion: status, run, stage, stages")
+    harness_parser = subparsers.add_parser("harness", help="Automatisierter 8-Stufen Harness-Loop & Reference HCL")
+    harness_parser.add_argument("action", choices=["status", "run", "stage", "stages", "loop-run"], default="status", nargs="?", help="Aktion: status, run, stage, stages, loop-run")
     harness_parser.add_argument("--stage", type=str, default="PLAN", help="Stufe für Einzelausführung (PLAN, BUILD, TEST, AUDIT, CERTIFY, RELEASE, MONITOR, IMPROVE)")
+    harness_parser.add_argument("--approve", action="store_true", help="Setzt Human-Approval-Flag für Loop-Run")
+    harness_parser.add_argument("--isolated", action="store_true", help="Bestätigt verifizierte externe Netzwerk-Isolation für Loop-Run")
+
+    # catalogs (136 Kapitel & 50 Repos Matrix)
+    catalogs_parser = subparsers.add_parser("catalogs", help="Nachweiskataloge (136 Kapitel, 50 Repos Matrix)")
+    catalogs_parser.add_argument("action", choices=["verify-136", "repos-matrix"], default="verify-136", nargs="?", help="Aktion: verify-136, repos-matrix")
 
     # zeroclock (Act Pack Zero Clock & NaTZa CFS)
     zc_parser = subparsers.add_parser("zeroclock", help="Act Pack Zero Clock (APZC) & NaTZa CFS Telemetrie")
@@ -353,6 +359,33 @@ def main():
                 print(f" - {std['name']:<22} | {std['category']:<22} | {std['domain']}")
             print("==================================================================")
 
+        elif args.action == "masterkonzept":
+            mk = suite.get_masterkonzept()
+            print("==================================================================")
+            print(f" HCOS FORINA TITAN — INTEGRIERTES MASTERKONZEPT (KANONISCH)")
+            print("==================================================================")
+            print(f" Titel:    {mk['title']}")
+            print(f" Status:   {mk['subtitle']}")
+            print(f" Größe:    {mk['size']:,} Bytes ({mk['lines']} Zeilen)")
+            print(f" SHA-256:  {mk['sha256']}")
+            print("==================================================================")
+            if getattr(args, "full", False):
+                print(mk["content"])
+            else:
+                for line in mk["content"].splitlines()[:28]:
+                    print(line)
+                print("...\n[Tipp] Volltext anzeigen mit: python3 forina.py concepts masterkonzept --full")
+            print("==================================================================")
+
+        elif args.action == "specialized":
+            specs = suite.list_specialized_papers()
+            print("==================================================================")
+            print(f" HCOS FORINA TITAN — 15 SPEZIALISIERTE KONZEPTPAPIERE")
+            print("==================================================================")
+            for s in specs:
+                print(f" * {s['id']:<45} | {s['size']:>6} B | {s['file']}")
+            print("==================================================================")
+
         else: # list
             if args.search:
                 papers = suite.search_papers(args.search)
@@ -407,6 +440,29 @@ def main():
             print("==================================================================")
             for s in stages:
                 print(f" {s['stage']}. {s['id']:<8} | {s['name']:<35} | {s['details']}")
+            print("==================================================================")
+
+        elif args.action == "loop-run":
+            from forina_engine.harness_control_loop import HarnessControlLoopEngine, WorkItem
+            hcl = HarnessControlLoopEngine()
+            wi = WorkItem(
+                task_id="CLI-HCL-ITEM-001",
+                requirement="Enforce deterministic state cycle and fail-closed audit",
+                proposed_change="Verify zero-leak isolation across all stages",
+                human_approval=getattr(args, "approve", False),
+                external_isolation_verified=getattr(args, "isolated", False)
+            )
+            print(">>> Führe Offline-Safe Reference Harness Control Loop (HCL) aus...")
+            out = hcl.run_cycle(wi)
+            print("==================================================================")
+            print(f" HARNESS CONTROL LOOP ERGEBNIS: {out.state.value}")
+            print("==================================================================")
+            print(f" Task-ID:       {out.task_id}")
+            print(f" Iterationen:   {out.iterations}")
+            print(f" Stop-Grund:    {out.stop_reason}")
+            print(f" Evidenz-Logs:  {len(out.evidence)} Prüfungen erfasst")
+            for ev in out.evidence:
+                print(f"   * Iteration {ev.iteration} [{ev.state}] -> Input: {ev.input_sha256[:12]}.. | Output: {ev.output_sha256[:12]}..")
             print("==================================================================")
 
         else: # status
@@ -576,6 +632,29 @@ def main():
         else: # summary
             summ = fin.get_summary()
             print(json.dumps(summ, indent=2, ensure_ascii=False))
+
+    elif args.command == "catalogs":
+        suite = ConceptPaperSuite(project_root)
+        if args.action == "verify-136":
+            rows = suite.get_136_kapitel_nachweis()
+            print("==================================================================")
+            print(f" HCOS 136-KAPITEL NACHWEISMATRIX ({len(rows)} Einträge)")
+            print("==================================================================")
+            for r in rows[:15]:
+                print(f" #{r.get('kapitel', '?'):<3} | Band {r.get('teil', '?')} | {r.get('thema', '')[:40]:<40} | Quelle: {r.get('quelle', '')[:25]}")
+            if len(rows) > 15:
+                print(f" ... und {len(rows) - 15} weitere Kapitel im Nachweisregister verifiziert.")
+            print("==================================================================")
+        elif args.action == "repos-matrix":
+            rows = suite.get_50_repos_matrix()
+            print("==================================================================")
+            print(f" HCOS 50 REPOSITORIES QUELLENMATRIX ({len(rows)} Einträge)")
+            print("==================================================================")
+            for r in rows[:15]:
+                print(f" #{r.get('Nr', '?'):<3} | {r.get('Repository', '')[:35]:<35} | Modul: {r.get('Modul', '')} | {r.get('Lizenz', '')}")
+            if len(rows) > 15:
+                print(f" ... und {len(rows) - 15} weitere Repositories in der Quellenmatrix.")
+            print("==================================================================")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

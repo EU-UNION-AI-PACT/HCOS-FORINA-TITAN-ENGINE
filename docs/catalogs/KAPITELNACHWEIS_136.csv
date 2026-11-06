@@ -1,0 +1,137 @@
+teil,kapitel,thema,quelle
+A,1,"Executive Target Architecture",HCOS_FORINA_Band_A_editierbar.md
+A,2,"Informationsarchitektur IA",HCOS_FORINA_Band_A_editierbar.md
+A,3,"Experience Design XD",HCOS_FORINA_Band_A_editierbar.md
+A,4,"Papier 4A: Intelligent Automation",HCOS_FORINA_Band_A_editierbar.md
+A,5,"Papier 4B: Design-System und Microinteractions",HCOS_FORINA_Band_A_editierbar.md
+A,6,"Gesamtmodell der 13 Module",HCOS_FORINA_Band_A_editierbar.md
+A,7,"50-Repository-Katalog als Source of Truth",HCOS_FORINA_Band_A_editierbar.md
+A,8,"Governance und Verantwortlichkeiten",HCOS_FORINA_Band_A_editierbar.md
+A,9,"Portal-Startseite und Nutzerführung",HCOS_FORINA_Band_A_editierbar.md
+A,10,"Evidenzzentriertes Statusmodell",HCOS_FORINA_Band_A_editierbar.md
+A,11,"Souveräner Offline-Launcher",HCOS_FORINA_Band_A_editierbar.md
+A,12,"Host-Neutralität und sichere Distribution",HCOS_FORINA_Band_A_editierbar.md
+A,13,"Identität, Einwilligung und Berechtigung",HCOS_FORINA_Band_A_editierbar.md
+A,14,"Schlüssel, Signaturen und Rotation",HCOS_FORINA_Band_A_editierbar.md
+A,15,"Privacy by Design und Datenminimierung",HCOS_FORINA_Band_A_editierbar.md
+A,16,"Banking Read-only und Settlement-Grenzen",HCOS_FORINA_Band_A_editierbar.md
+A,17,"Finanzanomalien und Erklärung",HCOS_FORINA_Band_A_editierbar.md
+A,18,"FORINA Domain Trust",HCOS_FORINA_Band_A_editierbar.md
+A,19,"API- und Ereignisarchitektur",HCOS_FORINA_Band_A_editierbar.md
+A,20,"Knowledge Graph und Provenienz",HCOS_FORINA_Band_A_editierbar.md
+A,21,"Agenten-Orchestrierung und Toolrechte",HCOS_FORINA_Band_A_editierbar.md
+A,22,"Harness Loop und kontrollierte Autonomie",HCOS_FORINA_Band_A_editierbar.md
+A,23,"Evidence Bus und Audit-Pipeline",HCOS_FORINA_Band_A_editierbar.md
+A,24,"Audit-Cockpit und Live-Status",HCOS_FORINA_Band_A_editierbar.md
+A,25,"Nachweis-Abzeichen und Markenschutz",HCOS_FORINA_Band_A_editierbar.md
+A,26,"Barrierefreiheit und Performance-Budget",HCOS_FORINA_Band_A_editierbar.md
+A,27,"Mehrsprachigkeit und Rechtsräume",HCOS_FORINA_Band_A_editierbar.md
+A,28,"Observability ohne Datenleckage",HCOS_FORINA_Band_A_editierbar.md
+A,29,"Threat Modeling und Red Team",HCOS_FORINA_Band_A_editierbar.md
+A,30,"Supply Chain und sichere Builds",HCOS_FORINA_Band_A_editierbar.md
+A,31,"Backup und Recovery als Fertigkeit",HCOS_FORINA_Band_A_editierbar.md
+A,32,"Releasemanagement und Rollback",HCOS_FORINA_Band_A_editierbar.md
+A,33,"Finanzplanung und Betriebsmodell",HCOS_FORINA_Band_A_editierbar.md
+A,34,"Roadmap, KPIs und Governance-Rhythmus",HCOS_FORINA_Band_A_editierbar.md
+B,1,"Requirements Engineering",HCOS_FORINA_Band_B_editierbar.md
+B,2,"Information Architecture",HCOS_FORINA_Band_B_editierbar.md
+B,3,"Experience Design",HCOS_FORINA_Band_B_editierbar.md
+B,4,"Design Systems",HCOS_FORINA_Band_B_editierbar.md
+B,5,"Frontend Architecture",HCOS_FORINA_Band_B_editierbar.md
+B,6,"Backend Services",HCOS_FORINA_Band_B_editierbar.md
+B,7,"Data Contracts",HCOS_FORINA_Band_B_editierbar.md
+B,8,"API Governance",HCOS_FORINA_Band_B_editierbar.md
+B,9,"Event-Driven Design",HCOS_FORINA_Band_B_editierbar.md
+B,10,"Identity & Access",HCOS_FORINA_Band_B_editierbar.md
+B,11,"Secrets & Cryptography",HCOS_FORINA_Band_B_editierbar.md
+B,12,"Software Supply Chain",HCOS_FORINA_Band_B_editierbar.md
+B,13,"Testing Strategy",HCOS_FORINA_Band_B_editierbar.md
+B,14,"Continuous Delivery",HCOS_FORINA_Band_B_editierbar.md
+B,15,"Runtime Isolation",HCOS_FORINA_Band_B_editierbar.md
+B,16,"Resilience and Backup",HCOS_FORINA_Band_B_editierbar.md
+B,17,"Observability",HCOS_FORINA_Band_B_editierbar.md
+B,18,"Threat Modeling",HCOS_FORINA_Band_B_editierbar.md
+B,19,"Privacy Engineering",HCOS_FORINA_Band_B_editierbar.md
+B,20,"GRC and Compliance",HCOS_FORINA_Band_B_editierbar.md
+B,21,"Evidence Engineering",HCOS_FORINA_Band_B_editierbar.md
+B,22,"Agents & LLM Integration",HCOS_FORINA_Band_B_editierbar.md
+B,23,"Model Evaluation",HCOS_FORINA_Band_B_editierbar.md
+B,24,"Search and Knowledge",HCOS_FORINA_Band_B_editierbar.md
+B,25,"Data Storage",HCOS_FORINA_Band_B_editierbar.md
+B,26,"Networking & DNS",HCOS_FORINA_Band_B_editierbar.md
+B,27,"Open Banking",HCOS_FORINA_Band_B_editierbar.md
+B,28,"Payment Integration",HCOS_FORINA_Band_B_editierbar.md
+B,29,"Blockchain Integration",HCOS_FORINA_Band_B_editierbar.md
+B,30,"Crypto Asset Risk",HCOS_FORINA_Band_B_editierbar.md
+B,31,"Smart Contract Assurance",HCOS_FORINA_Band_B_editierbar.md
+B,32,"Web3 UX",HCOS_FORINA_Band_B_editierbar.md
+B,33,"Release Metadata",HCOS_FORINA_Band_B_editierbar.md
+B,34,"Operations Language",HCOS_FORINA_Band_B_editierbar.md
+C,1,"Ledger-Boundary und Verantwortlichkeit",HCOS_FORINA_Band_C_editierbar.md
+C,2,"Wallet-Architektur und Mandantentrennung",HCOS_FORINA_Band_C_editierbar.md
+C,3,"Schlüsselverwahrung und digitale Signatur",HCOS_FORINA_Band_C_editierbar.md
+C,4,"Dezentrale Identität und Wallet-Login",HCOS_FORINA_Band_C_editierbar.md
+C,5,"On-chain Event Ingestion und Oracle-Risiko",HCOS_FORINA_Band_C_editierbar.md
+C,6,"AML- und Sanktionsscreening",HCOS_FORINA_Band_C_editierbar.md
+C,7,"Organisationsprüfung mit LEI und Register",HCOS_FORINA_Band_C_editierbar.md
+C,8,"Privacy-Preserving Proofs und ZKP",HCOS_FORINA_Band_C_editierbar.md
+C,9,"Tokenisierung und rechtliche Asset-Klasse",HCOS_FORINA_Band_C_editierbar.md
+C,10,"Stablecoins und E-Geld-Token",HCOS_FORINA_Band_C_editierbar.md
+C,11,"Fiat-Konten und IBAN-Aggregation",HCOS_FORINA_Band_C_editierbar.md
+C,12,"SEPA und Instant Payment Read Models",HCOS_FORINA_Band_C_editierbar.md
+C,13,"Reconciliation und Buchungsabgleich",HCOS_FORINA_Band_C_editierbar.md
+C,14,"Zero-Settlement Guardrail",HCOS_FORINA_Band_C_editierbar.md
+C,15,"Smart-Contract-Verifikation",HCOS_FORINA_Band_C_editierbar.md
+C,16,"DeFi-Protokollrisiken",HCOS_FORINA_Band_C_editierbar.md
+C,17,"Atomic Swaps und HTLC",HCOS_FORINA_Band_C_editierbar.md
+C,18,"Blockchain Bridges und Wrapped Assets",HCOS_FORINA_Band_C_editierbar.md
+C,19,"DeFi-Lending und Liquidation",HCOS_FORINA_Band_C_editierbar.md
+C,20,"RWA-Register und Corporate Actions",HCOS_FORINA_Band_C_editierbar.md
+C,21,"DAO-Governance und Fondsgrenzen",HCOS_FORINA_Band_C_editierbar.md
+C,22,"Treasury und Multi-Currency Exposure",HCOS_FORINA_Band_C_editierbar.md
+C,23,"Digitaler Euro: Integrationsbereitschaft",HCOS_FORINA_Band_C_editierbar.md
+C,24,"CBDC und Interoperabilitätsmodelle",HCOS_FORINA_Band_C_editierbar.md
+C,25,"Tokenomics und Emissionssteuerung",HCOS_FORINA_Band_C_editierbar.md
+C,26,"Gas, Gebühren und Gebührenobergrenzen",HCOS_FORINA_Band_C_editierbar.md
+C,27,"Chain Analytics und Address-Risk",HCOS_FORINA_Band_C_editierbar.md
+C,28,"Betrugs- und Anomalieerkennung",HCOS_FORINA_Band_C_editierbar.md
+C,29,"Market Risk und Szenarien",HCOS_FORINA_Band_C_editierbar.md
+C,30,"Steuern und Reporting",HCOS_FORINA_Band_C_editierbar.md
+C,31,"Kryptografische Attestation und Audit Trail",HCOS_FORINA_Band_C_editierbar.md
+C,32,"Incident Response und Schlüsselnotfall",HCOS_FORINA_Band_C_editierbar.md
+C,33,"Cross-Chain und Multi-Provider Interoperabilität",HCOS_FORINA_Band_C_editierbar.md
+C,34,"Produktive Einführung und Zulassungspfad",HCOS_FORINA_Band_C_editierbar.md
+D,1,"EU-DSGVO / GDPR (EU) 2016/679",HCOS_FORINA_Band_D_editierbar.md
+D,2,"DORA Verordnung (EU) 2022/2554",HCOS_FORINA_Band_D_editierbar.md
+D,3,"NIS2 Richtlinie (EU) 2022/2555",HCOS_FORINA_Band_D_editierbar.md
+D,4,"EU AI Act (EU) 2024/1689",HCOS_FORINA_Band_D_editierbar.md
+D,5,"Cyber Resilience Act (EU) 2024/2847",HCOS_FORINA_Band_D_editierbar.md
+D,6,"MiCA Verordnung (EU) 2023/1114",HCOS_FORINA_Band_D_editierbar.md
+D,7,"eIDAS 2 / EU Digital Identity (EU) 2024/1183",HCOS_FORINA_Band_D_editierbar.md
+D,8,"PSD2 Richtlinie (EU) 2015/2366",HCOS_FORINA_Band_D_editierbar.md
+D,9,"EU AML-Regelwerk / AMLR (EU) 2024/1624",HCOS_FORINA_Band_D_editierbar.md
+D,10,"DLT-Pilotverordnung (EU) 2022/858",HCOS_FORINA_Band_D_editierbar.md
+D,11,"European Accessibility Act (EU) 2019/882",HCOS_FORINA_Band_D_editierbar.md
+D,12,"EU Data Act (EU) 2023/2854",HCOS_FORINA_Band_D_editierbar.md
+D,13,"Data Governance Act (EU) 2022/868",HCOS_FORINA_Band_D_editierbar.md
+D,14,"Digital Services Act (EU) 2022/2065",HCOS_FORINA_Band_D_editierbar.md
+D,15,"EU Taxonomy (EU) 2020/852 / ESG",HCOS_FORINA_Band_D_editierbar.md
+D,16,"ISO/IEC 27001:2022 Informationssicherheitsmanagement",HCOS_FORINA_Band_D_editierbar.md
+D,17,"ISO/IEC 27002:2022 Security Controls",HCOS_FORINA_Band_D_editierbar.md
+D,18,"ISO/IEC 27701:2025 PIMS",HCOS_FORINA_Band_D_editierbar.md
+D,19,"ISO/IEC 42001:2023 AIMS",HCOS_FORINA_Band_D_editierbar.md
+D,20,"ISO 9001:2026 Qualitätsmanagement",HCOS_FORINA_Band_D_editierbar.md
+D,21,"ISO 22301:2019 Business Continuity",HCOS_FORINA_Band_D_editierbar.md
+D,22,"ISO/IEC 20000-1:2018 Service Management",HCOS_FORINA_Band_D_editierbar.md
+D,23,"ISO/IEC 27017:2015 Cloud Controls",HCOS_FORINA_Band_D_editierbar.md
+D,24,"ISO/IEC 27018:2019 Public Cloud Privacy",HCOS_FORINA_Band_D_editierbar.md
+D,25,"ISO 31000:2018 Risikomanagement",HCOS_FORINA_Band_D_editierbar.md
+D,26,"NIST Cybersecurity Framework 2.0",HCOS_FORINA_Band_D_editierbar.md
+D,27,"NIST SSDF SP 800-218",HCOS_FORINA_Band_D_editierbar.md
+D,28,"NIST SP 800-53 Rev. 5",HCOS_FORINA_Band_D_editierbar.md
+D,29,"OWASP ASVS 5.0.0",HCOS_FORINA_Band_D_editierbar.md
+D,30,"OWASP SAMM",HCOS_FORINA_Band_D_editierbar.md
+D,31,"CIS Controls v8.1",HCOS_FORINA_Band_D_editierbar.md
+D,32,"BSI IT-Grundschutz",HCOS_FORINA_Band_D_editierbar.md
+D,33,"PCI DSS 4.0.1",HCOS_FORINA_Band_D_editierbar.md
+D,34,"TISAX / VDA ISA",HCOS_FORINA_Band_D_editierbar.md

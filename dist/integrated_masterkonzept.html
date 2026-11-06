@@ -1,0 +1,742 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="UTF-8"><title>HCOS FORINA TITAN – Gesamtkonzept</title><style>
+@page { size: A4; margin: 19mm 18mm 19mm 18mm;
+@top-right { content: 'HCOS FORINA TITAN / MASTERKONZEPT'; color: #687a8d; font: 7.2pt 'DejaVu Sans'; letter-spacing:.4pt; }
+@bottom-right { content: 'Seite ' counter(page) ' / ' counter(pages); color: #66788b; font: 7.8pt 'DejaVu Sans'; }
+@bottom-left { content: '06.11.2026  |  Konzept / kein externes Zertifikat'; color: #7b8b9a; font: 7.1pt 'DejaVu Sans'; }
+}
+@page :first {@top-right {content:none;} @bottom-left{content:none;} @bottom-right{content:none;} }
+html {font-family:'DejaVu Sans',sans-serif;}
+body {font-size:9.4pt;line-height:1.56;color:#253446;hyphens:auto;}
+h1{font-size:22.5pt;color:#12375c;line-height:1.2;font-weight:800; margin-top:0;margin-bottom:14pt;page-break-before:auto;}
+h1:first-of-type{font-size:32pt;line-height:1.11;color:#102f54;page-break-before:avoid;letter-spacing:-.5pt;}
+h2{color:#13486c;font-size:14pt;line-height:1.3;margin-top:19pt;margin-bottom:9pt;break-after:avoid;}
+h3{font-size:11pt;color:#195b79;margin-top:13pt;margin-bottom:5pt;break-after:avoid;}
+p{margin:0 0 10pt 0;text-align:justify;orphans:3;widows:3;}
+blockquote {border-left:3px solid #43bfa3;padding-left:10pt;margin:12pt 0;color:#516477;}
+strong{font-weight:700;color:#183e61;}
+code{font-family:'DejaVu Sans Mono',monospace;font-size:.87em;background:#edf2f7;padding:0 2px;overflow-wrap:anywhere;}
+hr{border:0;border-top:1px solid #adc4d4;margin:21pt 0;}
+li{margin:4pt 0 6pt 0;}
+ul,ol{padding-left:17pt;}
+a{color:#096593;text-decoration:none;overflow-wrap:anywhere;}
+img{max-width:100%;height:auto;object-fit:contain;}
+body>p:nth-of-type(1) img{max-height:24mm;width:auto;}
+body>p:nth-of-type(2) img{max-height:47mm;width:100%;object-fit:cover;border-radius:4pt;}
+body>h1:first-of-type + p {margin-bottom:8pt;}
+table{border-collapse:collapse;font-size:8pt;margin:12pt 0;width:100%;table-layout:fixed;}
+td,th{border-bottom:1px solid #cad9e3;padding:4pt;overflow-wrap:anywhere;text-align:left;}
+th{background:#e9f1f8;}
+@media print { h2,h3{break-after:avoid;} p{break-inside:auto;} }
+</style></head><body><h1>HCOS FORINA TITAN ENGINE</h1>
+<p><img src="badges/HCOS_INTERNES_EVIDENZABZEICHEN.svg" alt="Originales HCOS Signet" /></p>
+<p><img src="badges/HCOS_HARNESS_LOOP_ARCHITEKTUR.svg" alt="HCOS Banner" /></p>
+<h2>Integriertes Masterkonzept, Umsetzungshandbuch und Audit-Regelwerk</h2>
+<p><strong>Ein einziges, durchgehend redigiertes Gesamtwerk</strong> – Architektur, IA/XD, Entwicklungssprache, M01–M13, 50-Repositories-Ökosystem, Blockchain/Web3/Finance, unabhängige Kontrollgrenzen, Harness Loop, 34 Normen-Dossiers, Freigaberegeln und visuelles Design.</p>
+<p><strong>Redaktionsstand:</strong> 06.11.2026 | <strong>Bestandsgrundlage:</strong> HCOS FORINA TITAN v1.7.0 (<code>4cd1db2066237798717d201fc4a0a46759664a85</code>) | <strong>Art:</strong> Konzept/Implementierungsplan, kein externes Zertifikat.</p>
+<p><strong>Zusammenführungsprinzip:</strong> Überlappende Standardtexte aus vier Fachbänden wurden in Kapitel 1 gebündelt. 136 Themen sind erhalten; ergänzend wurden die eigenständigen Aussagen des 50-Repository-Masterkonzepts integriert. Technische Claims werden nicht als erwiesene Produktionsreife dargestellt. Dieses Dokument löst die vier sich wiederholenden Einzelbände als kanonische Lesefassung ab.</p>
+<hr />
+<h2>Leseführung</h2>
+<p>Das Manuskript folgt der tatsächlichen Abfolge einer Implementierung: Zuerst werden Verantwortung, Zonen, Kontrollpunkte und Abnahmeziele festgelegt. Danach wird das Produkt aus Sicht der Anwender und seiner Module entworfen. Anschließend werden die Entwicklerbegriffe und die Verträge zwischen den Komponenten verbindlich erklärt. Die Finanz- und Web3-Abschnitte definieren bewusst zunächst beobachtende und nachweisende Funktionen; aktive Geldbewegungen stehen außerhalb des Read-only-Zielsystems. Zum Abschluss werden regulatorische Anforderungen, Audit-Dossiers und der Release-Zyklus in ein belastbares Steuerungsmodell überführt. Referenzdaten liegen zusätzlich als CSV/JSON vor, damit sie nicht auf jeder Fachseite neu abgedruckt werden müssen.</p>
+<hr />
+<h1>TEIL I – GEMEINSAME UMSETZUNGSLOGIK</h1>
+<h2>1. Ausgangsbasis, Nachweislage und Architekturversprechen</h2>
+<p>Das vorliegende Projekt verfügt laut dem zugrunde gelegten GitHub-Stand über modulare Python-Komponenten, M01–M13-Registrierungen, eine Build-Pipeline, ein Browser-Cockpit, einen Repository-Explorer, Security-Scanner und eine interne Assurance-Steuerung. Diese Existenz ist von ihren Qualitätsbehauptungen zu trennen. Die im Repository verwendeten Bezeichnungen „Freigegeben“, „fully assured“ oder „sovereign certification“ belegen für sich allein weder ein unabhängiges Audit noch eine aufsichtsrechtliche Genehmigung. Jedes Modul braucht deshalb einen Herkunftsnachweis, eine reproduzierbare Build-Identität, fachliche Akzeptanzfälle und eine technische Grenze, die unabhängig vom Modul selbst kontrolliert wird.</p>
+<p>Das Gesamtziel ist eine vernetzte, aber nicht unkontrolliert verknüpfte Plattform: Eine Control Plane verwaltet Identitäten, Fähigkeiten, Richtlinien und Status; eine Data Plane verarbeitet ausschließlich autorisierte Fachobjekte; eine Assurance Plane verifiziert Artefakte, Protokolle und Entscheidungen; und eine getrennte Signaturinstanz bescheinigt lediglich die Integrität eines konkret bezeichneten Datensatzes. Positive Prüfmeldungen sind keine Zugriffsrechte. Keine Webkarte, kein Agentenprompt und keine Badge-Grafik darf die Durchsetzung dieser Trennung ersetzen.</p>
+<p>Für die Produktentwicklung sind zwei Arbeitsweisen bewusst zu unterscheiden. Das allgemeine HCOS-Portal kann opt-in-Föderation mit externen Diensten besitzen, wenn Rechtsgrundlage, technische Scopes und Eigentümer feststehen. Der ausdrücklich separat geregelte UPUIA-Scanner bleibt dagegen ein lokal ausgeführtes Offline-Werkzeug: unveränderte Originaldateien, keine Systeminstallation, kein Container, keine Hostregeländerung, keine echten Schlüssel, keine Telemetrie und kein Netzwerk. Diese strengere Randbedingung darf nicht stillschweigend auf alle HCOS-Portale übertragen werden, muss für UPUIA aber vor dem Start unabhängig vom Python-Prozess beweisbar erfüllt sein.</p>
+<h2>2. Einmalige Methodik für alle 136 Fachthemen</h2>
+<p>Jedes Fachthema läuft durch dieselbe verbindliche Entscheidungskette, damit die folgenden Kapitel ihre Besonderheiten beschreiben können, statt diese Methode immer neu zu wiederholen. Beim <strong>Intake</strong> werden Eigentümer, Anwendungszweck, vorgesehene Nutzer, Datenklasse, Bedrohungsmodell und verbotene Nebenwirkungen schriftlich erfasst. Die <strong>Spezifikation</strong> liefert versionierte Eingabe- und Ausgabeformate einschließlich Fehlertypen, Timeout, Idempotenz, Rollen- und Zonenbeschränkungen. Das <strong>Design</strong> legt fest, an welcher Vertrauensgrenze eine Kontrolle wirkt und welches unabhängige Testorakel sie beurteilt. Erst danach entsteht der kleinste prüfbare Implementierungsschritt.</p>
+<p><strong>BUILD</strong> arbeitet aus einer freigegebenen Aufgabenliste und erzeugt ein klar abgegrenztes Artefakt. <strong>TEST</strong> vergleicht es gegen positive und ausdrücklich adversarielle Fälle. <strong>AUDIT</strong> prüft signierte Provenienz, Reproduzierbarkeit, Lizenz- und Sicherheitsnachweise, nicht lediglich Statusstrings. Eine zuständige Person entscheidet über Ausnahmen, rechtlich relevante Aussagen und Änderungen an Berechtigungen. <strong>RELEASE</strong> veröffentlicht nur die freigegebene Version in die erlaubte Zone und bindet Rollback, Monitoring und Widerruf an dieselbe Kennung. Dieser Ablauf wird in den Fachkapiteln nicht jedes Mal wiederholt; sie nennen stattdessen nur ihre spezifischen Integrations- und Prüfschritte.</p>
+<p>Jedes Ergebnis wird als Evidence Envelope festgehalten: <code>task_id</code>, <code>requirement_id</code>, <code>module_id</code>, <code>zone</code>, <code>source_ref</code>, <code>artifact_hash</code>, <code>test_run_id</code>, <code>policy_revision</code>, <code>reviewer_id</code>, <code>decision</code>, <code>valid_from</code>, <code>valid_until</code> und <code>rollback_ref</code>. Ein frei formuliertes KI-Urteil darf den <code>decision</code>-Wert nicht setzen. Für jedes Risiko existiert mindestens ein Negativtest. Fehlende Daten, unbekannte Schlüssel, ungültige Signaturen, widerrufene Freigaben und abgelaufene Evidence erzeugen <code>BLOCKED</code> oder <code>REVIEW_REQUIRED</code>, niemals ein stilles „PASS“.</p>
+<h2>3. Sicherheitszonen, Datenklassifikation und erlaubte Flüsse</h2>
+<p>Die <strong>Local Sovereign Zone</strong> enthält lokal freigegebene und technisch isolierte Komponenten; öffentliche Metadaten können dort nach kontrolliertem Import verarbeitet werden. Die <strong>Development &amp; Research Zone</strong> ist für öffentliche Repository-Funde, Tests und ausschließlich synthetische Beispiele vorgesehen. Die <strong>Federation &amp; Integration Zone</strong> bedient authentisierte Online-Connectoren für JMAP, OIDC, Domain-Daten oder Open-Banking-Informationsabfragen, wenn sie für das jeweilige Produkt explizit aktiviert wurden. Zwischen diesen Bereichen gilt keine „implizite Vertrauensstellung“: Jeder grenzüberschreitende Transfer erhält ein benanntes Exportformat, eine Freigabe, Integritätskontrolle und minimierte Datensätze.</p>
+<p>Die Datenklassen PUBLIC, SYNTHETIC, INTERNAL, RESTRICTED und SECRET stehen nicht nur im Glossar. Sie steuern Auswahlfilter, Zugriffsverträge, Speicherdauer und Darstellung. Für streng lokale Scans werden secret- und zertifikatstypische Dateien <strong>vor dem Öffnen</strong> ausgeschlossen; nachträgliche Maskierung wäre zu spät. Online-Modelle und Agenten erhalten höchstens synthetische Testgegenstände und öffentlich freigegebenes Material. Finanzbeobachtungen werden standardmäßig pseudonymisiert oder aggregiert; schreibende Finanzbefehle sind im M08-Analysepfad strukturell nicht vorhanden.</p>
+<h2>4. Harness Control Loop: begrenzt, überprüfbar und ohne Selbstzertifizierung</h2>
+<p>Der gewünschte Harness Loop ist eine <strong>automatisierte Arbeitssteuerung</strong>, keine magische Garantie. Er verwaltet eine überprüfbare Abfolge von PLAN, DESIGN, BUILD, TEST, AUDIT, HUMAN REVIEW, RELEASE und MONITOR. Zu Beginn werden ein konkretes Ziel, ein Satz unveränderlicher Muss-Kriterien, erlaubte Werkzeuge, eine Zielzone, ein Zeit-/Iterationsbudget und ein eindeutiger Stoppzustand festgelegt. Das Orakel liest die Ergebnisse unabhängig vom erzeugenden Agenten. Bei einer Abweichung erzeugt die Steuerung einen Defect-Record mit beobachtetem Fehler, Eingabeartefakt, Reproduktionsschritt und zugeordneter Person. Die Schleife versucht eine Änderung ausschließlich innerhalb der vorgegebenen Grenze; nach dem Budget endet sie mit einer nachvollziehbaren Übergabe.</p>
+<p>Der mitgelieferte Python-Prototyp ist absichtlich <strong>offline und synthetisch</strong>. Er demonstriert Zustandsübergänge, SHA-256-Evidenz, maximal sechs Iterationen, Prüfregeln und Freigabepunkte ohne echten Code-Executor. Für produktiven Einsatz müsste ein separater, unabhängiger Startmechanismus Dateipfade, Programmidentität, Netzwerkverbot, Umgebung, Capabilities und Abhängigkeiten vor dem Start prüfen. Ein Agent oder Test darf diese Sperre nicht durch eigene Python-Patches ersetzen. Zahlungen, Schlüsselzugriffe, Veröffentlichungen, behördliche Aussagen und externe Zertifikatsprüfzeichen bleiben zustimmungspflichtige Fachaktionen außerhalb des automatischen Builders.</p>
+<p>Die Freigabe lautet nicht einfach „alles grün“. Die Entscheidung muss zeigen, <strong>welches</strong> Verhalten überprüft wurde, <strong>mit welchem</strong> Sollwert, <strong>welche</strong> veränderte Datei umfasst war und <strong>welche</strong> Risiken offen sind. Auf dieser Basis kann das Cockpit einen Sachstand präzise in „Entwurf“, „getestet“, „intern verifiziert“, „zur Review bereit“ oder „extern nachgewiesen“ unterscheiden. Die Übergänge dürfen nur durch die jeweils berechtigte Rolle gesetzt werden und müssen widerrufbar bleiben.</p>
+<h2>5. Einheitlicher Gestaltungs- und Nachweisstil</h2>
+<p>Das HCOS-Design erhält eine klare Informationsebene mit einer ruhigen, barrierearmen Grundfläche, kontrastreichen Akzentfarben und einer separaten, deutlich erkennbaren Statussprache. Visuelle Bewegung – etwa GSAP-Animationen, 3D-Holografik oder Audiosignale – ist optional und respektiert reduzierte Bewegung, Tastaturnavigation und Screenreader. Für Sicherheitszustände sind Farbe und Symbol allein unzureichend; der tatsächliche Backendwert, Prüfzeitpunkt, Scope und der direkte Weg zum Evidence-Dossier müssen im Text stehen. „PASS“ darf nicht hart codiert sein. Eine fehlende Datenquelle zeigt „unbekannt“, nicht eine dekorative Erfolgsanzeige.</p>
+<p>Ein originäres HCOS-Logo und Banner werden als wiederverwendbare Design-Assets beigefügt. Interne Nachweisabzeichen enthalten ihre Bedeutung sichtbar; offizielle Zeichen von ISO, EU, BSI, ENX oder Zertifizierungsstellen dürfen weder nachgezeichnet noch wie verliehen dargestellt werden. Erst ein überprüfbares Drittzertifikat mit Aussteller, Nummer, Geltungsbereich, Gültigkeitsdatum und Markenfreigabe rechtfertigt eine entsprechende externe Darstellung. Die 34 beiliegenden Norm-Abzeichen sind ausdrücklich neutrale <strong>interne Vorlagen</strong>.</p>
+<hr />
+<h1>TEIL II – ARCHITEKTUR, INFORMATIONSAUFBAU UND EXPERIENCE DESIGN</h1>
+<p>Die folgenden 34 Kapitel übernehmen ausschließlich die fachlich unterscheidbaren Aussagen des ursprünglichen Architektur- und Designbandes. Gemeinsame Regeln zu Evidenz, Tests, Berechtigungen und Release wurden bereits in Teil I festgelegt. Die Module M01–M13 werden hier als fachliche Fähigkeitsgruppen gelesen, nicht automatisch als durch externe Tests produktiv bestätigt.</p>
+<h2>A01 – Executive Target Architecture</h2>
+<p>Die bestehende Plattform besitzt viele Funktionsgruppen, jedoch fehlt ein verbindlicher Gesamtnutzen mit Grenzen je Betriebszone. Ein öffentlich lesbares Zielbild unterscheidet Portal, Engine, offline geschützte lokale Werkzeuge und nur autorisierte Föderation.</p>
+<p>Capability-Karte mit Owner, Betriebszone, Datenklasse, Kritikalität, Vertrag und Systemgrenze.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Feature-Wildwuchs, unklare Zuständigkeit und unbewiesene Produktivfreigaben.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jede Capability hat Owner, API-Vertrag, Evidenzstatus und Rückbaupfad. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Dashboard-Wechsel darf niemals automatisch eine Zahlungs- oder Föderationsberechtigung erteilen.</p>
+<h2>A02 – Informationsarchitektur IA</h2>
+<p>Verschiedene Tabs und Modulregister zeigen Fähigkeiten, aber Nutzer suchen nach Aufgaben statt Dateinamen. Task-first-Navigation nach Prüfen, Erforschen, Bauen, Freigeben und Beobachten ersetzt ein flaches Menü.</p>
+<p>Navigationsschema aus Arbeitsbereich, Objekt, Aktivität, Sicherheitsstatus und zuletzt genutztem Kontext.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Verwechslung von Read-only- und Aktionsmodi führt zu gefährlichen Klickpfaden.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Ein neuer Benutzer findet den Prüfbericht ohne Einarbeitung und erkennt vor jeder Aktion die Folgen. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Prüfer sucht Belege für M07 und gelangt in höchstens drei Schritten zum passenden Evidence-Graphen.</p>
+<h2>A03 – Experience Design XD</h2>
+<p>Das Portal wirkt technisch, aber Statusmeldungen und Aufgabenfolgen sind nicht durchgängig verständlich. Ein konsistentes Interaktionsmodell verbindet Sprache, Feedback, Vorschau, Widerruf und sichtbare Systemgrenzen.</p>
+<p>Experience-Tokens für Zustände, Aufgaben, Warnungen, Eingaben, Fehler und leere Ansichten.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Schöne Animationen dürfen keinen falschen Sicherheitszustand visualisieren.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jeder entscheidende Workflow besitzt Start, Vorschau, Folgenhinweis, Bestätigung, Ergebnis und Rückweg. Das folgende Nutzungsszenario macht diese Anforderung konkret: Bei fehlendem Evidence-Datensatz zeigt der Bildschirm neutral unbekannt statt grünes Erfolgslicht.</p>
+<h2>A04 – Papier 4A: Intelligent Automation</h2>
+<p>Automatisierte Agenten und Prüfpipelines sind vorhanden, ihr Entscheidungsspielraum ist jedoch nicht konsequent formalisiert. IA bedeutet hier Intelligent Automation: Planen, Prüfen, Wiederholen mit deterministischen Freigabegrenzen.</p>
+<p>ActionContract mit erlaubter Aktion, Eignern, Ressourcenbudget, Testoracle und Schadensklasse.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Selbstreferenzierende Aktionen oder ungeprüfte autonome Änderungen können sich hochschaukeln.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Die Automationsschleife stoppt bei unklarer Autorität oder fehlendem Beleg und verlangt Menschenentscheidung. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Agent schlägt einen Fix vor; nur isolierte Tests und explizite Freigabe lassen ihn in einen Release gelangen.</p>
+<h2>A05 – Papier 4B: Design-System und Microinteractions</h2>
+<p>Leuchtende Statusanzeigen und interaktive Module benötigen gemeinsame visuelle Regeln statt Einzelgestaltung. Eine UI-Bibliothek definiert Typografie, Kontrast, Fokus, Raster, Motion, Schrift und barrierearme Semantik.</p>
+<p>Design-Tokens als versionierte JSON-Schemata; Komponenten für EvidenceCard, GateStatus, ScopeBanner und SafeAction.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ablenkende Daueranimation und unzureichender Kontrast beeinträchtigen Vertrauen und Barrierefreiheit.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jedes UI-Element hat Tastaturpfad, Screenreader-Name, Disabled-Zustand und nachvollziehbare Fehlermeldung. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine Prüfstufe wechselt nur dann auf grün, wenn die Backend-Signatur einer gültigen Audit-Entscheidung vorliegt.</p>
+<h2>A06 – Gesamtmodell der 13 Module</h2>
+<p>Im Registry-Modell sind 13 Kernmodule und weitere Funktionsgruppen vorhanden; die Grenzen sind teilweise implizit. Ein Capability-Graph definiert exakt, wer Daten lesen, Mutationen ausführen oder nur Vorschläge generieren darf.</p>
+<p>module_id, capability_id, input_schema, output_schema, permission, zone, evidence_ref und dependency_hash.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Import-seitige Effekte und transitive Abhängigkeiten können die Sicherheitsgrenze unterlaufen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Alle 13 Module haben maschinenlesbare Verträge mit Negativtests und signierten Versionsfreigaben. Das folgende Nutzungsszenario macht diese Anforderung konkret: M08 darf Zahlungsdaten auswerten, aber keine Überweisung oder Schreibberechtigung erlangen.</p>
+<h2>A07 – 50-Repository-Katalog als Source of Truth</h2>
+<p>Der neue Explorer listet 50 Projekte, doch Namensmapping ist kein Supply-Chain-Nachweis. Ein verifizierter Katalog trennt Fundstelle, Lizenz-Behauptung, geprüfte Lizenz, Schwachstellen und tatsächliche Einbindung.</p>
+<p>Repository-URL, Commit-SHA, Tag, Lizenzbeleg, SBOM, Herkunft und Freigabeidentität je Eintrag.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Namensaliase, ungesicherte Links und unbewiesene Security-Labels verwässern Aussagen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Kein Repo erhält VERIFIED ohne versionierte Primärquelle, Befund und zuständige Freigabe. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine neue Katalogzeile landet zunächst in Quarantäne und nicht in Sovereign.</p>
+<h2>A08 – Governance und Verantwortlichkeiten</h2>
+<p>Technische Freigabefunktionen existieren, ohne durchgehendes Rollenmodell für Risikoakzeptanz und externe Aussagen. RACI und Vier-Augen-Prinzip trennen Entwickler, Prüfer, Freigebende und Betreiber.</p>
+<p>RoleBinding verknüpft Person oder Dienstidentität mit Scope, Zeit, Zweck und dokumentiertem Widerruf.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Eine Selbstzertifizierung kann sonst unbeabsichtigt als externe Bescheinigung erscheinen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Zwei unabhängig autorisierte Rollen bestätigen kritische Produktionseingriffe und Audit-Veröffentlichungen. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Entwickler darf einen Kontrollbefund korrigieren, aber nicht seinen eigenen Hochrisiko-Befund abschließend abnehmen.</p>
+<h2>A09 – Portal-Startseite und Nutzerführung</h2>
+<p>Ein Feature-Tab ist kein verlässlicher Einstieg in komplexe Prüf- und Finanzabläufe. Eine rollenabhängige Startseite zeigt offene Aufgaben, Risiken, unabhängige Prüfnachweise und gesperrte Aktionen.</p>
+<p>HomeView aggregiert ReadModel statt direkte Schreibrechte aus M01 bis M13.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Echte Risiken können in dekorativen Karten verschwinden, wenn Priorität falsch gesetzt ist.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Top-Risiken, ausstehende Freigaben und Revisionsstand sind ohne Scrollen erreichbar. Das folgende Nutzungsszenario macht diese Anforderung konkret: Anstelle allgemeiner 100-Prozent-Balken erscheint ein überprüfbarer Status mit Erhebungszeit und Geltungsbereich.</p>
+<h2>A10 – Evidenzzentriertes Statusmodell</h2>
+<p>Die Oberfläche kann feste PASS-Texte ausgeben, die nicht dem tatsächlichen Gate-Ergebnis entsprechen. Der Status wird aus signierter Evaluation und Gültigkeitsfenster berechnet, nicht aus UI-Konstanten.</p>
+<p>EvidenceStatus: UNKNOWN, OPEN, BLOCKED, PASS_INTERNAL, REVIEWED, EXTERNAL_ATTESTED, EXPIRED.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein alter PASS nach neuer Codeversion ist eine Fehlfreigabe.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Statuswechsel sind transaktional und an Artifact-Hash, Signer, Scope und Zeit gebunden. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein geänderter Build-Hash setzt zuvor erteilte Freigaben automatisch auf erneute Prüfung.</p>
+<h2>A11 – Souveräner Offline-Launcher</h2>
+<p>Python-interne Netzwerksperren verhindern keine externen Prozess- oder Bibliothekspfade. Ein unabhängiger Launcher validiert Dateisignaturen, genehmigte Pfade und technische Isolationsfähigkeit vor dem Start.</p>
+<p>LaunchManifest mit executable_hash, approved_roots, namespace_attestation, no_egress und policy_version.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Wenn keine isolierende Hostfähigkeit ohne Systemänderung verfügbar ist, muss das Programm nicht starten.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Positivtest mit synthetischer Datei und negativer Egress-Test außerhalb des Scannerprozesses bestehen. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ohne messbaren No-Egress-Nachweis wird der Start abgelehnt, nicht still auf Python-Monkeypatch reduziert.</p>
+<h2>A12 – Host-Neutralität und sichere Distribution</h2>
+<p>Der lokale Scanner darf bestehende Arch-Konfiguration weder installieren noch verändern. Eine rein portable Auslieferung nutzt genehmigte Ordner, prüft Bibliotheken und deklariert ihre Laufzeitanforderungen.</p>
+<p>Staging-Metadaten mit Hashes, Schreibpfad-Whitelist, Uninstall-Prozedur und keinerlei Hostservice.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Automatisches Paketmanagement, Cron oder Firewall-Änderungen verletzen die Betriebsbedingung.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Tests protokollieren nur Metadaten und zeigen keine Hostmutationen bei Probe und Rückbau. Das folgende Nutzungsszenario macht diese Anforderung konkret: Nach Ausführung unterscheiden sich System-Konfigurationsdateien und Quell-Timestamps nicht.</p>
+<h2>A13 – Identität, Einwilligung und Berechtigung</h2>
+<p>OIDC und Consent-Komponenten bilden noch keinen einheitlichen globalen Berechtigungsentscheid. Eine Policy Decision Point trennt Authentication, Authorization und Consent für jede sensible Operation.</p>
+<p>Subject, purpose, resource, action, jurisdiction, credential_age und grant_id bilden den Policy-Kontext.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Verwechselte Nutzeridentität oder widerrufene Einwilligung ermöglichen unzulässigen Zugriff.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jeder Zugriff ist default deny und erfordert ein aktuelles, zweckgebundenes Grant. Das folgende Nutzungsszenario macht diese Anforderung konkret: Bei Entzug einer Datenfreigabe verschwindet die Berechtigung aus Cache, Connector und UI.</p>
+<h2>A14 – Schlüssel, Signaturen und Rotation</h2>
+<p>Ed25519-Bescheinigungen liefern Integrität, aber eigene Signaturen sind keine unabhängigen Zertifizierungen. Das Key-Lifecycle-Modell trennt Signierzwecke, Verwahrung, Rotation, Sperrung und Bestätigung der Schlüsselhoheit.</p>
+<p>KeyRecord mit key_id, usage, custodian, created_at, expires_at, revoke_ref und verification_scope.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein kompromittierter Schlüssel kann scheinbar gültige Artefakte produzieren.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Gesonderte Schlüssel für Build, Audit und Nutzer-Freigabe; keine privaten Schlüssel in ZIP oder Logs. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein gesperrter Schlüssel macht alle davon abhängigen Statuskarten ungültig.</p>
+<h2>A15 – Privacy by Design und Datenminimierung</h2>
+<p>Katalog, Finanzanalyse und Agentensitzungen berühren verschiedene Personen- und Geheimnisklassen. Datentypen werden vor Verarbeitung klassifiziert; synthetische Demos und reale Daten bleiben hart getrennt.</p>
+<p>DataClass, purpose, lawful_basis, retention, residency, deletion_job und access_policy an jedem Datensatz.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Protokolle oder Testfixtures könnten reale Kontodaten und Zugangsgeheimnisse aufnehmen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Export und Debugger maskieren vertrauliche Felder; Lösch- und Auskunftswege sind nachweisbar. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Support-Report enthält niemals IBAN, Token oder Credential-Klartext.</p>
+<h2>A16 – Banking Read-only und Settlement-Grenzen</h2>
+<p>Die Transaktionsanalyse besitzt Code-Sperren, aber Namensfilter ersetzen keine bankenrechtliche Berechtigungstrennung. Ausschließlich getrennte Read-only-Zugangsdaten und capability-minimierte Connectoren bedienen M08.</p>
+<p>AccountLinkId, consent_scope, provider, expiry, read_only_assertion und audit_receipt.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein neu angeschlossener Zahlungsprovider darf keine latenten Schreibrechte übernehmen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Negative API-Tests beweisen, dass Auszahlungen und Lastschriften unabhängig von Aktionsnamen blockiert bleiben. Das folgende Nutzungsszenario macht diese Anforderung konkret: Die UI kann verdächtige Abos markieren, aber niemals Geld verschieben.</p>
+<h2>A17 – Finanzanomalien und Erklärung</h2>
+<p>Doppelbelastung, Preissteigerung und Zombie-Abos können legitime Zahlungen falsch einordnen. Ein erklärbares Regelwerk zeigt Annahmen, Vertrauenswerte, Gegenbeispiele und Nutzerfeedback.</p>
+<p>Finding mit rule_version, evidence_refs, confidence_band, currency, period und reversible_label.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Unbegründete Ersparnisbehauptungen könnten finanzielle Entscheidungen verfälschen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Befunde gelten als Hinweise mit Rücknahmeoption und werden auf synthetischen Testfällen kalibriert. Das folgende Nutzungsszenario macht diese Anforderung konkret: Zwei gleiche Kaffeezahlungen bleiben zunächst Verdacht, solange keine Händler-ID oder Buchungskorrektur geklärt ist.</p>
+<h2>A18 – FORINA Domain Trust</h2>
+<p>Technischer DNS/TLS-Erfolg ist keine Organisationsverifizierung und kein Föderationsrecht. Eine gestufte Trust-Kette behandelt Discovery, Kontrolle, Organisation, Compliance und explizite Autorisierung getrennt.</p>
+<p>DomainTrustRecord mit proofs, claim_type, registrar_check, legal_entity_ref, scope und valid_until.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Einfache URL-Scans dürfen keine staatliche Zugehörigkeit oder Akkreditierung suggerieren.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Statuswerte werden nie übersprungen; Federation beginnt nur nach dokumentierter Einwilligung der Organisation. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine .gov-Domain ohne belegte Delegation erhält kein Organisationszertifikat.</p>
+<h2>A19 – API- und Ereignisarchitektur</h2>
+<p>Viele Dienste lassen sich anbinden, aber undokumentierte Eventverträge verursachen verdeckte Nebenwirkungen. Schema Registry, versionierte Events, Idempotenz und Replay-Schutz werden zum verbindlichen Integrationskern.</p>
+<p>OpenAPI/AsyncAPI Verträge für command_id, correlation_id, policy_ref, schema_version und idempotency_key.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Event-Duplikate, Ausführungsreihenfolge und inkonsistente Retries gefährden Datenzustände.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Contract-Tests und Dead-letter-Queues sind für jede asynchrone Verbindung definiert. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine doppelte Nachricht löst dieselbe fachliche Aktion höchstens einmal aus.</p>
+<h2>A20 – Knowledge Graph und Provenienz</h2>
+<p>Dokumente, URLs, Frameworks und Repo-Evidenz bleiben sonst in mehreren Listen isoliert. Ein gerichteter Evidence Graph verbindet Anforderungen mit Assets, Kontrollen, Tests und verantwortlichen Prüfern.</p>
+<p>Nodes für Source, Requirement, Control, Artifact, TestRun und Approval; Edges mit signierter Herkunft.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Automatisch abgeleitete Beziehungen könnten als offizielle Referenz durchgehen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jeder inferierte Mapping-Edge besitzt Konfidenz, Begründung und menschliche Freigabestufe. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine OWASP-Prüfung führt per Klick zu Code-Test, Prüflauf und konkreter Anforderung.</p>
+<h2>A21 – Agenten-Orchestrierung und Toolrechte</h2>
+<p>Ein Agent, der Tools frei ausführen darf, kann Sicherheitsgrenzen umgehen, auch wenn sein Text harmlos aussieht. Capabilities werden außerhalb des Prompt-Kontexts technisch erzwungen; Agenten liefern zunächst Vorschläge.</p>
+<p>AgentTask mit inputs, output_schema, budget, tool_allowlist, approved_workspace und risk_class.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Prompt-Injection über Repos, Mails oder Webseiten darf keine neue Toolberechtigung erzeugen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jede Agentenaktion ist einer expliziten Policy zugeordnet; nicht erlaubte Toolaufrufe werden abgewiesen. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein Webseitenhinweis auf sudo-Befehle bleibt Dateninhalt und niemals Handlungsanweisung.</p>
+<h2>A22 – Harness Loop und kontrollierte Autonomie</h2>
+<p>Eine schnelle Implementationsserie benötigt reproduzierbare Kontrollpunkte statt unendlicher Selbstbestätigung. Plan-Build-Test-Audit-Review-Release-Monitor bildet eine begrenzte, policy-gesteuerte Verbesserungsfolge.</p>
+<p>LoopRecord mit iteration, task_id, state, input_hash, test_oracle, evidence_hash und stop_reason.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Endlosschleifen, unsichere Selbstfreigabe und Modelldrift müssen ausdrücklich verhindert werden.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Maximale Iterationen, Budget, Freigabepflicht und negativer Test gehören in jede Arbeitsdefinition. Das folgende Nutzungsszenario macht diese Anforderung konkret: Wenn ein Test dreimal nicht besteht, stoppt die Schleife und erstellt ein handlungsfähiges Defect-Dossier.</p>
+<h2>A23 – Evidence Bus und Audit-Pipeline</h2>
+<p>Ein grüner Test ist nicht automatisch beweiskräftig, wenn Ausführer und Prüfer identisch sind. Ein Evidence Bus versieht jede Entscheidung mit Quelle, Hash, Scope, Zeit und Prüferidentität.</p>
+<p>EvidenceEnvelope als kanonisches JSON mit Schema-Id, input/output digest, issuer und signer_role.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Unvollständige Logs oder nachträgliche Änderungen entwerten Revisionssicherheit.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Für jedes Gate existiert ein reproduzierbarer Datensatz mit unabhängiger Prüfroutine. Das folgende Nutzungsszenario macht diese Anforderung konkret: Auditoren können eine Freigabe offline anhand von Paket, Manifest und Public Key überprüfen.</p>
+<h2>A24 – Audit-Cockpit und Live-Status</h2>
+<p>Statische PASS-Aufschriften können fail-closed Entscheidungen im Backend visuell überdecken. Das Cockpit zeigt pro Gate Ergebnis, Beleg, Prüfer, Ausführungsdatum, Gültigkeit und Fehlergrund.</p>
+<p>GateView wird ausschließlich aus signierten Status-Events und nicht aus hartcodierter Farbe erzeugt.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein einzelner unbekannter Gate-Status kann sonst fälschlich als Systemfreigabe erscheinen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: FAILED, UNKNOWN und EXPIRED sind sichtbar verschieden und blockieren kritische Buttons. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein G08-Mismatch erzeugt eine rote Sperrkarte mit betroffener Datei und Recheck-Aktion.</p>
+<h2>A25 – Nachweis-Abzeichen und Markenschutz</h2>
+<p>Ein intern erzeugtes Zertifikat kann unbeabsichtigt wie ein offizielles ISO- oder EU-Siegel wirken. Interne Prüfmarken unterscheiden sich sichtbar von externen Zertifizierungszeichen und zeigen ihren Aussteller.</p>
+<p>BadgeRecord mit assertion_type, scope, issuer, issued_at, expiry, evidence_url und revocation_endpoint.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Falsche Zertifikatsbehauptungen erzeugen Rechts- und Vertrauensrisiken.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Offizielle Marken erscheinen nur mit erlaubter Nutzung und einem überprüfbaren Zertifikat. Das folgende Nutzungsszenario macht diese Anforderung konkret: Das Portal zeigt INTERN AUDITIERT statt ISO ZERTIFIZIERT, wenn keine akkreditierte Stelle beteiligt war.</p>
+<h2>A26 – Barrierefreiheit und Performance-Budget</h2>
+<p>Komplexe Graphiken, animierte Dashboards und Kontrastfarben können Nutzergruppen ausschließen. WCAG-orientierte Komponenten mit reduzierter Bewegung, Tastaturführung und verständlichen Fehlermeldungen.</p>
+<p>Token für Farbkontrast, focus-visible, aria-label, reduced-motion und lokalisierte Statusnamen.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Screenreader erhalten möglicherweise eine falsche Reihenfolge oder rein dekorative Warnungen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Automatisierte Axe-Prüfung und manuelle Tastaturtests bestehen auf zentralen Use Cases. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine Warnung ist mit Text und Symbol wahrnehmbar und nicht nur rot gefärbt.</p>
+<h2>A27 – Mehrsprachigkeit und Rechtsräume</h2>
+<p>Internationale Normen und Mandate unterscheiden sich nach Rechtsraum und Nutzerrolle. Jurisdiction Resolver wählt Texte, Rechtsgrundlagen und Anforderungen anhand belegter Anwendbarkeit.</p>
+<p>LegalApplicability mit country, sector, legal_role, legal_basis, version und review_date.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Eine generische EU-Regel könnte fälschlich auf USA oder CH übertragen werden.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jede länderspezifische Aussage besitzt einen Normverweis und letzten Reviewzeitpunkt. Das folgende Nutzungsszenario macht diese Anforderung konkret: DE, EN und FR zeigen dieselbe technische Prüfung, aber korrekte regionale Rechtskontexte.</p>
+<h2>A28 – Observability ohne Datenleckage</h2>
+<p>Telemetrie ist nützlich, darf aber sensible Nutzdaten, Prompts oder Schlüssel nicht exponieren. Metriken und strukturelle Ereignisse werden ohne Payloads, mit Sampling und striktem Redaction-Schema erhoben.</p>
+<p>EventSchema mit severity, request_id, elapsed_ms, control_id und secret_scrub_result.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Selbst gut gemeinte Debug-Protokolle könnten echte Bankdaten enthalten.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Redaction-Fuzzing bestätigt, dass keine Test-Token oder personenbezogenen Werte gespeichert werden. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine Fehlermeldung nennt einen anonymen Referenzcode statt einer IBAN.</p>
+<h2>A29 – Threat Modeling und Red Team</h2>
+<p>Die bisherige Regex-Erkennung ist hilfreich, aber gegen Toolmissbrauch und Supply-Chain-Angriffe unvollständig. STRIDE, ATT&amp;CK-Mapping und Missbrauchsszenarien werden pro Integrationsgrenze modelliert.</p>
+<p>ThreatRecord mit actor, trust_boundary, abuse_case, impact, mitigation, test und residual_risk.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Insbesondere URI-Schemas, Archive, dynamische Imports und Agenten-Tools erlauben Umgehungen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Jede High-Risk-Grenze hat mindestens einen Negativtest und dokumentierte Restrestrisiken. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine manipulierte URL mit javascript-Schema wird im Webkatalog blockiert.</p>
+<h2>A30 – Supply Chain und sichere Builds</h2>
+<p>Eine Liste von Projektnamen sagt nichts über den tatsächlich ausgelieferten Binärinhalt aus. Build-Provenienz, SBOM, gepinnte Abhängigkeiten und signierte Artefakte bilden eine gemeinsame Kette.</p>
+<p>ReleaseManifest mit commit, dependency_lock, builder_id, SBoM_digest, build_hash und verification_method.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ungeprüfte Netzwerkdownloads und Binary-Replacement gefährden die portable Distribution.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Ein externer Prüfer kann das Paket auf exakt definierte Quellen und Binärhashes zurückführen. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein AppImage wird nur veröffentlicht, wenn Hash, Signatur und vorab geprüftes Manifest übereinstimmen.</p>
+<h2>A31 – Backup und Recovery als Fertigkeit</h2>
+<p>Ein Backup, das sich extrahieren lässt, belegt noch nicht die vollständige Wiederanlaufbarkeit. Restore-Drills testen Integrität, Anwendungen, Datenkonsistenz und geheimnisfreie Wiederherstellung.</p>
+<p>RestoreRun mit archive_digest, restoration_scope, RTO, RPO, file_parity und verified_by.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein Archiv kann unvollständige Tabellen oder unsichere Symlinks enthalten.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Vollständiger Hashvergleich, kontrollierte Extraktion und simuliertes Anlaufen mit synthetischen Daten. Das folgende Nutzungsszenario macht diese Anforderung konkret: Eine monatliche Testwiederherstellung erreicht das definierte RTO, ohne den Host zu verändern.</p>
+<h2>A32 – Releasemanagement und Rollback</h2>
+<p>Häufige Commits und Tags brauchen klare Stufen zwischen Experiment, Pilot und Veröffentlichung. A signiertes Release-Promotionsmodell trennt Dev, Synthetic, Audit und Production mit Rollbackbedingungen.</p>
+<p>ReleaseRecord mit stage, artifact_digest, approvals, gate_results, rollback_image und change_window.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Feste Produktivlabels könnten bei neuen Fehlern unverändert bestehen bleiben.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Ein neues Release ist ohne unabhängige Gate- und Policy-Nachweise nicht promotierbar. Das folgende Nutzungsszenario macht diese Anforderung konkret: Bei Fehlalarm wird das zuletzt freigegebene Paket ohne Neuinstallation wiederhergestellt.</p>
+<h2>A33 – Finanzplanung und Betriebsmodell</h2>
+<p>Viele Module erhöhen den Nutzen, erzeugen aber auch laufende Wartungs- und Prüflasten. Kosten- und Kapazitätsbudgets werden pro Service, Datenzone und externem Connector geplant.</p>
+<p>BudgetCard mit unit_cost, usage_cap, license_obligation, maintenance_owner und cost_ceiling.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Ein scheinbar kostenloser Dienst kann teure Nutzung, Datenabfluss oder Lizenzpflichten auslösen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: Keine Funktion verlässt die Pilotphase ohne Kostendeckel, Exit-Plan und vollständige Abhängigkeiten. Das folgende Nutzungsszenario macht diese Anforderung konkret: Ein neuer Open-Banking-Connector hat getrennte monatliche Kosten- und Risikoobergrenzen.</p>
+<h2>A34 – Roadmap, KPIs und Governance-Rhythmus</h2>
+<p>Die technische Breite verlangt eine klare Reihenfolge und messbare Qualitätsdefinitionen. Eine priorisierte 90/180/365-Tage-Roadmap ordnet Sicherheitsgrenzen vor UI-Politur und optionalen Integrationen.</p>
+<p>RoadmapItem mit value, dependency, effort, risk_reduction, owner, milestone und evidence_target.</p>
+<p>Ein ausdrücklich zu testender Fehlermodus ist: Arbeit an attraktiven Oberflächen kann existenzielle Sicherheitsblocker verdrängen.</p>
+<p>Ein überprüfbarer fachlicher Erfolg liegt vor, wenn: In jedem Sprint wird nach negativen Tests, Belegabdeckung und Nutzbarkeit statt Featurezahl priorisiert. Das folgende Nutzungsszenario macht diese Anforderung konkret: Sprint 1 beseitigt irreversible Risiken; Sprint 2 verbessert die Bedienung; Sprint 3 skaliert Integrationen.</p>
+<hr />
+<h1>TEIL III – ENTWICKLUNGSSPRACHE UND INTEGRATIONSVERTRÄGE</h1>
+<p>Die 34 Wortschatzkapitel liefern Begriffsnetze für Entwickler, UX, Sicherheitsverantwortliche und Prüfer. Die Langformen werden einmal pro Kapitel benannt; wiederholte allgemeine Glossarfelder sind im gemeinsamen Schema in Teil I beschrieben. „Verwendet“ bedeutet hier eine bewusste Zuordnung zu einem Daten- oder Prozessvertrag und nicht, dass ein Repository bereits installiert, sicherheitsgeprüft oder rechtskonform ist.</p>
+<h2>B01 – Requirements Engineering</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>REQ</strong> (Requirement); <strong>NFR</strong> (Nonfunctional Requirement); <strong>SLO</strong> (Service Level Objective); <strong>SLI</strong> (Service Level Indicator); <strong>DoD</strong> (Definition of Done); <strong>AC</strong> (Acceptance Criteria); <strong>RACI</strong> (Responsible Accountable Consulted Informed); <strong>ADR</strong> (Architecture Decision Record); <strong>RFC</strong> (Request for Comments).</p>
+<p>Abnahmekriterien statt Wunschlisten. Zielbild als versionierte Entscheidung mit nachvollziehbaren Akzeptanztests Ein technisches Anwendungsbeispiel verbindet REQ, NFR, SLO, SLI, DoD mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B02 – Information Architecture</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>IA</strong> (Information Architecture); <strong>JTBD</strong> (Jobs To Be Done); <strong>Sitemap</strong> (Navigation Map); <strong>Taxonomy</strong> (Klassifikation); <strong>Ontology</strong> (Begriffsmodell); <strong>Facet</strong> (Suchfiltermerkmal); <strong>Breadcrumb</strong> (Navigationspfad); <strong>ContentType</strong> (Inhaltsmodell); <strong>CardSort</strong> (Karten-Sortierung).</p>
+<p>Nutzeraufgaben über Organisationsmodule stellen. Suche nach Auditbelegen statt Navigation nach Python-Datei Ein technisches Anwendungsbeispiel verbindet IA, JTBD, Sitemap, Taxonomy, Ontology mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B03 – Experience Design</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>XD</strong> (Experience Design); <strong>UX</strong> (User Experience); <strong>UI</strong> (User Interface); <strong>CX</strong> (Customer Experience); <strong>HCD</strong> (Human-Centered Design); <strong>UCD</strong> (User-Centered Design); <strong>HE</strong> (Heuristic Evaluation); <strong>SUS</strong> (System Usability Scale); <strong>UXR</strong> (User Experience Research).</p>
+<p>Konsequenzen vor attraktiven Animationen sichtbar machen. Read-only-Analyse mit sicherem Zustand und verständlicher Vorschau Ein technisches Anwendungsbeispiel verbindet XD, UX, UI, CX, HCD mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B04 – Design Systems</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>DT</strong> (Design Token); <strong>DS</strong> (Design System); <strong>A11Y</strong> (Accessibility); <strong>ARIA</strong> (Accessible Rich Internet Applications); <strong>RTL</strong> (Right-to-Left); <strong>WCAG</strong> (Web Content Accessibility Guidelines); <strong>L10N</strong> (Localization); <strong>I18N</strong> (Internationalization); <strong>Figma</strong> (Design Collaboration Tool).</p>
+<p>Barrierefreie wiederverwendbare Komponenten und Tokens. Statuskarte mit Fehler- und Unbekanntzustand Ein technisches Anwendungsbeispiel verbindet DT, DS, A11Y, ARIA, RTL mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B05 – Frontend Architecture</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>SPA</strong> (Single Page Application); <strong>SSR</strong> (Server-Side Rendering); <strong>SSG</strong> (Static Site Generation); <strong>CSP</strong> (Content Security Policy); <strong>DOM</strong> (Document Object Model); <strong>XSS</strong> (Cross-Site Scripting); <strong>CSRF</strong> (Cross-Site Request Forgery); <strong>SRI</strong> (Subresource Integrity); <strong>CORS</strong> (Cross-Origin Resource Sharing).</p>
+<p>Sichere Rendering-Grenzen für untrusted CSV. Repository-Karten ohne riskante href-Schemas Ein technisches Anwendungsbeispiel verbindet SPA, SSR, SSG, CSP, DOM mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B06 – Backend Services</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>REST</strong> (Representational State Transfer); <strong>RPC</strong> (Remote Procedure Call); <strong>DTO</strong> (Data Transfer Object); <strong>BFF</strong> (Backend for Frontend); <strong>CQRS</strong> (Command Query Responsibility Segregation); <strong>DDD</strong> (Domain-Driven Design); <strong>ORM</strong> (Object Relational Mapping); <strong>CRUD</strong> (Create Read Update Delete); <strong>HTTP</strong> (Hypertext Transfer Protocol).</p>
+<p>Trennung von Read Models und Befehlsausführung. Sovereign-API liefert belegte Statuswerte ohne Seiteneffekte Ein technisches Anwendungsbeispiel verbindet REST, RPC, DTO, BFF, CQRS mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B07 – Data Contracts</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>JSON</strong> (JavaScript Object Notation); <strong>JSONS</strong> (JSON Schema); <strong>YAML</strong> (YAML Ain't Markup Language); <strong>CSV</strong> (Comma-Separated Values); <strong>XML</strong> (Extensible Markup Language); <strong>XSD</strong> (XML Schema Definition); <strong>Protobuf</strong> (Protocol Buffers); <strong>Avro</strong> (Apache Avro); <strong>IDL</strong> (Interface Definition Language).</p>
+<p>Versionierte JSON-Nachrichten und Validatoren. Audit-Event bleibt bei UI-Update rückwärtskompatibel Ein technisches Anwendungsbeispiel verbindet JSON, JSONS, YAML, CSV, XML mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B08 – API Governance</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>OpenAPI</strong> (OpenAPI Specification); <strong>AsyncAPI</strong> (AsyncAPI Specification); <strong>SDK</strong> (Software Development Kit); <strong>API</strong> (Application Programming Interface); <strong>SemVer</strong> (Semantic Versioning); <strong>OAuth</strong> (Open Authorization); <strong>OIDC</strong> (OpenID Connect); <strong>JWT</strong> (JSON Web Token); <strong>IdemKey</strong> (Idempotency Key).</p>
+<p>Explizite Connector-Autorisierung ohne implizite Rechte. Read-only Banking Vertrag und stufenweise Versionierung Ein technisches Anwendungsbeispiel verbindet OpenAPI, AsyncAPI, SDK, API, SemVer mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B09 – Event-Driven Design</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>EDA</strong> (Event-Driven Architecture); <strong>DLQ</strong> (Dead Letter Queue); <strong>CDC</strong> (Change Data Capture); <strong>Outbox</strong> (Transactional Outbox); <strong>Saga</strong> (Distributed Transaction Coordination); <strong>ETag</strong> (Entity Tag); <strong>TTL</strong> (Time To Live); <strong>ACK</strong> (Acknowledgment); <strong>NACK</strong> (Negative Acknowledgment).</p>
+<p>Doppelte Events führen nicht zu doppelten Aktionen. Signiertes Gate-Ergebnis über eine Event-Schnittstelle Ein technisches Anwendungsbeispiel verbindet EDA, DLQ, CDC, Outbox, Saga mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B10 – Identity &amp; Access</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>IAM</strong> (Identity and Access Management); <strong>RBAC</strong> (Role-Based Access Control); <strong>ABAC</strong> (Attribute-Based Access Control); <strong>PDP</strong> (Policy Decision Point); <strong>PEP</strong> (Policy Enforcement Point); <strong>MFA</strong> (Multi-Factor Authentication); <strong>TOTP</strong> (Time-Based One-Time Password); <strong>SSO</strong> (Single Sign-On); <strong>SCIM</strong> (System for Cross-domain Identity Management).</p>
+<p>Rechte auf Session, Zweck und Ressource begrenzen. Einwilligung wird bei Sperrung überall widerrufen Ein technisches Anwendungsbeispiel verbindet IAM, RBAC, ABAC, PDP, PEP mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B11 – Secrets &amp; Cryptography</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>KMS</strong> (Key Management Service); <strong>HSM</strong> (Hardware Security Module); <strong>PKI</strong> (Public Key Infrastructure); <strong>KDF</strong> (Key Derivation Function); <strong>AEAD</strong> (Authenticated Encryption with Associated Data); <strong>AES</strong> (Advanced Encryption Standard); <strong>Ed25519</strong> (Edwards-curve Digital Signature); <strong>SHA-256</strong> (Secure Hash Algorithm 256); <strong>JWK</strong> (JSON Web Key).</p>
+<p>Schlüssel nicht in Chat, ZIP oder Telemetrie exportieren. Trennung von Signier- und Authentifikationsschlüsseln Ein technisches Anwendungsbeispiel verbindet KMS, HSM, PKI, KDF, AEAD mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B12 – Software Supply Chain</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>SBOM</strong> (Software Bill of Materials); <strong>SLSA</strong> (Supply-chain Levels for Software Artifacts); <strong>SCA</strong> (Software Composition Analysis); <strong>SAST</strong> (Static Application Security Testing); <strong>DAST</strong> (Dynamic Application Security Testing); <strong>IAST</strong> (Interactive Application Security Testing); <strong>VEX</strong> (Vulnerability Exploitability eXchange); <strong>CVE</strong> (Common Vulnerabilities and Exposures); <strong>CWE</strong> (Common Weakness Enumeration).</p>
+<p>Quellcode- und Binary-Provenienz nachweisen. AppImage-Hash, SBOM und Repo-SHA nachvollziehbar Ein technisches Anwendungsbeispiel verbindet SBOM, SLSA, SCA, SAST, DAST mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B13 – Testing Strategy</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>UT</strong> (Unit Test); <strong>IT</strong> (Integration Test); <strong>E2E</strong> (End-to-End Test); <strong>UAT</strong> (User Acceptance Test); <strong>PBT</strong> (Property-Based Testing); <strong>Fuzz</strong> (Fuzz Testing); <strong>MutTest</strong> (Mutation Testing); <strong>Snapshot</strong> (Snapshot Testing); <strong>TDD</strong> (Test-Driven Development).</p>
+<p>Eigenschaften und Risiken testen statt nur Demo-Erfolg. Manipulierter SHA oder falsche Banking-Permission muss scheitern Ein technisches Anwendungsbeispiel verbindet UT, IT, E2E, UAT, PBT mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B14 – Continuous Delivery</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>CI</strong> (Continuous Integration); <strong>CD</strong> (Continuous Delivery); <strong>GitOps</strong> (Git Operations Model); <strong>IaC</strong> (Infrastructure as Code); <strong>CICD</strong> (CI/CD Pipeline); <strong>Canary</strong> (Incremental Rollout); <strong>BlueGreen</strong> (Blue-Green Deployment); <strong>Rollback</strong> (Release Reversal); <strong>RC</strong> (Release Candidate).</p>
+<p>Releases ohne stilles Rechtewachstum freigeben. Signierte Stufen Dev bis Release mit Rollback Ein technisches Anwendungsbeispiel verbindet CI, CD, GitOps, IaC, CICD mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B15 – Runtime Isolation</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>AirGap</strong> (Physically or Technically Isolated Network); <strong>Egress</strong> (Outbound Network Traffic); <strong>Seccomp</strong> (Linux Syscall Filtering); <strong>MAC</strong> (Mandatory Access Control); <strong>DAC</strong> (Discretionary Access Control); <strong>LSM</strong> (Linux Security Module); <strong>UID</strong> (User Identifier); <strong>FUSE</strong> (Filesystem in Userspace); <strong>Rootless</strong> (Without Elevated Privileges).</p>
+<p>Air-Gap nur behaupten wenn unabhängig erzwungen. Launcher lehnt fehlendes No-Egress-Evidence ab Ein technisches Anwendungsbeispiel verbindet AirGap, Egress, Seccomp, MAC, DAC mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B16 – Resilience and Backup</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>BCP</strong> (Business Continuity Plan); <strong>DRP</strong> (Disaster Recovery Plan); <strong>RTO</strong> (Recovery Time Objective); <strong>RPO</strong> (Recovery Point Objective); <strong>MTTR</strong> (Mean Time To Recovery); <strong>MTBF</strong> (Mean Time Between Failures); <strong>HA</strong> (High Availability); <strong>PITR</strong> (Point-in-Time Recovery); <strong>3-2-1</strong> (Backup Copy Rule).</p>
+<p>Wiederherstellung aller kritischen Dateien nachvollziehen. Borg-Archiv auf synthetischen Daten wiederherstellen Ein technisches Anwendungsbeispiel verbindet BCP, DRP, RTO, RPO, MTTR mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B17 – Observability</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>OTel</strong> (OpenTelemetry); <strong>SIEM</strong> (Security Information and Event Management); <strong>SOAR</strong> (Security Orchestration Automation and Response); <strong>APM</strong> (Application Performance Monitoring); <strong>RUM</strong> (Real User Monitoring); <strong>P95</strong> (95th Percentile); <strong>RED</strong> (Rate Errors Duration); <strong>USE</strong> (Utilization Saturation Errors); <strong>SRE</strong> (Site Reliability Engineering).</p>
+<p>Keine personenbezogenen Zahlungsdaten in Logs. Request-Latenz und Gate-Fails anonym korrelieren Ein technisches Anwendungsbeispiel verbindet OTel, SIEM, SOAR, APM, RUM mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B18 – Threat Modeling</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>STRIDE</strong> (Spoofing Tampering Repudiation Information disclosure Denial of service Elevation of privilege); <strong>DREAD</strong> (Damage Reproducibility Exploitability Affected users Discoverability); <strong>ATTACK</strong> (MITRE ATT&amp;CK); <strong>TTP</strong> (Tactics Techniques Procedures); <strong>KEV</strong> (Known Exploited Vulnerabilities); <strong>IOC</strong> (Indicator of Compromise); <strong>TLP</strong> (Traffic Light Protocol); <strong>STIX</strong> (Structured Threat Information Expression); <strong>TAXII</strong> (Trusted Automated Exchange of Intelligence Information).</p>
+<p>Angriffspfade als Tests statt nur Text. Agent-Prompt darf keine Tools freischalten Ein technisches Anwendungsbeispiel verbindet STRIDE, DREAD, ATTACK, TTP, KEV mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B19 – Privacy Engineering</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>PII</strong> (Personally Identifiable Information); <strong>DPIA</strong> (Data Protection Impact Assessment); <strong>ROPA</strong> (Record of Processing Activities); <strong>DSAR</strong> (Data Subject Access Request); <strong>PET</strong> (Privacy Enhancing Technology); <strong>DLP</strong> (Data Loss Prevention); <strong>Pseudonymization</strong> (Reversible Identifier Separation); <strong>Anonymization</strong> (Non-Reidentifiable Processing); <strong>TOM</strong> (Technical and Organizational Measures).</p>
+<p>Datenzwecke und Retention vor Implementierung. Löschauftrag propagiert in Read Models und Backups Ein technisches Anwendungsbeispiel verbindet PII, DPIA, ROPA, DSAR, PET mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B20 – GRC and Compliance</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>GRC</strong> (Governance Risk Compliance); <strong>ISMS</strong> (Information Security Management System); <strong>AIMS</strong> (AI Management System); <strong>PIMS</strong> (Privacy Information Management System); <strong>BCMS</strong> (Business Continuity Management System); <strong>SoA</strong> (Statement of Applicability); <strong>CAPA</strong> (Corrective and Preventive Action); <strong>KRI</strong> (Key Risk Indicator); <strong>KPI</strong> (Key Performance Indicator).</p>
+<p>Normanforderung direkt mit Test und Beweis verbinden. M07 Domain Trust erfordert autorisierte Herkunftsnachweise Ein technisches Anwendungsbeispiel verbindet GRC, ISMS, AIMS, PIMS, BCMS mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B21 – Evidence Engineering</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>Merkle</strong> (Merkle Tree); <strong>HashChain</strong> (Chained Digest Log); <strong>Attest</strong> (Signed Attestation); <strong>Provenance</strong> (Artifact Origin Proof); <strong>WORM</strong> (Write Once Read Many); <strong>Timestamp</strong> (Trusted Time Evidence); <strong>OCSP</strong> (Online Certificate Status Protocol); <strong>CRL</strong> (Certificate Revocation List); <strong>ETSI</strong> (European Telecommunications Standards Institute).</p>
+<p>Belege unveränderbar und scopegebunden halten. Gate PASS verfällt nach geänderter Binary Ein technisches Anwendungsbeispiel verbindet Merkle, HashChain, Attest, Provenance, WORM mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B22 – Agents &amp; LLM Integration</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>LLM</strong> (Large Language Model); <strong>RAG</strong> (Retrieval-Augmented Generation); <strong>MCP</strong> (Model Context Protocol); <strong>A2A</strong> (Agent-to-Agent Protocol); <strong>ReAct</strong> (Reasoning and Acting Pattern); <strong>RBA</strong> (Risk-Based Approval); <strong>HITL</strong> (Human in the Loop); <strong>HCL</strong> (Harness Control Loop); <strong>ToolGate</strong> (External Tool Policy Gate).</p>
+<p>Modellvorschläge und Rechte durch getrennte Ebenen. Harness Loop mit unabhängigen Testorakeln Ein technisches Anwendungsbeispiel verbindet LLM, RAG, MCP, A2A, ReAct mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B23 – Model Evaluation</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>Eval</strong> (Model Evaluation); <strong>GoldenSet</strong> (Curated Reference Dataset); <strong>Drift</strong> (Model Distribution Shift); <strong>ECE</strong> (Expected Calibration Error); <strong>FPR</strong> (False Positive Rate); <strong>FNR</strong> (False Negative Rate); <strong>TPR</strong> (True Positive Rate); <strong>Confidence</strong> (Calibrated Confidence); <strong>Oracle</strong> (Independent Test Oracle).</p>
+<p>Keine errechnete Modellqualität ohne Benchmark. BOBA-Kette reproduzierbar mit Negativfällen messen Ein technisches Anwendungsbeispiel verbindet Eval, GoldenSet, Drift, ECE, FPR mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B24 – Search and Knowledge</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>IR</strong> (Information Retrieval); <strong>BM25</strong> (Best Matching 25); <strong>ANN</strong> (Approximate Nearest Neighbor); <strong>RRF</strong> (Reciprocal Rank Fusion); <strong>KG</strong> (Knowledge Graph); <strong>RDF</strong> (Resource Description Framework); <strong>SPARQL</strong> (SPARQL Protocol and RDF Query Language); <strong>Rerank</strong> (Search Result Re-ranking); <strong>Citation</strong> (Source Reference).</p>
+<p>Dokumentantwort mit Quelle statt Halluzination. Normen-Crosswalk mit markierten Unsicherheiten Ein technisches Anwendungsbeispiel verbindet IR, BM25, ANN, RRF, KG mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B25 – Data Storage</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>OLTP</strong> (Online Transaction Processing); <strong>OLAP</strong> (Online Analytical Processing); <strong>ACID</strong> (Atomicity Consistency Isolation Durability); <strong>BASE</strong> (Basically Available Soft state Eventual consistency); <strong>MVCC</strong> (Multi-Version Concurrency Control); <strong>WAL</strong> (Write-Ahead Log); <strong>ETL</strong> (Extract Transform Load); <strong>ELT</strong> (Extract Load Transform); <strong>CDC</strong> (Change Data Capture).</p>
+<p>Souveräne lokale Daten und definierte TTL. Replikation ausschließlich nach freigegebener Zone Ein technisches Anwendungsbeispiel verbindet OLTP, OLAP, ACID, BASE, MVCC mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B26 – Networking &amp; DNS</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>DNS</strong> (Domain Name System); <strong>DNSSEC</strong> (DNS Security Extensions); <strong>TLS</strong> (Transport Layer Security); <strong>mTLS</strong> (Mutual TLS); <strong>RDAP</strong> (Registration Data Access Protocol); <strong>HSTS</strong> (HTTP Strict Transport Security); <strong>PKIX</strong> (Public Key Infrastructure X.509); <strong>CT</strong> (Certificate Transparency); <strong>ACME</strong> (Automated Certificate Management Environment).</p>
+<p>Domains verifizieren ohne Hoheitsrechte abzuleiten. DNSSEC TLS RDAP werden als technische Nachweise getrennt Ein technisches Anwendungsbeispiel verbindet DNS, DNSSEC, TLS, mTLS, RDAP mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B27 – Open Banking</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>AIS</strong> (Account Information Service); <strong>AISP</strong> (Account Information Service Provider); <strong>PIS</strong> (Payment Initiation Service); <strong>PISP</strong> (Payment Initiation Service Provider); <strong>SCA</strong> (Strong Customer Authentication); <strong>PSD2</strong> (Payment Services Directive 2); <strong>SEPA</strong> (Single Euro Payments Area); <strong>IBAN</strong> (International Bank Account Number); <strong>BIC</strong> (Business Identifier Code).</p>
+<p>Expliziter Kontozugriff ohne Zahlungsrecht. Nur lesende Transaktionen an M08 senden Ein technisches Anwendungsbeispiel verbindet AIS, AISP, PIS, PISP, SCA mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B28 – Payment Integration</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>PSP</strong> (Payment Service Provider); <strong>EMI</strong> (Electronic Money Institution); <strong>PI</strong> (Payment Institution); <strong>RTGS</strong> (Real-Time Gross Settlement); <strong>ACH</strong> (Automated Clearing House); <strong>SCT</strong> (SEPA Credit Transfer); <strong>SCTInst</strong> (SEPA Instant Credit Transfer); <strong>RTP</strong> (Real-Time Payments); <strong>SWIFT</strong> (Society for Worldwide Interbank Financial Telecommunication).</p>
+<p>Transaktionszustände und Risiko sauber modellieren. Keine Zahlungsausführung durch Analysemodul Ein technisches Anwendungsbeispiel verbindet PSP, EMI, PI, RTGS, ACH mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B29 – Blockchain Integration</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>DLT</strong> (Distributed Ledger Technology); <strong>EVM</strong> (Ethereum Virtual Machine); <strong>RPC</strong> (Remote Procedure Call); <strong>ABI</strong> (Application Binary Interface); <strong>SC</strong> (Smart Contract); <strong>DID</strong> (Decentralized Identifier); <strong>VC</strong> (Verifiable Credential); <strong>ZKP</strong> (Zero-Knowledge Proof); <strong>MPC</strong> (Multi-Party Computation).</p>
+<p>Smart Contracts nur über genehmigte Grenzen anbinden. Read-only Chain-Events getrennt von Signaturaktionen Ein technisches Anwendungsbeispiel verbindet DLT, EVM, RPC, ABI, SC mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B30 – Crypto Asset Risk</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>CASP</strong> (Crypto-Asset Service Provider); <strong>VASP</strong> (Virtual Asset Service Provider); <strong>MiCA</strong> (Markets in Crypto-Assets Regulation); <strong>AML</strong> (Anti-Money Laundering); <strong>KYC</strong> (Know Your Customer); <strong>KYB</strong> (Know Your Business); <strong>TravelRule</strong> (Crypto Transfer Information Rule); <strong>CDD</strong> (Customer Due Diligence); <strong>EDD</strong> (Enhanced Due Diligence).</p>
+<p>Tokenklassifikation vor Wallet-Verbindung prüfen. Wallet ist nicht automatisch reguliertes Konto Ein technisches Anwendungsbeispiel verbindet CASP, VASP, MiCA, AML, KYC mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B31 – Smart Contract Assurance</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>Reentrancy</strong> (Recursive Contract Entry); <strong>CEI</strong> (Checks Effects Interactions); <strong>EIP</strong> (Ethereum Improvement Proposal); <strong>ERC</strong> (Ethereum Request for Comments); <strong>Slither</strong> (Static Contract Analyzer); <strong>Foundry</strong> (EVM Testing Toolkit); <strong>Hardhat</strong> (Ethereum Development Environment); <strong>Timelock</strong> (Delayed Administrative Action); <strong>Multisig</strong> (Multi-Signature Authorization).</p>
+<p>Unveränderliche Ausführung benötigt Extra-Vorsicht. Simulierter Settlement-Fail-Test vor Deployment Ein technisches Anwendungsbeispiel verbindet Reentrancy, CEI, EIP, ERC, Slither mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B32 – Web3 UX</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>SIWE</strong> (Sign-In with Ethereum); <strong>EIP712</strong> (Typed Structured Data Signing); <strong>Nonce</strong> (Single-Use Random Value); <strong>ChainID</strong> (Blockchain Network Identifier); <strong>Gas</strong> (Transaction Execution Fee); <strong>MEV</strong> (Maximal Extractable Value); <strong>AA</strong> (Account Abstraction); <strong>Paymaster</strong> (Gas Sponsorship Contract); <strong>WalletConnect</strong> (Wallet Connection Protocol).</p>
+<p>Transaktions- und Berechtigungsrisiken sichtbar machen. Wallet-Bestätigung mit Kette Betrag Gebühren und Empfänger Ein technisches Anwendungsbeispiel verbindet SIWE, EIP712, Nonce, ChainID, Gas mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B33 – Release Metadata</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>SPDX</strong> (Software Package Data Exchange); <strong>CycloneDX</strong> (SBOM Format); <strong>OSCAL</strong> (Open Security Controls Assessment Language); <strong>SARIF</strong> (Static Analysis Results Interchange Format); <strong>JWS</strong> (JSON Web Signature); <strong>DSSE</strong> (Dead Simple Signing Envelope); <strong>Sigstore</strong> (Open Source Signing Project); <strong>Rekor</strong> (Transparency Log); <strong>SCEP</strong> (Simple Certificate Enrollment Protocol).</p>
+<p>Semantik von Zertifizierung und Label unterscheiden. Intern PASS ist nicht extern zertifiziert Ein technisches Anwendungsbeispiel verbindet SPDX, CycloneDX, OSCAL, SARIF, JWS mit den dazugehörigen Vertragsfeldern.</p>
+<h2>B34 – Operations Language</h2>
+<p>Das Vokabular dieses Bereichs besteht aus <strong>P0</strong> (Critical Incident Priority); <strong>P1</strong> (High Incident Priority); <strong>SOP</strong> (Standard Operating Procedure); <strong>Runbook</strong> (Operational Step Guide); <strong>OnCall</strong> (Incident Response Duty); <strong>RCA</strong> (Root Cause Analysis); <strong>Postmortem</strong> (Incident Learning Review); <strong>ChangeFreeze</strong> (Temporary Release Stop); <strong>SLA</strong> (Service Level Agreement).</p>
+<p>Störung, Risiko und Verantwortlichkeit schnell kommunizieren. P1-Vorfall wechselt Status aller betroffenen Belege Ein technisches Anwendungsbeispiel verbindet P0, P1, SOP, Runbook, OnCall mit den dazugehörigen Vertragsfeldern.</p>
+<hr />
+<h1>TEIL IV – BLOCKCHAIN, CRYPTO, SECURITY, WEB3 UND FINANCE</h1>
+<p>Die Finanzarchitektur beginnt mit Beobachten, Klassifizieren und Nachweisen. Wallet-Signaturen, Zahlungsfreigaben, Transaktionen und Settlement sind getrennte rechtlich und technisch zu autorisierende Fähigkeiten. Der in M08 angelegte „Zero-Settlement“-Grundsatz muss deshalb auf Provider-Berechtigungen und Prozessgrenzen beruhen, nicht nur auf der Erkennung bestimmter Aktionsnamen. Öffentlich nachvollziehbare Blockchain-Events erhalten eine Vertrauensstufe und dürfen nicht mit endgültig verfügbarer Fiat-Liquidität gleichgesetzt werden.</p>
+<h2>C01 – Ledger-Boundary und Verantwortlichkeit</h2>
+<p>Ein Blockchain-Ledger besitzt andere Finalitäts- und Datenschutzannahmen als eine Bankdatenbank. Die zu verwendenden Schlüsselbegriffe sind <strong>DLT, On-chain, Off-chain, Merkle, Finality, Nonce, Indexer, Reorg</strong>.</p>
+<p>Trenne Beobachtungsadapter, validierten Chain-Index und genehmigte Schreibkommandos durch getrennte Prozesse und Schlüssel.</p>
+<p>Besonders zu beherrschen ist das Risiko: Reorganisationen, unbestätigte Events und unbeabsichtigte Publikation personenbezogener Daten. Als fachlicher Nachweis ist vorgesehen: Signiertes Chain-Snapshot, Blockhöhe, Reorg-Test, Kontroll-Hash und Data-Lineage-Protokoll.</p>
+<p>M08 erhält ausschließlich normalisierte Finanzbeobachtungen; aktive Chain-Operationen gehören in einen anderen genehmigten Capability-Bereich.</p>
+<h2>C02 – Wallet-Architektur und Mandantentrennung</h2>
+<p>Wallet-Adressen und Konten sind nicht identisch; Vermögensinhaber, Betreiber und Schlüsselverwahrer müssen trennbar sein. Die zu verwendenden Schlüsselbegriffe sind <strong>Wallet, HD, Seed, MPC, Multisig, Smart Account, AA, Signer</strong>.</p>
+<p>Führe Watch-only-Wallets, custodial und non-custodial Varianten als getrennte Produkttypen mit unterschiedlichen Freigaben.</p>
+<p>Besonders zu beherrschen ist das Risiko: Seed-Leaks, unklare Eigentümerschaft und unbemerkte Signaturdelegationen. Als fachlicher Nachweis ist vorgesehen: WalletPolicy, Schlüssel-RACI, hardwareisolierte Signaturtests und Recovery-Plan.</p>
+<p>Eine read-only Aggregation darf weder Seed Phrase noch Private Keys abfragen oder speichern.</p>
+<h2>C03 – Schlüsselverwahrung und digitale Signatur</h2>
+<p>Eine technisch gültige Signatur sagt nichts über die rechtliche Berechtigung ihres Unterzeichners aus. Die zu verwendenden Schlüsselbegriffe sind <strong>HSM, KMS, MPC, Ed25519, ECDSA, ECDH, Rotation, Revocation</strong>.</p>
+<p>Verwende getrennte Schlüsselhierarchien für Build, Audit, Identität, Blockchain und Zahlung; protokolliere Scope und Laufzeit.</p>
+<p>Besonders zu beherrschen ist das Risiko: Key-Reuse, unkontrollierte Exporte und falsch dargestellte Zertifikatsgüte. Als fachlicher Nachweis ist vorgesehen: Key Inventory, Rotation Drill, Sperrlisten-Evidence und unabhängige Public-Key-Verifikation.</p>
+<p>Für reale Custody-Angebote sind die jeweils anwendbaren regulatorischen und vertraglichen Anforderungen zusätzlich zu prüfen.</p>
+<h2>C04 – Dezentrale Identität und Wallet-Login</h2>
+<p>Ein Wallet-Login ist nicht automatisch eine amtliche Identitäts- oder Organisationsprüfung. Die zu verwendenden Schlüsselbegriffe sind <strong>DID, VC, OIDC4VC, SIOP, SIWE, SD-JWT, Nonce, Proof</strong>.</p>
+<p>Trenne kryptografischen Besitznachweis, Identitätsattribut, Verifiable Credential und organisierte Freigabeprozesse.</p>
+<p>Besonders zu beherrschen ist das Risiko: Replay, Phishing und falsche Interpretation selbstsignierter Claims. Als fachlicher Nachweis ist vorgesehen: Issuer-DID, VC-Schema, Ablaufdatum, Revocation-Check, Nonce-Test und Consent-Receipt.</p>
+<p>FORINA kann verifizierte Claims speichern, ohne daraus unberechtigt einen Behördenstatus abzuleiten.</p>
+<h2>C05 – On-chain Event Ingestion und Oracle-Risiko</h2>
+<p>Blockchain-Knoten melden Ereignisse mit Bestätigungsstufen; off-chain Preis-Orakel besitzen zusätzliche Vertrauensrisiken. Die zu verwendenden Schlüsselbegriffe sind <strong>RPC, WebSocket, Indexer, Oracle, TWAP, Reorg, BlockTag, ABI</strong>.</p>
+<p>Nutze redundante unabhängige Beobachtungsquellen, Mindestbestätigungen und eindeutige Chain-ID.</p>
+<p>Besonders zu beherrschen ist das Risiko: Manipulierte Orakelpreise und Reorgs führen zu falschen Finanzindikatoren. Als fachlicher Nachweis ist vorgesehen: Reorg-Fuzztest, Oracle-Abweichungsbericht, Block-Hash-Protokoll und Retry-Trace.</p>
+<p>Das Modul darf in unsicheren Netzphasen keine selbstständige Handels- oder Auszahlungsempfehlung als sicher melden.</p>
+<h2>C06 – AML- und Sanktionsscreening</h2>
+<p>Regulierte Finanzfunktionen verlangen gegebenenfalls Kundenprüfung und risikobasierte Kontrollen. Die zu verwendenden Schlüsselbegriffe sind <strong>AML, KYC, KYB, PEP, Sanctions, CDD, EDD, TravelRule</strong>.</p>
+<p>Definiere zunächst Produkt, Jurisdiktion und Rolle; nutze dann nur rechtmäßige Datenquellen und dokumentierte Trefferprüfung.</p>
+<p>Besonders zu beherrschen ist das Risiko: Falsch-positive Sanktionstreffer können ungerechte Sperren verursachen; falsch-negative gefährden Compliance. Als fachlicher Nachweis ist vorgesehen: Screening-Policy, Data-Provenance, Audit-Review, Trefferklassifizierung und Beschwerdeweg.</p>
+<p>Die Funktion bleibt in der Pilotphase mit synthetischen Personen-/Entitätsdaten.</p>
+<h2>C07 – Organisationsprüfung mit LEI und Register</h2>
+<p>Eine Domain oder Wallet kann ohne belegte juristische Zuordnung nicht als vertrauenswürdige Organisation gelten. Die zu verwendenden Schlüsselbegriffe sind <strong>LEI, vLEI, RDAP, KYB, UBO, Registry, DID, Credential</strong>.</p>
+<p>Verbinde kontrollierten Domainnachweis mit amtlichem Register oder LEI und prüfe Identitätsberechtigung und Zeitgültigkeit.</p>
+<p>Besonders zu beherrschen ist das Risiko: Veraltete Registerdaten, Namensgleichheit und unzulässige Amtsbehauptungen. Als fachlicher Nachweis ist vorgesehen: Registerauszug-Referenz, Identitäts-Claim, Freigabe-Scope und Prüfzeitpunkt.</p>
+<p>Kein Trust-Badge für unbekannte Domaininhaber; sichtbarer Status lautet ungeprüft.</p>
+<h2>C08 – Privacy-Preserving Proofs und ZKP</h2>
+<p>Öffentliche Ledger sind für persönliche Kontodaten ungeeignet; Beweiswissen darf keine Identität rekonstruieren. Die zu verwendenden Schlüsselbegriffe sind <strong>ZKP, ZK-SNARK, ZK-STARK, Selective Disclosure, Commitment, Nullifier, Privacy, DPIA</strong>.</p>
+<p>Prüfe, ob bestimmte Berechtigungseigenschaften ohne Offenlegung der Primärdaten nachweisbar sind.</p>
+<p>Besonders zu beherrschen ist das Risiko: Fehlerhafte Schaltkreise und Linkability untergraben Datenschutzversprechen. Als fachlicher Nachweis ist vorgesehen: Proof-Testvektor, Datenschutzauswirkung, Linkability-Test und unabhängiges Audit.</p>
+<p>ZKP ergänzt DSGVO-Bewertung, ersetzt aber keine Rechtsgrundlage und Löschstrategie.</p>
+<h2>C09 – Tokenisierung und rechtliche Asset-Klasse</h2>
+<p>Ein Token kann technische Übertragbarkeit besitzen, ohne einen wirksamen Eigentums- oder Forderungsanspruch zu vermitteln. Die zu verwendenden Schlüsselbegriffe sind <strong>RWA, Token, Claim, Issuer, Holder, Registry, Rights, CorporateAction</strong>.</p>
+<p>Erstelle vor Token-Design eine juristische Rechte-Matrix für Asset, Emittent, Verwahrung, Rechtsraum und Investorengruppe.</p>
+<p>Besonders zu beherrschen ist das Risiko: Irreführende Eigentumsversprechen und fehlende Transferbeschränkungen. Als fachlicher Nachweis ist vorgesehen: Rechte-Matrix, Transferregeln, Corporate-Actions-Test und Rechtsgutachtenstatus.</p>
+<p>Nur synthetische Assets bis rechtliche Bewertung abgeschlossen ist.</p>
+<h2>C10 – Stablecoins und E-Geld-Token</h2>
+<p>Stablecoin-Funktionen sind in der EU nicht pauschal gleichbehandelt; EMT und ART können unterschiedliche Regeln auslösen. Die zu verwendenden Schlüsselbegriffe sind <strong>EMT, ART, MiCA, Issuer, Reserve, Redemption, CASP, Attestation</strong>.</p>
+<p>Ordne Token und Tätigkeit zuerst unter MiCA und einschlägiges Zahlungsrecht ein, bevor on-chain Produktivschnittstellen entstehen.</p>
+<p>Besonders zu beherrschen ist das Risiko: Unzureichende Rückzahlungsrechte, Reserven oder Emittenteninformationen. Als fachlicher Nachweis ist vorgesehen: Whitepaper-Metadaten, Aufsichtsregisterquelle, Reserve-/Redemption-Anforderung und Risikohinweis.</p>
+<p>Portal kann Tokens beobachten, aber keine unlizenzierte Ausgabe oder Custody anbieten.</p>
+<h2>C11 – Fiat-Konten und IBAN-Aggregation</h2>
+<p>Ein Wallet-Anbieter, eine Bank und eine Zahlungsinstitution besitzen unterschiedliche Rollen und Haftung. Die zu verwendenden Schlüsselbegriffe sind <strong>IBAN, BIC, AIS, AISP, PSD2, SCA, SEPA, Consent</strong>.</p>
+<p>Connector-Registry führt IBAN-Kontoarten, Verfügbarkeit, Währungen, consent scopes und Providerspezifikationen getrennt.</p>
+<p>Besonders zu beherrschen ist das Risiko: Datenverwechslungen bei Mehrwährung und versehentlich freigegebene Zahlungsauslösung. Als fachlicher Nachweis ist vorgesehen: Consent Receipt, Scope-Test, Fx-Datum und Account-Link-Dossier.</p>
+<p>IBAN-Formate können angezeigt werden, aber keine echten Testkonten in Build-Artefakte kopieren.</p>
+<h2>C12 – SEPA und Instant Payment Read Models</h2>
+<p>Instant Payments erfordern präzise Zustands- und Zeitbegriffe; eine Ansicht ist nicht gleich eine Ausführung. Die zu verwendenden Schlüsselbegriffe sind <strong>SCT, SCTInst, SEPA, ISO20022, PACS, PAIN, CAMT, PSP</strong>.</p>
+<p>Leseweg verarbeitet normierte Zahlungsereignisse, Settlement-Timestamps und Rückweisungsgründe ohne Schreibrecht.</p>
+<p>Besonders zu beherrschen ist das Risiko: Duplikate, verspätete Events und Inkonsistenzen zwischen PSP und Ledger. Als fachlicher Nachweis ist vorgesehen: ISO-20022-Mapping, Event-Finality-Test und doppelte Nachrichtenprüfung.</p>
+<p>Produktive Payment-Initiation bleibt in einer getrennten genehmigten Lösung.</p>
+<h2>C13 – Reconciliation und Buchungsabgleich</h2>
+<p>Bank- und Blockchain-Buchungen lassen sich selten nur über Betrag und Händler eindeutig abgleichen. Die zu verwendenden Schlüsselbegriffe sind <strong>Reconciliation, Ledger, DoubleEntry, CAMT, Clearing, Suspense, MatchScore, Fx</strong>.</p>
+<p>Nutze mehrstufige Zuordnung über Kontoreferenz, Zeitfenster, Währung, Gegenpartei und belegtes Event.</p>
+<p>Besonders zu beherrschen ist das Risiko: Falsches Zusammenführen oder Doppelerfassung verzerrt Finanzberichte. Als fachlicher Nachweis ist vorgesehen: Reconciliation Run, Match-Confidence, Abweichungsbericht und Prüfprotokoll.</p>
+<p>Die gleiche Kartenzahlung an zwei Tagen darf nicht automatisch als Double Charge gebucht werden.</p>
+<h2>C14 – Zero-Settlement Guardrail</h2>
+<p>Namenslisten zur Blockierung von transfer oder debit sind keine ausreichende technische Schranke. Die zu verwendenden Schlüsselbegriffe sind <strong>ZeroSettlement, ReadOnly, Capability, PDP, PEP, DryRun, DualControl, LedgerLock</strong>.</p>
+<p>Entkopple Beobachtungs- und Transaktionszugangsdaten auf Provider-, Prozess- und Policy-Ebene.</p>
+<p>Besonders zu beherrschen ist das Risiko: Umbenannte Zahlungs-APIs oder neue Provider könnten Wörterfilter umgehen. Als fachlicher Nachweis ist vorgesehen: Policy Evaluation, Provider Scope Snapshot, abgelehnte Request-Traces ohne Payloads.</p>
+<p>Alle echten Geldbewegungen sind außerhalb des Analysemoduls nur mit separater Autorisierung möglich.</p>
+<h2>C15 – Smart-Contract-Verifikation</h2>
+<p>Smart Contracts sind nach Deployment schwierig zu korrigieren und können irreversible Schäden auslösen. Die zu verwendenden Schlüsselbegriffe sind <strong>EVM, ABI, Foundry, Slither, Invariant, Fuzz, Timelock, Audit</strong>.</p>
+<p>Formuliere Invarianten, Property Tests, unabhängige Reviews und Upgrade- beziehungsweise Pause-Strategie.</p>
+<p>Besonders zu beherrschen ist das Risiko: Reentrancy, Access-Control-Fehler, Oracle-Abhängigkeit, ungeprüfte Upgrades. Als fachlicher Nachweis ist vorgesehen: Proof of Compilation, Testnet-Report, Security Findings, signed approval und timelock configuration.</p>
+<p>Ein Demo-Contract nutzt ausschließlich synthetische Tokens und keine echten Schlüssel.</p>
+<h2>C16 – DeFi-Protokollrisiken</h2>
+<p>DeFi erbt Risiken durch Liquidität, Smart Contracts, Governance und Preisfeeds. Die zu verwendenden Schlüsselbegriffe sind <strong>DeFi, AMM, LP, DEX, Liquidity, Slippage, MEV, Oracle</strong>.</p>
+<p>Führe Risikoklassen für Protokolle, Router, Pools, Schlüssel und zugelassene Chains ein.</p>
+<p>Besonders zu beherrschen ist das Risiko: Liquidity Drain, Flash-Loan-Manipulation und Sandwich-Angriffe. Als fachlicher Nachweis ist vorgesehen: Pool-Simulation, Slippage-Tests, Oracle-Failure und Benutzerbestätigung.</p>
+<p>Trading-Simulation ist getrennt von realen Asset-Transfers.</p>
+<h2>C17 – Atomic Swaps und HTLC</h2>
+<p>Cross-Chain-Tausch muss unterschiedliche Finalität und Zeitfenster sicher behandeln. Die zu verwendenden Schlüsselbegriffe sind <strong>HTLC, AtomicSwap, Hashlock, Timelock, Secret, Refund, CrossChain, Finality</strong>.</p>
+<p>Erstelle in synthetischer Testumgebung eine Zustandsmaschine mit Timeout, Refund und Wiederholschutz.</p>
+<p>Besonders zu beherrschen ist das Risiko: Secret-Leaks und ungleich lange Timelocks können Assets blockieren. Als fachlicher Nachweis ist vorgesehen: State-Transition-Tabelle, Timeout-Test und Recovery-Simulation.</p>
+<p>Ein fehlgeschlagener Tausch darf nicht automatisch über eine zweite Route wiederholt werden.</p>
+<h2>C18 – Blockchain Bridges und Wrapped Assets</h2>
+<p>Bridges bündeln Vermögenswerte und Vertrauen in wenige Komponenten. Die zu verwendenden Schlüsselbegriffe sind <strong>Bridge, Wrapped, Custody, Validator, Proof, Replay, MintBurn, Quorum</strong>.</p>
+<p>Bewerte Proof-System, Validierungsquorum, Pausenrechte, Custody und Vorfallhistorie vor jeder Integration.</p>
+<p>Besonders zu beherrschen ist das Risiko: Bridge-Hacks, Replay und Doppelprägungen erzeugen systemische Verluste. Als fachlicher Nachweis ist vorgesehen: Bridge Risk File, Multi-Chain Invariant Report und Independent Review.</p>
+<p>Dashboard zeigt Bridge-Risiken, aber startet keine Brückenübertragung aus M08.</p>
+<h2>C19 – DeFi-Lending und Liquidation</h2>
+<p>Leihe und Sicherheiten können Nutzer unerwarteten Liquidationen aussetzen. Die zu verwendenden Schlüsselbegriffe sind <strong>LTV, Collateral, Borrow, APR, Liquidation, HealthFactor, Oracle, Margin</strong>.</p>
+<p>Modelliere Kreditpositionen mit Pricing-Staleness, Liquidationsschwelle und Sensitivitätsanalyse.</p>
+<p>Besonders zu beherrschen ist das Risiko: Preisfehler und Hebelwirkung erhöhen Verlustrisiken. Als fachlicher Nachweis ist vorgesehen: Stress-Matrix, synthetische Portfoliofälle und Erklärung des Health Factors.</p>
+<p>Die Plattform empfiehlt ohne geeignete Lizenz und Prüfung keine individuelle Kredit- oder Anlageentscheidung.</p>
+<h2>C20 – RWA-Register und Corporate Actions</h2>
+<p>Tokenisierte Vermögenswerte erfordern Abgleich von Rechtsregister und technischem Ledger. Die zu verwendenden Schlüsselbegriffe sind <strong>RWA, Custodian, CSD, RecordDate, Dividend, KYC, TransferAgent, CapTable</strong>.</p>
+<p>Verknüpfe Transfer-Agent, Sperrfristen, Berechtigte und Corporate-Action-Ereignisse über geprüfte Interfaces.</p>
+<p>Besonders zu beherrschen ist das Risiko: Widerspruch zwischen on-chain Besitz und rechtlicher Inhaberschaft. Als fachlicher Nachweis ist vorgesehen: Rechte-Register, Audit Trail, Corporate Action Simulation, Abstimmungsprotokoll.</p>
+<p>Keine generischen Eigentumssiegel für RWA ohne verifizierte Verträge.</p>
+<h2>C21 – DAO-Governance und Fondsgrenzen</h2>
+<p>DAO-Steuerung kann über reine Community-Abstimmungen hinaus rechtliche Pflichten auslösen. Die zu verwendenden Schlüsselbegriffe sind <strong>DAO, Proposal, Quorum, Voting, Timelock, Treasury, Multisig, Snapshot</strong>.</p>
+<p>Trenne Governance-Beschlüsse, Ausführung, Aufsicht und Risikoreserven; definiere Quoren und Vetorechte.</p>
+<p>Besonders zu beherrschen ist das Risiko: Governance-Capture und anonyme Stimmen dürfen Finanzrechte nicht automatisch erteilen. Als fachlicher Nachweis ist vorgesehen: Proposal-Dossier, Quorum-Proof, Timelock-Status und Approver Evidence.</p>
+<p>Ein Vorschlag über Treasury-Transfer bleibt bis zur separaten rechtskonformen Freigabe im Entwurf.</p>
+<h2>C22 – Treasury und Multi-Currency Exposure</h2>
+<p>Fiat, E-Geld und Crypto lassen sich nicht einfach als gleich sichere Liquidität addieren. Die zu verwendenden Schlüsselbegriffe sind <strong>Treasury, FX, VaR, Limit, Hedge, Reserve, Runway, Cashflow</strong>.</p>
+<p>Definiere getrennte Bewertungs- und Liquiditätsklassen mit FX-Quelle, Haircuts und Konzentrationsgrenzen.</p>
+<p>Besonders zu beherrschen ist das Risiko: Kurs- und Gegenparteirisiken können eine scheinbar ausreichende Reserve entwerten. Als fachlicher Nachweis ist vorgesehen: Mark-to-Market-Snapshot, FX-Source, Liquiditätsstress und historische Volatilität.</p>
+<p>Finanzanalysen bleiben informativ und erzeugen keine automatischen Trades.</p>
+<h2>C23 – Digitaler Euro: Integrationsbereitschaft</h2>
+<p>Digitale-Euro-Schnittstellen dürfen nicht als bereits verfügbare Produktivdienste behauptet werden. Die zu verwendenden Schlüsselbegriffe sind <strong>CBDC, DigitalEuro, Wallet, Privacy, Offline, Intermediary, Settlement, API</strong>.</p>
+<p>Isoliere ein experimentelles Adapterinterface, dessen Aktivierung von offiziellen Spezifikationen und Berechtigungen abhängt.</p>
+<p>Besonders zu beherrschen ist das Risiko: Scheinbare Kompatibilität kann Verbraucher und Partner täuschen. Als fachlicher Nachweis ist vorgesehen: Compatibility Matrix, Authority Source, Mock-Adapter und deaktivierter Launch Flag.</p>
+<p>Keine behauptete ECB-Akkreditierung oder EU-Wallet-Zertifizierung.</p>
+<h2>C24 – CBDC und Interoperabilitätsmodelle</h2>
+<p>Zentralbankgeld ist institutionell und technisch von privaten Stablecoins und Tokens zu unterscheiden. Die zu verwendenden Schlüsselbegriffe sind <strong>CBDC, RTGS, DvP, PvP, ISO20022, CentralBank, Token, DLT</strong>.</p>
+<p>Entwickle abstrakte Message- und Settlement-Modelle mit Rollen-/Jurisdiktionsparametern.</p>
+<p>Besonders zu beherrschen ist das Risiko: Falsche Annahmen über Zahlungsfinalität oder Zentralbankzugang. Als fachlicher Nachweis ist vorgesehen: Sequence-Diagram, Rollenmatrix, ISO20022-Mapping und Finalitätsmatrix.</p>
+<p>Jeder produktive Adapter setzt eine offizielle Zulassung voraus.</p>
+<h2>C25 – Tokenomics und Emissionssteuerung</h2>
+<p>Tokenomics kann Anlegerinteressen, Liquidität und Governance langfristig verändern. Die zu verwendenden Schlüsselbegriffe sind <strong>Supply, Burn, Mint, Vesting, Inflation, Unlock, Governance, Reserve</strong>.</p>
+<p>Definiere Emissionsobergrenzen, Vesting, Unlocks, Rechte und Offenlegung unabhängig vom UI-Narrativ.</p>
+<p>Besonders zu beherrschen ist das Risiko: Unklare Token-Rechte oder unrealistische Renditeannahmen. Als fachlicher Nachweis ist vorgesehen: Supply-Invariant, Governance-Vote, Sensitivität, Risikoerklärung.</p>
+<p>Demo-Token besitzt keinen wirtschaftlichen Anspruch und wird ausdrücklich als synthetisch markiert.</p>
+<h2>C26 – Gas, Gebühren und Gebührenobergrenzen</h2>
+<p>Gebühren schwanken mit Chain-Zustand und komplexen Smart-Contract-Pfaden. Die zu verwendenden Schlüsselbegriffe sind <strong>Gas, EIP1559, BaseFee, PriorityFee, MEV, Slippage, Paymaster, Estimate</strong>.</p>
+<p>Zeige Gebühren vor jeder freigegebenen Signaturaktion mit Obergrenze, Ablauf und Anstiegsszenario.</p>
+<p>Besonders zu beherrschen ist das Risiko: Eine falsche Gas-Schätzung kann zu Abbruch oder unerwarteten Kosten führen. Als fachlicher Nachweis ist vorgesehen: Gas-Stress-Test, Zeitstempel, Quote-Source, Fallback-Verhalten.</p>
+<p>Read-only Views zeigen Kosten hypothetisch ohne Nutzerwallet zu belasten.</p>
+<h2>C27 – Chain Analytics und Address-Risk</h2>
+<p>Transaktionsgraphen können nützliche Muster zeigen, aber Personen nicht sicher identifizieren. Die zu verwendenden Schlüsselbegriffe sind <strong>Graph, Cluster, Address, Entity, Mixer, RiskScore, FalsePositive, Provenance</strong>.</p>
+<p>Erklärung, Unsicherheit und Herkunft jeder Risikoheuristik werden ausgewiesen.</p>
+<p>Besonders zu beherrschen ist das Risiko: Falschzuordnungen schädigen legitime Nutzer oder Partner. Als fachlicher Nachweis ist vorgesehen: Attribution-Source, Confidence, Appeal, Bias-Test und Privacy Review.</p>
+<p>Eine Wallet-Verbindung wird nicht als belegte juristische Person ausgegeben.</p>
+<h2>C28 – Betrugs- und Anomalieerkennung</h2>
+<p>Crypto und Fiat-Betrugsmuster überlappen, verlangen aber unterschiedliche Daten- und Rechtsgrundlagen. Die zu verwendenden Schlüsselbegriffe sind <strong>Fraud, Velocity, Device, Behavior, Anomaly, Rule, Model, Chargeback</strong>.</p>
+<p>Nutze explizite Regeln und kalibrierte Modelle mit Interventionsstufen und Reviewprozess.</p>
+<p>Besonders zu beherrschen ist das Risiko: Zu viele Fehlalarme untergraben die Nutzbarkeit; Logdaten können sensible Profile erzeugen. Als fachlicher Nachweis ist vorgesehen: Precision/Recall, Drift-Monitoring, synthetische Angriffsbeispiele, Case Dossier.</p>
+<p>Anomaliehinweise bleiben ohne Freigabe reine Warnungen.</p>
+<h2>C29 – Market Risk und Szenarien</h2>
+<p>Automatisierte Risikoanzeigen können bei Modellfehlern falsche Sicherheit vermitteln. Die zu verwendenden Schlüsselbegriffe sind <strong>VaR, CVaR, Drawdown, Volatility, Stress, Liquidity, Correlation, Exposure</strong>.</p>
+<p>Beschreibe Datenherkunft, Prognosezeitraum, Modellgrenzen und konservative Schockszenarien.</p>
+<p>Besonders zu beherrschen ist das Risiko: Regimewechsel und dünne Märkte machen historische Schätzungen instabil. Als fachlicher Nachweis ist vorgesehen: Backtesting, Sensitivitätskurven, Out-of-sample-Resultate und Governance-Freigabe.</p>
+<p>Keine individualisierte Anlageberatung im Read-only Research Mode.</p>
+<h2>C30 – Steuern und Reporting</h2>
+<p>Krypto-Steuerlogiken hängen von Sachverhalt, Rechtsraum und Bewertungsmethode ab. Die zu verwendenden Schlüsselbegriffe sind <strong>Tax, CostBasis, FIFO, LIFO, Lot, RealizedPnL, Jurisdiction, AuditTrail</strong>.</p>
+<p>Trenne Rohdaten, Transaktionsklassifikation, Bewertungsregel und steuerlichen Export.</p>
+<p>Besonders zu beherrschen ist das Risiko: Automatische Steuerberechnungen können juristisch falsch sein oder Buchungsfehler fortschreiben. Als fachlicher Nachweis ist vorgesehen: Lot-Reconciliation, Methodendokument, Source Attribution, Korrekturprotokoll.</p>
+<p>Persönliche steuerliche Beratung erfordert gegebenenfalls zugelassene Fachleute.</p>
+<h2>C31 – Kryptografische Attestation und Audit Trail</h2>
+<p>Eine Hashliste allein beweist nicht, wer einen Zustand autorisiert hat. Die zu verwendenden Schlüsselbegriffe sind <strong>Attestation, Merkle, Ed25519, DSSE, JWS, Timestamp, Revocation, TrustAnchor</strong>.</p>
+<p>Signiere kanonische Evidence-Envelopes und führe Version, Zweck, Aussteller und Widerrufsstatus mit.</p>
+<p>Besonders zu beherrschen ist das Risiko: Selbstsignierte Nachweise können fälschlich wie Drittzertifikate aussehen. Als fachlicher Nachweis ist vorgesehen: Replay-Test, Chain of Custody, Public-Key-Check, Zertifikatsverzeichnis.</p>
+<p>Eine neue Binary entwertet frühere Build-Integritätsnachweise.</p>
+<h2>C32 – Incident Response und Schlüsselnotfall</h2>
+<p>Finanz- und Web3-Vorfälle benötigen sofortige klar autorisierte Deaktivierung. Die zu verwendenden Schlüsselbegriffe sind <strong>IR, SOC, CSIRT, Playbook, Rotate, Revoke, Pause, Forensics</strong>.</p>
+<p>Plane Freeze, Key Revocation, Connector Shutdown und forensische Sicherung ohne Vollzugriff auf Privatdaten.</p>
+<p>Besonders zu beherrschen ist das Risiko: Verzögerte Alarmierung erhöht irreversible Verluste. Als fachlicher Nachweis ist vorgesehen: Incident Timeline, Runbook, Kommunikationsmatrix und Lessons Learned.</p>
+<p>Kein automatisch ungeprüftes Gegen-Trading als Vorfallreaktion.</p>
+<h2>C33 – Cross-Chain und Multi-Provider Interoperabilität</h2>
+<p>Technologien verschiedener Chains und Bankprovider bieten inkompatible Sicherheitsannahmen. Die zu verwendenden Schlüsselbegriffe sind <strong>IBC, CCIP, Bridge, ChainID, ISO20022, Adapter, Gateway, Policy</strong>.</p>
+<p>Eine normalisierte Adapter-Ebene hält Schema, Rechte und Finalitätssemantik getrennt.</p>
+<p>Besonders zu beherrschen ist das Risiko: Ein Adapter darf keine eigenen privilegierten Aktionen erfinden. Als fachlicher Nachweis ist vorgesehen: Contract-Test-Suite, Version Matrix, Rollback-Plan, Simulation.</p>
+<p>Neue Chain wird zuerst read-only, dann extern geprüft und nur danach optional aktionsfähig.</p>
+<h2>C34 – Produktive Einführung und Zulassungspfad</h2>
+<p>Funktionsfähiger Code ist nicht gleich rechtlich zulässiges Finanzprodukt oder zertifizierte Infrastruktur. Die zu verwendenden Schlüsselbegriffe sind <strong>Launch, MiCA, DORA, GDPR, PSD2, AML, GoLive, Certification</strong>.</p>
+<p>Entscheide zuerst Produktrolle, Berechtigungsumfang, Lizenzerfordernisse und verfügbare Prüfpartner.</p>
+<p>Besonders zu beherrschen ist das Risiko: Falsche Zulassungs- oder Zertifizierungsbehauptungen sind ein eigenständiges Risiko. Als fachlicher Nachweis ist vorgesehen: Launch Checklist, Legal Memo, External Attestation, Disaster Drill und Exit-Plan.</p>
+<p>Bis dahin Synthetic Research und Read-only Integration statt Echtgeldbewegungen.</p>
+<hr />
+<h1>TEIL V – NORMEN, NACHWEISE UND ZERTIFIZIERUNGSVORBEREITUNG</h1>
+<p>Dieser Abschnitt unterscheidet vier Dinge, die in Softwareprojekten häufig irreführend vermischt werden: gesetzliche Verpflichtungen, freiwillige technische Standards, interne Kontrollberichte und tatsächlich von einer zuständigen dritten Stelle ausgestellte Zertifikate beziehungsweise Prüfzeichen. Ein EU-Gesetz ist nicht automatisch ein Zertifizierungsschema; ein eigenes kryptografisches Zertifikat bestätigt nur die in seinem Geltungsbereich signierte Aussage. Das Normenregister führt deshalb Typ, Aussteller/Scheme-Halter, offizielle URL, Revision, konkrete Anwendbarkeit, Prüfkriterium, Evidenz und Status getrennt.</p>
+<p>Für die automatische Audit-Leitung gilt ein gemeinsamer Workflow: Quelle und Version bestimmen, Rollen-/Produktanwendbarkeit entscheiden, jedes Kontrollziel in messbare Pflichten herunterbrechen, geeignete Evidence einsammeln, Signatur und Frische prüfen, Defizite klassifizieren, menschliche Review durchführen und erst danach eine <strong>interne</strong> Entscheidung veröffentlichen. <code>EXTERNAL_CERTIFIED</code> darf ausschließlich gesetzt werden, wenn eine echte Bescheinigung mit Aussteller, Prüfscope und Gültigkeit nachweisbar ist. Logos/Abzeichen richten sich zudem nach Marken- und Nutzungsbedingungen der jeweiligen Organisation. Im Paket liegen deshalb eigene, neutral gestaltete HCOS-Abzeichenvorlagen, keine kopierten Behörden- oder ISO-Logos.</p>
+<h2>D01 – EU-DSGVO / GDPR (EU) 2016/679</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> Europäische Union / Datenschutzaufsichten. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2016/679/oj">https://eur-lex.europa.eu/eli/reg/2016/679/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Personenbezogene Daten in Accounts, Finanzanalyse, Support und Telemetrie.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Rechtsgrundlage und Zweckbindung</strong>; <strong>K02 Datenminimierung</strong>; <strong>K03 Betroffenenrechte</strong>; <strong>K04 TOMs</strong>; <strong>K05 Auftragsverarbeitung</strong>; <strong>K06 Löschfristen</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 RoPA</strong>; <strong>E02 Datenschutzhinweise</strong>; <strong>E03 DPIA-Entscheidung</strong>; <strong>E04 Consent-Receipt</strong>; <strong>E05 Löschtest</strong>; <strong>E06 Zugriffsprotokoll</strong>.</p>
+<p>Interner DSGVO-Nachweis ist kein staatliches DSGVO-Zertifikat; etwaige Zertifizierungsverfahren sind von zuständigen Stellen und Artikel 42 abhängig.</p>
+<h2>D02 – DORA Verordnung (EU) 2022/2554</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / ESAs und zuständige nationale Finanzaufsicht. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2022/2554/oj">https://eur-lex.europa.eu/eli/reg/2022/2554/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Finanzunternehmen und ICT-Drittparteien je konkretem persönlichen und sachlichen Anwendungsbereich.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 ICT-Risikomanagement</strong>; <strong>K02 Vorfallmanagement</strong>; <strong>K03 Resilienztests</strong>; <strong>K04 Drittparteirisiko</strong>; <strong>K05 Governance</strong>; <strong>K06 Informationsaustausch</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 ICT-Asset-Register</strong>; <strong>E02 kritische Dienstekette</strong>; <strong>E03 Vorfallplan</strong>; <strong>E04 Exit-Strategie</strong>; <strong>E05 Testprotokoll</strong>; <strong>E06 Dienstleisterverträge</strong>.</p>
+<p>Keine allgemeine DORA-Zertifizierung aus Eigenprüfung; Regulierung und behördliche Aufsicht je Norm und Rolle.</p>
+<h2>D03 – NIS2 Richtlinie (EU) 2022/2555</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU-Mitgliedstaaten / nationale zuständige Behörden. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/dir/2022/2555/oj">https://eur-lex.europa.eu/eli/dir/2022/2555/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Wesentliche oder wichtige Einrichtungen nach sektor- und größenbezogener nationaler Umsetzung.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Risikomanagement</strong>; <strong>K02 Lieferkette</strong>; <strong>K03 Incident Handling</strong>; <strong>K04 Meldewege</strong>; <strong>K05 Geschäftsleitung</strong>; <strong>K06 BCM</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Anwendbarkeitsanalyse</strong>; <strong>E02 Assetliste</strong>; <strong>E03 Meldeplan</strong>; <strong>E04 Lieferantenbeurteilungen</strong>; <strong>E05 Awareness</strong>; <strong>E06 Tests</strong>.</p>
+<p>Kein offizielles EU-NIS2-Siegel durch Software; nationale Umsetzung und Fristen sind gesondert zu prüfen.</p>
+<h2>D04 – EU AI Act (EU) 2024/1689</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / AI Office und nationale Marktüberwachung. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2024/1689">https://eur-lex.europa.eu/eli/reg/2024/1689</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: KI-Provider oder Deployer nach Rolle, Systemzweck, Risikoklasse und geltender gestaffelter Anwendungsphase.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Risikoklassifizierung</strong>; <strong>K02 Verbotstatbestände</strong>; <strong>K03 Transparenz</strong>; <strong>K04 High-Risk-Prozesse wo anwendbar</strong>; <strong>K05 menschliche Aufsicht</strong>; <strong>K06 Dokumentation</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 AI-Systeminventar</strong>; <strong>E02 Use-Case-Factsheet</strong>; <strong>E03 Risikoentscheidung</strong>; <strong>E04 Daten-Governance</strong>; <strong>E05 Testfälle</strong>; <strong>E06 Nutzungsinformation</strong>.</p>
+<p>Keine pauschale AI-Act-Zertifizierung; bei einschlägigen Konformitätsverfahren sind Rechtsgrundlage und Stelle nachzuweisen.</p>
+<h2>D05 – Cyber Resilience Act (EU) 2024/2847</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / Marktüberwachungs- und Konformitätsstellen. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2024/2847/oj">https://eur-lex.europa.eu/eli/reg/2024/2847/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Produkte mit digitalen Elementen, die in Anwendungsbereich und Übergangsfristen fallen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Secure by Design</strong>; <strong>K02 Schwachstellenmanagement</strong>; <strong>K03 Herstellerpflichten</strong>; <strong>K04 technische Dokumentation</strong>; <strong>K05 Update- und Meldewege</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Produktklassifizierung</strong>; <strong>E02 SBOM</strong>; <strong>E03 Schwachstellenprozess</strong>; <strong>E04 Sicherheitsupdates</strong>; <strong>E05 technische Akte</strong>; <strong>E06 Risikoanalyse</strong>.</p>
+<p>CE-Zeichen nur bei nachweislich einschlägigem Produkt und korrekt durchlaufenem Konformitätsprozess, nicht für das Portal als Ganzes.</p>
+<h2>D06 – MiCA Verordnung (EU) 2023/1114</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / zuständige Finanzaufsicht, ESMA und EBA. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2023/1114/oj">https://eur-lex.europa.eu/eli/reg/2023/1114/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Crypto-Asset-Dienstleistung, Emission oder bestimmte Tokenarten nach konkreter Tätigkeit.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Token-Klassifikation</strong>; <strong>K02 Whitepaper</strong>; <strong>K03 Emittentenpflichten</strong>; <strong>K04 CASP-Lizenzstatus</strong>; <strong>K05 Beschwerdeweg</strong>; <strong>K06 Marktmissbrauchsschutz</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Token-Dossier</strong>; <strong>E02 Registerauszug</strong>; <strong>E03 Whitepaper-Referenz</strong>; <strong>E04 Custody-Rechte</strong>; <strong>E05 Compliance-Mapping</strong>; <strong>E06 Freigabeprotokoll</strong>.</p>
+<p>Kein MiCA-Approved-Badge ohne amtlichen Status; Selbstbewertung ist maximal eine vorbereitende Prüfdokumentation.</p>
+<h2>D07 – eIDAS 2 / EU Digital Identity (EU) 2024/1183</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU-Mitgliedstaaten / Vertrauensdiensteaufsicht. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2024/1183/oj">https://eur-lex.europa.eu/eli/reg/2024/1183/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Digitale Identitäten, Vertrauensdienste, Wallet-Ökosystem und qualifizierte Dienste je Rolle.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Identitätsbindung</strong>; <strong>K02 Wallet-Vertrauensmodell</strong>; <strong>K03 Verifizierbarkeit</strong>; <strong>K04 Attributfreigabe</strong>; <strong>K05 Widerruf</strong>; <strong>K06 Interoperabilität</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 DID-/VC-Profile</strong>; <strong>E02 Vertrauensliste</strong>; <strong>E03 Issuer-Evidence</strong>; <strong>E04 Wallet-Tests</strong>; <strong>E05 Signaturprüfung</strong>; <strong>E06 Scope</strong>.</p>
+<p>Eine eigene Wallet oder eine Ed25519-Signatur ist nicht automatisch ein qualifizierter Vertrauensdienst.</p>
+<h2>D08 – PSD2 Richtlinie (EU) 2015/2366</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / nationale Finanzaufsichten. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/dir/2015/2366/oj">https://eur-lex.europa.eu/eli/dir/2015/2366/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Account Information oder Payment Initiation Services, einschlägige Zahlungsvorgänge und zugelassene Anbieter.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Starke Kundenauthentifizierung</strong>; <strong>K02 Kundeneinwilligung</strong>; <strong>K03 Schnittstellenrechte</strong>; <strong>K04 Sicherheitsmaßnahmen</strong>; <strong>K05 Providerrolle</strong>; <strong>K06 Beschwerdeweg</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Consent-Scope</strong>; <strong>E02 SCA-Test</strong>; <strong>E03 Rollen-/Lizenzanalyse</strong>; <strong>E04 Providervertrag</strong>; <strong>E05 Access Log</strong>; <strong>E06 Widerrufstest</strong>.</p>
+<p>Nur Read-only-Kontodatenzugriff ist technisch und rechtlich sauber von Zahlungsauslösung zu trennen.</p>
+<h2>D09 – EU AML-Regelwerk / AMLR (EU) 2024/1624</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / AMLA, Finanzaufsichten und FIUs. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2024/1624/oj">https://eur-lex.europa.eu/eli/reg/2024/1624/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Verpflichtete Unternehmen und einschlägige Tätigkeiten unter abgestuften Anwendungsdaten.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Kundensorgfalt</strong>; <strong>K02 wirtschaftlich Berechtigte</strong>; <strong>K03 Monitoring</strong>; <strong>K04 Verdachtsmeldungen</strong>; <strong>K05 Aufbewahrung</strong>; <strong>K06 Kontrollen</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Produktrollenmatrix</strong>; <strong>E02 AML-Policy</strong>; <strong>E03 synthetische Screening-Fälle</strong>; <strong>E04 Eskalationsprozess</strong>; <strong>E05 Trainingsbeleg</strong>.</p>
+<p>Automatisierte Analyse ersetzt nicht behördliche Anforderungen, professionelle Beurteilung oder gesetzlich gebotene Meldungen.</p>
+<h2>D10 – DLT-Pilotverordnung (EU) 2022/858</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / ESMA und nationale Finanzmarktaufsichten. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2022/858/oj">https://eur-lex.europa.eu/eli/reg/2022/858/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Bestimmte DLT-Marktinfrastrukturen und Finanzinstrumente nach Ausnahme- und Zulassungsrahmen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Rechtliche Klassifikation</strong>; <strong>K02 Betriebsmodell</strong>; <strong>K03 DLT-Risiken</strong>; <strong>K04 Marktinfrastruktur-Governance</strong>; <strong>K05 Teilnehmerrechte</strong>; <strong>K06 Exit</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 DLT-Architektur</strong>; <strong>E02 Zulassungspfad</strong>; <strong>E03 Aufsichtsentscheid</strong>; <strong>E04 Settlement-Finality-Matrix</strong>; <strong>E05 Testnet-Protokoll</strong>.</p>
+<p>Kein automatischer DLT-Pilot-Status allein aufgrund technischer Tokenisierung.</p>
+<h2>D11 – European Accessibility Act (EU) 2019/882</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU-Mitgliedstaaten / Marktüberwachung. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/dir/2019/882/oj">https://eur-lex.europa.eu/eli/dir/2019/882/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Bestimmte Produkte und Dienstleistungen mit Barrierefreiheitsanforderungen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Bedienbarkeit</strong>; <strong>K02 Verständlichkeit</strong>; <strong>K03 Eingabehilfe</strong>; <strong>K04 Dokumentation</strong>; <strong>K05 Supportzugang</strong>; <strong>K06 zugängliche Interaktion</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 WCAG-Mapping</strong>; <strong>E02 Tastaturtest</strong>; <strong>E03 Screenreader-Test</strong>; <strong>E04 Kontrastbericht</strong>; <strong>E05 Fehlerbehebungsplan</strong>.</p>
+<p>Ein internes Accessibility-Label ist keine amtliche Marktfreigabe oder pauschale EAA-Konformität.</p>
+<h2>D12 – EU Data Act (EU) 2023/2854</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> Europäische Union / nationale zuständige Stellen. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2023/2854/oj">https://eur-lex.europa.eu/eli/reg/2023/2854/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Zugriff auf bestimmte Produkt- und Dienstdaten, Cloudwechsel und Datennutzung nach Anwendbarkeit.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Datenzugangsrechte</strong>; <strong>K02 Fairness</strong>; <strong>K03 Portabilität</strong>; <strong>K04 Schutz von Geschäftsgeheimnissen</strong>; <strong>K05 Interoperabilität</strong>; <strong>K06 Vertragspflichten</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Data Inventory</strong>; <strong>E02 API-Export-Test</strong>; <strong>E03 Data-Sharing-Kontrakt</strong>; <strong>E04 Lösch-/Wechselplan</strong>; <strong>E05 Jurisdiktionsanalyse</strong>.</p>
+<p>Ein universeller Datenfreigabeanspruch folgt nicht aus dem Namen Data Act; konkrete Regeln sind zu prüfen.</p>
+<h2>D13 – Data Governance Act (EU) 2022/868</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / zuständige nationale Behörden. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2022/868/oj">https://eur-lex.europa.eu/eli/reg/2022/868/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Besondere Datenvermittlungsdienste, geschützte öffentliche Daten und Datenaltruismus.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Intermediary-Rollen</strong>; <strong>K02 Zwecktrennung</strong>; <strong>K03 organisatorische Unabhängigkeit</strong>; <strong>K04 Vertrauen</strong>; <strong>K05 Transparenz</strong>; <strong>K06 Register</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Vermittlungsmodell</strong>; <strong>E02 Data-Sharing-Katalog</strong>; <strong>E03 Governance-Regeln</strong>; <strong>E04 Anbieter-Status</strong>; <strong>E05 Nutzungsbedingungen</strong>.</p>
+<p>Keine amtliche Datenvermittler-Anerkennung durch selbstgeneriertes Badge.</p>
+<h2>D14 – Digital Services Act (EU) 2022/2065</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / Digital Services Coordinators und Kommission. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2022/2065/oj">https://eur-lex.europa.eu/eli/reg/2022/2065/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Vermittlungsdienste oder Plattformdienste entsprechend ihrer tatsächlichen Funktion.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Kontaktstellen</strong>; <strong>K02 Transparenz</strong>; <strong>K03 Meldungsbearbeitung</strong>; <strong>K04 Beschwerdewege</strong>; <strong>K05 ggf. zusätzliche Plattformpflichten</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Serviceklassifizierung</strong>; <strong>E02 Notice-and-Action-Prozess</strong>; <strong>E03 Moderationsaudit</strong>; <strong>E04 Berichtspflichtenentscheidung</strong>.</p>
+<p>Ein internes Moderationsboard beweist keine Erfüllung aller DSA-Pflichten.</p>
+<h2>D15 – EU Taxonomy (EU) 2020/852 / ESG</h2>
+<p><strong>Instrumenttyp:</strong> GESETZ. <strong>Referenz-/Schemeträger:</strong> EU / Finanz- und Nachhaltigkeitsaufsicht. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://eur-lex.europa.eu/eli/reg/2020/852/oj">https://eur-lex.europa.eu/eli/reg/2020/852/oj</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Bestimmte Finanzprodukte, Unternehmen und Nachhaltigkeitsangaben nach anwendbaren Offenlegungspflichten.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Technische Bewertung</strong>; <strong>K02 Tätigkeitsklassifikation</strong>; <strong>K03 DNSH</strong>; <strong>K04 Mindestschutz</strong>; <strong>K05 Nachweise</strong>; <strong>K06 Datenqualität</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Asset-Taxonomy Map</strong>; <strong>E02 Prüfmethoden</strong>; <strong>E03 Quellen-Datum</strong>; <strong>E04 Nichtanwendbarkeitsentscheidung</strong>; <strong>E05 Review</strong>.</p>
+<p>Ein grün gefärbtes ESG-Symbol ist kein geprüfter Taxonomie-Konformitätsnachweis.</p>
+<h2>D16 – ISO/IEC 27001:2022 Informationssicherheitsmanagement</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC / akkreditierte Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/27001">https://www.iso.org/standard/27001</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: ISMS für den festgelegten organisatorischen und technischen Geltungsbereich.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Kontext und Risiken</strong>; <strong>K02 ISMS-Führung</strong>; <strong>K03 Anwendbarkeitserklärung</strong>; <strong>K04 Maßnahmen</strong>; <strong>K05 Audits</strong>; <strong>K06 kontinuierliche Verbesserung</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Scope Statement</strong>; <strong>E02 Risk Register</strong>; <strong>E03 SoA</strong>; <strong>E04 interne Audits</strong>; <strong>E05 Management Review</strong>; <strong>E06 Wirksamkeitsbelege</strong>.</p>
+<p>„ISO-zertifiziert“ nur mit gültigem Zertifikat einer zuständigen Stelle im nachgewiesenen Scope; ISO-Logo nicht frei nutzbar.</p>
+<h2>D17 – ISO/IEC 27002:2022 Security Controls</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/75652.html">https://www.iso.org/standard/75652.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Leitfaden für Informationssicherheitsmaßnahmen und deren Umsetzung.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Organisatorische Kontrollen</strong>; <strong>K02 personelle Kontrollen</strong>; <strong>K03 physische Kontrollen</strong>; <strong>K04 technische Kontrollen</strong>; <strong>K05 Wirksamkeit</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Control Catalogue</strong>; <strong>E02 Maßnahmenbelege</strong>; <strong>E03 Verantwortliche</strong>; <strong>E04 Audit-Proben</strong>; <strong>E05 Gap-Analyse</strong>.</p>
+<p>27002 selbst ist ein Controls-Leitfaden; daraus folgt kein eigenständiges Unternehmenszertifikat.</p>
+<h2>D18 – ISO/IEC 27701:2025 PIMS</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC / ggf. Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://committee.iso.org/standard/27701">https://committee.iso.org/standard/27701</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Privacy Information Management System für Controller und Processor nach scope.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 PII-Governance</strong>; <strong>K02 Rollen</strong>; <strong>K03 Privacy Risks</strong>; <strong>K04 Rechteprozesse</strong>; <strong>K05 Datenschutzkontrollen</strong>; <strong>K06 Verbesserung</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 PIMS Scope</strong>; <strong>E02 Dateninventar</strong>; <strong>E03 Datenschutzprüfung</strong>; <strong>E04 Betroffenenrechte</strong>; <strong>E05 Prozessaudit</strong>.</p>
+<p>2025er Ausgabe getrennt von 2019er Ausgabe behandeln; externe Zertifizierung nur bei bestehendem Prüfweg behaupten.</p>
+<h2>D19 – ISO/IEC 42001:2023 AIMS</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC / Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/42001">https://www.iso.org/standard/42001</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: AI Management System für Entwicklung oder Nutzung von KI im festgelegten Scope.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 AI-Governance</strong>; <strong>K02 Risiko- und Wirkungsbewertung</strong>; <strong>K03 Systeminventar</strong>; <strong>K04 Prozesse</strong>; <strong>K05 Evaluierung</strong>; <strong>K06 Verbesserung</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 AI Policy</strong>; <strong>E02 Systemliste</strong>; <strong>E03 Risikodossier</strong>; <strong>E04 Modelltests</strong>; <strong>E05 Managementreview</strong>; <strong>E06 Human Oversight</strong>.</p>
+<p>Ein KI-Projekt erhält kein ISO/IEC-42001-Siegel durch eigenen Testbericht.</p>
+<h2>D20 – ISO 9001:2026 Qualitätsmanagement</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO / Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/9001-2026">https://www.iso.org/9001-2026</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: QMS mit Prozessqualität, Kundenbezug und kontinuierlicher Verbesserung.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Führung</strong>; <strong>K02 Qualitätsziele</strong>; <strong>K03 Prozesssteuerung</strong>; <strong>K04 Risiko und Chance</strong>; <strong>K05 Nichtkonformität</strong>; <strong>K06 Managementreview</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Prozesskarte</strong>; <strong>E02 KPIs</strong>; <strong>E03 Abweichungen</strong>; <strong>E04 Korrekturmaßnahmen</strong>; <strong>E05 Auditkalender</strong>; <strong>E06 Managementreview</strong>.</p>
+<p>Die 2026er Ausgabe ersetzt 2015; Übergangsbedingungen sind mit Zertifizierern zu klären.</p>
+<h2>D21 – ISO 22301:2019 Business Continuity</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO / Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/75106.html">https://www.iso.org/standard/75106.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Business Continuity Management für definierte kritische Dienstleistungen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Business Impact Analysis</strong>; <strong>K02 RTO/RPO</strong>; <strong>K03 Fortführungsstrategien</strong>; <strong>K04 Übungen</strong>; <strong>K05 Notfallkommunikation</strong>; <strong>K06 Verbesserungen</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 BIA</strong>; <strong>E02 Recovery-Pläne</strong>; <strong>E03 Restore-Test</strong>; <strong>E04 Übungsbericht</strong>; <strong>E05 Krisenrollen</strong>; <strong>E06 Recovery-KPIs</strong>.</p>
+<p>Ein Backup allein beweist kein zertifiziertes BCMS; Geltungsbereich und Wirksamkeit zählen.</p>
+<h2>D22 – ISO/IEC 20000-1:2018 Service Management</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC / Zertifizierungsstelle. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/70636.html">https://www.iso.org/standard/70636.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Servicemanagementsystem für definierte IT-Dienstleistungen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Service Design</strong>; <strong>K02 Incident- und Change-Management</strong>; <strong>K03 Supplier Control</strong>; <strong>K04 Service Levels</strong>; <strong>K05 Continual Improvement</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Service-Katalog</strong>; <strong>E02 SLA/SLO</strong>; <strong>E03 Incident Records</strong>; <strong>E04 Change Freigaben</strong>; <strong>E05 Lieferantenreview</strong>.</p>
+<p>Nur ein externer, scopegebundener Prüfprozess kann eine Zertifizierungsbehauptung tragen.</p>
+<h2>D23 – ISO/IEC 27017:2015 Cloud Controls</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/43757.html">https://www.iso.org/standard/43757.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Sicherheitsmaßnahmen für Cloud-Service-Provider und Cloud-Kunden als ergänzende Orientierung.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Shared Responsibility</strong>; <strong>K02 Provisioning</strong>; <strong>K03 Virtualization Security</strong>; <strong>K04 Cloud Logging</strong>; <strong>K05 Asset Return</strong>; <strong>K06 Tenant Isolation</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Responsibility Matrix</strong>; <strong>E02 Cloud Config</strong>; <strong>E03 Access Review</strong>; <strong>E04 Third Party Contract</strong>; <strong>E05 Log Hygiene</strong>.</p>
+<p>Eine Umsetzung einzelner Cloud-Controls ist nicht automatisch ein ISO-27017-Zertifikat.</p>
+<h2>D24 – ISO/IEC 27018:2019 Public Cloud Privacy</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO/IEC. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/76559.html">https://www.iso.org/standard/76559.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Schutz personenbezogener Informationen bei Public-Cloud-Verarbeitung nach anwendbarer Rolle.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 PII Handling</strong>; <strong>K02 Löschung</strong>; <strong>K03 Transparenz</strong>; <strong>K04 Subprocessing</strong>; <strong>K05 Zugriffskontrolle</strong>; <strong>K06 Auditing</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Cloud Processing Agreement</strong>; <strong>E02 Löschbestätigung</strong>; <strong>E03 PII Inventory</strong>; <strong>E04 Supplier Assessment</strong>.</p>
+<p>Cloud-Nutzung durch einzelne Funktionen wird nicht pauschal durch ein Selbstbadge datenschutzkonform.</p>
+<h2>D25 – ISO 31000:2018 Risikomanagement</h2>
+<p><strong>Instrumenttyp:</strong> NORM. <strong>Referenz-/Schemeträger:</strong> ISO. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.iso.org/standard/65694.html">https://www.iso.org/standard/65694.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Allgemeines Management von Risiken und Chancen ohne spezialisiertes Zertifizierungsversprechen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Risikokontext</strong>; <strong>K02 Identifizierung</strong>; <strong>K03 Analyse</strong>; <strong>K04 Bewertung</strong>; <strong>K05 Behandlung</strong>; <strong>K06 Monitoring</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Risk Method</strong>; <strong>E02 Risk Register</strong>; <strong>E03 Treatments</strong>; <strong>E04 Monitoring Review</strong>; <strong>E05 Decision Minutes</strong>.</p>
+<p>ISO 31000 ist ein Leitfaden; es besteht keine klassische ISO-Zertifizierung nach dieser Norm.</p>
+<h2>D26 – NIST Cybersecurity Framework 2.0</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> NIST / USA. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.nist.gov/cyberframework">https://www.nist.gov/cyberframework</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Cybersicherheits-Governance und Funktionsmapping für Organisationen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Govern</strong>; <strong>K02 Identify</strong>; <strong>K03 Protect</strong>; <strong>K04 Detect</strong>; <strong>K05 Respond</strong>; <strong>K06 Recover</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 CSF Profile</strong>; <strong>E02 Gap Analysis</strong>; <strong>E03 Risk Register</strong>; <strong>E04 Control Trace</strong>; <strong>E05 KPIs</strong>.</p>
+<p>NIST CSF Alignment ist eine interne Methodenaussage, kein NIST-Zertifikat.</p>
+<h2>D27 – NIST SSDF SP 800-218</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> NIST / USA. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://csrc.nist.gov/pubs/sp/800/218/final">https://csrc.nist.gov/pubs/sp/800/218/final</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Sicherer Softwareentwicklungsprozess und Lieferkettenkontrolle.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Prepare Organization</strong>; <strong>K02 Protect Software</strong>; <strong>K03 Produce Well-Secured Software</strong>; <strong>K04 Respond to Vulnerabilities</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Secure SDLC</strong>; <strong>E02 Build Provenance</strong>; <strong>E03 Training</strong>; <strong>E04 Code Review</strong>; <strong>E05 Vulnerability Response</strong>; <strong>E06 Evidence</strong>.</p>
+<p>Kein offizieller NIST-SSDF-Zertifikatsstatus durch selbst erstellten Bericht.</p>
+<h2>D28 – NIST SP 800-53 Rev. 5</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> NIST / USA. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final">https://csrc.nist.gov/pubs/sp/800/53/r5/upd1/final</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Sicherheits- und Datenschutz-Control-Katalog für anspruchsvolle Systeme.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Access Control</strong>; <strong>K02 Audit</strong>; <strong>K03 Configuration</strong>; <strong>K04 Incident Response</strong>; <strong>K05 System Integrity</strong>; <strong>K06 Privacy Controls</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 System Security Plan</strong>; <strong>E02 Control Assessment</strong>; <strong>E03 POA&amp;M</strong>; <strong>E04 Risk Evidence</strong>; <strong>E05 Independent Test</strong>.</p>
+<p>Kontrollmapping ist keine staatliche NIST-Autorisierung oder Betriebsfreigabe.</p>
+<h2>D29 – OWASP ASVS 5.0.0</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> OWASP Foundation. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://asvs.owasp.org/">https://asvs.owasp.org/</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Technische Sicherheitsanforderungen für Webanwendungen und Webservices.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Authentication</strong>; <strong>K02 Session</strong>; <strong>K03 Access Control</strong>; <strong>K04 Input Validation</strong>; <strong>K05 API Security</strong>; <strong>K06 Data Protection</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 ASVS Matrix</strong>; <strong>E02 PenTest Results</strong>; <strong>E03 Source Review</strong>; <strong>E04 Negative API Tests</strong>; <strong>E05 Defect Evidence</strong>.</p>
+<p>OWASP ASVS 5.0 hat Referenzanforderungen; eine eigene Software kann Alignment darstellen, aber kein erfundenes OWASP-Zertifikat.</p>
+<h2>D30 – OWASP SAMM</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> OWASP Foundation. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://owaspsamm.org/">https://owaspsamm.org/</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Reifegrad sicherer Softwareentwicklung mit wiederholbarer Assessment-Struktur.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Governance</strong>; <strong>K02 Design</strong>; <strong>K03 Implementation</strong>; <strong>K04 Verification</strong>; <strong>K05 Operations</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 SAMM Assessment</strong>; <strong>E02 Improvement Backlog</strong>; <strong>E03 Maturity Profile</strong>; <strong>E04 Sprint Evidence</strong>; <strong>E05 Review</strong>.</p>
+<p>Ein SAMM-Score ist eine Bewertungsgröße, nicht automatisch eine Zertifizierung.</p>
+<h2>D31 – CIS Controls v8.1</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> Center for Internet Security. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.cisecurity.org/controls/v8-1">https://www.cisecurity.org/controls/v8-1</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Priorisierte technische und organisatorische Cybersicherheitsmaßnahmen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Asset Control</strong>; <strong>K02 Data Protection</strong>; <strong>K03 Secure Configuration</strong>; <strong>K04 Vulnerability Management</strong>; <strong>K05 Incident Response</strong>; <strong>K06 PenTest</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Control-to-Safeguard Matrix</strong>; <strong>E02 Asset Inventory</strong>; <strong>E03 Scan</strong>; <strong>E04 Response Exercise</strong>; <strong>E05 KPI</strong>.</p>
+<p>CIS Controls Implementierung und CIS-Akkreditierung sind unterschiedliche Dinge; kein eigenes offizielles Label erfinden.</p>
+<h2>D32 – BSI IT-Grundschutz</h2>
+<p><strong>Instrumenttyp:</strong> FRAMEWORK. <strong>Referenz-/Schemeträger:</strong> Bundesamt für Sicherheit in der Informationstechnik. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html">https://www.bsi.bund.de/DE/Themen/Unternehmen-und-Organisationen/Standards-und-Zertifizierung/IT-Grundschutz/it-grundschutz_node.html</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Deutsche Informationssicherheit und gegebenenfalls BSI-Zertifizierungsweg.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Strukturanalyse</strong>; <strong>K02 Schutzbedarf</strong>; <strong>K03 Modellierung</strong>; <strong>K04 Basisabsicherung</strong>; <strong>K05 Sicherheitscheck</strong>; <strong>K06 Revision</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Grundschutz-Konzept</strong>; <strong>E02 IT-Verbund</strong>; <strong>E03 Maßnahmenliste</strong>; <strong>E04 Dokumentation</strong>; <strong>E05 Audit-Report</strong>.</p>
+<p>Ein BSI-Zertifikat benötigt die zuständige externe Prüfung und erteilte Zertifizierung; selbst generiertes BSI-Siegel verboten.</p>
+<h2>D33 – PCI DSS 4.0.1</h2>
+<p><strong>Instrumenttyp:</strong> SCHEME. <strong>Referenz-/Schemeträger:</strong> PCI Security Standards Council. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://www.pcisecuritystandards.org/document_library/">https://www.pcisecuritystandards.org/document_library/</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Karteninhaberdatenumgebung nach PCI-Scope und Rollen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 Scope Minimization</strong>; <strong>K02 Network Segmentation</strong>; <strong>K03 Encryption</strong>; <strong>K04 Access</strong>; <strong>K05 Logging</strong>; <strong>K06 Penetration Tests</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 Cardholder Data Flow</strong>; <strong>E02 SAQ/ROC je Typ</strong>; <strong>E03 AOC</strong>; <strong>E04 ASV Reports</strong>; <strong>E05 PenTest</strong>; <strong>E06 Policies</strong>.</p>
+<p>Validierungsart und Attestation folgen PCI-Vorgaben; interne PASS-Karte ist keine PCI-AOC.</p>
+<h2>D34 – TISAX / VDA ISA</h2>
+<p><strong>Instrumenttyp:</strong> SCHEME. <strong>Referenz-/Schemeträger:</strong> ENX Association / zugelassener Prüfdienstleister. <strong>Offizielle beziehungsweise angegebene Referenz:</strong> <a href="https://portal.enx.com/en-us/TISAX/ISA/">https://portal.enx.com/en-us/TISAX/ISA/</a>. Für HCOS lautet die fachliche Anwendbarkeitsfrage: Information Security Assessment für Automotive-Lieferketten gemäß Teilnehmeranforderungen.</p>
+<p>Daraus ergeben sich sechs fachlich unterscheidbare Kontrollziele: <strong>K01 VDA ISA</strong>; <strong>K02 Scope</strong>; <strong>K03 Maturity</strong>; <strong>K04 Assessment Objectives</strong>; <strong>K05 Findings</strong>; <strong>K06 Improvement Plan</strong>.</p>
+<p>Als überprüfbare Belegarten werden zugeordnet: <strong>E01 VDA ISA Self-assessment</strong>; <strong>E02 Assessment Report</strong>; <strong>E03 ENX Result Status</strong>; <strong>E04 Corrective Actions</strong>.</p>
+<p>Nur ENX-Prozess und berechtigte Assessment-Provider können gültige TISAX-Ergebnisse erzeugen.</p>
+<hr />
+<h1>TEIL VI – REPOSITORY-ÖKOSYSTEM, INTEGRATION UND LIEFERPLAN</h1>
+<h2>6.1 Kontrolliertes Repository-Onboarding</h2>
+<p>Der ursprüngliche 50-Repository-Katalog beschreibt mögliche Technologien für UI, modulare Auslieferung, Identität, Datenschutz, Finance und Security. Er ist ein <strong>Evaluationsinstrument</strong>, kein Installationsauftrag. Ein externer Quellbestand wird nur als Metadatensatz mit Original-URL, Projektversion, License-Identifier, Sicherheitsstatus, Produktzone, vorgesehener Modul-ID und Quelle erfasst. Ein Integrationsentscheidung „Pilot“ bedeutet nicht, dass Code in die lokale Sovereign Zone kopiert wurde. Vor einer konkreten Übernahme braucht es SPDX-/Lizenzbewertung, SBOM, CVE-/KEV-Abgleich, reproduzierbare Builds, negative Sicherheitstests und einen benannten Reviewer.</p>
+<p>Die 50 Einträge werden im Paket <strong>einmal</strong> als maschinenlesbare Tabelle geführt. Fachliche Verknüpfungen in den Kapiteln referenzieren auf diese Registry statt Repo-Namen seitenweise neu zu beschreiben. Für die Betriebszone ist entscheidend, dass nicht bekannte Repository-IDs kein automatisches Sovereign-Recht erhalten. Die JMAP-Namensabweichung aus dem älteren Quellenkatalog wird auf die aktuelle Bezeichnung <code>linagora/jmap-client-ts</code> konsolidiert; der ursprüngliche Alias wird als Provenienznotiz erhalten. Die Zuordnung einer Technologie zu M01–M13 setzt noch keine technische Abhängigkeit und keinen Freigabezustand.</p>
+<h2>6.2 Drei Ende-zu-Ende-Workflows</h2>
+<p><strong>Repository-Aufnahme:</strong> Öffentliche Metadaten werden in Research gesammelt, auf konkrete Versions- und Lizenzangaben hin kontrolliert, gegen bekannte Sicherheitsrisiken geprüft und als signiertes Prüfprotokoll in die zentrale Registry übergeben. Ein nicht genehmigter Import wird zurückgestellt. <strong>FORINA Domain-Evidence:</strong> DNS-, TLS- und Registrierungsnachweise werden nur als Domain-Control-Indikatoren behandelt; Organisation, Rechtsträger, Compliance und föderierte Vertrauensstellung benötigen jeweils eigene, zuständige Bestätigungen. <strong>Agentengestützte Entwicklung:</strong> Der Agent erzeugt aus synthetischen Beispielen einen Patchvorschlag; ein unabhängiger Runner und Reviewer validieren diff, Effekte, Abhängigkeiten und Ausführung, bevor ein Release-Artefakt freigegeben wird.</p>
+<h2>6.3 Implementierungsreihenfolge mit Abnahmestufen</h2>
+<p><strong>P0 – Daten- und Sicherheitswahrheit.</strong> Einheitliche Objekt- und Zustandsmodelle, technische Sperren außerhalb der Python-Laufzeit, tatsächliche statt dekorative Gate-Statuswerte, Tar- und Pfadvalidierung, datenarme Testumgebung sowie Entfernung sensibler Inhalte aus Git-Historien nach gesonderter Prüfung.</p>
+<p><strong>P1 – IA/XD und modulare Produktoberfläche.</strong> Task-first-Navigation, WCAG-2.2-Tests, kontrastreiche Design-Tokens, konsistente Fehlerzustände, sichere URL-Verarbeitung, eindeutige Trennung von read-only, Simulation, genehmigter Aktion und externem Connector.</p>
+<p><strong>P2 – Trusted Registry und Entwicklungsverträge.</strong> Manifest- und Abhängigkeitsschemas, signierte Provenienz, Autorisierungsverträge, API-Versionierung, 50-Repo-SBOM, echte Lizenz- und Security-Nachweise je konkreter Version.</p>
+<p><strong>P3 – AI, Dokumenten- und Domain-Intelligenz.</strong> Synthetische RAG-Tests, Tool-Grenzen, Prompt-Injection-Negativtests, FORINA-Statusmodell mit getrennten Kontrollstufen, menschliche Prüfung bei Identitäts- und Organisationsbehauptungen.</p>
+<p><strong>P4 – Finance und Web3 im Beobachtungsmodus.</strong> Provider-Scopes technisch read-only, Ledger-Normalisierung, Reconciliation, Dubletten- und Gebührenanalyse, sichere Wallet-/Token-Anzeigen, aber keine automatische Zahlung, kein Signing ohne explizite gesonderte Freigabe.</p>
+<p><strong>P5 – Assurance und Zertifizierungsvorbereitung.</strong> Geltungsbereichsbewertung pro Norm, prüfbare Kriterien, revisionsfeste Dossiers, unabhängige Testberichte und reproduzierbarer Release-Hash; externe Zertifizierung bleibt einer berechtigten Organisation vorbehalten.</p>
+<p><strong>P6 – Betriebsübernahme und erneute Bewertung.</strong> Staging, Rollback, Alarmierung, Supportfälle, Lösch- und Widerrufsworkflows, Updatepolitik, Messung der Fehlerraten sowie regelmäßige Reviewzyklen mit pausierbarer Harness-Steuerung.</p>
+<h2>6.4 Einheitliche Definition of Done</h2>
+<p>Ein Arbeitspaket gilt erst als abgeschlossen, wenn Scope, Zweck, zuständige Rolle, freigegebene Datenklasse, Schnittstellenvertrag, abgesicherter Testpfad, reproduzierbarer Build, mindestens ein passender Negativtest, dokumentiertes Restrisiko und Rollback- beziehungsweise Widerrufsweg vorliegen. Für UI-Änderungen kommen Accessibility, Fehlzustände und Nutzerverständlichkeit hinzu; für Finance gelten strikte Provider-Scopes und Reconciliation; für Normen eine belastbare Anwendbarkeitsentscheidung und ein eigener Evidence-Satz. Ein Fachkapitel wird nicht allein deshalb als abgeschlossen geführt, weil Dokumentationsfelder ausgefüllt sind.</p>
+<h2>6.6 Vertragsvorlagen: Modulmanifest und unabhängige Evidence</h2>
+<p>Ein Modulmanifest benennt die aus dem technischen Entwurf zulässigen Fähigkeiten. Der folgende Musterdatensatz ist ein <strong>Entwurf</strong> mit absichtlich ungültigen Platzhaltern, nicht ein bestätigtes Release. Produktive Zustände sind nur nach einer extern durchgesetzten Freigabe erreichbar. Dieselbe ID referenziert die vorstehend beschriebenen Kapitel, die Prüfkriterien aus dem Normenregister und das Repository-Mapping.</p>
+<pre><code class="language-json">{
+  &quot;schema_version&quot;: &quot;hcos.module.v1&quot;,
+  &quot;id&quot;: &quot;forina.domain-intelligence&quot;,
+  &quot;version&quot;: &quot;0.1.0&quot;,
+  &quot;source&quot;: {&quot;repository&quot;: &quot;https://example.invalid/public-repo&quot;, &quot;commit&quot;: &quot;PINNED_COMMIT_REQUIRED&quot;},
+  &quot;artifact&quot;: {&quot;sha256&quot;: &quot;PENDING_VERIFICATION&quot;, &quot;signature_ref&quot;: null},
+  &quot;capabilities&quot;: [&quot;source.read_public_metadata&quot;, &quot;evidence.write_local&quot;],
+  &quot;deny&quot;: [&quot;network.unapproved&quot;, &quot;credential.read&quot;, &quot;host.modify&quot;],
+  &quot;data_classes&quot;: [&quot;PUBLIC&quot;, &quot;SYNTHETIC&quot;],
+  &quot;execution_profile&quot;: &quot;OFFLINE_VERIFICATION_REQUIRED&quot;,
+  &quot;dependencies&quot;: [],
+  &quot;license_review&quot;: &quot;PENDING&quot;,
+  &quot;security_review&quot;: &quot;PENDING&quot;,
+  &quot;approval&quot;: {&quot;status&quot;: &quot;NOT_APPROVED&quot;, &quot;reference&quot;: null}
+}
+</code></pre>
+<p>Die getrennte Evidence hat ein anderes Ziel: Sie dokumentiert die beobachtete Qualität eines konkreten Artefakts, ohne das Modul nachträglich selbst zu autorisieren. Nach jeder Ausführung müssen Testset, Prüfumgebung, Startberechtigung und Signaturverifikator identifizierbar bleiben. Der <code>PASS</code>-Wert bedeutet ausschließlich den durch <code>method</code> und <code>limitations</code> bezeichneten Prüfumfang.</p>
+<pre><code class="language-json">{
+  &quot;schema_version&quot;: &quot;hcos.evidence.v1&quot;,
+  &quot;subject_id&quot;: &quot;forina.domain-intelligence@0.1.0&quot;,
+  &quot;claim&quot;: &quot;synthetic_contract_tests_passed&quot;,
+  &quot;result&quot;: &quot;PENDING&quot;,
+  &quot;method&quot;: &quot;independent-synthetic-contract-test&quot;,
+  &quot;test_suite_hash&quot;: &quot;PENDING_VERIFICATION&quot;,
+  &quot;artifact_hash&quot;: &quot;PENDING_VERIFICATION&quot;,
+  &quot;independent_verifier&quot;: &quot;REVIEWER_REQUIRED&quot;,
+  &quot;observed_at_utc&quot;: null,
+  &quot;limitations&quot;: [&quot;No external conformity assessment&quot;, &quot;No production runtime assessment&quot;],
+  &quot;signature&quot;: null
+}
+</code></pre>
+<p>Ein neuer Integrationsadapter erhält zuerst einen reinen Leseendpunkt und einen Negativtest für nicht autorisierte Aktionen. Die Produktionsschnittstelle verwendet grundsätzlich getrennte Rechte für <code>registry.read</code>, <code>plan.create</code>, <code>preflight.request</code>, <code>execute.approved</code>, <code>evidence.read</code> und <code>release.approve</code>. <code>GET /v1/modules/{id}/manifest</code> ist dabei eine rein lesende Ansicht; <code>POST /v1/runs/{id}/start</code> darf ausschließlich nach unabhängiger Preflight-Freigabe vorhanden sein. Diese Beispiel-Endpunkte sind Designverträge und keine Behauptung über die aktuelle Implementation.</p>
+<h2>6.5 Herkunft, Lizenz- und Zertifikatsgrenzen</h2>
+<p>Dieses zusammengeführte Buch ist eine redigierte Konzeptfassung aus den vier bereits erzeugten Fachbänden und dem zuvor bereitgestellten 50-Repository-Masterkonzept. Es ist kein Code-Audit des aktuellen Hostsystems, keine juristische Stellungnahme und kein unabhängiges Zertifikat. Die Normen-URLs im beigefügten Register sind Referenzen, deren Ausgabe und Aktualität vor jeder rechtsrelevanten Entscheidung neu zu prüfen sind. Abzeichen sind lokale Gestaltungs- und Evidenzvorlagen; sie dürfen nicht als amtliches oder akkreditiertes Prüfzeichen eingesetzt werden.</p>
+<hr />
+<h2>Anhang – Dateien, die die Kapitel direkt ergänzen</h2>
+<p>Der ZIP-Ordner <code>daten/</code> enthält die vollständigen Abkürzungs-, Web3-/Finance- und Normkontrollregister; <code>repositorien/</code> die Originalquellen-Matrix aller 50 Projekte mit korrigiertem Namen und Provenienzvermerk; <code>automation/</code> den nicht privilegierten Harness-Prototyp mit synthetischer Testserie sowie Assurance-Kontrollzielen; <code>gestaltung/</code> Banner, Logo und 34 interne Badge-Vorlagen. Damit ist die Beschreibung nur an einer Stelle vorhanden; Detailfelder und Code leben in den jeweiligen Arbeitspaketen.</p>
+<p><strong>Ende des integrierten Masterkonzepts.</strong></p>
+</body></html>

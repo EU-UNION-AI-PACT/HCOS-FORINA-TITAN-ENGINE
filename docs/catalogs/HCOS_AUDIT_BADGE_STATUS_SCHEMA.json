@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "HCOS Internal Audit Badge Status Contract",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "control_id",
+    "assessment_status",
+    "scope",
+    "artifact_sha256",
+    "evaluated_at",
+    "issuer_type",
+    "official_reference_url"
+  ],
+  "properties": {
+    "control_id": {
+      "type": "string",
+      "pattern": "^[A-Z0-9_-]{4,80}$"
+    },
+    "assessment_status": {
+      "enum": [
+        "UNKNOWN",
+        "NOT_APPLICABLE_REVIEWED",
+        "GAP_OPEN",
+        "BLOCKED",
+        "PASS_INTERNAL",
+        "HUMAN_REVIEWED",
+        "EXTERNAL_ATTESTED",
+        "EXPIRED"
+      ]
+    },
+    "scope": {
+      "type": "string",
+      "minLength": 5
+    },
+    "artifact_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evaluated_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "expires_at": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "date-time"
+    },
+    "issuer_type": {
+      "enum": [
+        "INTERNAL",
+        "ACCREDITED_CERTIFICATION_BODY",
+        "PUBLIC_AUTHORITY",
+        "SCHEME_OWNER"
+      ]
+    },
+    "issuer_name": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "certificate_number": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "external_verification_url": {
+      "type": [
+        "string",
+        "null"
+      ],
+      "format": "uri"
+    },
+    "official_reference_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "revocation_status": {
+      "enum": [
+        "UNKNOWN",
+        "VALID",
+        "REVOKED",
+        "NOT_APPLICABLE"
+      ]
+    },
+    "human_approval_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "mark_usage_permission": {
+      "type": "boolean",
+      "default": false
+    }
+  }
+}

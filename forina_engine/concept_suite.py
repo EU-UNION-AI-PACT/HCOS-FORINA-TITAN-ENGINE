@@ -499,3 +499,46 @@ class ConceptPaperSuite:
                     "size": f.stat().st_size
                 })
         return res
+
+    def get_masterkonzept(self) -> Dict[str, Any]:
+        master_file = self.root / "docs" / "HCOS_FORINA_TITAN_INTEGRIERTES_MASTERKONZEPT.md"
+        if not master_file.exists():
+            return {"title": "Integriertes Masterkonzept", "content": "", "size": 0, "sha256": ""}
+        content = master_file.read_text(encoding="utf-8")
+        import hashlib
+        h = hashlib.sha256(content.encode("utf-8")).hexdigest()
+        return {
+            "title": "HCOS FORINA TITAN – Integriertes Masterkonzept",
+            "subtitle": "Umsetzungshandbuch und Audit-Regelwerk (Kanonische Einzelfassung)",
+            "file": "docs/HCOS_FORINA_TITAN_INTEGRIERTES_MASTERKONZEPT.md",
+            "html_file": "web/integrated_masterkonzept.html",
+            "size": len(content),
+            "lines": len(content.splitlines()),
+            "sha256": h,
+            "content": content
+        }
+
+    def get_136_kapitel_nachweis(self) -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "KAPITELNACHWEIS_136.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        rows = []
+        with open(csv_file, mode="r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                rows.append(r)
+        return rows
+
+    def get_50_repos_matrix(self) -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "HCOS_50_Repositories_Quellenmatrix.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        rows = []
+        with open(csv_file, mode="r", encoding="utf-8") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                rows.append(r)
+        return rows
+

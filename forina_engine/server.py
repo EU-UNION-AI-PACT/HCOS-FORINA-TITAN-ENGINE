@@ -411,6 +411,51 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(status, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 14. INTEGRATED MASTERKONZEPT & CATALOG MATRICES
+        if parsed.path == "/api/concepts/masterkonzept":
+            suite = ConceptPaperSuite(self.project_root)
+            mk = suite.get_masterkonzept()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(mk, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/catalogs/kapitel136":
+            suite = ConceptPaperSuite(self.project_root)
+            k136 = suite.get_136_kapitel_nachweis()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(k136), "kapitel": k136}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/catalogs/repos50matrix":
+            suite = ConceptPaperSuite(self.project_root)
+            r50 = suite.get_50_repos_matrix()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(r50), "repositories": r50}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 15. HARNESS CONTROL LOOP (HCL) SIMULATION
+        if parsed.path == "/api/harness/loop/simulate":
+            from .harness_control_loop import HarnessControlLoopEngine, WorkItem
+            qs = parse_qs(parsed.query)
+            human_appr = qs.get("human_approval", ["0"])[0] in ("1", "true")
+            iso_ver = qs.get("external_isolation", ["0"])[0] in ("1", "true")
+            task_id = qs.get("task_id", ["HCOS-HCL-SIM-001"])[0]
+            req = qs.get("requirement", ["Sovereign zero-trust gate verification"])[0]
+            prop = qs.get("proposed_change", ["Implement verified deterministic state machine"])[0]
+
+            wi = WorkItem(
+                task_id=task_id,
+                requirement=req,
+                proposed_change=prop,
+                human_approval=human_appr,
+                external_isolation_verified=iso_ver
+            )
+            hcl = HarnessControlLoopEngine()
+            outcome = hcl.run_cycle(wi)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(outcome.to_dict(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 

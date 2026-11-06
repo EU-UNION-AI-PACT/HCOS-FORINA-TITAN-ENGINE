@@ -459,6 +459,23 @@ class TestForinaTitanEngine(unittest.TestCase):
         schemas = fin.get_iso20022_message_schemas()
         self.assertGreaterEqual(len(schemas), 5)
 
+    def test_integrated_masterkonzept_and_catalogs(self):
+        suite = ConceptPaperSuite(self.root)
+        mk = suite.get_masterkonzept()
+        self.assertTrue(mk["size"] > 100000, "Masterkonzept muss >100KB sein")
+        self.assertEqual(len(mk["sha256"]), 64)
+        self.assertIn("HCOS FORINA TITAN ENGINE", mk["content"])
+        self.assertIn("Integriertes Masterkonzept", mk["content"])
+
+        k136 = suite.get_136_kapitel_nachweis()
+        self.assertEqual(len(k136), 136, "Muss exakt 136 Kapitel im Nachweisregister haben")
+
+        r50 = suite.get_50_repos_matrix()
+        self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
+
+        specs = suite.list_specialized_papers()
+        self.assertEqual(len(specs), 15, "Muss alle 15 spezialisierten Papiere erfassen")
+
 
 if __name__ == "__main__":
     unittest.main()
