@@ -1,0 +1,35 @@
+nr,tool,url,native_api
+1,Platform-Launchpad,https://platform.82-165-134-41.sslip.io (Alias portal.),/health
+2,Gitopia Web,https://gitopia.82-165-134-41.sslip.io,/api/graphql · /api/faucet · /explorer
+3,Gitopia LCD API,https://gitopia-api.82-165-134-41.sslip.io,/cosmos/** · /gitopia/**
+4,Gitopia RPC,https://gitopia-rpc.82-165-134-41.sslip.io,/status · /websocket
+5,Gitopia Storage,https://storage.gitopia.82-165-134-41.sslip.io,POST /v1/blobs · /v1/trees · /v1/commits
+6,Gitopia MCP,https://mcp.gitopia.82-165-134-41.sslip.io,"JSON-RPC POST / (initialize, 57 Tools)"
+7,Storage-Explorer,https://storage-explorer.82-165-134-41.sslip.io,LCD gitopia/storage
+8,Chain-Registry,https://gitopia.82-165-134-41.sslip.io/keplr/gitopia-local-1/chain.json,statisch (Keplr)
+9,Ditto (Nostr),https://ditto.82-165-134-41.sslip.io (Alias nostr.),/ (Nostr WS-Relays)
+10,Huly,https://huly.82-165-134-41.sslip.io,/_accounts · /_transactor
+11,Fider,https://fider.82-165-134-41.sslip.io,/api/v1/posts
+12,Zammad,https://zammad.82-165-134-41.sslip.io,/api/v1/users/me · /api/v1/**
+13,Chatwoot,https://chatwoot.82-165-134-41.sslip.io,/api/v1/**
+14,Twenty CRM,https://twenty.82-165-134-41.sslip.io,/graphql · /healthz
+15,Teable,https://teable.82-165-134-41.sslip.io,/api/space · /api/**
+16,Listmonk,https://listmonk.82-165-134-41.sslip.io,/api/lists · /api/**
+17,DocuSeal,https://docuseal.82-165-134-41.sslip.io,/api/templates
+18,Documenso,https://documenso.82-165-134-41.sslip.io,/api/health
+19,Cal.com,https://cal.82-165-134-41.sslip.io,/api/version · /api/**
+20,AFFiNE,https://affine.82-165-134-41.sslip.io,/graphql
+21,Dify AI,https://dify.82-165-134-41.sslip.io,/console/api/setup · /v1
+22,Kodus AI,https://kodus.82-165-134-41.sslip.io (+ kodus-api.),/health
+23,OmniRoute,https://omniroute.82-165-134-41.sslip.io,/v1
+24,0Router,https://0router.82-165-134-41.sslip.io,/v1
+25,SonarQube,https://sonar.82-165-134-41.sslip.io,/api/system/status
+26,DefectDojo,https://defectdojo.82-165-134-41.sslip.io,/api/v2/
+27,DepTrack,https://dtrack.82-165-134-41.sslip.io,/api/version
+28,Infisical,https://infisical.82-165-134-41.sslip.io,/api/status
+29,Presidio Analyzer,https://presidio-analyzer.82-165-134-41.sslip.io,/health · /analyze
+30,Presidio Anonym.,https://presidio-anonymizer.82-165-134-41.sslip.io,/health · /anonymize
+31,Qualle ML,https://qualle.82-165-134-41.sslip.io,/docs · /predict · /openapi.json
+32,Arcane,https://arcane.82-165-134-41.sslip.io,/api/health
+33,SingleStore,https://singlestore.82-165-134-41.sslip.io,/health
+34,Orbit KnowledgeG.,https://orbit.82-165-134-41.sslip.io,/-/liveness · /-/readiness · /-/metrics · gRPC :50054

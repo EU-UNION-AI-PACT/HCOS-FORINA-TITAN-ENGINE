@@ -301,15 +301,83 @@ class InstitutionalFinanceRegistry:
             "status_distribution": status_counts
         }
 
+    def get_global_central_banks(self, query: str = "", jurisdiction: str = "", limit: int = 50) -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "GLOBAL_202_ZENTRALBANKEN_CATALOG.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        results = []
+        q = query.lower().strip()
+        jur = jurisdiction.lower().strip()
+        try:
+            with open(csv_file, mode="r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    j = row.get("jurisdiction", "").lower()
+                    cb = row.get("central_bank", "").lower()
+                    if q and (q not in j and q not in cb):
+                        continue
+                    if jur and jur not in j:
+                        continue
+                    results.append(row)
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+        return results
+
+    def get_global_central_banks_stats(self) -> Dict[str, Any]:
+        csv_file = self.root / "docs" / "catalogs" / "GLOBAL_202_ZENTRALBANKEN_CATALOG.csv"
+        if not csv_file.exists():
+            return {"total_sovereign_central_banks": 0, "governance": "Global Sovereign Monetary Entities", "ezb_pontes_aligned": True}
+        import csv
+        total = 0
+        try:
+            with open(csv_file, mode="r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                total = sum(1 for _ in reader)
+        except Exception:
+            pass
+        return {
+            "total_sovereign_central_banks": total,
+            "governance": "Global Sovereign Monetary Entities",
+            "ezb_pontes_aligned": True
+        }
+
+    def get_wish_studio_vps_portals(self, query: str = "", limit: int = 50) -> List[Dict[str, Any]]:
+        csv_file = self.root / "docs" / "catalogs" / "WISH_STUDIO_VPS_34_PORTALS.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        results = []
+        q = query.lower().strip()
+        try:
+            with open(csv_file, mode="r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    tool = row.get("tool", "").lower()
+                    url = row.get("url", "").lower()
+                    api = row.get("native_api", "").lower()
+                    if q and (q not in tool and q not in url and q not in api):
+                        continue
+                    results.append(row)
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+        return results
+
     def get_summary(self) -> Dict[str, Any]:
         return {
             "mapped_central_banks": len(self.central_banks),
+            "global_sovereign_central_banks": 202,
             "open_banking_providers": len(self.open_banking_providers),
             "supported_iso20022_schemas": len(self.get_iso20022_message_schemas()),
             "ezb_pontes_bridge": "INTEGRATED_SPEC_2026",
             "enable_banking_app": ENABLE_BANKING_APP_SPEC["app_name"],
             "enable_banking_status": ENABLE_BANKING_APP_SPEC["status"],
             "aspsp_eu_banks": 1128,
+            "wish_studio_vps_portals": 34,
             "security_tier": "READ_ONLY_TRANSACTION_SCOPE (G05 Enforced)",
             "sovereign_governance": "Daniel Pohl, Royal Kaiser Charter RegSys"
         }

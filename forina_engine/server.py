@@ -461,6 +461,30 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(stats, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        if parsed.path == "/api/finance/centralbanks/global":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            jur = qs.get("jurisdiction", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            cbs = fin_reg.get_global_central_banks(query=q, jurisdiction=jur, limit=limit)
+            stats = fin_reg.get_global_central_banks_stats()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(cbs), "stats": stats, "central_banks": cbs}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/vps/portals":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            portals = fin_reg.get_wish_studio_vps_portals(query=q, limit=limit)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(portals), "vps_ip": "82.165.134.41", "portals": portals}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 11e. 3D FLOW ENGINE VISUALISIERUNGEN
         if parsed.path == "/api/flow/list":
             flow_dir = self.project_root / "web" / "flow"

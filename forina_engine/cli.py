@@ -104,7 +104,7 @@ def main():
 
     # finance (Zentralbanken & Open Banking)
     fin_parser = subparsers.add_parser("finance", help="Zentralbanken, EZB Pontes & Open Banking Schnittstellen (PSD2)")
-    fin_parser.add_argument("action", choices=["summary", "centralbanks", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp"], default="summary", nargs="?", help="Aktion: summary, centralbanks, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "globalcbs", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp", "vpsportals"], default="summary", nargs="?", help="Aktion: summary, centralbanks, globalcbs, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp, vpsportals")
     fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale, C-Level oder ASPSP-Banken")
     fin_parser.add_argument("--country", type=str, default="", help="Länderkürzel für ASPSP-Banken (DE, AT, CH, FR, etc.)")
     fin_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für Portale")
@@ -721,6 +721,33 @@ def main():
             print("==================================================================")
             print(f" Treffer: {len(results)} (Limit: {getattr(args, 'limit', 25)})")
             print(f" [Tipp] Filter: python3 forina.py finance aspsp --search Sparkasse --country DE")
+        elif args.action == "globalcbs":
+            stats = fin.get_global_central_banks_stats()
+            results = fin.get_global_central_banks(
+                query=getattr(args, "search", ""),
+                jurisdiction=getattr(args, "country", ""),
+                limit=getattr(args, "limit", 25)
+            )
+            print("==================================================================")
+            print(f" GLOBALE SOUVERÄNE ZENTRALBANKEN ({stats['total_sovereign_central_banks']} Staaten & Währungsräume)")
+            print(f" Pontes Interoperabilitäts-Standard (EZB wCBDC 2026 Aligned)")
+            print("==================================================================")
+            for r in results:
+                print(f" {r.get('jurisdiction', 'Unbekannt'):<30} | {r.get('central_bank', '')}")
+            print("==================================================================")
+            print(f" Treffer: {len(results)} (Limit: {getattr(args, 'limit', 25)})")
+            print(f" [Tipp] Suche: python3 forina.py finance globalcbs --search Schweiz")
+        elif args.action == "vpsportals":
+            results = fin.get_wish_studio_vps_portals(
+                query=getattr(args, "search", ""),
+                limit=getattr(args, "limit", 35)
+            )
+            print("==================================================================")
+            print(f" WISH STUDIO OS · VPS 82.165.134.41 ÖFFENTLICHE PORTALE ({len(results)} Tools)")
+            print("==================================================================")
+            for r in results:
+                print(f" #{r.get('nr', '?'):<2} | {r.get('tool', ''):<20} | {r.get('native_api', '')[:25]:<25} | {r.get('url', '')}")
+            print("==================================================================")
         else: # summary
             summ = fin.get_summary()
             print(json.dumps(summ, indent=2, ensure_ascii=False))

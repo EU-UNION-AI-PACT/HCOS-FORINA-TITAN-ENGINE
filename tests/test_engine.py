@@ -537,6 +537,26 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(fider["repository"], "getfider/fider")
         self.assertEqual(fider["bereich"], "Wunschportal & Support")
 
+    def test_global_central_banks_and_vps_portals(self):
+        from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+        fin = InstitutionalFinanceRegistry(self.root)
+
+        # Test Global Central Banks (202 sovereign entities)
+        stats = fin.get_global_central_banks_stats()
+        self.assertEqual(stats["total_sovereign_central_banks"], 202)
+        switzerland = fin.get_global_central_banks(query="Schweiz")
+        self.assertEqual(len(switzerland), 1)
+        self.assertIn("Schweizerische Nationalbank", switzerland[0]["central_bank"])
+
+        japan = fin.get_global_central_banks(jurisdiction="Japan")
+        self.assertGreaterEqual(len(japan), 1)
+
+        # Test Wish Studio 34 VPS Portals
+        vps = fin.get_wish_studio_vps_portals()
+        self.assertEqual(len(vps), 34, "Muss 34 VPS Portale umfassen")
+        gitopia = fin.get_wish_studio_vps_portals(query="gitopia")
+        self.assertGreaterEqual(len(gitopia), 5)
+
 
 if __name__ == "__main__":
     unittest.main()
