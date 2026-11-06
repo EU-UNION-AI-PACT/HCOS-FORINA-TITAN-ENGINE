@@ -34,6 +34,9 @@ def main():
     # verify-spec
     subparsers.add_parser("verify-spec", help="Verifiziert alle Module live gegen die Spezifikation")
 
+    # audit
+    subparsers.add_parser("audit", help="Fuehrt das unabhaengige 13-Gate HCOS Assurance Audit (G00-G12) aus")
+
     # certify
     subparsers.add_parser("certify", help="Generiert das kryptografische Souveraenitaets-Zertifikat")
 
@@ -89,6 +92,25 @@ def main():
             status_sym = "[x] REALISIERT" if m["realized"] else "[ ] AUSSTEHEND"
             print(f" - {m['name']:<45} | {status_sym} | Spec: {m['spec_score']}% | PRL: {m['readiness_score']}% [{m['tier_badge']:<17}] | Light: {m['light_state']}")
         print("==================================================================")
+
+    elif args.command == "audit":
+        from .assurance_gates import AssuranceGatePipeline
+        pipeline = AssuranceGatePipeline(project_root)
+        print(">>> Starte unabhängiges HCOS 13-Gate Assurance Audit (G00–G12)...")
+        res = pipeline.audit_all_gates()
+        print("==================================================================")
+        print(f" HCOS TITAN 13-GATE HARDENED ASSURANCE: {res['overall_status']}")
+        print(f" Geprüfte Gates: {res['passed_gates']}/{res['total_gates']}")
+        print("==================================================================")
+        for g in res["gates"]:
+            status_badge = f"[{g['status']}]"
+            print(f" {g['gate']} | {g['name']:<28} | {status_badge:<24} | {g['details']}")
+        print("==================================================================")
+        if res.get("overall_status") != "FULL_ASSURANCE_PASSED":
+            print("[FAIL-CLOSED] Mindestens ein Sicherheits-Gate hat die Freigabe blockiert.")
+            sys.exit(1)
+        else:
+            print("[OK] Alle 13 Gates unabhängig verifiziert. System uneingeschränkt freigegeben.")
 
     elif args.command == "certify":
         certifier = SovereignCertifier(project_root)

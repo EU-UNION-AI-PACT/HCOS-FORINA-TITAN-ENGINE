@@ -3,6 +3,7 @@ HCOS - HNOSS CONTROL OPERATING SYSTEM
 AUTOMATED ENGINE & SPEC-SYNC TESTS
 Copyright (c) 2024-2026 Daniel Pohl. All Rights Reserved Worldwide.
 """
+import os
 import unittest
 import json
 from pathlib import Path
@@ -202,6 +203,8 @@ class TestForinaTitanEngine(unittest.TestCase):
             loader.execute_module("test_unapproved", "test_action", {})
 
     def test_13_gate_assurance_pipeline(self):
+        if os.environ.get("FORINA_IN_G06_AUDIT") == "1":
+            return  # Prevent recursive loop during G06 audit
         pipeline = AssuranceGatePipeline(self.root)
         audit = pipeline.audit_all_gates()
         self.assertEqual(audit["total_gates"], 13)
