@@ -63,11 +63,14 @@ def main():
     mod_parser.add_argument("action", choices=["list", "verify", "test", "promote"], default="list", nargs="?", help="Aktion: list, verify, test, promote")
     mod_parser.add_argument("--id", type=str, default="", help="Modul-ID fuer Einzelpruefung")
 
-    # repos (50 Repositories Explorer)
-    repo_parser = subparsers.add_parser("repos", help="Erforscht die 50 Open-Source Repositories & Wish Studio Ökosystem")
-    repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect", "wish-studio"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect, wish-studio")
+    # repos (50 Repositories Explorer & LOCCP 352 Repositories)
+    repo_parser = subparsers.add_parser("repos", help="Erforscht die 50 Open-Source Repositories, Wish Studio & LOCCP 352 Masterkatalog")
+    repo_parser.add_argument("action", choices=["list", "summary", "zone", "inspect", "wish-studio", "loccp"], default="list", nargs="?", help="Aktion: list, summary, zone, inspect, wish-studio, loccp")
     repo_parser.add_argument("--zone", type=str, default="", help="Zone Filter: sovereign, dev, federation")
     repo_parser.add_argument("--nr", type=int, default=1, help="Repository Nummer fuer inspect (1-50)")
+    repo_parser.add_argument("--search", type=str, default="", help="Suchbegriff für LOCCP Repositories")
+    repo_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für LOCCP Repositories")
+    repo_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern für LOCCP")
 
     # concepts (34 Concept Papers Suite)
     concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite & Normenabdeckung v2.0")
@@ -115,6 +118,11 @@ def main():
     # upuia (Universal Project & URL Intelligence Archive)
     upuia_parser = subparsers.add_parser("upuia", help="UPUIA URL & Project Intelligence Archive (10 Grundregeln)")
     upuia_parser.add_argument("action", choices=["status", "preflight"], default="status", nargs="?", help="Aktion: status, preflight")
+
+    # compliance (LOCCP 42 Prüfpunkte & Wish OS Finance Attestation)
+    comp_parser = subparsers.add_parser("compliance", help="LOCCP 42 Prüfpunkte & Wish OS Local Finance Attestation")
+    comp_parser.add_argument("action", choices=["pruefpunkte", "attestation", "stats"], default="pruefpunkte", nargs="?", help="Aktion: pruefpunkte, attestation, stats")
+    comp_parser.add_argument("--module", type=str, default="", help="Filter nach Compliance-Modul (Corporate, DORA, etc.)")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -311,6 +319,22 @@ def main():
             for r in wish_repos:
                 print(f" #{r['nr']:02d} | {r['projekt']:<12} | {r['repository']:<24} | {r['kategorie']:<30} | [{r['lizenz']}]")
             print("==================================================================")
+
+        elif args.action == "loccp":
+            items = catalog.get_loccp_repo_catalog(
+                query=getattr(args, "search", ""),
+                category=getattr(args, "category", ""),
+                limit=getattr(args, "limit", 25)
+            )
+            stats = catalog.get_loccp_stats()
+            print("==================================================================")
+            print(f" LOCCP MASTERKATALOG ({stats['total_loccp_repositories']} REPOSITORIES / {len(stats['categories'])} KATEGORIEN)")
+            print("==================================================================")
+            for r in items:
+                print(f" {r.get('ID', '?'):<7} | {r.get('Projekt/Tool', ''):<26} | {r.get('GitHub-Pfad', ''):<32} | {r.get('Kategorie', '')[:22]}")
+            print("==================================================================")
+            print(f" Treffer: {len(items)} (Limit: {getattr(args, 'limit', 25)})")
+            print(" [Tipp] Suche: python3 forina.py repos loccp --search actual")
 
         else: # list
             all_repos = catalog.list_all()
@@ -862,6 +886,28 @@ def main():
             print(f" Secret-Ausschluss:    {summ['secret_exclusion']}")
             print(f" Unveränderte Quellen: {summ['immutable_originals']}")
             print("==================================================================")
+
+    elif args.command == "compliance":
+        from .repo_catalog import RepositoryEvaluationCatalog
+        catalog = RepositoryEvaluationCatalog(project_root)
+        if args.action == "pruefpunkte":
+            pts = catalog.get_loccp_pruefpunkte(compliance_module=getattr(args, "module", ""))
+            print("==================================================================")
+            print(f" LOCCP 42 COMPLIANCE-PRÜFPUNKTE ({len(pts)} Prüfpunkte)")
+            print("==================================================================")
+            for p in pts:
+                print(f" [{p.get('ID', '?'):<3}] {p.get('Compliance-Modul', ''):<22} | {p.get('Prüfpunkt', ''):<45} | Repos: {p.get('Passende Repositories', '')[:20]}")
+            print("==================================================================")
+            print(" [Tipp] Modul-Filter: python3 forina.py compliance pruefpunkte --module Corporate")
+        elif args.action == "attestation":
+            attestation_file = project_root / "docs" / "compliance" / "WISH_OS_LOCAL_FINANCE_COMPLIANCE_ATTESTATION.md"
+            if attestation_file.exists():
+                print(attestation_file.read_text(encoding="utf-8"))
+            else:
+                print("[!] Attestationsdokument nicht gefunden.")
+        else: # stats
+            stats = catalog.get_loccp_stats()
+            print(json.dumps(stats, indent=2, ensure_ascii=False))
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

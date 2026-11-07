@@ -592,6 +592,37 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertTrue(gc["spec_available"])
         self.assertGreater(gc["spec_size_bytes"], 100000)
 
+    def test_loccp_repositories_and_compliance_pruefpunkte(self):
+        from forina_engine.repo_catalog import RepositoryEvaluationCatalog
+        cat = RepositoryEvaluationCatalog(self.root)
+
+        # 1. LOCCP Masterkatalog Stats (352 Repos, 42 Prüfpunkte, 911 URLs)
+        stats = cat.get_loccp_stats()
+        self.assertEqual(stats["total_loccp_repositories"], 352)
+        self.assertEqual(stats["total_compliance_pruefpunkte"], 42)
+        self.assertEqual(stats["total_registered_urls"], 911)
+        self.assertGreaterEqual(len(stats["categories"]), 30)
+
+        # 2. Search Repos
+        actual = cat.get_loccp_repo_catalog(query="actual")
+        self.assertGreaterEqual(len(actual), 1)
+        self.assertEqual(actual[0]["Projekt/Tool"], "Actual Budget")
+
+        # 3. 42 Prüfpunkte
+        all_pts = cat.get_loccp_pruefpunkte()
+        self.assertEqual(len(all_pts), 42)
+        corp_pts = cat.get_loccp_pruefpunkte(compliance_module="Corporate")
+        self.assertEqual(len(corp_pts), 6)
+
+        # 4. Wish OS Compliance Attestation & Badge
+        badge = self.root / "web" / "badges" / "WISH_OS_COMPLIANCE_DOCUMENTED.svg"
+        self.assertTrue(badge.exists())
+        self.assertIn("<svg", badge.read_text(encoding="utf-8"))
+
+        attestation = self.root / "docs" / "compliance" / "WISH_OS_LOCAL_FINANCE_COMPLIANCE_ATTESTATION.md"
+        self.assertTrue(attestation.exists())
+        self.assertIn("Wish OS Local Finance Stack", attestation.read_text(encoding="utf-8"))
+
 
 if __name__ == "__main__":
     unittest.main()

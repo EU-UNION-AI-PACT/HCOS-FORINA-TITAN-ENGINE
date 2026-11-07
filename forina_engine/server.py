@@ -271,6 +271,56 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 10c. LOCCP 352 OPEN-SOURCE REPOSITORIES MASTER CATALOG
+        if parsed.path == "/api/repos/loccp":
+            catalog = RepositoryEvaluationCatalog(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            cat = qs.get("category", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            items = catalog.get_loccp_repo_catalog(query=q, category=cat, limit=limit)
+            stats = catalog.get_loccp_stats()
+            payload = {
+                "catalog": "LOCCP Konsolidierter Masterkatalog 2026-11-04",
+                "count": len(items),
+                "stats": stats,
+                "repositories": items
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # 10d. 42 COMPLIANCE-PRÜFPUNKTE & SELF-ATTESTATION
+        if parsed.path == "/api/compliance/pruefpunkte":
+            catalog = RepositoryEvaluationCatalog(self.project_root)
+            qs = parse_qs(parsed.query)
+            mod = qs.get("module", [""])[0]
+            pts = catalog.get_loccp_pruefpunkte(compliance_module=mod)
+            payload = {
+                "count": len(pts),
+                "module_filter": mod,
+                "pruefpunkte": pts
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/compliance/attestation":
+            attestation_file = self.project_root / "docs" / "compliance" / "WISH_OS_LOCAL_FINANCE_COMPLIANCE_ATTESTATION.md"
+            badge_file = self.project_root / "web" / "badges" / "WISH_OS_COMPLIANCE_DOCUMENTED.svg"
+            payload = {
+                "attestation_title": "COMPLIANCE & SECURITY ATTESTATION — Wish OS Local Finance Stack",
+                "scope": "Lokale Finance-Infrastruktur (127.0.0.1 Air-Gap / Gate G03)",
+                "date": "2026-10-30 16:11 CET",
+                "provenance": "Daniel Pohl · Royal Kaiser Charter RegSys",
+                "badge_url": "/badges/WISH_OS_COMPLIANCE_DOCUMENTED.svg",
+                "badge_available": badge_file.exists(),
+                "content_markdown": attestation_file.read_text(encoding="utf-8") if attestation_file.exists() else ""
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 11. 34 CONCEPT PAPERS SUITE & STANDARDS
         if parsed.path.startswith("/api/concepts/paper"):
             suite = ConceptPaperSuite(self.project_root)

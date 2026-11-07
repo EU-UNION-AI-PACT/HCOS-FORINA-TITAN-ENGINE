@@ -1187,6 +1187,52 @@ async function loadWishStudioRepos() {
   }
 }
 
+async function loadLoccpRepos() {
+  const container = document.getElementById('repos-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--neon-blue); font-size:0.75rem;">Lade LOCCP 352 Repositories...</div>';
+
+  try {
+    const res = await fetch('/api/repos/loccp?limit=60');
+    const data = await res.json();
+    const repos = data.repositories || [];
+
+    container.innerHTML = repos.map(r => {
+      const safeProject = escapeHtml(r['Projekt/Tool'] || '');
+      const safeRepo = escapeHtml(r['GitHub-Pfad'] || '');
+      const safeCat = escapeHtml(r['Kategorie'] || '');
+      const safeFunc = escapeHtml(r['Funktion / Anwendungsfeld'] || '');
+      const safeLicense = escapeHtml(r['Lizenz (Quellenangabe)'] || 'OSS');
+      const safeUrl = sanitizeGitHubUrl(r['GitHub-URL'] || `https:
+
+      return `
+        <div style="background:rgba(0,240,255,0.03); border:1px solid rgba(0,240,255,0.2); border-radius:6px; padding:8px; font-size:0.7rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; gap:4px;">
+              <span style="color:var(--neon-blue); font-weight:700;">${escapeHtml(r.ID || '')} · ${safeProject}</span>
+              <span style="font-size:0.6rem; color:var(--gold); border:1px solid var(--gold); padding:1px 4px; border-radius:3px;">
+                ${safeCat}
+              </span>
+            </div>
+            <div style="margin-top:4px;">
+              <a href="${safeUrl}" target="_blank" rel="noopener noreferrer" style="color:var(--neon-green); font-weight:700; text-decoration:none; word-break:break-all;">${safeRepo} ↗</a>
+            </div>
+            <div style="color:#e2e8f0; font-size:0.68rem; margin-top:3px;">
+              ${safeFunc}
+            </div>
+          </div>
+          <div style="margin-top:6px; border-top:1px solid rgba(255,255,255,0.06); display:flex; justify-content:space-between; align-items:center; font-size:0.62rem; color:#a0aec0;">
+            <span style="color:var(--gold);">Lizenz: <strong>${safeLicense}</strong></span>
+            <span style="color:#94a3b8;">LOCCP Master</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver);">352 LOCCP Repositories in docs/catalogs/LOCCP_352_REPOSITORY_MASTER.csv</div>';
+  }
+}
+
 let _activeConceptCategory = '';
 
 function filterConceptCategory(category, chipEl) {

@@ -226,3 +226,76 @@ class RepositoryEvaluationCatalog:
                     "zone": "Wish Studio & Gemeinwohl Federation"
                 })
         return items
+
+    def get_loccp_repo_catalog(self, query: str = "", category: str = "", limit: int = 50) -> List[Dict[str, Any]]:
+        csv_path = self.root / "docs" / "catalogs" / "LOCCP_352_REPOSITORY_MASTER.csv"
+        if not csv_path.exists():
+            return []
+        items = []
+        q = query.lower().strip()
+        cat = category.lower().strip()
+        with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                tool = r.get("Projekt/Tool", "").lower()
+                repo_path = r.get("GitHub-Pfad", "").lower()
+                r_cat = r.get("Kategorie", "").lower()
+                func = r.get("Funktion / Anwendungsfeld", "").lower()
+
+                if q and (q not in tool and q not in repo_path and q not in func):
+                    continue
+                if cat and cat not in r_cat:
+                    continue
+                items.append(dict(r))
+                if len(items) >= limit:
+                    break
+        return items
+
+    def get_loccp_pruefpunkte(self, compliance_module: str = "") -> List[Dict[str, Any]]:
+        csv_path = self.root / "docs" / "catalogs" / "LOCCP_42_COMPLIANCE_PRUEFPUNKTE.csv"
+        if not csv_path.exists():
+            return []
+        items = []
+        mod = compliance_module.lower().strip()
+        with open(csv_path, mode="r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                c_mod = r.get("Compliance-Modul", "").lower()
+                c_id = r.get("ID", "").lower()
+                if mod and (mod not in c_mod and mod not in c_id):
+                    continue
+                items.append(dict(r))
+        return items
+
+    def get_loccp_stats(self) -> Dict[str, Any]:
+        csv_repo = self.root / "docs" / "catalogs" / "LOCCP_352_REPOSITORY_MASTER.csv"
+        csv_42 = self.root / "docs" / "catalogs" / "LOCCP_42_COMPLIANCE_PRUEFPUNKTE.csv"
+        csv_urls = self.root / "docs" / "catalogs" / "LOCCP_911_URL_REGISTER.csv"
+
+        total_repos = 0
+        categories = {}
+        if csv_repo.exists():
+            with open(csv_repo, mode="r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f)
+                for r in reader:
+                    total_repos += 1
+                    c = r.get("Kategorie", "Unkategorisiert")
+                    categories[c] = categories.get(c, 0) + 1
+
+        total_42 = 0
+        if csv_42.exists():
+            with open(csv_42, mode="r", encoding="utf-8-sig") as f:
+                total_42 = sum(1 for _ in csv.DictReader(f))
+
+        total_urls = 0
+        if csv_urls.exists():
+            with open(csv_urls, mode="r", encoding="utf-8-sig") as f:
+                total_urls = sum(1 for _ in csv.DictReader(f))
+
+        return {
+            "total_loccp_repositories": total_repos,
+            "total_compliance_pruefpunkte": total_42,
+            "total_registered_urls": total_urls,
+            "categories": categories,
+            "provenance": "LOCCP Konsolidierter Masterkatalog 2026-11-04 · Daniel Pohl"
+        }
