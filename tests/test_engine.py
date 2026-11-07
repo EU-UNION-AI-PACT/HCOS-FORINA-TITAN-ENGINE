@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 19, "Muss alle 19 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 21, "Muss alle 21 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -765,6 +765,68 @@ class TestForinaTitanEngine(unittest.TestCase):
         res1 = self.root / "docs" / "concept_papers" / "specialized" / "Research_01_Top100_Scientific_Energy_Audit_Matrix.md"
         self.assertTrue(res1.exists())
         self.assertGreater(res1.stat().st_size, 3000)
+
+    def test_sovereign_cde_and_tlore_lightning_modules(self):
+        from forina_engine.tlore_cde import SovereignCdeEngine, TloreLightningEngine
+
+        # 1. Sovereign CDE Engine
+        cde = SovereignCdeEngine(self.root)
+        cde_summ = cde.get_summary()
+        self.assertEqual(cde_summ["rules_count"], 4)
+        self.assertTrue(cde_summ["point_start_ready"])
+        self.assertTrue(cde_summ["spec_available"])
+        self.assertIn("Daniel Pohl", cde_summ["governance"])
+
+        rules = cde.list_rules()
+        self.assertEqual(len(rules), 4)
+        self.assertEqual(rules[0]["Regel_Nr"], "CDE-RULE-01")
+
+        spawn = cde.spawn_point("crash_log_77")
+        self.assertEqual(spawn["status"], "POINT_AWAKENED")
+        self.assertLess(spawn["restore_latency_ms"], 10.0)
+        self.assertTrue(spawn["vfs_streaming_active"])
+
+        # 2. TLORE Lightning Engine
+        tlore = TloreLightningEngine(self.root)
+        t_summ = tlore.get_summary()
+        self.assertEqual(t_summ["total_modules"], 44)
+        self.assertEqual(t_summ["mode"], "SYNTHETIC_READ_ONLY")
+        self.assertTrue(t_summ["spec_available"])
+
+        mods = tlore.list_modules()
+        self.assertEqual(len(mods), 44)
+
+        m1 = tlore.get_module("01")
+        self.assertIsNotNone(m1)
+        self.assertEqual(m1["Name"], "Gitopia Chain Identity")
+
+        m44 = tlore.get_module("44")
+        self.assertIsNotNone(m44)
+        self.assertEqual(m44["Name"], "Independent Audit and Evidence")
+
+        boost = tlore.run_boost_simulation("01")
+        self.assertEqual(boost["mode"], "synthetic_read_only")
+        self.assertTrue(boost["live_trades_blocked"])
+        self.assertEqual(len(boost["harness_steps"]), 8)
+
+        # 3. File & Catalog Verifications
+        csv_tlore = self.root / "docs" / "catalogs" / "TLORE_44_FINANCE_MODULES.csv"
+        self.assertTrue(csv_tlore.exists())
+        t_lines = [l.strip() for l in csv_tlore.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(t_lines), 45, "Header + 44 Zeilen")
+
+        csv_cde = self.root / "docs" / "catalogs" / "SOVEREIGN_CDE_RULES.csv"
+        self.assertTrue(csv_cde.exists())
+        c_lines = [l.strip() for l in csv_cde.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(c_lines), 5, "Header + 4 Zeilen")
+
+        arch8 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_08_Sovereign_CDE_Point_Start_Userspace.md"
+        self.assertTrue(arch8.exists())
+        self.assertGreater(arch8.stat().st_size, 3000)
+
+        arch9 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_09_TLORE_44_Lightning_Power_Finance_Suite.md"
+        self.assertTrue(arch9.exists())
+        self.assertGreater(arch9.stat().st_size, 3000)
 
 
 if __name__ == "__main__":

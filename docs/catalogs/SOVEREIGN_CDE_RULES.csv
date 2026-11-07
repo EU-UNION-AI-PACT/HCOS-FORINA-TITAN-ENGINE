@@ -1,0 +1,5 @@
+Regel_Nr,Regel_Name,Schlüsseltechnologie,Anforderung,Compliance_Ziel,Status
+CDE-RULE-01,Zero-Trust Egress Rule,WhyTrace & NextTrace eBPF,Gestartete Umgebungen dürfen standardmäßig nicht auf das offene WAN zugreifen,Air-Gap Boundary & Exfiltration Defense,Hard Enforced
+CDE-RULE-02,Copy-on-Write (CoW) Rule,OverlayFS / ZFS / Btrfs,Petabyte-Projekte werden niemals kopiert · Basis-Code ist Read-Only · Änderungen nur im Delta Upperdir,Ressourceneffizienz & Bit-Parität,Hard Enforced
+CDE-RULE-03,Stateless Ephemeral Rule,Firecracker MicroVMs / Pods,Testumgebungen sind Wegwerf-Produkte · Nach Beendigung restlos gelöscht · Nur Git-Points bleiben,Zero-Persistence of Tainted State,Hard Enforced
+CDE-RULE-04,Memory-Safety Rule,Clang UCCS / ASan / UBSan,Vor Snapshot-Freigabe für Point Start müssen strenge Clang Speicherprüfungen bestanden sein,Memory Safety & Crash-Free Restore,Hard Enforced

@@ -763,6 +763,38 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(cands), "candidates": cands}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 18. TLORE LIGHTNING SUITE & SOVEREIGN CDE
+        if parsed.path == "/api/tlore/summary":
+            from .tlore_cde import TloreLightningEngine
+            eng = TloreLightningEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/tlore/modules":
+            from .tlore_cde import TloreLightningEngine
+            eng = TloreLightningEngine(self.project_root)
+            stage = query.get("stage", [None])[0]
+            mods = eng.list_modules(harness_stage=stage)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(mods), "modules": mods}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/cde/summary":
+            from .tlore_cde import SovereignCdeEngine
+            eng = SovereignCdeEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/cde/rules":
+            from .tlore_cde import SovereignCdeEngine
+            eng = SovereignCdeEngine(self.project_root)
+            rules = eng.list_rules()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(rules), "rules": rules}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
@@ -877,6 +909,42 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
                 resp = {"error": str(e), "status": "NATZA_DIVERGENCE_BLOCKED", "success": False}
             self._set_json_headers(200)
             self.wfile.write(json.dumps(resp, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # TLORE LIGHTNING BOOST & CDE SPAWN
+        if parsed.path == "/api/tlore/boost":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            from .tlore_cde import TloreLightningEngine
+            eng = TloreLightningEngine(self.project_root)
+            try:
+                res = eng.run_boost_simulation(
+                    sector_nr=req_data.get("sector_nr", "01"),
+                    network=req_data.get("network", "testnet")
+                )
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e)}, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/cde/spawn":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            from .tlore_cde import SovereignCdeEngine
+            eng = SovereignCdeEngine(self.project_root)
+            try:
+                res = eng.spawn_point(
+                    point_id=req_data.get("point_id", "crash_log_77")
+                )
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e)}, ensure_ascii=False).encode("utf-8"))
             return
 
         # 6. JMAP PARTNER INQUIRY (Redacted Logging for Privacy & GDPR)

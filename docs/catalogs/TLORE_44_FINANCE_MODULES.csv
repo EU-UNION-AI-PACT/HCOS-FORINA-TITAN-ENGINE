@@ -1,0 +1,45 @@
+Modul_ID,Sektor_Nr,Name,Bereich,Harness_Stage,Compliance_Pruefziel,Status
+TLORE-01,01,Gitopia Chain Identity,DLT Identity & Chain-ID,PLAN,Sovereign Chain Registrierung & Validierung,Synthetic Read-Only
+TLORE-02,02,TLORE Tokenomics,Tokenomics & Monetary Policy,PLAN,Mathematische Ausgabekurve & Burn-Raten,Synthetic Read-Only
+TLORE-03,03,IBC Capability,Inter-Blockchain Communication,DISCOVER,Cosmos IBC Channel Handshake Verifikation,Synthetic Read-Only
+TLORE-04,04,Bitcoin Markets,Crypto Asset Markets,DISCOVER,BTC / Satoshi Preisfindung & Liquiditätsnachweis,Synthetic Read-Only
+TLORE-05,05,Ethereum Markets,Crypto Asset Markets,DISCOVER,ETH / ERC-20 Interoperabilität & Smart Contracts,Synthetic Read-Only
+TLORE-06,06,USDC Markets,Stablecoin Infrastructure,DISCOVER,Circle MiCA-konforme Euro/USD Stablecoin Bindung,Synthetic Read-Only
+TLORE-07,07,EURC Markets,Stablecoin Infrastructure,DISCOVER,MiCA EMT (Electronic Money Token) Notierung,Synthetic Read-Only
+TLORE-08,08,Fiat FX Registry,Foreign Exchange (FX),VALIDATE,EZB Referenzkurse & Devisenregister,Synthetic Read-Only
+TLORE-09,09,Global ISO 4217 Currency Registry,Standards & Währungscodes,VALIDATE,ISO 4217 Dreistellige Währungscodes & Symbole,Synthetic Read-Only
+TLORE-10,10,Asset Identifier Registry,ISIN / LEI / Digital Tokens,VALIDATE,ISO 6166 ISIN & Global LEI 894500GBJSIW8L6ET310,Synthetic Read-Only
+TLORE-11,11,Market Data Feeds,Real-Time Telemetrie,SIMULATE,Sub-Sekunden Websocket Feeds & Normalisierung,Synthetic Read-Only
+TLORE-12,12,Oracle Consensus,Preisorakel & Daten-Integrität,SIMULATE,Byzantinischer Konsens & Median-Filterung,Synthetic Read-Only
+TLORE-13,13,Market Cap Evidence,Marktkapitalisierung,SIMULATE,Fully Diluted Valuation (FDV) & Bit-Parität,Synthetic Read-Only
+TLORE-14,14,Trade Volume Verification,Handelsvolumen-Audit,SIMULATE,Wash-Trading-Ausschluss & Orderbuch-Tiefe,Synthetic Read-Only
+TLORE-15,15,Liquidity Depth,Orderbuch & AMM Pools,SIMULATE,Slippage-Toleranz bei Großordern,Synthetic Read-Only
+TLORE-16,16,TLORE/USDC Pool,Automated Market Maker (AMM),TEST,Konstantes Produkt x*y=k & Impermanent Loss,Synthetic Read-Only
+TLORE-17,17,TLORE/ETH Pool,Automated Market Maker (AMM),TEST,Gas-optimierte EVM Routerverträge,Synthetic Read-Only
+TLORE-18,18,TLORE/BTC Routing,Cross-Asset Routing,TEST,Multi-Hop Pfadoptimierung über IBC,Synthetic Read-Only
+TLORE-19,19,Cosmos DEX Discovery,Interchain DeFi,TEST,Osmosis / Astrovault DEX Integration,Synthetic Read-Only
+TLORE-20,20,EVM DEX Discovery,EVM DeFi Ecosystem,TEST,Uniswap v3 / Curve Pool Routenfindung,Synthetic Read-Only
+TLORE-21,21,Bitcoin Bridge Verification,Cross-Chain Bridge,TEST,Light Client Proof & Bit-for-Bit Nachweis,Synthetic Read-Only
+TLORE-22,22,Cross-Chain Finality,Konsens-Endgültigkeit,EVIDENCE,Tendermint / CometBFT 1-Block Finalität,Synthetic Read-Only
+TLORE-23,23,Smart Quote Aggregator,Best-Execution Routing,EVIDENCE,MiFID II Best Execution Nachweispfad,Synthetic Read-Only
+TLORE-24,24,Slippage Protection,Verlustschutz & MEV-Abwehr,EVIDENCE,Maximaler Slippage-Threshold < 0.5%,Synthetic Read-Only
+TLORE-25,25,MEV Protection,Frontrunning-Prävention,EVIDENCE,Private Mempools & Fair Sequencing Services,Synthetic Read-Only
+TLORE-26,26,Treasury Business Pool,Sovereign Reserve Management,REVIEW,Treuhand- und Reservekontenverwaltung,Synthetic Read-Only
+TLORE-27,27,Partner Business Pool,Fintech Partner Integration,REVIEW,Mastercard/Visa BaaS Partner-Schnittstellen,Synthetic Read-Only
+TLORE-28,28,Reserve Segregation,Asset-Trennung,REVIEW,Strikte Trennung von Kunden- und Eigenmitteln,Synthetic Read-Only
+TLORE-29,29,Proof of Reserves and Liabilities,Merkle-Tree Solvenznachweis,REVIEW,Kryptografischer Nachweis aller Verbindlichkeiten,Synthetic Read-Only
+TLORE-30,30,Redemption and Settlement,Rücktausch & Auszahlung,REVIEW,T+0 / Sofortige Settlement-Finalität,Synthetic Read-Only
+TLORE-31,31,KYC/KYB and AML,Geldwäscheprävention & Identität,GATE,BaFin / GwG & EU AMLR Konformität,Synthetic Read-Only
+TLORE-32,32,MiCA Token Classification,EU-Regulierung,GATE,Art. 16/48 MiCA Klassifizierung (ART / EMT / Utility),Synthetic Read-Only
+TLORE-33,33,CASP and Custody Permissions,Verwahrlizenz-Prüfung,GATE,Crypto Asset Service Provider (CASP) Audit,Synthetic Read-Only
+TLORE-34,34,DORA ICT Controls,Digitale Betriebsstabilität,GATE,EU DORA Notfallwiederherstellung & IKT-Tests,Synthetic Read-Only
+TLORE-35,35,GDPR Privacy and Retention,Datenschutz & DSGVO Art. 25,GATE,Recht auf Vergessenwerden & Off-Chain PII,Synthetic Read-Only
+TLORE-36,36,Cybersecurity and Key Isolation,HSM & Air-Gap KMS,GATE,BSI TR-03105 & FIPS 140-3 Hardwareisolation,Synthetic Read-Only
+TLORE-37,37,DAO Governance,Dezentrale Entscheidungsfindung,GATE,On-Chain Quorum & Abstimmungsverifikation,Synthetic Read-Only
+TLORE-38,38,Multisignature Approvals,Schlüsselverteilung (M-of-N),GATE,3-aus-5 Schwellwertsignatur mit Ed25519,Synthetic Read-Only
+TLORE-39,39,Testnet/Mainnet Separation,Umgebungstrennung,GATE,Physische Netztrennung · 0 WAN Egress Leak,Synthetic Read-Only
+TLORE-40,40,Free and Low-Cost Operations,Kosteneffizienz & Zero-Gas,GATE,Deterministische Minimalgebühren-Steuerung,Synthetic Read-Only
+TLORE-41,41,Pareto 80/20 Deployment,Agile Bereitstellung,GATE,80% Kernfunktionalität mit 20% Ressourcenaufwand,Synthetic Read-Only
+TLORE-42,42,Harness Build Loop,Automatisierter 8-Stufen Zyklus,GATE,Kontinuierlicher Plan-to-Improve Feedbackzyklus,Synthetic Read-Only
+TLORE-43,43,Incident Response,Sicherheitsvorfall-Management,GATE,Automatisches Kill-Switch Protokoll & Alerting,Synthetic Read-Only
+TLORE-44,44,Independent Audit and Evidence,Unabhängiges Gutachten,GATE,13/13 Assurance Gates & Unveränderbare Hash-Kette,Synthetic Read-Only

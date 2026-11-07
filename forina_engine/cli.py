@@ -143,6 +143,18 @@ def main():
     energy_parser.add_argument("--nr", type=int, default=1, help="Auswahl-Nummer des Systems (1-100)")
     energy_parser.add_argument("--limit", type=int, default=25, help="Maximale Trefferanzahl")
 
+    # tlore (TLORE Infinity 44 Lightning Power Suite)
+    tlore_parser = subparsers.add_parser("tlore", help="TLORE Infinity: 44 Lightning Power Finance- und Systemmodule")
+    tlore_parser.add_argument("action", choices=["summary", "modules", "boost"], default="summary", nargs="?", help="Aktion: summary, modules, boost")
+    tlore_parser.add_argument("--module", type=str, default="01", help="Sektor-Nummer (01-44) oder Modul-ID (TLORE-01)")
+    tlore_parser.add_argument("--stage", type=str, default="", help="Harness-Stage Filter (PLAN, DISCOVER, TEST, GATE, etc.)")
+    tlore_parser.add_argument("--network", type=str, default="testnet", help="Netzwerk (testnet, mainnet)")
+
+    # cde (Sovereign CDE & Point Start Userspace Checkpointing)
+    cde_parser = subparsers.add_parser("cde", help="Sovereign CDE & Point Start Userspace Checkpointing")
+    cde_parser.add_argument("action", choices=["summary", "rules", "spawn"], default="summary", nargs="?", help="Aktion: summary, rules, spawn")
+    cde_parser.add_argument("--point", type=str, default="crash_log_77", help="CRIU Checkpoint ID (z.B. crash_log_77)")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -1088,6 +1100,85 @@ def main():
             print("==================================================================")
             print(" [Tipp] Liste anzeigen:   python3 forina.py energy list")
             print(" [Tipp] Gruppe filtern:   python3 forina.py energy list --group Fusion")
+
+    elif args.command == "tlore":
+        from .tlore_cde import TloreLightningEngine
+        eng = TloreLightningEngine(project_root)
+
+        if args.action == "modules":
+            mods = eng.list_modules(harness_stage=args.stage if args.stage else None)
+            print("==================================================================")
+            print(f" TLORE INFINITY — 44 LIGHTNING POWER FINANCE-MODULE ({len(mods)} Treffer)")
+            print("==================================================================")
+            for m in mods:
+                print(f" [{m.get('Modul_ID')}] {m.get('Sektor_Nr'):<2} · {m.get('Name'):<34} | [{m.get('Harness_Stage'):<8}] | {m.get('Bereich')}")
+            print("==================================================================")
+            print(" [Tipp] Boost-Simulation: python3 forina.py tlore boost --module 01")
+
+        elif args.action == "boost":
+            res = eng.run_boost_simulation(sector_nr=args.module, network=args.network)
+            print("==================================================================")
+            print(f" ⚡ TLORE LIGHTNING BOOST: {res['name'].upper()} (#{res['sector_nr']})")
+            print(f" Modus:       {res['mode'].upper()} (Live-Trades Gesperrt: {res['live_trades_blocked']})")
+            print(f" Netzwerk:    {res['network']}")
+            print(f" Evidence:    {res['evidence_hash']}")
+            print("==================================================================")
+            print(" Harness-Prüfablauf (8 Stufen):")
+            for step in res['harness_steps']:
+                print(f"   {step}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:   {summ['governance']}")
+            print(f" Module:       {summ['total_modules']} Sektoren in 6 Domänen")
+            print(f" Modus:        {summ['mode']} (100% Fail-Closed)")
+            print(" Harness-Stages Verteilung:")
+            for s, count in summ["stages_distribution"].items():
+                print(f"   * {s:<12} : {count:>2} Module")
+            print("==================================================================")
+            print(" [Tipp] Alle Module anzeigen:  python3 forina.py tlore modules")
+            print(" [Tipp] Modul-Boost testen:    python3 forina.py tlore boost --module 01")
+
+    elif args.command == "cde":
+        from .tlore_cde import SovereignCdeEngine
+        eng = SovereignCdeEngine(project_root)
+
+        if args.action == "rules":
+            rules = eng.list_rules()
+            print("==================================================================")
+            print(f" SOVEREIGN CDE — 4 UNVERHANDELBARE REGELN DER IMPLEMENTIERUNG")
+            print("==================================================================")
+            for r in rules:
+                print(f" [{r.get('Regel_Nr')}] {r.get('Regel_Name'):<28} | {r.get('Schlüsseltechnologie')}")
+                print(f"    -> {r.get('Anforderung')}")
+            print("==================================================================")
+
+        elif args.action == "spawn":
+            pt = eng.spawn_point(point_id=args.point)
+            print("==================================================================")
+            print(f" SOVEREIGN CDE — POINT START AWAKENED (#{pt['point_id']})")
+            print("==================================================================")
+            print(f" Latenz:      {pt['restore_latency_ms']} ms")
+            print(f" VFS Stream:  {pt['streaming_driver']}")
+            print(f" Checkpoint:  {pt['checkpoint_driver']}")
+            print(f" Isolation:   {pt['isolation']}")
+            print(f" Overlay CoW: {pt['overlayfs_cow_upperdir']}")
+            print(f" Memory-Hash: {pt['memory_mapping_hash']}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:   {summ['governance']}")
+            print(f" Regeln:       {summ['rules_count']} Invarianten (Zero-Trust, CoW, Stateless, Memory-Safety)")
+            print(f" Point Start:  Bereit via CRIU Memory Mapping & Nydus Lazy Loading")
+            print("==================================================================")
+            print(" [Tipp] Regeln anzeigen:   python3 forina.py cde rules")
+            print(" [Tipp] Point aufwecken:   python3 forina.py cde spawn --point crash_log_77")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"
