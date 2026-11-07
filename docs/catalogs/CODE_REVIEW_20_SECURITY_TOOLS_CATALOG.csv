@@ -1,0 +1,21 @@
+Tool_ID,Name,Kategorie,Primaere_Funktion,Lizenz,Status
+CR-01,Semgrep,SAST / Code Analysis,Semantische statische Codeanalyse mit maßgeschneiderten Regeln,LGPL-2.1,VERIFIZIERT
+CR-02,Trivy,Vulnerability Scanner,Umfassender Scanner für Container-Images / OS / Git-Repos & Misconfigurations,Apache-2.0,VERIFIZIERT
+CR-03,Checkov,IaC Security,Statische Code-Analyse für Infrastructure-as-Code (Terraform / K8s / CloudFormation),Apache-2.0,VERIFIZIERT
+CR-04,ast-grep,AST Structural Search,Blitzschnelle AST-basierte Code-Suche und Transformation via Tree-Sitter,MIT,VERIFIZIERT
+CR-05,Bandit,Python SAST,Sicherheits-Schwachstellenscanner für Python-Codebestände,Apache-2.0,VERIFIZIERT
+CR-06,Hadolint,Dockerfile Linter,Dockerfile-Linter und Best-Practice-Prüfer basierend auf Haskell AST,GPL-3.0,VERIFIZIERT
+CR-07,Kube-Linter,Kubernetes Linter,Statischer Analysator für Kubernetes YAML-Dateien und Helm Charts,Apache-2.0,VERIFIZIERT
+CR-08,Spectral,API Linter,JSON/YAML & OpenAPI / AsyncAPI Linter für Regeltreue und Schemakonsistenz,Apache-2.0,VERIFIZIERT
+CR-09,PR-Agent,AI Code Review,Automatisierter Pull-Request-Reviewer mit KI-gestützter Diff-Analyse,Apache-2.0,VERIFIZIERT
+CR-10,Kodus-AI,AI Code Assistant,Automatisiertes PR-Feedback und Sicherheits-Patch-Generierung,Proprietär / OSS Core,VERIFIZIERT
+CR-11,Joern,Code Property Graph,Interaktives Schwachstellen-Mining und Pfadanalyse via Code Property Graphs,Apache-2.0,VERIFIZIERT
+CR-12,Cover-Agent,Test Generation,KI-gestützte Generierung von Unit-Tests zur Steigerung der Testabdeckung,Apache-2.0,VERIFIZIERT
+CR-13,Reviewdog,Automated Review Runner,Automatisierter Bot zur Integration von Linter-Ergebnissen in PR-Kommentare,MIT,VERIFIZIERT
+CR-14,Buf,Protobuf Linter,High-Performance Protobuf-Linter / Breaking Change Detector und Generator,Apache-2.0,VERIFIZIERT
+CR-15,Tree-Sitter,Parser Generator,Inkrementeller Parser für präzise Syntaxbäume über dutzende Sprachen,MIT,VERIFIZIERT
+CR-16,PlantUML,UML Architecture,Deklarative Generierung von Architektur- und Sequenzdiagrammen aus Text,GPL-3.0,VERIFIZIERT
+CR-17,Graphviz,Graph Visualization,Visualisierung komplexer Modulabhängigkeiten und Kontrollflussgraphen,CPL-1.0,VERIFIZIERT
+CR-18,OpenReview,Academic Peer Review,Offene Peer-Review- und Verifikationsplattform für wissenschaftliche Arbeiten,MIT,VERIFIZIERT
+CR-19,Rerast,Rust AST Refactoring,Regelbasiertes Code-Refactoring und AST-Transformation für Rust,MIT / Apache-2.0,VERIFIZIERT
+CR-20,Awesome-AI-Review,Knowledge Catalog,Kuratierter Katalog führender KI-basierter Code-Review-Systeme und Heuristiken,CC0,VERIFIZIERT

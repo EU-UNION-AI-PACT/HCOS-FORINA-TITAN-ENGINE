@@ -179,6 +179,18 @@ def main():
     cdp_cli_parser.add_argument("action", choices=["summary", "components", "condense", "kyc"], default="summary", nargs="?", help="Aktion: summary, components, condense, kyc")
     cdp_cli_parser.add_argument("--raw-kb", type=int, default=1500, help="Größe der Roh-Webseite in KB für Kondensationstest")
 
+    # flow (Flow-Engine: Sensor -> Trigger -> Settlement)
+    flow_parser = subparsers.add_parser("flow", help="Flow-Engine: Sensor -> Trigger -> Settlement (Spectral Loop & WebGL 3D)")
+    flow_parser.add_argument("action", choices=["summary", "matrix", "simulate"], default="summary", nargs="?", help="Aktion: summary, matrix, simulate")
+    flow_parser.add_argument("--layer", type=str, default="", help="Schicht-Filter (Sensor, Trigger, Settlement, Loop-Feedback)")
+    flow_parser.add_argument("--energy", type=float, default=0.85, help="Spektral-Energie (0.0 bis 1.0)")
+    flow_parser.add_argument("--motion", type=float, default=12.5, help="Winkelgeschwindigkeit (z.B. 12.5)")
+
+    # review (20 Core Security Tools Stack)
+    review_parser = subparsers.add_parser("review", help="Automated PR Code Review & 20 SAST/DAST/AST Security Tools")
+    review_parser.add_argument("action", choices=["summary", "list", "policy"], default="summary", nargs="?", help="Aktion: summary, list, policy")
+    review_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter (z.B. SAST, Vulnerability Scanner, IaC Security, etc.)")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -1404,6 +1416,88 @@ def main():
             print(" [Tipp] Module auflisten:      python3 forina.py cdp components")
             print(" [Tipp] Kondensation testen:   python3 forina.py cdp condense --raw-kb 2000")
             print(" [Tipp] KYC-Register prüfen:   python3 forina.py cdp kyc")
+
+    elif args.command == "flow":
+        from .flow_and_review import FlowEngineSpectralSettlement
+        eng = FlowEngineSpectralSettlement(project_root)
+
+        if args.action == "matrix":
+            items = eng.list_matrix_entries(layer_type=args.layer if args.layer else None)
+            print("==================================================================")
+            print(f" FLOW-ENGINE REAKTIVE KYBERNETIK-MATRIX ({len(items)} Elemente)")
+            print("==================================================================")
+            for it in items:
+                print(f" [{it.get('Element_ID')}] {it.get('Schicht'):<14} | {it.get('Bezeichnung'):<26} | [{it.get('Status')}]")
+            print("==================================================================")
+
+        elif args.action == "simulate":
+            sim = eng.simulate_sensor_frame(spectral_energy=args.energy, mouse_angular_speed=args.motion)
+            print("==================================================================")
+            print(" FLOW-ENGINE LIVE FRAME SIMULATION (SENSOR -> TRIGGER -> SETTLEMENT)")
+            print("==================================================================")
+            print(f" Signaleingang:   Energy: {sim['signals']['spectral_energy']:.2f} | Motion: {sim['signals']['motion_normalized']:.2f} | Load: {sim['signals']['system_load']:.2f}")
+            print(f" Getriggerte Events ({sim['triggered_events_count']}):")
+            for ev in sim["triggered_events"]:
+                print(f"   * [{ev['trigger_id']}] {ev['name']}")
+            print(f" Ausgeführte Settlements ({sim['settlements_executed_count']}):")
+            for st in sim["settlements"]:
+                print(f"   * [{st['settlement_id']}] {st['type']}")
+            print(" Feedback:        Resonanz-Rückkopplung geschlossen (60 Hz)")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            asset = eng.get_visualization_asset_info()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:      {summ['governance']}")
+            print(f" Matrix-Elemente: {summ['total_matrix_elements']} Schichten-Komponenten")
+            for layer, count in summ["layers"].items():
+                print(f"   * {layer:<18} : {count:>2} Elemente")
+            print("------------------------------------------------------------------")
+            print(f" 3D WebGL Asset:  {asset['asset_path']} ({asset['size_bytes']} Bytes)")
+            print(f" Zero-Image-Rule: {'Eingehalten' if asset['zero_image_compliant'] else 'Verletzt'}")
+            print("==================================================================")
+            print(" [Tipp] Matrix auflisten:      python3 forina.py flow matrix")
+            print(" [Tipp] Frame simulieren:      python3 forina.py flow simulate --energy 0.95")
+
+    elif args.command == "review":
+        from .flow_and_review import CodeReviewSecurityStackEngine
+        eng = CodeReviewSecurityStackEngine(project_root)
+
+        if args.action == "list":
+            tools = eng.list_tools(category=args.category if args.category else None)
+            print("==================================================================")
+            print(f" CODE REVIEW & SECURITY ANALYSIS 20-TOOL STACK ({len(tools)} Tools)")
+            print("==================================================================")
+            for t in tools:
+                print(f" [{t.get('Tool_ID')}] {t.get('Name'):<18} | {t.get('Kategorie'):<22} | {t.get('Lizenz')}")
+            print("==================================================================")
+
+        elif args.action == "policy":
+            pol = eng.evaluate_pr_policies()
+            print("==================================================================")
+            print(" PR CODE REVIEW POLICY & ASSURANCE GATE MAPPING")
+            print("==================================================================")
+            print(f" Status:              [{pol['status']}]")
+            print(f" Tools verifiziert:   {pol['total_tools_verified']}")
+            print(f" Fail-Closed Policy:  {pol['fail_closed_policy']}")
+            print(" Assurance Gate Verknüpfung:")
+            for gate, t_list in pol["gate_mappings"].items():
+                print(f"   * {gate:<30} : {', '.join(t_list)}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:          {summ['governance']}")
+            print(f" Werkzeuge im Stack:  {summ['total_tools']} Kern-Tools (SAST, DAST, AST, IaC, AI-Review)")
+            print(" Integrierte Assurance Gates:")
+            print(f"   * {', '.join(summ['assurance_gates_integrated'])}")
+            print("==================================================================")
+            print(" [Tipp] Tools anzeigen:        python3 forina.py review list")
+            print(" [Tipp] Gate-Policy prüfen:    python3 forina.py review policy")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

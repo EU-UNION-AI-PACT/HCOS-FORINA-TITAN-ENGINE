@@ -4,7 +4,7 @@
 ```text
 =============================================================================
 CERTIFICATE ID:   HCOS-CERT-2026-EU-NATO-DP-001
-DATE OF ISSUANCE: 2026-11-07T23:48:56.181529+00:00
+DATE OF ISSUANCE: 2026-11-07T23:53:16.900055+00:00
 CRYPTO ALGORITHM: Ed25519 (RFC 8032 Asymmetric Signature) + Merkle SHA-256
 STATUS:           ASYMMETRIC_SIGNATURE_VERIFIED
 ASSURANCE TIER:   PRODUCTION_ASSURED
@@ -35,10 +35,10 @@ ASSURANCE TIER:   PRODUCTION_ASSURED
 
 ## 4. ASYMMETRIC CRYPTOGRAPHIC PROOF (Ed25519)
 * **Codebase Merkle Root (SHA-256):**
-  `937a55850acb1cdda0a6ab15ae456e5e037e6813234ef52b70999bfa550908fb`
+  `52cc2d9d8ac488555a6305ea2d9e857dbdfa3e805c07d45b9f9f27573fc705ed`
 * **Signer:** `Daniel Pohl (Sole Proprietor & Trademark Holder Hnoss / PrisMaTHarIOn)`
 * **Ed25519 Signature (Hex):**
-  `7ff01e4c0038c0c96c39479285ddda7eaf3493c78571a8ec22ed2afe916663d54e1f0ec099ecd6aeae302059f83c9ef7d180f4cefc5f5bfc46e15b0148093b03`
+  `857dd9f47170f848cf6c369ee25e7e3b40c0651175b2bf582ac07cd4616eb2ae948ac7239afa285f592c7335cfc23e015e6ba91132fd6cc93a3a1359c60aa00a`
 * **Public Key (PEM):**
 ```text
 -----BEGIN PUBLIC KEY-----

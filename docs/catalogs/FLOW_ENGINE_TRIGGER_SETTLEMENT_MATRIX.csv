@@ -1,0 +1,17 @@
+Schicht,Element_ID,Bezeichnung,Messung_Bedingung,Aktion_Settlement,Status
+Sensor,S1-SPECTRAL,Spektral-Sensor,FFT-Frequenzanalyse (0-20kHz) & Spectral Centroid,Normalisierter Energie-Vektor (0-1),AKTIV
+Sensor,S2-MOTION,Bewegungs-Sensor,Maus-/Touch-Winkelgeschwindigkeit & Scroll-Velocity,Rotationsvektor & Frame-Overlap-Metrik,AKTIV
+Sensor,S3-SYSTEM,System- & Telemetrie-Sensor,CPU/GPU-Last / Frame-Times & Memory Pressure,Hardware-Load-Index (0-1),AKTIV
+Sensor,S4-NETWORK,Netzwerk- & Egress-Sensor,Latenz / Jitter & Paketfluss auf Loopback,Egress-Audit-Index,AKTIV
+Trigger,T1-BEAT,Beat-Trigger,Energy überschreitet dynamischen Schwellenwert + Onset,Rhythmischer Zustandsimpuls,AKTIV
+Trigger,T2-SYNC,Sync-Trigger,Toleranzfenster mehrerer Sensoren kongruent (<5% Delta),Synchronisations-Trigger & Score-Multiplikator,AKTIV
+Trigger,T3-CIRCLE,Kreis-Trigger,Vollständige 360-Grad-Umdrehung der Zeigerkoordinaten,Manueller Modulator für Flow-Parameter,AKTIV
+Trigger,T4-PEAK,Peak-Trigger,Extremwert-Spitze >0.92 Energy über 3 aufeinanderfolgende Frames,Prioritäts-Interrupt für Sicherheits-/Audit-Pfad,AKTIV
+Trigger,T5-FLOW,Flow-Trigger,Cluster von >=5 Events innerhalb von 250 Millisekunden,Aktivierung kontinuierlicher Sequenzströme,AKTIV
+Trigger,T6-DELAY,Delay-Trigger,Hohe Scroll-Geschwindigkeit bei Frame-Overlap,Visuelle & zeitliche Nachlauf-Interpolation,AKTIV
+Settlement,SET-01-STATE,State-Update Settlement,Empfang validierter Trigger-Events,Aktualisierung von Flow-Score und Event-Historie,DURCHGEFUEHRT
+Settlement,SET-02-VISUAL,Visuelles Settlement,Echtzeit-Feedback an WebGL-Shader und Canvas,Partikel-Feld-Modulation und Farbgradienten-Update,DURCHGEFUEHRT
+Settlement,SET-03-TOKEN,Token-Ledger Settlement,Verifizierte Sync- und Flow-Events,Deterministische Punkte- und Belohnungsbuchung im Ledger,DURCHGEFUEHRT
+Settlement,SET-04-CHAIN,Kettenreaktions-Settlement,Erreichen kritischer Settlement-Schwellenwerte,Freischaltung nachgelagerter Trigger und Stufen,DURCHGEFUEHRT
+Loop-Feedback,FB-01-RESONANCE,Resonanz-Rückkopplung,Settlement-Ergebnis fließt in Sensor-Schwellenwerte,Dynamische Adaption der Trigger-Empfindlichkeit,AKTIV
+Loop-Feedback,FB-02-AUDIT,Audit-Trail Schließung,Jeder Durchlauf wird kryptografisch signiert,Lückenlose forensische Nachvollziehbarkeit,MANDATORISCH

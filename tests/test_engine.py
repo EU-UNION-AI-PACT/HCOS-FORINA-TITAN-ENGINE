@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 24, "Muss alle 24 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 26, "Muss alle 26 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -961,6 +961,65 @@ class TestForinaTitanEngine(unittest.TestCase):
         arch12 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_12_CDP_LiveSync_MCP_DevinAI_Portal_Automation.md"
         self.assertTrue(arch12.exists())
         self.assertGreater(arch12.stat().st_size, 3000)
+
+    def test_flow_engine_and_code_review_stack(self):
+        from forina_engine.flow_and_review import FlowEngineSpectralSettlement, CodeReviewSecurityStackEngine
+        flow = FlowEngineSpectralSettlement(self.root)
+        summ_f = flow.get_summary()
+        self.assertEqual(summ_f["total_matrix_elements"], 16)
+        self.assertTrue(summ_f["web_asset_available"])
+        self.assertEqual(summ_f["loop_state"], "OPERATIONAL_REALTIME")
+        self.assertTrue(summ_f["fail_closed_guaranteed"])
+
+        # Simulation
+        sim = flow.simulate_sensor_frame(spectral_energy=0.95, mouse_angular_speed=15.0, cpu_load=0.3)
+        self.assertEqual(sim["status"], "FRAME_PROCESSED_SUCCESS")
+        self.assertGreaterEqual(sim["triggered_events_count"], 3)
+        self.assertGreaterEqual(sim["settlements_executed_count"], 2)
+        self.assertTrue(sim["loop_closed"])
+
+        # Web asset check
+        asset_info = flow.get_visualization_asset_info()
+        self.assertTrue(asset_info["available"])
+        self.assertEqual(asset_info["raster_images_contained"], 0)
+        self.assertTrue(asset_info["zero_image_compliant"])
+
+        # Code Review Stack
+        review = CodeReviewSecurityStackEngine(self.root)
+        summ_r = review.get_summary()
+        self.assertEqual(summ_r["total_tools"], 20)
+        self.assertEqual(len(summ_r["assurance_gates_integrated"]), 5)
+
+        # Policy evaluation
+        pol = review.evaluate_pr_policies()
+        self.assertEqual(pol["status"], "PR_REVIEW_POLICY_PASSED")
+        self.assertEqual(pol["total_tools_verified"], 20)
+        self.assertEqual(pol["fail_closed_policy"], "STRICT_ENFORCEMENT")
+        self.assertIn("Semgrep", pol["gate_mappings"]["G01_LICENSE_AND_THREAT"])
+        self.assertIn("PR-Agent", pol["gate_mappings"]["G09_SOVEREIGN_APPROVAL"])
+
+        # File presence
+        csv_flow = self.root / "docs" / "catalogs" / "FLOW_ENGINE_TRIGGER_SETTLEMENT_MATRIX.csv"
+        self.assertTrue(csv_flow.exists())
+        f_lines = [l.strip() for l in csv_flow.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(f_lines), 17, "Header + 16 Elemente")
+
+        csv_review = self.root / "docs" / "catalogs" / "CODE_REVIEW_20_SECURITY_TOOLS_CATALOG.csv"
+        self.assertTrue(csv_review.exists())
+        r_lines = [l.strip() for l in csv_review.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(r_lines), 21, "Header + 20 Tools")
+
+        arch13 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_13_Flow_Engine_Sensor_Trigger_Settlement_Spectral_Loop.md"
+        self.assertTrue(arch13.exists())
+        self.assertGreater(arch13.stat().st_size, 3000)
+
+        arch14 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_14_Automated_PR_Code_Review_SAST_DAST_AST_Stack.md"
+        self.assertTrue(arch14.exists())
+        self.assertGreater(arch14.stat().st_size, 3000)
+
+        web_3d = self.root / "web" / "flow-engine-3d.html"
+        self.assertTrue(web_3d.exists())
+        self.assertGreater(web_3d.stat().st_size, 2000)
 
 
 if __name__ == "__main__":

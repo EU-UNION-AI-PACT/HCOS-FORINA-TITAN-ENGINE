@@ -867,6 +867,41 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 21. FLOW-ENGINE & PR CODE REVIEW STACK
+        if parsed.path == "/api/flow-engine/summary":
+            from .flow_and_review import FlowEngineSpectralSettlement
+            eng = FlowEngineSpectralSettlement(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/flow-engine/simulate":
+            from .flow_and_review import FlowEngineSpectralSettlement
+            eng = FlowEngineSpectralSettlement(self.project_root)
+            energy = float(query.get("energy", [0.85])[0])
+            motion = float(query.get("motion", [12.5])[0])
+            load = float(query.get("load", [0.42])[0])
+            sim = eng.simulate_sensor_frame(spectral_energy=energy, mouse_angular_speed=motion, cpu_load=load)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(sim, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/code-review/summary":
+            from .flow_and_review import CodeReviewSecurityStackEngine
+            eng = CodeReviewSecurityStackEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/code-review/tools":
+            from .flow_and_review import CodeReviewSecurityStackEngine
+            eng = CodeReviewSecurityStackEngine(self.project_root)
+            cat = query.get("category", [None])[0]
+            tools = eng.list_tools(category=cat)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(tools), "tools": tools}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
