@@ -725,6 +725,44 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(projs), "projects": projs}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 17. SCIENTIFIC ENERGY AUDIT & PONTES DLT
+        if parsed.path == "/api/energy/summary":
+            from .energy_audit import ScientificEnergyAuditEngine
+            eng = ScientificEnergyAuditEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/energy/systems":
+            from .energy_audit import ScientificEnergyAuditEngine
+            eng = ScientificEnergyAuditEngine(self.project_root)
+            q = query.get("q", [None])[0]
+            group = query.get("group", [None])[0]
+            grade = query.get("grade", [None])[0]
+            if q:
+                systems = eng.search_systems(q)
+            else:
+                systems = eng.list_systems(group=group, nachweisgrad=grade)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(systems), "systems": systems}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/pontes/summary":
+            from .energy_audit import PontesDltSettlementEngine
+            eng = PontesDltSettlementEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/pontes/matrix":
+            from .energy_audit import PontesDltSettlementEngine
+            eng = PontesDltSettlementEngine(self.project_root)
+            cat = query.get("category", [None])[0]
+            cands = eng.list_candidates(category=cat)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(cands), "candidates": cands}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 

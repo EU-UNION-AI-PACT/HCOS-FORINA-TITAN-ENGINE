@@ -107,7 +107,7 @@ def main():
 
     # finance (Zentralbanken & Open Banking)
     fin_parser = subparsers.add_parser("finance", help="Zentralbanken, EZB Pontes & Open Banking Schnittstellen (PSD2)")
-    fin_parser.add_argument("action", choices=["summary", "centralbanks", "globalcbs", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp", "vpsportals", "portalregistry", "partnerapps", "globalcards"], default="summary", nargs="?", help="Aktion: summary, centralbanks, globalcbs, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp, vpsportals, portalregistry, partnerapps, globalcards")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "globalcbs", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp", "vpsportals", "portalregistry", "partnerapps", "globalcards", "pontesmatrix"], default="summary", nargs="?", help="Aktion: summary, centralbanks, globalcbs, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp, vpsportals, portalregistry, partnerapps, globalcards, pontesmatrix")
     fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale, C-Level oder ASPSP-Banken")
     fin_parser.add_argument("--country", type=str, default="", help="Länderkürzel für ASPSP-Banken (DE, AT, CH, FR, etc.)")
     fin_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für Portale")
@@ -133,6 +133,15 @@ def main():
     wish_parser.add_argument("--role", type=str, default="SKILL-VOL-01", help="Skill-Pass Rollen-ID")
     wish_parser.add_argument("--level", type=str, default="", help="Kompetenz-Level (Bronze, Silver, Gold, Titan)")
     wish_parser.add_argument("--did", type=str, default="did:tdw:volunteer.dev:community-id", help="Entwickler Decentralized Identifier (DID)")
+
+    # energy (Top 100 Wissenschaftlicher Energie- & Extremtechnologie-Audit)
+    energy_parser = subparsers.add_parser("energy", help="Top 100 Wissenschaftlicher Energie- & Extremtechnologie-Audit")
+    energy_parser.add_argument("action", choices=["summary", "list", "inspect"], default="summary", nargs="?", help="Aktion: summary, list, inspect")
+    energy_parser.add_argument("--group", type=str, default="", help="Fachgruppe (Fusion, Kernspaltung, Hyperschall, etc.)")
+    energy_parser.add_argument("--grade", type=str, default="", help="Nachweisgrad (A, B, C)")
+    energy_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Systeme")
+    energy_parser.add_argument("--nr", type=int, default=1, help="Auswahl-Nummer des Systems (1-100)")
+    energy_parser.add_argument("--limit", type=int, default=25, help="Maximale Trefferanzahl")
 
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
@@ -872,6 +881,16 @@ def main():
             for m in gc["modules"]:
                 print(f"   [{m['id']}] {m['name']:<24} | {m['scope']}")
             print("==================================================================")
+        elif args.action == "pontesmatrix":
+            from .energy_audit import PontesDltSettlementEngine
+            pont = PontesDltSettlementEngine(project_root)
+            cands = pont.list_candidates()
+            print("==================================================================")
+            print(f" EZB PONTES & WHOLESALE DLT RECHERCHEMATRIX ({len(cands)} Systeme)")
+            print("==================================================================")
+            for c in cands:
+                print(f" [{c.get('Kandidat_ID'):<8}] {c.get('Projekt'):<16} | {c.get('Kategorie'):<22} | {c.get('Fokus_DvP_PvP')}")
+            print("==================================================================")
         else: # summary
             summ = fin.get_summary()
             print(json.dumps(summ, indent=2, ensure_ascii=False))
@@ -1017,6 +1036,58 @@ def main():
             print(" [Tipp] Rollen anzeigen:     python3 forina.py wish roles")
             print(" [Tipp] Projekte anzeigen:   python3 forina.py wish projects")
             print(" [Tipp] VC ausstellen:       python3 forina.py wish credential --role SKILL-VOL-08")
+
+    elif args.command == "energy":
+        from .energy_audit import ScientificEnergyAuditEngine
+        eng = ScientificEnergyAuditEngine(project_root)
+
+        if args.action == "list":
+            systems = eng.list_systems(group=args.group if args.group else None, nachweisgrad=args.grade if args.grade else None)
+            if args.search:
+                systems = eng.search_systems(args.search)
+            print("==================================================================")
+            print(f" TOP 100 WISSENSCHAFTLICHER ENERGIE-AUDIT ({len(systems)} Treffer)")
+            print("==================================================================")
+            for s in systems[:args.limit]:
+                wert = f"{s.get('Wert', '')} {s.get('Einheit', '')}".strip() or "N/A"
+                print(f" #{s.get('Auswahl-Nr', '?'):<3} | [{s.get('Nachweisgrad', '?')[:1]}] | {s.get('System', ''):<26} | {wert:<18} | {s.get('Gruppe', '')}")
+            if len(systems) > args.limit:
+                print(f"... ({len(systems) - args.limit} weitere Systeme, nutze --limit {len(systems)})")
+            print("==================================================================")
+            print(" [Tipp] Detailansicht: python3 forina.py energy inspect --nr 1")
+
+        elif args.action == "inspect":
+            s = eng.get_system_by_nr(args.nr)
+            if not s:
+                print(f"[!] System #{args.nr} nicht gefunden.")
+                return
+            print("==================================================================")
+            print(f" ENERGIE-SYSTEM #{s.get('Auswahl-Nr')}: {s.get('System')}")
+            print(f" Gruppe:        {s.get('Gruppe')}")
+            print(f" Rolle:         {s.get('Rolle')}")
+            print(f" Status:        {s.get('Altstatus')}")
+            print(f" Nachweisgrad:  {s.get('Nachweisgrad')}")
+            print(f" Messwert:      {s.get('Wert')} {s.get('Einheit')} ({s.get('Messart')})")
+            print(f" Quelle:        {s.get('Quelle spezifisch/alt')}")
+            print(f" Fachportal:    {s.get('Fachportal')}")
+            print("------------------------------------------------------------------")
+            print(f" Besonderheit:  {s.get('Besonderheit')}")
+            print(f" Krit. Anmerk.: {s.get('kritische Anmerkung')}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:    {summ['governance']}")
+            print(f" Gesamtsysteme: {summ['total_systems']} in {summ['groups_count']} Fachgruppen")
+            print(" Fachgruppen:")
+            for g, count in summ["groups_breakdown"].items():
+                print(f"   * {g:<35} : {count:>2} Systeme")
+            print(f" Nachweisgrade: A (Messbeleg): {summ['nachweisgrade'].get('A', 0)} | B (Projektbeleg): {summ['nachweisgrade'].get('B', 0)} | C: {summ['nachweisgrade'].get('C', 0)}")
+            print("==================================================================")
+            print(" [Tipp] Liste anzeigen:   python3 forina.py energy list")
+            print(" [Tipp] Gruppe filtern:   python3 forina.py energy list --group Fusion")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

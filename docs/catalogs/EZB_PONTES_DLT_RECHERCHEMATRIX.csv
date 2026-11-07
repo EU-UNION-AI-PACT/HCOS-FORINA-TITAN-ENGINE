@@ -1,0 +1,26 @@
+Kandidat_ID,Projekt,Kategorie,Institutionen,Fokus_DvP_PvP,Recherchefrage,Status
+PONT-001,Pontes,Eurosystem Core,EZB / Eurosystem,DvP / Wholesale Settlement,Architektur und Entscheidungslage zur marktseitigen DLT-Anbindung an TARGET-Dienste,Analysiert
+PONT-002,Appia,Eurosystem Core,EZB / Eurosystem,Plattformarchitektur,Langfristige Eurosystem-Plattformidee versus konkreter operativer Dienst,Analysiert
+PONT-003,Trigger Solution,Eurosystem Core,Deutsche Bundesbank,DvP Trigger-Mechanismus,Verknüpfung von privaten DLT-Plattformen mit T2-RTGS Geldkonten,Analysiert
+PONT-004,DL3S (Full DLT),Eurosystem Core,Banque de France,Interoperables Cash-Ledger,Zentralbankgeld-Tokenisierung auf interoperablem DLT-Knoten,Analysiert
+PONT-005,TIPS Hash-Link,Eurosystem Core,Banca d'Italia,Echtzeit-Settlement API,Kryptografischer Hash-Link zwischen DLT und TIPS Instant Payments,Analysiert
+PONT-006,T2 / TARGET2,Eurosystem Core,EZB / Eurosystem,RTGS Großbetragszahlung,Brutto-Echtzeit-Abrechnung für Interbanken-Transaktionen,Produktiv
+PONT-007,T2S,Eurosystem Core,EZB / Eurosystem,DvP Wertpapierabwicklung,Zentralisierte Wertpapierabrechnung in Zentralbankgeld,Produktiv
+PONT-008,TIPS,Eurosystem Core,EZB / Eurosystem,Instant Payments,Echtzeit-Zahlungsverkehr im Euroraum rund um die Uhr,Produktiv
+PONT-009,ECMS,Eurosystem Core,EZB / Eurosystem,Sicherheitenmanagement,Einheitliches Sicherheitenverwaltungssystem des Eurosystems,Produktiv
+PONT-010,Helvetia,Wholesale DvP,SNB / BIZ / SIX Digital Exchange,Wholesale DvP Token,Echte Wertpapierabwicklung mit Wholesale-CBDC auf SDX,Pilot / Erprobt
+PONT-011,Jura,Wholesale DvP & PvP,Banque de France / SNB / BIZ,Grenzüberschreitend EUR/CHF,PvP Devisen- und DvP Wertpapierabwicklung zwischen Frankreich und Schweiz,Erprobt
+PONT-012,Meridian / FX,Wholesale Synchronization,Bank of England / BIZ,Ledger-Synchronisierung,Synchronisierung von RTGS und externen Registern ohne Tokenisierung,Erprobt
+PONT-013,Stella,Forschung & Historie,EZB / Bank of Japan,DLT-Machbarkeit,Gemeinsame Forschungsphasen zu Liquiditätsspar- und Abwicklungsmechanismen,Historisch
+PONT-014,Jasper,Forschung & Historie,Bank of Canada,Wholesale DLT,Erprobung von DLT für Großbetragszahlungen und Wertpapiere,Historisch
+PONT-015,Ubin / Ubin+,Wholesale Interoperabilität,Monetary Authority of Singapore (MAS),Multi-Currency DLT,Föderierte Zahlungsnetzwerke und grenzüberschreitende DLT-Kopplung,Fortgeführt
+PONT-016,Jasper-Ubin,Wholesale Cross-Border,Bank of Canada / MAS,Cross-Border PvP,Bilateraler grenzüberschreitender Test ohne Mittelsperson,Erprobt
+PONT-017,Khokha,Wholesale DvP,South African Reserve Bank (SARB),Wholesale Settlement,Erprobung von DLT für Interbanken-Settlement und Schuldtitel,Erprobt
+PONT-018,Drex,Wholesale & Retail Platform,Banco Central do Brasil,Multi-Asset DLT Platform,Verknüpfung von digitalem Real mit tokenisierten Bankeinlagen,Pilotbetrieb
+PONT-019,Agorá,Cross-Border Multi-Currency,BIZ / Beteiligte Zentralbanken & G-SIBs,Tokenisierte Einlagen & CBDC,Einheitliches programmierbares Ledger für grenzüberschreitende Zahlungen,Aktiv
+PONT-020,mBridge,Cross-Border Multi-Currency,HKMA / BOT / PBoC / CBUAE / BIZ,Multi-CBDC Plattform,Reale grenzüberschreitende Zahlungen auf dediziertem Consensus-Ledger,MVP / Erprobt
+PONT-021,Dunbar,Cross-Border Multi-Currency,BIZ / RBA / BNM / MAS / SARB,Multi-CBDC Plattform,Gemeinsame Plattform für direkte internationale Abrechnung,Erprobt
+PONT-022,Aber,Bilateral Wholesale,Saudi Central Bank (SAMA) / CBUAE,Bilateral Dual-Currency,Bilateraler digitaler Währungsausgleich zwischen Saudi-Arabien und VAE,Erprobt
+PONT-023,Mariana,Automatisierter FX Tausch,BIZ / BdF / SNB / MAS,Automated Market Maker (AMM),Cross-Border FX mit dezentralen Liquiditätspools und wCBDC,Erprobt
+PONT-024,Icebreaker,Retail Hub,BIZ / BOI / Norges Bank / Riksbank,Retail CBDC Interoperabilität,Hub-and-Spoke Architektur für internationale Kleinbetragszahlungen,Erprobt
+PONT-025,Digitaler Euro,Retail CBDC,EZB / Eurosystem,Retail Zentralbankgeld,Elektronisches gesetzliches Zahlungsmittel für Bürger und Unternehmen,Vorbereitungsphase

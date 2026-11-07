@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 17, "Muss alle 17 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 19, "Muss alle 19 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -703,6 +703,68 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertTrue(csv_roles.exists())
         lines = [line.strip() for line in csv_roles.read_text(encoding="utf-8").splitlines() if line.strip()]
         self.assertEqual(len(lines), 11, "Header + 10 Rollen")
+
+    def test_scientific_energy_audit_and_pontes_dlt(self):
+        from forina_engine.energy_audit import ScientificEnergyAuditEngine, PontesDltSettlementEngine
+
+        # 1. Energy Audit Engine
+        ea = ScientificEnergyAuditEngine(self.root)
+        summ = ea.get_summary()
+        self.assertEqual(summ["total_systems"], 100)
+        self.assertEqual(summ["groups_count"], 8)
+        self.assertIn("Fusion & Plasma", summ["groups_breakdown"])
+        self.assertIn("Daniel Pohl", summ["governance"])
+
+        all_sys = ea.list_systems()
+        self.assertEqual(len(all_sys), 100)
+
+        fusion_sys = ea.list_systems(group="Fusion")
+        self.assertEqual(len(fusion_sys), 15)
+
+        tokamak_search = ea.search_systems("Tokamak")
+        self.assertGreaterEqual(len(tokamak_search), 5)
+
+        sys1 = ea.get_system_by_nr(1)
+        self.assertIsNotNone(sys1)
+        self.assertEqual(sys1["System"], "ITER")
+        self.assertEqual(sys1["Wert"], "500")
+
+        # 2. Pontes DLT Settlement Engine
+        pont = PontesDltSettlementEngine(self.root)
+        p_summ = pont.get_summary()
+        self.assertEqual(p_summ["total_candidates"], 25)
+        self.assertIn("Eurosystem Core", p_summ["categories"])
+
+        cands = pont.list_candidates()
+        self.assertEqual(len(cands), 25)
+
+        c1 = pont.get_candidate("PONT-001")
+        self.assertIsNotNone(c1)
+        self.assertEqual(c1["Projekt"], "Pontes")
+        self.assertIn("TARGET", c1["Recherchefrage"])
+
+        c3 = pont.get_candidate("PONT-003")
+        self.assertIsNotNone(c3)
+        self.assertEqual(c3["Projekt"], "Trigger Solution")
+
+        # 3. Catalog and Documentation Files Verification
+        csv_energy = self.root / "docs" / "catalogs" / "TOP100_ENERGIE_TECHNOLOGIE_AUDIT.csv"
+        self.assertTrue(csv_energy.exists())
+        e_lines = [l.strip() for l in csv_energy.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(e_lines), 101, "Header + 100 Zeilen")
+
+        csv_pontes = self.root / "docs" / "catalogs" / "EZB_PONTES_DLT_RECHERCHEMATRIX.csv"
+        self.assertTrue(csv_pontes.exists())
+        p_lines = [l.strip() for l in csv_pontes.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(p_lines), 26, "Header + 25 Zeilen")
+
+        arch7 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_07_EZB_Pontes_DLT_Wholesale_Settlement.md"
+        self.assertTrue(arch7.exists())
+        self.assertGreater(arch7.stat().st_size, 3000)
+
+        res1 = self.root / "docs" / "concept_papers" / "specialized" / "Research_01_Top100_Scientific_Energy_Audit_Matrix.md"
+        self.assertTrue(res1.exists())
+        self.assertGreater(res1.stat().st_size, 3000)
 
 
 if __name__ == "__main__":
