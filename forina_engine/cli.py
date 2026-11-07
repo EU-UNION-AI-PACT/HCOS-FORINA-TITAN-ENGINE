@@ -124,6 +124,16 @@ def main():
     comp_parser.add_argument("action", choices=["pruefpunkte", "attestation", "stats"], default="pruefpunkte", nargs="?", help="Aktion: pruefpunkte, attestation, stats")
     comp_parser.add_argument("--module", type=str, default="", help="Filter nach Compliance-Modul (Corporate, DORA, etc.)")
 
+    # wish (Wish Studio OS, Digital Skill Pass & Human Approval Gate)
+    wish_parser = subparsers.add_parser("wish", help="Wish Studio OS: Wünsche, Digitaler Skill Pass & Human Approval Gate (G09)")
+    wish_parser.add_argument("action", choices=["summary", "roles", "projects", "create", "approve", "credential"], default="summary", nargs="?", help="Aktion: summary, roles, projects, create, approve, credential")
+    wish_parser.add_argument("--id", type=str, default="", help="Projekt-ID (z.B. WISH-2026-001) oder Rollen-ID")
+    wish_parser.add_argument("--title", type=str, default="", help="Titel des Wunschprojekts")
+    wish_parser.add_argument("--desc", type=str, default="", help="Beschreibung des Wunschprojekts")
+    wish_parser.add_argument("--role", type=str, default="SKILL-VOL-01", help="Skill-Pass Rollen-ID")
+    wish_parser.add_argument("--level", type=str, default="", help="Kompetenz-Level (Bronze, Silver, Gold, Titan)")
+    wish_parser.add_argument("--did", type=str, default="did:tdw:volunteer.dev:community-id", help="Entwickler Decentralized Identifier (DID)")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -938,6 +948,75 @@ def main():
         else: # stats
             stats = catalog.get_loccp_stats()
             print(json.dumps(stats, indent=2, ensure_ascii=False))
+
+    elif args.command == "wish":
+        from .skill_pass import WishStudioSkillPassEngine
+        eng = WishStudioSkillPassEngine(project_root)
+
+        if args.action == "roles":
+            roles = eng.list_roles(level=args.level if args.level else None)
+            print("==================================================================")
+            print(" WISH STUDIO OS — DIGITAL SKILL PASS ROLLEN-KATALOG (W3C DID / SWIYU)")
+            print("==================================================================")
+            for r in roles:
+                print(f" [{r.get('Rollen_ID'):<12}] | {r.get('Level'):<6} | {r.get('Titel'):<32} | {r.get('Bereich')}")
+            print("==================================================================")
+
+        elif args.action == "projects":
+            projs = eng.list_projects()
+            print("==================================================================")
+            print(" WISH STUDIO OS — AKTIVE WUNSCH-PROJEKTE & FREIGABESTATUS")
+            print("==================================================================")
+            for p in projs:
+                app_mark = "[APPROVED]" if p.get("status") == "HUMAN_APPROVED" else f"[{p.get('status')}]"
+                print(f" {p.get('id'):<14} | {app_mark:<16} | {p.get('title'):<45}")
+            print("==================================================================")
+
+        elif args.action == "create":
+            if not args.title:
+                print("[!] Bitte --title angeben.")
+                return
+            proj = eng.create_project(title=args.title, description=args.desc, assigned_role=args.role)
+            print(f"[OK] Wunsch-Projekt erstellt: {proj['id']} — {proj['title']}")
+
+        elif args.action == "approve":
+            if not args.id:
+                print("[!] Bitte --id <WISH-ID> angeben.")
+                return
+            approval = eng.approve_project(project_id=args.id, approver="Daniel Pohl", role="Sovereign Requestor / Authority")
+            print("==================================================================")
+            print(" SOVEREIGN HUMAN APPROVAL GATE (G09) VERBINDLICH ERTEILT")
+            print("==================================================================")
+            print(f" Genehmigt von: {approval['approver']} ({approval['role']})")
+            print(f" Projekt:       {approval['project_id']}")
+            print(f" Zeitstempel:   {approval['timestamp']}")
+            print(f" Audit-Hash:    {approval['hash']}")
+            print("==================================================================")
+
+        elif args.action == "credential":
+            vc = eng.generate_verifiable_credential(
+                developer_did=args.did,
+                role_id=args.role,
+                project_id=args.id if args.id else "WISH-2026-001"
+            )
+            print("==================================================================")
+            print(" W3C VERIFIABLE CREDENTIAL — DIGITAL SKILL PASS AUSGESTELLT")
+            print("==================================================================")
+            print(json.dumps(vc, indent=2, ensure_ascii=False))
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:   {summ['governance']}")
+            print(f" Rollen:       {summ['total_defined_roles']} Rollen über 4 Levels (Bronze bis Titan)")
+            print(f" Projekte:     {summ['total_wish_projects']} registriert ({summ['human_approved_projects']} human-approved)")
+            print(f" W3C / swiyu:  100% kompatibel (Gate G09 Hard-Enforced)")
+            print("==================================================================")
+            print(" [Tipp] Rollen anzeigen:     python3 forina.py wish roles")
+            print(" [Tipp] Projekte anzeigen:   python3 forina.py wish projects")
+            print(" [Tipp] VC ausstellen:       python3 forina.py wish credential --role SKILL-VOL-08")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

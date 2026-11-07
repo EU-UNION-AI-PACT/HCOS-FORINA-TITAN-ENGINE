@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 16, "Muss alle 16 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 17, "Muss alle 17 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -659,6 +659,50 @@ class TestForinaTitanEngine(unittest.TestCase):
         # 5. Core Masterbook documentation files
         self.assertTrue((self.root / "docs" / "dp_masterbook" / "INDEX.md").exists())
         self.assertTrue((self.root / "docs" / "dp_masterbook" / "MASTERPLAN.md").exists())
+
+    def test_wish_studio_skill_pass_and_human_approval(self):
+        from forina_engine.skill_pass import WishStudioSkillPassEngine
+        eng = WishStudioSkillPassEngine(self.root)
+
+        # 1. Summary
+        summ = eng.get_summary()
+        self.assertEqual(summ["total_defined_roles"], 10)
+        self.assertGreaterEqual(summ["total_wish_projects"], 3)
+        self.assertTrue(summ["gate_g09_enforced"])
+        self.assertTrue(summ["w3c_did_compatible"])
+        self.assertTrue(summ["swiss_swiyu_ready"])
+        self.assertIn("Daniel Pohl", summ["governance"])
+
+        # 2. Roles Catalog
+        roles = eng.list_roles()
+        self.assertEqual(len(roles), 10)
+        titan_roles = eng.list_roles(level="Titan")
+        self.assertEqual(len(titan_roles), 3)
+
+        # 3. W3C Verifiable Credential Generation
+        vc = eng.generate_verifiable_credential("did:tdw:volunteer.community.eu:pohl", "SKILL-VOL-08", "WISH-2026-001")
+        self.assertIn("VerifiableCredential", vc["type"])
+        self.assertIn("CivicDeveloperSkillPass", vc["type"])
+        self.assertIn("Daniel Pohl", vc["issuer"]["name"])
+        self.assertEqual(vc["credentialSubject"]["competenceLevel"], "TITAN")
+        self.assertEqual(vc["proof"]["type"], "Ed25519Signature2020")
+
+        # 4. Human Approval Workflow (Gate G09)
+        new_proj = eng.create_project(title="Test Feature Wunsch", description="Automatischer Sandbox-Test")
+        self.assertEqual(new_proj["status"], "DRAFT")
+        approval = eng.approve_project(new_proj["id"], approver="Daniel Pohl", role="Sovereign Requestor / Authority")
+        self.assertEqual(approval["decision"], "APPROVED")
+        self.assertEqual(approval["gate_reference"], "G09_SOVEREIGN_APPROVAL")
+
+        # 5. Architecture Paper 06 & CSV Catalog
+        arch6 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_06_Wish_Studio_Skill_Pass_Human_Approval.md"
+        self.assertTrue(arch6.exists())
+        self.assertGreater(arch6.stat().st_size, 5000)
+
+        csv_roles = self.root / "docs" / "catalogs" / "WISH_STUDIO_SKILL_PASS_ROLES.csv"
+        self.assertTrue(csv_roles.exists())
+        lines = [line.strip() for line in csv_roles.read_text(encoding="utf-8").splitlines() if line.strip()]
+        self.assertEqual(len(lines), 11, "Header + 10 Rollen")
 
 
 if __name__ == "__main__":

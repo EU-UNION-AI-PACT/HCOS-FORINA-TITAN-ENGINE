@@ -232,6 +232,7 @@
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem;" onclick="switchAiTab('kb')">🔍 RAG</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green);" onclick="switchAiTab('repos')">📦 50 Repositories</button>
             <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--neon-green);" onclick="switchAiTab('upuia')">🔒 UPUIA Archiv</button>
+            <button class="titan-btn" style="padding:4px 10px; font-size:0.75rem; border-color:var(--gold);" onclick="switchAiTab('wish')">🌟 Wish Studio & Skill Pass</button>
           </div>
         </div>
 
@@ -642,6 +643,41 @@
             <!-- Dynamisch via loadUpuiaStatus() -->
           </div>
           <div id="upuia-preflight-result" style="display:none; background:#080d14; border:1px solid var(--neon-green); border-radius:6px; padding:10px; font-size:0.72rem; margin-top:8px;"></div>
+        </div>
+
+        <!-- TAB 15: WISH STUDIO OS & DIGITAL SKILL PASS -->
+        <div id="ai-tab-wish" class="ai-tab-content" style="display:none; margin-top:10px;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px; margin-bottom:10px;">
+            <div>
+              <strong style="font-size:0.85rem; color:var(--gold);">🌟 Wish Studio OS — Developer & Community Innovation Hub</strong>
+              <p style="font-size:0.72rem; color:#cbd5e0; margin:2px 0;">
+                Wunschintegration · W3C DID Digital Skill Pass (swiyu) · Gate G09 Sovereign Human Approval (Daniel Pohl)
+              </p>
+            </div>
+            <div style="display:flex; gap:6px;">
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem; border-color:var(--gold);" onclick="loadWishProjects()">📋 Projekte & Freigaben</button>
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem; border-color:var(--neon-green);" onclick="loadWishRoles()">🎖 Skill Pass Rollen (10)</button>
+              <button class="titan-btn" style="padding:4px 8px; font-size:0.72rem; border-color:var(--neon-blue);" onclick="toggleNewWishForm()">➕ Neuer Wunsch</button>
+            </div>
+          </div>
+
+          <!-- Neuer Wunsch Form (Collapsible) -->
+          <div id="new-wish-form-panel" style="display:none; background:rgba(212,175,55,0.06); border:1px solid var(--gold); border-radius:6px; padding:10px; margin-bottom:10px; font-size:0.75rem;">
+            <strong style="color:var(--gold);">Neuen Tool- / Feature-Wunsch formulieren</strong>
+            <p style="color:#cbd5e0; font-size:0.68rem; margin:2px 0 6px 0;">Nicht programmieren müssen — einfach den Wunsch beschreiben. KI strukturiert, Entwickler bauen, Daniel Pohl gibt frei.</p>
+            <div style="display:grid; grid-template-columns:1fr; gap:6px;">
+              <input type="text" id="wish-title-input" placeholder="Wunsch-Titel (z.B. Offline PDF-Signatur-Prüfer)..." style="padding:5px 8px; font-size:0.72rem;" />
+              <textarea id="wish-desc-input" placeholder="Detaillierte Beschreibung der Funktion, Ein- und Ausgaben, gewünschtes Format..." rows="3" style="padding:5px 8px; font-size:0.72rem; background:#080d14; color:#fff; border:1px solid rgba(255,255,255,0.2); border-radius:4px;"></textarea>
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <span style="font-size:0.65rem; color:var(--silver);">Wunschgeber: <strong>Daniel Pohl</strong> (Sovereign Authority)</span>
+                <button class="titan-btn" style="padding:4px 12px; font-size:0.72rem; border-color:var(--gold); color:var(--gold);" onclick="submitNewWish()">Wunsch Einreichen ↗</button>
+              </div>
+            </div>
+          </div>
+
+          <div id="wish-studio-container" style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:10px; max-height:360px; overflow-y:auto; padding-right:4px;">
+            <!-- Dynamisch via loadWishProjects() oder loadWishRoles() -->
+          </div>
         </div>
       </section>
 

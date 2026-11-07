@@ -699,6 +699,32 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(upuia.run_preflight_check(), indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 16. WISH STUDIO OS & DIGITAL SKILL PASS
+        if parsed.path == "/api/wish/summary":
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/wish/roles":
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            level = query.get("level", [None])[0]
+            roles = eng.list_roles(level=level)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(roles), "roles": roles}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/wish/projects":
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            status = query.get("status", [None])[0]
+            projs = eng.list_projects(status=status)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(projs), "projects": projs}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 
@@ -736,6 +762,65 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             tick = apzc.get_zero_clock_tick()
             self._set_json_headers(200)
             self.wfile.write(json.dumps(tick, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        # WISH STUDIO OS ACTIONS
+        if parsed.path == "/api/wish/projects":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            try:
+                proj = eng.create_project(
+                    title=req_data.get("title", "Neuer Wunsch"),
+                    requestor=req_data.get("requestor", "Daniel Pohl"),
+                    description=req_data.get("description", ""),
+                    assigned_role=req_data.get("assigned_role", "SKILL-VOL-01")
+                )
+                self._set_json_headers(201)
+                self.wfile.write(json.dumps(proj, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e)}, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/wish/approve":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            try:
+                approval = eng.approve_project(
+                    project_id=req_data.get("project_id"),
+                    approver=req_data.get("approver", "Daniel Pohl"),
+                    role=req_data.get("role", "Sovereign Requestor / Authority")
+                )
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(approval, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e)}, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/wish/credential":
+            content_len = int(self.headers.get("Content-Length", 0))
+            post_body = self.rfile.read(content_len).decode("utf-8") if content_len else "{}"
+            req_data = json.loads(post_body) if post_body else {}
+            from .skill_pass import WishStudioSkillPassEngine
+            eng = WishStudioSkillPassEngine(self.project_root)
+            try:
+                vc = eng.generate_verifiable_credential(
+                    developer_did=req_data.get("developer_did", "did:tdw:dev.community.org"),
+                    role_id=req_data.get("role_id", "SKILL-VOL-01"),
+                    project_id=req_data.get("project_id", "WISH-2026-001")
+                )
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(vc, indent=2, ensure_ascii=False).encode("utf-8"))
+            except Exception as e:
+                self._set_json_headers(400)
+                self.wfile.write(json.dumps({"error": str(e)}, ensure_ascii=False).encode("utf-8"))
             return
 
         # NATZA TMR VOTE

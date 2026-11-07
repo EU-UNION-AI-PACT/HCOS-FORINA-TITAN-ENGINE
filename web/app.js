@@ -601,7 +601,7 @@ async function injectModuleViaApiKey() {
 let lastAgentResponse = "HCOS FORINA TITAN Engine ist bereit.";
 
 function switchAiTab(tabName) {
-  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness', 'baende', 'badges', 'flow', 'upuia'].forEach(t => {
+  ['chat', 'finance', 'boba', 'gates', 'skills', 'mcp', 'kb', 'repos', 'concepts', 'harness', 'baende', 'badges', 'flow', 'upuia', 'wish'].forEach(t => {
     const el = document.getElementById(`ai-tab-${t}`);
     if (el) el.style.display = (t === tabName) ? 'block' : 'none';
   });
@@ -616,6 +616,7 @@ function switchAiTab(tabName) {
   if (tabName === 'badges') loadAuditBadges();
   if (tabName === 'flow') loadFlowEngines();
   if (tabName === 'upuia') loadUpuiaStatus();
+  if (tabName === 'wish') loadWishProjects();
 }
 
 async function sendAgentMessage() {
@@ -2204,6 +2205,186 @@ async function runUpuiaPreflightUi() {
     `;
   } catch (e) {
     resultEl.innerHTML = '<div style="color:var(--neon-green);">Preflight lokal via CLI: python3 forina.py upuia preflight</div>';
+  }
+}
+
+// =========================================================================
+// 15. 🌟 WISH STUDIO OS & DIGITAL SKILL PASS (W3C DID / SWIYU)
+// =========================================================================
+function toggleNewWishForm() {
+  const form = document.getElementById('new-wish-form-panel');
+  if (form) form.style.display = form.style.display === 'none' ? 'block' : 'none';
+}
+
+async function loadWishProjects() {
+  const container = document.getElementById('wish-studio-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade Wish Studio Projekte & Freigabestatus...</div>';
+
+  try {
+    const res = await fetch('/api/wish/projects');
+    const data = await res.json();
+    const projs = data.projects || [];
+
+    if (!projs.length) {
+      container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Keine aktiven Wunsch-Projekte registriert.</div>';
+      return;
+    }
+
+    container.innerHTML = projs.map(p => {
+      const isApproved = p.status === 'HUMAN_APPROVED';
+      const statusColor = isApproved ? 'var(--neon-green)' : 'var(--gold)';
+      const statusBadge = isApproved ? '✓ HUMAN APPROVED (G09)' : `⏳ ${p.status}`;
+      const safeTitle = escapeHtml(p.title);
+      const safeDesc = escapeHtml(p.description || '');
+      const safeReq = escapeHtml(p.requestor || 'Daniel Pohl');
+      const safeApp = escapeHtml(p.approver || 'Ausstehend');
+
+      return `
+        <div style="background:rgba(255,255,255,0.03); border:1px solid ${isApproved ? 'rgba(0,255,136,0.3)' : 'rgba(212,175,55,0.3)'}; border-radius:6px; padding:10px; font-size:0.72rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
+              <span style="color:var(--neon-blue); font-weight:700; border:1px solid var(--neon-blue); padding:1px 5px; border-radius:3px; font-size:0.65rem;">${p.id}</span>
+              <span style="color:${statusColor}; font-weight:700; font-size:0.65rem;">${statusBadge}</span>
+            </div>
+            <strong style="color:#ffffff; font-size:0.8rem; line-height:1.2; display:block; margin:6px 0 4px 0;">${safeTitle}</strong>
+            <p style="color:#cbd5e1; font-size:0.68rem; margin:0 0 6px 0;">${safeDesc}</p>
+          </div>
+          <div style="border-top:1px solid rgba(255,255,255,0.08); padding-top:6px; margin-top:6px; font-size:0.62rem; color:var(--silver);">
+            <div>Wunschgeber: <strong style="color:var(--gold);">${safeReq}</strong></div>
+            <div>Freigabe: <span style="color:${statusColor};">${safeApp}</span></div>
+            ${!isApproved ? `
+              <div style="margin-top:8px; text-align:right;">
+                <button class="titan-btn" style="padding:2px 8px; font-size:0.65rem; border-color:var(--neon-green); color:var(--neon-green);" onclick="approveWishProject('${p.id}')">
+                  🛡️ Als Daniel Pohl Freigeben (Gate G09)
+                </button>
+              </div>
+            ` : ''}
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Wish Studio Projekte via CLI: python3 forina.py wish projects</div>';
+  }
+}
+
+async function loadWishRoles() {
+  const container = document.getElementById('wish-studio-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade Digital Skill Pass Rollen (W3C DID)...</div>';
+
+  try {
+    const res = await fetch('/api/wish/roles');
+    const data = await res.json();
+    const roles = data.roles || [];
+
+    container.innerHTML = roles.map(r => {
+      let lvlColor = 'var(--silver)';
+      if (r.Level === 'Bronze') lvlColor = '#cd7f32';
+      if (r.Level === 'Silver') lvlColor = '#e2e8f0';
+      if (r.Level === 'Gold') lvlColor = 'var(--gold)';
+      if (r.Level === 'Titan') lvlColor = 'var(--neon-blue)';
+
+      return `
+        <div style="background:rgba(255,255,255,0.03); border:1px solid rgba(212,175,55,0.25); border-radius:6px; padding:10px; font-size:0.72rem;">
+          <div style="display:flex; justify-content:space-between; align-items:center;">
+            <span style="color:var(--gold); font-weight:700; font-size:0.68rem;">${r.Rollen_ID}</span>
+            <span style="color:${lvlColor}; font-weight:700; border:1px solid ${lvlColor}; padding:0 4px; border-radius:3px; font-size:0.62rem;">${r.Level}</span>
+          </div>
+          <strong style="color:#ffffff; font-size:0.8rem; display:block; margin:4px 0 2px 0;">${escapeHtml(r.Titel)}</strong>
+          <div style="color:var(--silver); font-size:0.65rem; margin-bottom:4px;">Bereich: ${escapeHtml(r.Bereich)}</div>
+          <div style="color:#cbd5e1; font-size:0.65rem; margin-bottom:4px;">Anforderung: ${escapeHtml(r.Mindestanforderungen)}</div>
+          <div style="font-size:0.60rem; color:var(--neon-green); font-family:monospace; margin-top:4px;">
+            ${escapeHtml(r.DID_Schema_Anchor)}
+          </div>
+          <div style="margin-top:6px; text-align:right;">
+            <button class="titan-btn" style="padding:2px 6px; font-size:0.62rem; border-color:var(--gold);" onclick="issueSkillCredential('${r.Rollen_ID}')">
+              📜 W3C VC Erzeugen
+            </button>
+          </div>
+        </div>
+      `;
+    }).join('');
+  } catch (e) {
+    container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Skill Pass Rollen via CLI: python3 forina.py wish roles</div>';
+  }
+}
+
+async function submitNewWish() {
+  const titleInput = document.getElementById('wish-title-input');
+  const descInput = document.getElementById('wish-desc-input');
+  if (!titleInput || !titleInput.value.trim()) {
+    alert('Bitte einen Titel für den Wunsch eingeben.');
+    return;
+  }
+
+  const payload = {
+    title: titleInput.value.trim(),
+    requestor: "Daniel Pohl",
+    description: descInput ? descInput.value.trim() : "",
+    assigned_role: "SKILL-VOL-01"
+  };
+
+  try {
+    const res = await fetch('/api/wish/projects', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(payload)
+    });
+    if (res.ok) {
+      titleInput.value = '';
+      if (descInput) descInput.value = '';
+      toggleNewWishForm();
+      loadWishProjects();
+    } else {
+      alert('Fehler beim Einreichen des Wunsches.');
+    }
+  } catch (e) {
+    alert('Netzwerkfehler: ' + e.message);
+  }
+}
+
+async function approveWishProject(projectId) {
+  if (!confirm(`Projekt ${projectId} verbindlich als Daniel Pohl (Sovereign Authority) über Gate G09 freigeben?`)) {
+    return;
+  }
+
+  try {
+    const res = await fetch('/api/wish/approve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        project_id: projectId,
+        approver: "Daniel Pohl",
+        role: "Sovereign Requestor / Authority"
+      })
+    });
+    if (res.ok) {
+      loadWishProjects();
+    } else {
+      alert('Freigabe fehlgeschlagen.');
+    }
+  } catch (e) {
+    alert('Netzwerkfehler: ' + e.message);
+  }
+}
+
+async function issueSkillCredential(roleId) {
+  try {
+    const res = await fetch('/api/wish/credential', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        role_id: roleId,
+        developer_did: "did:tdw:volunteer.community.eu:pohl",
+        project_id: "WISH-2026-001"
+      })
+    });
+    const vc = await res.json();
+    alert(`W3C Verifiable Credential ausgestellt!\nID: ${vc.id}\nLevel: ${vc.credentialSubject.competenceLevel}\nIssuer: ${vc.issuer.name}`);
+  } catch (e) {
+    alert('VC-Ausstellung fehlgeschlagen: ' + e.message);
   }
 }
 

@@ -1,0 +1,11 @@
+Rollen_ID,Titel,Bereich,Mindestanforderungen,Verifizierungsmethode,DID_Schema_Anchor,Level,Gemeinwohl_Status
+SKILL-VOL-01,Junior Civic Frontend Developer,XD & UI Components,3 verifizierte PRs · WCAG 2.1 AA Barrierefreiheit,Automated + Peer Review,did:tdw:wish.eu/schemas/civic-ui-v1,Bronze,Aktiv Verifiziert
+SKILL-VOL-02,Civic Python Backend Integrator,REST & Microservices,5 verifizierte Module · Typehints · 100% Docstrings,Gate G06 Unittest Suite,did:tdw:wish.eu/schemas/civic-backend-v1,Bronze,Aktiv Verifiziert
+SKILL-VOL-03,Intermediate System Architect,DevSecOps & Isolation,10 verifizierte PRs · Zero-Trust Netzwerkisolation,Gate G03 Air-Gap Verification,did:tdw:wish.eu/schemas/sys-arch-v1,Silver,Aktiv Verifiziert
+SKILL-VOL-04,Data Pipeline & ETL Specialist,BigQuery & Dataform,Automatisierte Datenbereinigung · Schema Mapping,DQ-Assurance Gate,did:tdw:wish.eu/schemas/dataform-etl-v1,Silver,Aktiv Verifiziert
+SKILL-VOL-05,Security & Compliance Auditor,BSI IT-Grundschutz & ISO 27001,Stroq Secret Scanner Audit · 0 Vulnerabilities,Gate G04 & G07 Adversarial Tests,did:tdw:wish.eu/schemas/sec-audit-v1,Gold,Aktiv Verifiziert
+SKILL-VOL-06,Fintech & PSD2 Protocol Engineer,Open Banking & ASPSP,XS2A API Integration · SEPA / EBSI Anbindung,Institutional Partner Attestation,did:tdw:wish.eu/schemas/fintech-psd2-v1,Gold,Aktiv Verifiziert
+SKILL-VOL-07,Decentralized Identity Specialist,W3C DID & Swiyu Swiss e-ID,did:tdw & did:cheqd Implementierung · VC Trust Registry,Cryptographic Signature Proof,did:tdw:wish.eu/schemas/w3c-did-v1,Gold,Aktiv Verifiziert
+SKILL-VOL-08,Sovereign Governance Validator,Royal Kaiser Charter RegSys,13/13 Assurance Gates Master Audit · Fail-Closed Invarianten,Gate G09 Sovereign Human Sign-Off,did:tdw:wish.eu/schemas/sovereign-gov-v1,Titan,Aktiv Verifiziert
+SKILL-VOL-09,AI Agentic Systems Coordinator,Multi-Agent Orchestration,Orchestrierung autonomer Agenten mit menschlichem Kontroll-Gate,Fail-Closed Loop Validator,did:tdw:wish.eu/schemas/ai-agent-v1,Titan,Aktiv Verifiziert
+SKILL-VOL-10,Public Good Ecosystem Steward,Gemeinwohl-Ökonomie,EUPL-1.2 Lizenz-Governance · Gemeinnützige Projektleitung,Civic Foundation Council Seal,did:tdw:wish.eu/schemas/civic-steward-v1,Titan,Aktiv Verifiziert
