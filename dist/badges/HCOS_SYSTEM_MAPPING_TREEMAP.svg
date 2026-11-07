@@ -1,0 +1,133 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 420" width="100%" height="100%">
+  <defs>
+    <linearGradient id="cyberBg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0a0f1d" />
+      <stop offset="100%" stop-color="#020409" />
+    </linearGradient>
+    <linearGradient id="neonCyanMap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#00f5ff" />
+      <stop offset="100%" stop-color="#0077ff" />
+    </linearGradient>
+    <linearGradient id="neonPurpleMap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#a855f7" />
+      <stop offset="100%" stop-color="#ec4899" />
+    </linearGradient>
+    <linearGradient id="neonGoldMap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#eab308" />
+      <stop offset="100%" stop-color="#f97316" />
+    </linearGradient>
+    <linearGradient id="neonEmeraldMap" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#10b981" />
+      <stop offset="100%" stop-color="#06b6d4" />
+    </linearGradient>
+    <filter id="glowMap">
+      <feGaussianBlur stdDeviation="4" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+  </defs>
+
+  <rect width="1000" height="420" fill="url(#cyberBg)" rx="12" stroke="#1e293b" stroke-width="1.5" />
+
+  <!-- Waveform line at top -->
+  <path d="M 0 30 Q 250 5 500 30 T 1000 30" fill="none" stroke="#00f5ff" stroke-width="1.5" stroke-opacity="0.5" />
+
+  <!-- Section Title -->
+  <text x="500" y="24" text-anchor="middle" fill="#00f5ff" font-family="'Courier New', monospace" font-size="12" font-weight="bold" letter-spacing="3">SYSTEM MAPPING · 4-DOMAIN SOVEREIGN TREEMAP ARCHITECTURE</text>
+
+  <!-- Domain 1: Hardware Root & Kernel (Top-Left) -->
+  <g transform="translate(25, 45)">
+    <rect width="460" height="165" rx="8" fill="#0f172a" stroke="url(#neonCyanMap)" stroke-width="1.2" />
+    <rect x="0" y="0" width="460" height="26" rx="8" fill="#1e293b" fill-opacity="0.6" />
+    <text x="15" y="18" fill="#00f5ff" font-family="monospace" font-size="11" font-weight="bold">DOMÄNE 1: HARDWARE ROOT-OF-TRUST &amp; KERNEL</text>
+    
+    <!-- Sub-blocks -->
+    <rect x="15" y="38" width="205" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="55" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">L0: TPM 2.0 / HSM</text>
+    <text x="25" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">RSA-8192 &amp; ECC P-521 Binding</text>
+
+    <rect x="235" y="38" width="210" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="245" y="55" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">L1: SECURE ENCLAVES</text>
+    <text x="245" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">Intel SGX / AMD SEV Encrypted RAM</text>
+
+    <rect x="15" y="100" width="205" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="117" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">L2: POST-QUANTUM NET</text>
+    <text x="25" y="137" fill="#94a3b8" font-family="monospace" font-size="8.5">ML-KEM-1024 / Dilithium In-Transit</text>
+
+    <rect x="235" y="100" width="210" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="245" y="117" fill="#38bdf8" font-family="monospace" font-size="10" font-weight="bold">L3: ZERO-KNOWLEDGE</text>
+    <text x="245" y="137" fill="#94a3b8" font-family="monospace" font-size="8.5">zk-SNARKs Telemetrie-Entkopplung</text>
+  </g>
+
+  <!-- Domain 2: KI-Einkesselung & Containment (Top-Right) -->
+  <g transform="translate(515, 45)">
+    <rect width="460" height="165" rx="8" fill="#0f172a" stroke="url(#neonPurpleMap)" stroke-width="1.2" />
+    <rect x="0" y="0" width="460" height="26" rx="8" fill="#1e293b" fill-opacity="0.6" />
+    <text x="15" y="18" fill="#f472b6" font-family="monospace" font-size="11" font-weight="bold">DOMÄNE 2: KI-EINKESSELUNG &amp; AGENTIC CONTROL</text>
+
+    <rect x="15" y="38" width="205" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="55" fill="#f472b6" font-family="monospace" font-size="10" font-weight="bold">C1: AIR-GAP SANDBOX</text>
+    <text x="25" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">eBPF Filter &amp; Cgroups v2 Quotas</text>
+
+    <rect x="235" y="38" width="210" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="245" y="55" fill="#f472b6" font-family="monospace" font-size="10" font-weight="bold">C2: COGNITIVE FIREWALL</text>
+    <text x="245" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">Prompt Injection Defense &amp; Guardrails</text>
+
+    <rect x="15" y="100" width="205" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="117" fill="#f472b6" font-family="monospace" font-size="10" font-weight="bold">C3: SEMANTIC DLP</text>
+    <text x="25" y="137" fill="#94a3b8" font-family="monospace" font-size="8.5">PII &amp; Source Masking Output Stream</text>
+
+    <rect x="235" y="100" width="210" height="52" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="245" y="117" fill="#f472b6" font-family="monospace" font-size="10" font-weight="bold">C4: LOOP BREAKER</text>
+    <text x="245" y="137" fill="#94a3b8" font-family="monospace" font-size="8.5">Signed Token Budget &amp; SIGKILL Freeze</text>
+  </g>
+
+  <!-- Domain 3: Reactive Flow-Engine & Visual 3D (Bottom-Left) -->
+  <g transform="translate(25, 225)">
+    <rect width="460" height="175" rx="8" fill="#0f172a" stroke="url(#neonGoldMap)" stroke-width="1.2" />
+    <rect x="0" y="0" width="460" height="26" rx="8" fill="#1e293b" fill-opacity="0.6" />
+    <text x="15" y="18" fill="#facc15" font-family="monospace" font-size="11" font-weight="bold">DOMÄNE 3: REAKTIVE FLOW-ENGINE &amp; 3D WEBGL</text>
+
+    <rect x="15" y="38" width="135" height="120" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="22" y="55" fill="#facc15" font-family="monospace" font-size="9.5" font-weight="bold">SENSOREN (60Hz)</text>
+    <text x="22" y="75" fill="#94a3b8" font-family="monospace" font-size="8">• S1: Spektral FFT</text>
+    <text x="22" y="95" fill="#94a3b8" font-family="monospace" font-size="8">• S2: Mouse/Motion</text>
+    <text x="22" y="115" fill="#94a3b8" font-family="monospace" font-size="8">• S3: System Telemetrie</text>
+    <text x="22" y="135" fill="#94a3b8" font-family="monospace" font-size="8">• S4: Loopback Net</text>
+
+    <rect x="160" y="38" width="135" height="120" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="167" y="55" fill="#facc15" font-family="monospace" font-size="9.5" font-weight="bold">TRIGGER CLUSTER</text>
+    <text x="167" y="75" fill="#94a3b8" font-family="monospace" font-size="8">• T1: Beat Dynamic</text>
+    <text x="167" y="95" fill="#94a3b8" font-family="monospace" font-size="8">• T2: Sync Matrix</text>
+    <text x="167" y="115" fill="#94a3b8" font-family="monospace" font-size="8">• T3: 360° Circle</text>
+    <text x="167" y="135" fill="#94a3b8" font-family="monospace" font-size="8">• T4: Peak &amp; Flow</text>
+
+    <rect x="305" y="38" width="140" height="120" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="312" y="55" fill="#facc15" font-family="monospace" font-size="9.5" font-weight="bold">SETTLEMENTS</text>
+    <text x="312" y="75" fill="#94a3b8" font-family="monospace" font-size="8">• SET-01 State Hist.</text>
+    <text x="312" y="95" fill="#94a3b8" font-family="monospace" font-size="8">• SET-02 WebGL 3D</text>
+    <text x="312" y="115" fill="#94a3b8" font-family="monospace" font-size="8">• SET-03 Token Book</text>
+    <text x="312" y="135" fill="#94a3b8" font-family="monospace" font-size="8">• SET-04 Chain React</text>
+  </g>
+
+  <!-- Domain 4: Sovereign Governance & Assurance (Bottom-Right) -->
+  <g transform="translate(515, 225)">
+    <rect width="460" height="175" rx="8" fill="#0f172a" stroke="url(#neonEmeraldMap)" stroke-width="1.2" />
+    <rect x="0" y="0" width="460" height="26" rx="8" fill="#1e293b" fill-opacity="0.6" />
+    <text x="15" y="18" fill="#34d399" font-family="monospace" font-size="11" font-weight="bold">DOMÄNE 4: SOUVERÄNE ASSURANCE &amp; COMPLIANCE</text>
+
+    <rect x="15" y="38" width="205" height="55" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="55" fill="#34d399" font-family="monospace" font-size="10" font-weight="bold">13-GATE PIPELINE</text>
+    <text x="25" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">G00–G12 Full Assurance Pass</text>
+
+    <rect x="235" y="38" width="210" height="55" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="245" y="55" fill="#34d399" font-family="monospace" font-size="10" font-weight="bold">20 SAST/DAST TOOLS</text>
+    <text x="245" y="75" fill="#94a3b8" font-family="monospace" font-size="8.5">Semgrep, Trivy, Bandit, Checkov</text>
+
+    <rect x="15" y="103" width="430" height="55" rx="4" fill="#1e293b" stroke="#334155" stroke-width="0.8" />
+    <text x="25" y="120" fill="#34d399" font-family="monospace" font-size="10" font-weight="bold">SOUVERÄNE BEGLAUBIGUNG: DANIEL POHL</text>
+    <text x="25" y="138" fill="#94a3b8" font-family="monospace" font-size="8.5">Ed25519 Merkle-Root Signatur · RFC 8032 · Cert #8849-AF-2026-GOV-SEC</text>
+  </g>
+</svg>
