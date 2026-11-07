@@ -166,6 +166,19 @@ def main():
     tools_parser.add_argument("--query", type=str, default="", help="Suchbegriff für Tools")
     tools_parser.add_argument("--limit", type=int, default=25, help="Maximale Trefferanzahl")
 
+    # containment (State-Level Security & AI Containment)
+    cont_parser = subparsers.add_parser("containment", help="State-Level Security, KI-Einkesselung & Hardware Root-of-Trust (AUDITREQ-99X)")
+    cont_parser.add_argument("action", choices=["summary", "layers", "verify", "loop"], default="summary", nargs="?", help="Aktion: summary, layers, verify, loop")
+    cont_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter (Hardware-Pipeline, Einkesselung, Notfall-Protokoll, Preflight-Check)")
+    cont_parser.add_argument("--iterations", type=int, default=5, help="Anzahl Iterationen für Agentic Loop Breaker Test")
+    cont_parser.add_argument("--tokens", type=int, default=25000, help="Anzahl Tokens für Loop Breaker Test")
+    cont_parser.add_argument("--approve", action="store_true", help="Gate G09 Human Approval simulieren")
+
+    # cdp (Devin AI + CDP + MCP Live-Sync & Livelink)
+    cdp_cli_parser = subparsers.add_parser("cdp", help="CDP LiveSync, MCP & Devin AI Portal Automation Suite")
+    cdp_cli_parser.add_argument("action", choices=["summary", "components", "condense", "kyc"], default="summary", nargs="?", help="Aktion: summary, components, condense, kyc")
+    cdp_cli_parser.add_argument("--raw-kb", type=int, default=1500, help="Größe der Roh-Webseite in KB für Kondensationstest")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -1266,6 +1279,131 @@ def main():
             print("==================================================================")
             print(" [Tipp] Alle Tools anzeigen: python3 forina.py tools list")
             print(" [Tipp] Tool suchen:         python3 forina.py tools search --query OpenCode")
+
+    elif args.command == "containment":
+        from .containment_pipeline import StateSovereignContainmentEngine
+        eng = StateSovereignContainmentEngine(project_root)
+
+        if args.action == "layers":
+            layers = eng.list_layers(category=args.category if args.category else None)
+            print("==================================================================")
+            print(f" STAATLICHE SICHERHEITS- & EINKESSELUNGS-SCHICHTEN ({len(layers)} Einträge)")
+            print("==================================================================")
+            for l in layers:
+                print(f" [{l.get('Schicht_ID')}] {l.get('Bezeichnung'):<30} | {l.get('Technologie_Protokoll'):<32} | [{l.get('Integritaetsstatus')}]")
+            print("==================================================================")
+
+        elif args.action == "verify":
+            hw = eng.verify_hardware_pipeline()
+            ct = eng.verify_containment_controls()
+            form = eng.get_audit_form_99x()
+            print("==================================================================")
+            print(" VERIFIZIERUNG: STATE-LEVEL HARDWARE- & EINKESSELUNGS-PIPELINE")
+            print("==================================================================")
+            print(f" Hardware Root-of-Trust:  [{hw['status']}] {hw['root_of_trust']}")
+            print(f" Secure Enclaves (L1):   [{hw['status']}] {hw['memory_encryption']}")
+            print(f" PQC Network (L2):        [{hw['status']}] {hw['pqc_cipher']}")
+            print(f" Zero-Knowledge (L3):     [{hw['status']}] {hw['zero_knowledge']}")
+            print("------------------------------------------------------------------")
+            print(f" Einkesselung Status:     [{ct['status']}] ({ct['controls_count']} Kontrollen)")
+            print(f" Cognitive Firewall:      {ct['cognitive_firewall']}")
+            print(f" Semantic DLP:            {ct['semantic_dlp']}")
+            print(f" Agentic Loop Breaker:    {ct['agentic_loop_breaker']}")
+            print("------------------------------------------------------------------")
+            print(f" Audit-Freigabe Formular: {form['form_id']} -> Zertifikat: {form['certificate_id']}")
+            print(f" Governance-Key:          {form['governance_key_id']}")
+            print(f" Verantwortlicher Auditor: {form['chief_security_auditor']}")
+            print("==================================================================")
+
+        elif args.action == "loop":
+            eval_res = eng.evaluate_agentic_loop(iterations=args.iterations, token_count=args.tokens, human_approved=args.approve)
+            print("==================================================================")
+            print(" AGENTIC LOOP BREAKER & HUMAN-IN-THE-LOOP EVALUATION")
+            print("==================================================================")
+            status_txt = "FREIGEGEBEN" if eval_res["allowed"] else "TERMINIERT_FAIL_CLOSED"
+            print(f" Ergebnis:       [{status_txt}] -> Aktion: {eval_res['action']}")
+            if not eval_res["allowed"]:
+                print(f" Grund:          {eval_res['reason']}")
+                print(f" Forensik:       {eval_res['forensic_status']}")
+            else:
+                print(f" Iterationen:    {eval_res['iterations_used']}/{eval_res['iterations_max']}")
+                print(f" Token-Budget:   {eval_res['tokens_used']}/{eval_res['tokens_max']}")
+                print(f" Human Approval: {eval_res['human_approved']}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Zertifikat:     {summ['certificate']} (Gültig bis 31.12.2027)")
+            print(f" Governance-Key: {summ['governance_key']}")
+            print(f" Spezifikation:  {summ['total_spec_entries']} registrierte Schichten & Kontrollen")
+            for cat, count in summ["categories"].items():
+                print(f"   * {cat:<24} : {count:>2} Kontrollen")
+            print("==================================================================")
+            print(" [Tipp] Schichten auflisten:  python3 forina.py containment layers")
+            print(" [Tipp] Pipeline verifizieren: python3 forina.py containment verify")
+            print(" [Tipp] Loop Breaker testen:  python3 forina.py containment loop --iterations 15")
+
+    elif args.command == "cdp":
+        from .containment_pipeline import CdpLiveSyncAutomationEngine
+        eng = CdpLiveSyncAutomationEngine(project_root)
+
+        if args.action == "components":
+            comps = eng.list_components()
+            print("==================================================================")
+            print(f" CDP & MCP PORTAL-AUTOMATISIERUNGS-KOMPONENTEN ({len(comps)} Module)")
+            print("==================================================================")
+            for c in comps:
+                print(f" [{c.get('ID')}] {c.get('Komponente'):<22} | {c.get('Schnittstelle'):<24} | {c.get('Protokoll_Port')}")
+            print("==================================================================")
+
+        elif args.action == "condense":
+            raw_bytes = args.raw_kb * 1024
+            sim = eng.simulate_livelink_condensation(raw_bytes, dom_node_count=1850)
+            print("==================================================================")
+            print(" LIVELINK KONDENSATION & KONTEXT-KOMPRIMIERUNG (SIMULATION)")
+            print("==================================================================")
+            print(f" Rohdaten-Größe:      {sim['raw_html_size_bytes']/1024:.1f} KB (~{sim['raw_token_estimate']:,} Tokens)")
+            print(f" Kondensierte Größe:  {sim['condensed_size_bytes']/1024:.1f} KB (~{sim['condensed_token_estimate']:,} Tokens)")
+            print(f" Ersparnis / Filter:  {sim['compression_ratio']} ({sim['tokens_saved']:,} Tokens eingespart)")
+            print(" Gefilterter Overhead:")
+            for f in sim["filtered_overhead"]:
+                print(f"   * {f}")
+            print(" Extrahierte Interaktionsdaten:")
+            for e in sim["extracted_entities"]:
+                print(f"   * {e}")
+            print("==================================================================")
+
+        elif args.action == "kyc":
+            kyc = eng.verify_portal_kyc_prerequisites()
+            print("==================================================================")
+            print(" MICA & FINTECH PORTAL KYC PREREQUISITES")
+            print("==================================================================")
+            print(f" Status:       [{kyc['status']}]")
+            print(f" CDP Host:     {kyc['cdp_host']} (Port {kyc['cdp_port']})")
+            print(" Hinterlegte souveräne Identitätsnachweise:")
+            ident = kyc["sovereign_identity"]
+            print(f"   * Urheber:     {ident['author']} ({ident['charter']})")
+            print(f"   * EU PIC:      {', '.join(ident['pic_eu'])}")
+            print(f"   * Global LEI:  {ident['lei']}")
+            print(f"   * Zoll EORI:   {ident['eori']}")
+            print(f"   * USt-IdNr.:   {', '.join(ident['ust_idnr'])}")
+            print(f"   * D-U-N-S:     {', '.join(ident['duns'])}")
+            print(f"   * Swiss AHV:   {ident['swiss_ahv']}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Komponenten:  {summ['total_components']} registrierte Schnittstellen")
+            print(f" CDP Engine:   {summ['cdp_protocol']}")
+            print(f" MCP Brücke:   {summ['mcp_protocol']}")
+            print("==================================================================")
+            print(" [Tipp] Module auflisten:      python3 forina.py cdp components")
+            print(" [Tipp] Kondensation testen:   python3 forina.py cdp condense --raw-kb 2000")
+            print(" [Tipp] KYC-Register prüfen:   python3 forina.py cdp kyc")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

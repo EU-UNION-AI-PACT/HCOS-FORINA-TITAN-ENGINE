@@ -1,0 +1,9 @@
+Komponente,ID,Schnittstelle,Protokoll_Port,Funktion,Fail_Closed_Policy
+Steuerungslogik,DEVIN-AI-CORE,Devin AI Runtime,LLM Context Engine,Übergeordneter Entscheider für Zustandsevaluierung und Handlungsplanung,Fail-Closed bei unklarem Formularzustand oder unerwartetem Captcha
+Schnittstellen-Adapter,MCP-CDP-ADAPTER,Model Context Protocol,JSON-RPC / Stdio & SSE,Kondensiert Live-Signale und filtert DOM-Overhead sowie redundante Netzwerk-Logs,Blockiert ungefilterten Raw-Stream bei PII-Detektion
+Browser-Runtime,CDP-CHROME-CORE,Chrome DevTools Protocol,WebSocket Port 9222,Echtzeit-DOM-Inspektion und Netzwerk-Interception (Network.enable & Page.enable),Verbindungsabbruch erzwingt sofortigen Stopp aller Formularaktionen
+Echtzeit-Netzwerk,CDP-NET-INTERCEPT,Network Domain,Fetch.requestPaused / CDP,Abfangen und Validieren von Registrierungsanfragen und Headern vor Absendung,Unsignierte Payloads werden vor dem HTTP-Egress verworfen
+Ereignis-Injektion,CDP-INPUT-EMULATE,Input Domain,Input.dispatchKeyEvent / MouseEvent,Direkte Einspeisung nativer Hardware-Events in den Browser-Core ohne synthetische Scripts,Keine Ausführung bei Fokusverlust des Target-Elements
+Kontext-Kondensation,LIVELINK-COMPRESS,Livelink Filter Pipeline,Vektorisierte Kompression,Entfernt Werbebanner und dekoratives HTML für minimalen Kontextverbrauch,Maximales Token-Budget pro Interaktionsschritt strikt limitiert
+MiCA-KYC-Pipeline,MICA-PORTAL-KYC,Partner Portal Flow,REST / mTLS & WebAuthn,Automatische Verifizierung von Unternehmensidentitäten (PIC/LEI/EORI/USt-IdNr),Abbruch bei Diskrepanz zwischen Registerdaten und Portalformular
+Prism-Lens-Sync,LENS-PRISM-SYNC,Lens/Prism VPS Agent,SSH Ed25519 / Qwen3.6-35B,Autonome DNS- und Sandbox-Bereitstellung mit stündlichem verschlüsseltem Backup,Zertifikatsentzug stoppt Subdomain-Provisionierung

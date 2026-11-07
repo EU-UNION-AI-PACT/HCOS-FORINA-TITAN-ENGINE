@@ -831,6 +831,42 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(tools), "tools": tools}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 20. STATE CONTAINMENT & CDP LIVE-SYNC
+        if parsed.path == "/api/containment/summary":
+            from .containment_pipeline import StateSovereignContainmentEngine
+            eng = StateSovereignContainmentEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/containment/layers":
+            from .containment_pipeline import StateSovereignContainmentEngine
+            eng = StateSovereignContainmentEngine(self.project_root)
+            cat = query.get("category", [None])[0]
+            layers = eng.list_layers(category=cat)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(layers), "layers": layers}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/containment/verify":
+            from .containment_pipeline import StateSovereignContainmentEngine
+            eng = StateSovereignContainmentEngine(self.project_root)
+            res = {
+                "hardware_pipeline": eng.verify_hardware_pipeline(),
+                "containment_controls": eng.verify_containment_controls(),
+                "audit_form_99x": eng.get_audit_form_99x()
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(res, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/cdp-sync/summary":
+            from .containment_pipeline import CdpLiveSyncAutomationEngine
+            eng = CdpLiveSyncAutomationEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 

@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 22, "Muss alle 22 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 24, "Muss alle 24 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -877,6 +877,90 @@ class TestForinaTitanEngine(unittest.TestCase):
         arch10 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_10_FIGP_UFCIE_Framework_Intelligence_Platform.md"
         self.assertTrue(arch10.exists())
         self.assertGreater(arch10.stat().st_size, 3000)
+
+    def test_state_sovereign_containment_and_cdp_livesync(self):
+        from forina_engine.containment_pipeline import StateSovereignContainmentEngine, CdpLiveSyncAutomationEngine
+        cont = StateSovereignContainmentEngine(self.root)
+        summ_c = cont.get_summary()
+        self.assertEqual(summ_c["total_spec_entries"], 17)
+        self.assertTrue(summ_c["hardware_pipeline_verified"])
+        self.assertTrue(summ_c["containment_enforced"])
+        self.assertTrue(summ_c["killswitches_ready"])
+        self.assertTrue(summ_c["fail_closed_active"])
+
+        # Hardware pipeline
+        hw = cont.verify_hardware_pipeline()
+        self.assertEqual(hw["status"], "VERIFIED")
+        self.assertEqual(hw["layers_count"], 4)
+        self.assertIn("TPM 2.0", hw["root_of_trust"])
+
+        # Containment controls
+        ctrl = cont.verify_containment_controls()
+        self.assertEqual(ctrl["status"], "ENFORCED")
+        self.assertEqual(ctrl["controls_count"], 6)
+
+        # Agentic loop breaker
+        ok_loop = cont.evaluate_agentic_loop(iterations=5, token_count=10000, human_approved=False)
+        self.assertTrue(ok_loop["allowed"])
+        self.assertEqual(ok_loop["action"], "PROCEED")
+
+        blocked_loop = cont.evaluate_agentic_loop(iterations=15, token_count=120000, human_approved=False)
+        self.assertFalse(blocked_loop["allowed"])
+        self.assertEqual(blocked_loop["action"], "SIGKILL_TERMINATION_AND_MEMORY_FREEZE")
+        self.assertTrue(blocked_loop["fail_closed_triggered"])
+
+        approved_loop = cont.evaluate_agentic_loop(iterations=15, token_count=120000, human_approved=True)
+        self.assertTrue(approved_loop["allowed"])
+        self.assertTrue(approved_loop["human_approved"])
+
+        # Killswitch
+        ks = cont.trigger_emergency_killswitch("K1-HW-KILLSWITCH")
+        self.assertEqual(ks["status"], "EXECUTED_FAIL_CLOSED")
+        self.assertTrue(ks["tpm_revoked"])
+        self.assertTrue(ks["gpu_kernel_blocked"])
+
+        # Audit form 99X
+        form = cont.get_audit_form_99x()
+        self.assertEqual(form["form_id"], "AUDITREQ-99X")
+        self.assertEqual(form["certificate_id"], "#8849-AF-2026-GOV-SEC-MULTI-LAYER")
+
+        # CDP LiveSync Engine
+        cdp = CdpLiveSyncAutomationEngine(self.root)
+        summ_cdp = cdp.get_summary()
+        self.assertEqual(summ_cdp["total_components"], 8)
+        self.assertTrue(summ_cdp["condensation_active"])
+        self.assertTrue(summ_cdp["fail_closed_enforced"])
+
+        # Livelink condensation
+        sim = cdp.simulate_livelink_condensation(raw_html_size_bytes=1000000, dom_node_count=1500)
+        self.assertEqual(sim["status"], "CONDENSED_SUCCESS")
+        self.assertEqual(sim["compression_ratio"], "88.0%")
+        self.assertLess(sim["condensed_token_estimate"], sim["raw_token_estimate"])
+
+        # KYC prerequisites
+        kyc = cdp.verify_portal_kyc_prerequisites()
+        self.assertEqual(kyc["status"], "READY_FOR_PORTAL_AUTOMATION")
+        self.assertEqual(kyc["cdp_port"], 9222)
+        self.assertIn("867679357", kyc["sovereign_identity"]["pic_eu"])
+
+        # File presence
+        csv_cont = self.root / "docs" / "catalogs" / "KI_EINKESSELUNG_SICHERHEITS_SCHICHTEN.csv"
+        self.assertTrue(csv_cont.exists())
+        c_lines = [l.strip() for l in csv_cont.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(c_lines), 18, "Header + 17 Kontrollen")
+
+        csv_cdp = self.root / "docs" / "catalogs" / "CDP_MCP_PORTAL_AUTOMATION_SPECS.csv"
+        self.assertTrue(csv_cdp.exists())
+        cdp_lines = [l.strip() for l in csv_cdp.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(cdp_lines), 9, "Header + 8 Komponenten")
+
+        arch11 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_11_Staatliche_Sicherheits_KI_Einkesselung_Spezifikation.md"
+        self.assertTrue(arch11.exists())
+        self.assertGreater(arch11.stat().st_size, 3000)
+
+        arch12 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_12_CDP_LiveSync_MCP_DevinAI_Portal_Automation.md"
+        self.assertTrue(arch12.exists())
+        self.assertGreater(arch12.stat().st_size, 3000)
 
 
 if __name__ == "__main__":
