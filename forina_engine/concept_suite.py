@@ -437,13 +437,17 @@ class ConceptPaperSuite:
             "total_standards": len(self.standards),
             "suite_version": "v2.0 Concept Pack (33+ A4 Masterkonzept)",
             "sovereign_governance": "Daniel Pohl, Royal Kaiser Charter RegSys",
+            "dp_masterbook_chapters": len(self.list_dp_masterbook_chapters()),
             "provenance": {
                 "author": "Daniel Pohl",
-                "pic": "867679357",
-                "vat": "DE31353063511",
+                "pic": ["867679357", "873042778"],
+                "vat": ["DE31353063511", "DE441892129"],
                 "duns": ["315676980", "317066336"],
                 "lei": "894500GBJSIW8L6ET310",
-                "ungm": "1172700"
+                "ungm": "1172700",
+                "swiss_ahv": "756.6199.0539.28",
+                "orcid": "0009000403489769",
+                "scopus": "EX2025D1143002"
             }
         }
 
@@ -541,4 +545,57 @@ class ConceptPaperSuite:
             for r in reader:
                 rows.append(r)
         return rows
+
+    def list_dp_masterbook_chapters(self) -> List[Dict[str, Any]]:
+        csv_file = self.root / "docs" / "catalogs" / "DP_MASTERBOOK_27_KAPITEL.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        chapters = []
+        with open(csv_file, mode="r", encoding="utf-8-sig") as f:
+            reader = csv.DictReader(f)
+            for r in reader:
+                chapters.append({
+                    "nr": int(r.get("nr", 0)),
+                    "filename": r.get("filename", ""),
+                    "title": r.get("title", ""),
+                    "words": int(r.get("words", 0)),
+                    "size_bytes": int(r.get("size_bytes", 0)),
+                    "license": r.get("license", "EUPL-1.2"),
+                    "author": r.get("author", "Daniel Pohl · Royal Kaiser Charter RegSys")
+                })
+        return chapters
+
+    def get_dp_masterbook_chapter(self, nr: int) -> Optional[Dict[str, Any]]:
+        chapters = self.list_dp_masterbook_chapters()
+        ch = next((c for c in chapters if c["nr"] == nr), None)
+        if not ch:
+            return None
+        ch_file = self.root / "docs" / "dp_masterbook" / "kapitel" / ch["filename"]
+        if not ch_file.exists():
+            return None
+        content = ch_file.read_text(encoding="utf-8")
+        return {
+            **ch,
+            "content": content
+        }
+
+    def get_dp_masterbook_summary(self) -> Dict[str, Any]:
+        chapters = self.list_dp_masterbook_chapters()
+        total_words = sum(c["words"] for c in chapters)
+        total_bytes = sum(c["size_bytes"] for c in chapters)
+        index_file = self.root / "docs" / "dp_masterbook" / "INDEX.md"
+        masterplan_file = self.root / "docs" / "dp_masterbook" / "MASTERPLAN.md"
+        return {
+            "title": "DP MASTERBOOK — Meta-Publikation aller Konzepte von Daniel Pohl",
+            "total_curated_chapters": len(chapters),
+            "total_words": total_words,
+            "total_bytes": total_bytes,
+            "license": "EUPL-1.2",
+            "author": "Daniel Pohl · Royal Kaiser Charter RegSys",
+            "governance": "Daniel Pohl · Royal Kaiser Charter RegSys",
+            "index_available": index_file.exists(),
+            "masterplan_available": masterplan_file.exists(),
+            "status": "APPROVED_SOVEREIGN_META_PUBLICATION"
+        }
 

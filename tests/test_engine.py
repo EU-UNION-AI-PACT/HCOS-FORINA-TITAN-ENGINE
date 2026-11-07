@@ -623,6 +623,43 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertTrue(attestation.exists())
         self.assertIn("Wish OS Local Finance Stack", attestation.read_text(encoding="utf-8"))
 
+    def test_dp_masterbook_integration(self):
+        from forina_engine.concept_suite import ConceptPaperSuite
+        suite = ConceptPaperSuite(self.root)
+
+        # 1. Summary
+        summary = suite.get_dp_masterbook_summary()
+        self.assertEqual(summary["total_curated_chapters"], 27)
+        self.assertGreaterEqual(summary["total_words"], 16000)
+        self.assertEqual(summary["status"], "APPROVED_SOVEREIGN_META_PUBLICATION")
+        self.assertEqual(summary["license"], "EUPL-1.2")
+        self.assertIn("Daniel Pohl", summary["author"])
+
+        # 2. Chapters list
+        chapters = suite.list_dp_masterbook_chapters()
+        self.assertEqual(len(chapters), 27)
+        self.assertEqual(chapters[0]["nr"], 1)
+        self.assertIn("PNIA", chapters[0]["title"])
+        self.assertEqual(chapters[-1]["nr"], 27)
+        self.assertIn("Resonanz-Kommunikationsprotokoll", chapters[-1]["title"])
+
+        # 3. Chapter 1 retrieval
+        ch1 = suite.get_dp_masterbook_chapter(1)
+        self.assertIsNotNone(ch1)
+        self.assertEqual(ch1["nr"], 1)
+        self.assertIn("Production Network ID Architecture", ch1["content"])
+        self.assertGreaterEqual(ch1["words"], 800)
+
+        # 4. CSV Catalog Verification
+        csv_path = self.root / "docs" / "catalogs" / "DP_MASTERBOOK_27_KAPITEL.csv"
+        self.assertTrue(csv_path.exists())
+        lines = [line.strip() for line in csv_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        self.assertEqual(len(lines), 28, "Header + 27 Datenzeilen")
+
+        # 5. Core Masterbook documentation files
+        self.assertTrue((self.root / "docs" / "dp_masterbook" / "INDEX.md").exists())
+        self.assertTrue((self.root / "docs" / "dp_masterbook" / "MASTERPLAN.md").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

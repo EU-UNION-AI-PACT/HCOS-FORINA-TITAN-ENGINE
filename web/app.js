@@ -1544,6 +1544,99 @@ async function loadConceptStandards() {
   }
 }
 
+async function loadDpMasterbookChapters() {
+  const container = document.getElementById('concepts-catalog-container');
+  if (!container) return;
+  container.innerHTML = '<div style="color:var(--silver); font-size:0.75rem;">Lade DP Masterbook (27 Kuratierte Kapitel)...</div>';
+
+  try {
+    const res = await fetch('/api/concepts/masterbook');
+    const data = await res.json();
+    const chapters = data.chapters || [];
+    const summary = data.summary || {};
+
+    let html = `
+      <div style="grid-column: 1 / -1; background:rgba(212,175,55,0.08); border:1px solid rgba(212,175,55,0.3); border-radius:6px; padding:10px; margin-bottom:8px;">
+        <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:6px;">
+          <div>
+            <strong style="color:var(--gold); font-size:0.85rem;">📖 ${escapeHtml(summary.title || 'DP Masterbook')}</strong>
+            <p style="font-size:0.68rem; color:#cbd5e0; margin:2px 0;">
+              Autor: <strong>${escapeHtml(summary.author || 'Daniel Pohl')}</strong> · Status: <span style="color:var(--neon-green);">${escapeHtml(summary.status || 'APPROVED')}</span> · Lizenz: ${escapeHtml(summary.license || 'EUPL-1.2')}
+            </p>
+          </div>
+          <div style="font-size:0.7rem; color:var(--gold); border:1px solid var(--gold); border-radius:4px; padding:2px 8px;">
+            ${chapters.length} Kapitel · ${(summary.total_words || 0).toLocaleString()} Wörter
+          </div>
+        </div>
+      </div>
+    `;
+
+    html += chapters.map(ch => {
+      const safeTitle = escapeHtml(ch.title);
+      const safeAuthor = escapeHtml(ch.author || 'Daniel Pohl');
+      const nrStr = String(ch.nr).padStart(2, '0');
+
+      return `
+        <div class="concept-paper-card" style="border-color:rgba(212,175,55,0.35); cursor:pointer;" onclick="openDpMasterbookChapter(${ch.nr})">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; margin-bottom:4px;">
+            <span class="concept-code-badge" style="border-color:var(--gold); color:var(--gold);">Kapitel #${nrStr}</span>
+            <span style="font-size:0.60rem; color:var(--silver);">${ch.words || 0} Wörter</span>
+          </div>
+          <strong style="color:#ffffff; font-size:0.75rem; line-height:1.2; display:block; margin-bottom:4px;">${safeTitle}</strong>
+          <div style="font-size:0.62rem; color:var(--silver);">
+            ${safeAuthor}
+          </div>
+          <div style="margin-top:6px; text-align:right;">
+            <span style="color:var(--gold); font-size:0.62rem; text-decoration:underline;">Kapitel lesen ↗</span>
+          </div>
+        </div>
+      `;
+    }).join('');
+
+    container.innerHTML = html;
+  } catch (e) {
+    container.innerHTML = `<div style="color:#ef4444; font-size:0.75rem;">Fehler beim Laden des DP Masterbooks: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
+async function openDpMasterbookChapter(nr) {
+  const modal = document.getElementById('concept-paper-modal');
+  const badgeEl = document.getElementById('modal-paper-badge');
+  const titleEl = document.getElementById('modal-paper-title');
+  const metaEl = document.getElementById('modal-paper-meta');
+  const bodyEl = document.getElementById('modal-paper-body');
+  if (!modal || !bodyEl) return;
+
+  modal.style.display = 'flex';
+  bodyEl.innerHTML = '<div style="color:var(--silver); font-size:0.8rem; padding:20px 0;">Lade DP Masterbook Kapitel...</div>';
+
+  try {
+    const res = await fetch(`/api/concepts/masterbook/${nr}`);
+    const ch = await res.json();
+
+    if (badgeEl) {
+      badgeEl.textContent = `DP Masterbook #${String(ch.nr).padStart(2, '0')}`;
+      badgeEl.style.borderColor = 'var(--gold)';
+      badgeEl.style.color = 'var(--gold)';
+    }
+    if (titleEl) titleEl.textContent = ch.title || `Kapitel #${ch.nr}`;
+
+    if (metaEl) {
+      metaEl.innerHTML = `
+        <div><strong style="color:var(--gold);">Kapitel:</strong> <span style="color:var(--gold); font-weight:700;">#${String(ch.nr).padStart(2, '0')}</span></div>
+        <div><strong style="color:var(--gold);">Autor:</strong> ${escapeHtml(ch.author || 'Daniel Pohl')}</div>
+        <div><strong style="color:var(--neon-green);">Lizenz:</strong> ${escapeHtml(ch.license || 'EUPL-1.2')}</div>
+        <div><strong style="color:var(--neon-blue);">Umfang:</strong> ${ch.words || 0} Wörter (${ch.lines || 0} Zeilen)</div>
+        <div><strong style="color:var(--gold);">Status:</strong> <span style="color:var(--neon-green);">${escapeHtml(ch.status || 'APPROVED')}</span></div>
+      `;
+    }
+
+    bodyEl.innerHTML = renderSimpleMarkdown(ch.content || '');
+  } catch (e) {
+    bodyEl.innerHTML = `<div style="color:#ef4444;">Fehler beim Laden des Kapitels: ${escapeHtml(e.message)}</div>`;
+  }
+}
+
 async function loadHarnessLoopStatus() {
   const container = document.getElementById('harness-stages-container');
   if (!container) return;

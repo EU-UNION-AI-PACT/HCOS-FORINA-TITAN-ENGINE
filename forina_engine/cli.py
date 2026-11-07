@@ -72,9 +72,9 @@ def main():
     repo_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für LOCCP Repositories")
     repo_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern für LOCCP")
 
-    # concepts (34 Concept Papers Suite)
-    concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite & Normenabdeckung v2.0")
-    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "read", "standards", "masterkonzept", "specialized"], default="list", nargs="?", help="Aktion: list, summary, inspect, read, standards, masterkonzept, specialized")
+    # concepts (34 Concept Papers Suite & DP Masterbook)
+    concept_parser = subparsers.add_parser("concepts", help="34 Concept Papers Suite, Masterkonzept & DP Masterbook (27)")
+    concept_parser.add_argument("action", choices=["list", "summary", "inspect", "read", "standards", "masterkonzept", "specialized", "masterbook"], default="list", nargs="?", help="Aktion: list, summary, inspect, read, standards, masterkonzept, specialized, masterbook")
     concept_parser.add_argument("--nr", type=int, default=1, help="Papier-Nummer (1-34)")
     concept_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Concept Papers")
     concept_parser.add_argument("--full", action="store_true", help="Gibt das vollständige Markdown-Dokument aus")
@@ -428,6 +428,36 @@ def main():
             for s in specs:
                 print(f" * {s['id']:<45} | {s['size']:>6} B | {s['file']}")
             print("==================================================================")
+
+        elif args.action == "masterbook":
+            if getattr(args, "nr", None) and args.nr > 0 and getattr(args, "nr", 1) != 1 or (getattr(args, "nr", 0) > 0 and "--nr" in sys.argv):
+                ch = suite.get_dp_masterbook_chapter(args.nr)
+                if not ch:
+                    print(f"[!] DP Masterbook Kapitel #{args.nr} nicht gefunden (Bereich: 1-27).")
+                    return
+                print("==================================================================")
+                print(f" DP MASTERBOOK KAPITEL #{ch['nr']:02d}: {ch['title']}")
+                print(f" Wörter: {ch['words']} | Lizenz: {ch['license']} | {ch['author']}")
+                print("==================================================================")
+                if getattr(args, "full", False):
+                    print(ch.get("content", ""))
+                else:
+                    for line in ch.get("content", "").splitlines()[:25]:
+                        print(line)
+                    print("...\n[Tipp] Volltext anzeigen mit: python3 forina.py concepts masterbook --nr " + str(ch['nr']) + " --full")
+                print("==================================================================")
+            else:
+                summ = suite.get_dp_masterbook_summary()
+                chapters = suite.list_dp_masterbook_chapters()
+                print("==================================================================")
+                print(f" {summ['title'].upper()}")
+                print(f" Status: {summ['status']} | Lizenz: {summ['license']}")
+                print(f" Gesamtumfang: {summ['total_curated_chapters']} Kapitel, {summ['total_words']:,} Wörter")
+                print("==================================================================")
+                for c in chapters:
+                    print(f" #{c['nr']:02d} | {c['title']:<52} | {c['words']:>5} Wörter")
+                print("==================================================================")
+                print(" [Tipp] Kapitel lesen: python3 forina.py concepts masterbook --nr 1")
 
         else: # list
             if args.search:

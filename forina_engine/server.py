@@ -617,6 +617,36 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps(mk, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 14b. DP MASTERBOOK (27 KURATIERTE KAPITEL)
+        if parsed.path.startswith("/api/concepts/masterbook"):
+            suite = ConceptPaperSuite(self.project_root)
+            nr = None
+            parts = parsed.path.strip("/").split("/")
+            if len(parts) >= 4 and parts[3].isdigit():
+                nr = int(parts[3])
+            elif "nr" in query and query["nr"][0].isdigit():
+                nr = int(query["nr"][0])
+
+            if nr is not None:
+                ch = suite.get_dp_masterbook_chapter(nr)
+                if not ch:
+                    self._set_json_headers(404)
+                    self.wfile.write(json.dumps({"error": f"Kapitel #{nr} nicht gefunden"}, ensure_ascii=False).encode("utf-8"))
+                    return
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(ch, indent=2, ensure_ascii=False).encode("utf-8"))
+                return
+            summary = suite.get_dp_masterbook_summary()
+            chapters = suite.list_dp_masterbook_chapters()
+            payload = {
+                "summary": summary,
+                "count": len(chapters),
+                "chapters": chapters
+            }
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(payload, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         if parsed.path == "/api/catalogs/kapitel136":
             suite = ConceptPaperSuite(self.project_root)
             k136 = suite.get_136_kapitel_nachweis()
