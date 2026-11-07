@@ -795,6 +795,42 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(rules), "rules": rules}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        # 19. FIGP GOVERNANCE & 141 OBSERVABILITY TOOLS
+        if parsed.path == "/api/figp/summary":
+            from .figp_engine import FigpGovernanceEngine
+            eng = FigpGovernanceEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/figp/frameworks":
+            from .figp_engine import FigpGovernanceEngine
+            eng = FigpGovernanceEngine(self.project_root)
+            fams = eng.list_framework_families()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(fams), "frameworks": fams}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/tools/summary":
+            from .figp_engine import ObservabilityToolsCatalogEngine
+            eng = ObservabilityToolsCatalogEngine(self.project_root)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(eng.get_summary(), indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/tools/catalog":
+            from .figp_engine import ObservabilityToolsCatalogEngine
+            eng = ObservabilityToolsCatalogEngine(self.project_root)
+            cat = query.get("category", [None])[0]
+            q = query.get("q", [None])[0]
+            if q:
+                tools = eng.search_tools(q)
+            else:
+                tools = eng.list_tools(category=cat)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(tools), "tools": tools}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # Fallback to static file serving
         return super().do_GET()
 

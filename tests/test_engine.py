@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 21, "Muss alle 21 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 22, "Muss alle 22 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -827,6 +827,56 @@ class TestForinaTitanEngine(unittest.TestCase):
         arch9 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_09_TLORE_44_Lightning_Power_Finance_Suite.md"
         self.assertTrue(arch9.exists())
         self.assertGreater(arch9.stat().st_size, 3000)
+
+    def test_figp_and_observability_141_tools_catalog(self):
+        from forina_engine.figp_engine import FigpGovernanceEngine, ObservabilityToolsCatalogEngine
+        figp = FigpGovernanceEngine(self.root)
+        summ_figp = figp.get_summary()
+        self.assertEqual(summ_figp["total_framework_families"], 12)
+        self.assertTrue(summ_figp["fail_closed_launcher_enforced"])
+        self.assertTrue(summ_figp["schema_available"])
+        self.assertTrue(summ_figp["api_spec_available"])
+
+        frameworks = figp.list_framework_families()
+        self.assertEqual(len(frameworks), 12)
+        bsi = next((f for f in frameworks if "bsi" in f.get("Family_ID", "").lower()), None)
+        self.assertIsNotNone(bsi)
+        self.assertEqual(bsi["Family_ID"], "FIGP-BSI-01")
+
+        tools = ObservabilityToolsCatalogEngine(self.root)
+        summ_tools = tools.get_summary()
+        self.assertEqual(summ_tools["total_tools"], 141)
+        self.assertGreaterEqual(summ_tools["categories_count"], 14)
+
+        all_tools = tools.list_tools()
+        self.assertEqual(len(all_tools), 141)
+
+        search_opencode = tools.search_tools("OpenCode")
+        self.assertEqual(len(search_opencode), 1)
+        self.assertEqual(search_opencode[0]["Name"], "OpenCode")
+
+        # Verify files on disk
+        csv_tools = self.root / "docs" / "catalogs" / "OBSERVABILITY_141_TOOLS_CATALOG.csv"
+        self.assertTrue(csv_tools.exists())
+        lines_tools = [l.strip() for l in csv_tools.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(lines_tools), 142, "Header + 141 Tools")
+
+        csv_figp = self.root / "docs" / "catalogs" / "FIGP_GOVERNANCE_ENTITIES.csv"
+        self.assertTrue(csv_figp.exists())
+        lines_figp = [l.strip() for l in csv_figp.read_text(encoding="utf-8").splitlines() if l.strip()]
+        self.assertEqual(len(lines_figp), 13, "Header + 12 Frameworks")
+
+        schema_sql = self.root / "docs" / "schemas" / "FIGP_Reference_Schema.sql"
+        self.assertTrue(schema_sql.exists())
+        self.assertGreater(schema_sql.stat().st_size, 1000)
+
+        schema_yaml = self.root / "docs" / "schemas" / "FIGP_API_v1.yaml"
+        self.assertTrue(schema_yaml.exists())
+        self.assertGreater(schema_yaml.stat().st_size, 1000)
+
+        arch10 = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_10_FIGP_UFCIE_Framework_Intelligence_Platform.md"
+        self.assertTrue(arch10.exists())
+        self.assertGreater(arch10.stat().st_size, 3000)
 
 
 if __name__ == "__main__":

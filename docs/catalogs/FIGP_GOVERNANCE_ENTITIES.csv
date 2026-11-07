@@ -1,0 +1,13 @@
+Family_ID,Publisher,Canonical_Name,Art,Rechtsstatus,Geltungsbereich,Anzahl_Kontrollen,Status
+FIGP-BSI-01,BSI (Bundesamt für Sicherheit in der Informationstechnik),IT-Grundschutz Kompendium 2026,Sicherheitsstandard,Nationaler Standard,Deutschland / EU,94 Bausteine,Source-Verified
+FIGP-ISO-01,ISO / IEC,ISO/IEC 27001:2022 ISMS,Internationale Norm,Zertifizierbare Norm,Global,93 Controls (Annex A),Source-Verified
+FIGP-DORA-01,Europäische Union (EP / Rat),Digital Operational Resilience Act (DORA),EU-Verordnung,Unmittelbar geltendes EU-Recht,EU Finanzsektor,64 Artikel / RTS,Approved
+FIGP-MICA-01,Europäische Union (EP / Rat),Markets in Crypto-Assets (MiCA),EU-Verordnung,Unmittelbar geltendes EU-Recht,EU Krypto- & CASP-Märkte,149 Artikel,Approved
+FIGP-AIACT-01,Europäische Union (EP / Rat),EU Artificial Intelligence Act (AI Act),EU-Verordnung,Unmittelbar geltendes EU-Recht,EU / Globale KI-Systeme,113 Artikel,Approved
+FIGP-GDPR-01,Europäische Union (EP / Rat),Datenschutz-Grundverordnung (DSGVO),EU-Verordnung,Unmittelbar geltendes EU-Recht,EU Bürgerdaten / Global,99 Artikel,Approved
+FIGP-NIST-01,NIST (National Institute of Standards and Technology),NIST Cybersecurity Framework (CSF) 2.0,Sicherheitsframework,US / Internationaler Referenzstandard,Global,6 Kernfunktionen (GV/ID/PR/DE/RS/RC),Source-Verified
+FIGP-CIS-01,Center for Internet Security (CIS),CIS Critical Security Controls v8.1,Sicherheitskontrollen,Best Practice Benchmark,Global,18 Controls / 153 Safeguards,Source-Verified
+FIGP-OWASP-01,OWASP Foundation,OWASP Top 10 (2025/2026) & API Security,Bedrohungskatalog,Offener Branchenstandard,Web & Cloud APIs,10 Kernrisiken,Source-Verified
+FIGP-NIST-02,NIST,NIST SP 800-53 Rev. 5,Sicherheits- & Datenschutz-Katalog,US Federal Standard,Global,1000+ Basiskontrollen,Source-Verified
+FIGP-BSI-02,BSI,BSI TR-03105 EAC & eID-Konformität,Technische Richtlinie,Staatliche Konformitätsvorgabe,Deutschland / EU eIDAS,Kryptografische Prüffälle,Source-Verified
+FIGP-OSCAL-01,NIST,OSCAL (Open Security Controls Assessment Language),Datenaustausch- & Maschinenformat,Offener Standard,Global,Schema-Modell v1.1,Approved

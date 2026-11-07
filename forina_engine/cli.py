@@ -155,6 +155,17 @@ def main():
     cde_parser.add_argument("action", choices=["summary", "rules", "spawn"], default="summary", nargs="?", help="Aktion: summary, rules, spawn")
     cde_parser.add_argument("--point", type=str, default="crash_log_77", help="CRIU Checkpoint ID (z.B. crash_log_77)")
 
+    # figp (FIGP & UFCIE Governance Platform)
+    figp_parser = subparsers.add_parser("figp", help="FIGP & UFCIE Framework Intelligence & Governance Platform")
+    figp_parser.add_argument("action", choices=["summary", "frameworks", "schema"], default="summary", nargs="?", help="Aktion: summary, frameworks, schema")
+
+    # tools (141 Observability & AI-Agent Stack)
+    tools_parser = subparsers.add_parser("tools", help="141 Observability, Monitoring & AI-Agent Tools Stack")
+    tools_parser.add_argument("action", choices=["summary", "list", "search"], default="summary", nargs="?", help="Aktion: summary, list, search")
+    tools_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter (z.B. AI-IDEs, Tracing, Logging, etc.)")
+    tools_parser.add_argument("--query", type=str, default="", help="Suchbegriff für Tools")
+    tools_parser.add_argument("--limit", type=int, default=25, help="Maximale Trefferanzahl")
+
     args = parser.parse_args()
     project_root = Path(__file__).parent.parent
 
@@ -1179,6 +1190,82 @@ def main():
             print("==================================================================")
             print(" [Tipp] Regeln anzeigen:   python3 forina.py cde rules")
             print(" [Tipp] Point aufwecken:   python3 forina.py cde spawn --point crash_log_77")
+
+    elif args.command == "figp":
+        from .figp_engine import FigpGovernanceEngine
+        eng = FigpGovernanceEngine(project_root)
+
+        if args.action == "frameworks":
+            fams = eng.list_framework_families()
+            print("==================================================================")
+            print(f" FIGP KANONISCHE FRAMEWORK-FAMILIEN ({len(fams)} Standards)")
+            print("==================================================================")
+            for f in fams:
+                print(f" [{f.get('Family_ID')}] {f.get('Canonical_Name'):<38} | {f.get('Geltungsbereich'):<16} | {f.get('Status')}")
+            print("==================================================================")
+
+        elif args.action == "schema":
+            ddl = eng.get_schema_ddl()
+            print("==================================================================")
+            print(" FIGP SQLITE / POSTGRESQL REFERENZ-DATENMODELL (DDL)")
+            print("==================================================================")
+            for line in ddl.splitlines()[:30]:
+                print(line)
+            print("...\n[Tipp] Vollständiges Schema in: docs/schemas/FIGP_Reference_Schema.sql")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:   {summ['governance']}")
+            print(f" Frameworks:   {summ['total_framework_families']} kanonische Familien (BSI, ISO, DORA, etc.)")
+            print(f" Schema DDL:   {'Verfügbar' if summ['schema_available'] else 'Fehlt'} ({summ['schema_size_bytes']} Bytes)")
+            print(f" API Spec:     {'Verfügbar' if summ['api_spec_available'] else 'Fehlt'} ({summ['api_spec_size_bytes']} Bytes)")
+            print("==================================================================")
+            print(" [Tipp] Frameworks anzeigen: python3 forina.py figp frameworks")
+            print(" [Tipp] Schema anzeigen:     python3 forina.py figp schema")
+
+    elif args.command == "tools":
+        from .figp_engine import ObservabilityToolsCatalogEngine
+        eng = ObservabilityToolsCatalogEngine(project_root)
+
+        if args.action == "list":
+            tools = eng.list_tools(category=args.category if args.category else None)
+            print("==================================================================")
+            print(f" OBSERVABILITY & AI-AGENT STACK ({len(tools)} Tools)")
+            print("==================================================================")
+            for t in tools[:args.limit]:
+                stars_txt = f"{t.get('Stars')}★" if t.get('Stars') and t.get('Stars') != '0' else "OSS"
+                print(f" [{t.get('Tool_ID')}] {t.get('Name'):<22} | {stars_txt:<8} | {t.get('Kategorie'):<24} | {t.get('Lizenz')}")
+            if len(tools) > args.limit:
+                print(f"... ({len(tools) - args.limit} weitere Tools, nutze --limit {len(tools)})")
+            print("==================================================================")
+            print(" [Tipp] Kategorie-Filter: python3 forina.py tools list --category \"AI-IDEs\"")
+
+        elif args.action == "search":
+            results = eng.search_tools(args.query)
+            print("==================================================================")
+            print(f" TOOL-SUCHE FÜR '{args.query}' ({len(results)} Treffer)")
+            print("==================================================================")
+            for t in results:
+                print(f" * {t.get('Name'):<20} | {t.get('Kategorie'):<24} | {t.get('Repo')}")
+                if t.get('Beschreibung'):
+                    print(f"   -> {t.get('Beschreibung')}")
+            print("==================================================================")
+
+        else: # summary
+            summ = eng.get_summary()
+            print("==================================================================")
+            print(f" {summ['title'].upper()}")
+            print(f" Governance:   {summ['governance']}")
+            print(f" Tools:        {summ['total_tools']} in {summ['categories_count']} Fachdomänen ({summ['open_source_count']} Open Source)")
+            print(" Domänen-Verteilung:")
+            for cat, count in summ["categories_distribution"].items():
+                print(f"   * {cat:<32} : {count:>2} Tools")
+            print("==================================================================")
+            print(" [Tipp] Alle Tools anzeigen: python3 forina.py tools list")
+            print(" [Tipp] Tool suchen:         python3 forina.py tools search --query OpenCode")
 
     elif args.command == "push-repo":
         url = args.repo_url or "https://github.com/EU-UNION-AI-PACT/HCOS-FORINA-TITAN-ENGINE.git"

@@ -170,6 +170,102 @@
       "assigned_role": "SKILL-VOL-01",
       "sandbox_isolated": true,
       "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-015",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:38:42.152949+00:00",
+      "approved_at": "2026-11-07T23:38:42.174962+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-016",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:38:44.119078+00:00",
+      "approved_at": "2026-11-07T23:38:44.119376+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-017",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:38:59.680969+00:00",
+      "approved_at": "2026-11-07T23:38:59.681336+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-018",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:39:23.838328+00:00",
+      "approved_at": "2026-11-07T23:39:23.838726+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-019",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:39:29.568896+00:00",
+      "approved_at": "2026-11-07T23:39:29.569296+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-020",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:40:06.279590+00:00",
+      "approved_at": "2026-11-07T23:40:06.302723+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-021",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:40:11.706262+00:00",
+      "approved_at": "2026-11-07T23:40:11.706682+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
+    },
+    {
+      "id": "WISH-2026-022",
+      "title": "Test Feature Wunsch",
+      "requestor": "Daniel Pohl",
+      "status": "HUMAN_APPROVED",
+      "created_at": "2026-11-07T23:40:26.368006+00:00",
+      "approved_at": "2026-11-07T23:40:26.368473+00:00",
+      "approver": "Daniel Pohl (Sovereign Requestor / Authority)",
+      "assigned_role": "SKILL-VOL-01",
+      "sandbox_isolated": true,
+      "description": "Automatischer Sandbox-Test"
     }
   ],
   "approvals": [
@@ -302,6 +398,86 @@
       "timestamp": "2026-11-07T20:47:14.211429+00:00",
       "gate_reference": "G09_SOVEREIGN_APPROVAL",
       "hash": "b8666dc84bef8cc8a16a01a0f494386b6a4944b43d367d8b8441d3a9d1d3cecb"
+    },
+    {
+      "approval_id": "APP-WISH-2026-015",
+      "project_id": "WISH-2026-015",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:38:42.174962+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "760a6a369aa1ae09a3f9610d8f83536bbbed4e74b8511f417620372a86df2f52"
+    },
+    {
+      "approval_id": "APP-WISH-2026-016",
+      "project_id": "WISH-2026-016",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:38:44.119376+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "24ea6a5d28c3abc5d95990f41d1c1eb0a69984841dffe4e2d49c98a14ef7cf4c"
+    },
+    {
+      "approval_id": "APP-WISH-2026-017",
+      "project_id": "WISH-2026-017",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:38:59.681336+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "3a45a1da8d2a99fa141a71a1504c4d30e4a6e481766aac1aaeceba4787d0dc0e"
+    },
+    {
+      "approval_id": "APP-WISH-2026-018",
+      "project_id": "WISH-2026-018",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:39:23.838726+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "032a7defc96a9f10c642c9fe7dc417a9ce27fa4d3280b9b880288848230501cc"
+    },
+    {
+      "approval_id": "APP-WISH-2026-019",
+      "project_id": "WISH-2026-019",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:39:29.569296+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "b5e2788e5137bc487e4efaa74cd18375b17c5b7a87f05afc2ea4dab4a7885be7"
+    },
+    {
+      "approval_id": "APP-WISH-2026-020",
+      "project_id": "WISH-2026-020",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:40:06.302723+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "835f029b734f1895c4c461f2d827514d1ca02fb4ef81c541b73cea344f846d79"
+    },
+    {
+      "approval_id": "APP-WISH-2026-021",
+      "project_id": "WISH-2026-021",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:40:11.706682+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "d133df817949b4a627c0bd60d4776867d0a6b8fef70b916868c5c1df9aad7a81"
+    },
+    {
+      "approval_id": "APP-WISH-2026-022",
+      "project_id": "WISH-2026-022",
+      "decision": "APPROVED",
+      "approver": "Daniel Pohl",
+      "role": "Sovereign Requestor / Authority",
+      "timestamp": "2026-11-07T23:40:26.368473+00:00",
+      "gate_reference": "G09_SOVEREIGN_APPROVAL",
+      "hash": "0a4e81043b5c9c452ef3e26751a881757e1ee6e323b341ad48a38f08d84432c3"
     }
   ]
 }

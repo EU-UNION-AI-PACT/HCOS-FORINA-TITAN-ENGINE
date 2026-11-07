@@ -1,0 +1,176 @@
+openapi: 3.0.3
+info:
+  title: FIGP Framework Catalog API (REFERENCE DESIGN ONLY)
+  version: 1.0.0
+  description: >-
+    Proposed contract for the existing website. Not deployed. Sensitive local
+    scanner data and private evidence are excluded. Mutating endpoints must
+    remain disabled until separately approved and authorized.
+servers:
+  - url: /api/v1
+paths:
+  /frameworks:
+    get:
+      operationId: listFrameworks
+      summary: List canonical framework families; one result per family
+      parameters:
+        - in: query
+          name: category
+          schema: {type: string}
+        - in: query
+          name: cursor
+          schema: {type: string}
+        - in: query
+          name: limit
+          schema: {type: integer, minimum: 1, maximum: 100, default: 25}
+      responses:
+        '200':
+          description: Families with source provenance
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/FrameworkListResponse'}
+  /frameworks/{familyId}:
+    get:
+      operationId: getFramework
+      summary: Family detail with versions and parts
+      parameters:
+        - $ref: '#/components/parameters/familyId'
+      responses:
+        '200':
+          description: Framework detail
+          content:
+            application/json:
+              schema: {$ref: '#/components/schemas/FrameworkResponse'}
+        '404': {description: Framework not found}
+  /frameworks/{familyId}/releases:
+    get:
+      operationId: listReleases
+      parameters:
+        - $ref: '#/components/parameters/familyId'
+      responses:
+        '200': {description: Framework releases, including archived versions}
+  /requirements/{requirementId}:
+    get:
+      operationId: getRequirement
+      parameters:
+        - in: path
+          name: requirementId
+          required: true
+          schema: {type: string}
+      responses:
+        '200': {description: Rights-cleared requirement metadata}
+        '404': {description: Requirement not found}
+  /mappings:
+    get:
+      operationId: listMappings
+      parameters:
+        - in: query
+          name: status
+          schema: {type: string, enum: [proposed, reviewed, approved, rejected, stale]}
+        - in: query
+          name: familyId
+          schema: {type: string}
+      responses:
+        '200': {description: Typed mappings with provenance}
+  /imports/validate:
+    post:
+      operationId: validateImport
+      summary: Validate metadata of an approved staged snapshot (no remote URL fetching)
+      security: [{sessionAuth: []}]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [source_id, snapshot_hash]
+              properties:
+                source_id: {type: string}
+                snapshot_hash: {type: string, pattern: '^[a-fA-F0-9]{64}$'}
+      responses:
+        '200': {description: Dry-run validation report}
+        '403': {description: Writes disabled or insufficient permissions}
+  /mappings/proposals:
+    post:
+      operationId: createMappingProposal
+      security: [{sessionAuth: []}]
+      responses:
+        '201': {description: Proposal staged for review}
+        '403': {description: Writes disabled or insufficient permissions}
+  /mappings/{edgeId}/reviews:
+    post:
+      operationId: reviewMapping
+      security: [{sessionAuth: []}]
+      parameters:
+        - in: path
+          name: edgeId
+          required: true
+          schema: {type: string}
+      responses:
+        '200': {description: Mapping review decision recorded}
+        '403': {description: Insufficient permissions}
+        '409': {description: Stale version or conflicting review}
+  /reports/coverage:
+    get:
+      operationId: getCoverage
+      security: [{sessionAuth: []}]
+      responses:
+        '200': {description: Qualified coverage report, not certification}
+        '403': {description: Insufficient permissions}
+components:
+  parameters:
+    familyId:
+      in: path
+      name: familyId
+      required: true
+      schema: {type: string}
+  securitySchemes:
+    sessionAuth:
+      type: http
+      scheme: bearer
+      description: Placeholder only; reuse existing site's approved authentication.
+  schemas:
+    Provenance:
+      type: object
+      required: [source_uri, review_status]
+      properties:
+        source_uri: {type: string, format: uri}
+        source_version: {type: string}
+        source_hash: {type: string}
+        review_status: {type: string}
+    Framework:
+      type: object
+      required: [family_id, canonical_name, publisher, kind]
+      properties:
+        family_id: {type: string}
+        canonical_name: {type: string}
+        publisher: {type: string}
+        kind: {type: string}
+        releases:
+          type: array
+          items:
+            type: object
+            required: [release_id, label]
+            properties:
+              release_id: {type: string}
+              label: {type: string}
+              published: {type: string, format: date}
+    FrameworkResponse:
+      type: object
+      required: [schema_version, data, provenance, generated_at]
+      properties:
+        schema_version: {type: string}
+        data: {$ref: '#/components/schemas/Framework'}
+        provenance: {$ref: '#/components/schemas/Provenance'}
+        generated_at: {type: string, format: date-time}
+    FrameworkListResponse:
+      type: object
+      required: [schema_version, data, generated_at]
+      properties:
+        schema_version: {type: string}
+        data:
+          type: array
+          items: {$ref: '#/components/schemas/Framework'}
+        provenance: {$ref: '#/components/schemas/Provenance'}
+        next_cursor: {type: string, nullable: true}
+        generated_at: {type: string, format: date-time}
