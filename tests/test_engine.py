@@ -516,7 +516,7 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(r50), 50, "Muss 50 Repositories in der Quellenmatrix haben")
 
         specs = suite.list_specialized_papers()
-        self.assertEqual(len(specs), 15, "Muss alle 15 spezialisierten Papiere erfassen")
+        self.assertEqual(len(specs), 16, "Muss alle 16 spezialisierten Papiere erfassen")
 
     def test_upuia_engine_integration(self):
         from forina_engine.upuia_scanner import UpuiaIntelligenceArchive
@@ -556,6 +556,41 @@ class TestForinaTitanEngine(unittest.TestCase):
         self.assertEqual(len(vps), 34, "Muss 34 VPS Portale umfassen")
         gitopia = fin.get_wish_studio_vps_portals(query="gitopia")
         self.assertGreaterEqual(len(gitopia), 5)
+
+    def test_portal_registry_and_partner_applications(self):
+        from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+        fin = InstitutionalFinanceRegistry(self.root)
+
+        # 1. Master Portal Registry (2.361 Portale)
+        portals = fin.search_portal_registry_2361(query="Visa")
+        self.assertGreaterEqual(len(portals), 1)
+        self.assertIn("Visa", portals[0]["Name"])
+
+        # 2. Partner Application Dossiers (9 Partner)
+        apps = fin.get_partner_applications()
+        self.assertEqual(len(apps), 9, "Muss exakt 9 vorbereitete Partner-Anträge umfassen")
+        providers = [a["provider"] for a in apps]
+        self.assertIn("Mastercard", providers)
+        self.assertIn("Visa", providers)
+        self.assertIn("Solaris", providers)
+        self.assertIn("Unit", providers)
+        self.assertIn("Synctera", providers)
+        self.assertIn("Highnote", providers)
+        self.assertIn("Enfuce", providers)
+        self.assertIn("ClearBank", providers)
+        self.assertIn("EnableBanking", providers)
+
+        # 3. Single Provider Application Check
+        mc = fin.get_partner_application("Mastercard")
+        self.assertIsNotNone(mc)
+        self.assertEqual(mc["payload"].get("application_id"), "app_e3f999bb97")
+        self.assertIn("Mastercard Engage", mc["payload"].get("program", ""))
+
+        # 4. GlobalCards Bank Specification
+        gc = fin.get_globalcards_bank_spec()
+        self.assertEqual(len(gc["modules"]), 12, "Muss 12 GlobalCards Entwicklungsmodule enthalten")
+        self.assertTrue(gc["spec_available"])
+        self.assertGreater(gc["spec_size_bytes"], 100000)
 
 
 if __name__ == "__main__":

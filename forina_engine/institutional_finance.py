@@ -367,6 +367,110 @@ class InstitutionalFinanceRegistry:
             pass
         return results
 
+    def search_portal_registry_2361(self, query: str = "", category: str = "", status: str = "", limit: int = 50) -> List[Dict[str, str]]:
+        csv_file = self.root / "docs" / "catalogs" / "PORTAL_REGISTRY_2361_MASTER.csv"
+        if not csv_file.exists():
+            return []
+        import csv
+        results = []
+        q = query.lower().strip()
+        cat = category.lower().strip()
+        st = status.upper().strip()
+        try:
+            with open(csv_file, mode="r", encoding="utf-8-sig") as f:
+                reader = csv.DictReader(f, delimiter=";")
+                for row in reader:
+                    name = row.get("Name", "").lower()
+                    domain = row.get("Domain", "").lower()
+                    row_cat = row.get("Kategorie", "").lower()
+                    row_themen = row.get("Themen", "").lower()
+                    row_status = row.get("Status", "").upper()
+
+                    if q and (q not in name and q not in domain and q not in row_themen):
+                        continue
+                    if cat and cat not in row_cat:
+                        continue
+                    if st and st != row_status:
+                        continue
+                    results.append(row)
+                    if len(results) >= limit:
+                        break
+        except Exception:
+            pass
+        return results
+
+    def get_partner_applications(self) -> List[Dict[str, Any]]:
+        base_dir = self.root / "docs" / "partner_applications"
+        if not base_dir.exists():
+            return []
+        apps = []
+        for p in sorted(base_dir.iterdir()):
+            if p.is_dir():
+                payload_file = p / "Antrag_Payload.json"
+                dossier_file = p / "Antrag_Dossier.md"
+                data = {
+                    "provider": p.name,
+                    "has_payload": payload_file.exists(),
+                    "has_dossier": dossier_file.exists(),
+                    "payload": {}
+                }
+                if payload_file.exists():
+                    try:
+                        with open(payload_file, "r", encoding="utf-8") as pf:
+                            data["payload"] = json.load(pf)
+                    except Exception:
+                        pass
+                apps.append(data)
+        return apps
+
+    def get_partner_application(self, provider: str) -> Optional[Dict[str, Any]]:
+        base_dir = self.root / "docs" / "partner_applications"
+        target_dir = base_dir / provider
+        if not target_dir.exists() or not target_dir.is_dir():
+            for p in base_dir.iterdir():
+                if p.is_dir() and p.name.lower() == provider.lower():
+                    target_dir = p
+                    break
+        if not target_dir.exists() or not target_dir.is_dir():
+            return None
+        payload_file = target_dir / "Antrag_Payload.json"
+        dossier_file = target_dir / "Antrag_Dossier.md"
+        data = {
+            "provider": target_dir.name,
+            "dossier_markdown": dossier_file.read_text(encoding="utf-8") if dossier_file.exists() else "",
+            "payload": {}
+        }
+        if payload_file.exists():
+            try:
+                with open(payload_file, "r", encoding="utf-8") as pf:
+                    data["payload"] = json.load(pf)
+            except Exception:
+                pass
+        return data
+
+    def get_globalcards_bank_spec(self) -> Dict[str, Any]:
+        spec_file = self.root / "docs" / "concept_papers" / "specialized" / "Architecture_05_GlobalCards_Bank_International_Infrastructure.md"
+        return {
+            "title": "GlobalCards Bank – Internationale Banking- und Karteninfrastruktur",
+            "modules": [
+                {"id": "GC-01", "name": "Identity & Access", "scope": "KYC, KYB, Passkeys, RBAC"},
+                {"id": "GC-02", "name": "Accounts & IBAN", "scope": "Virtuelle IBANs, Kontoverwaltung"},
+                {"id": "GC-03", "name": "Double-Entry Ledger", "scope": "Salden, Buchungsjournal, Audit"},
+                {"id": "GC-04", "name": "Card Engine", "scope": "Visa, Mastercard, MDES Apple/Google Pay"},
+                {"id": "GC-05", "name": "Payments", "scope": "SEPA, SEPA Instant, SWIFT, Transfers"},
+                {"id": "GC-06", "name": "Multi-Currency & FX", "scope": "FX Wechselkurse, Multi-Asset Wallets"},
+                {"id": "GC-07", "name": "Settlement & Clearing", "scope": "Tagesabschluss, DvP Abgleich"},
+                {"id": "GC-08", "name": "Treasury", "scope": "Liquiditäts- & Reserveverwaltung"},
+                {"id": "GC-09", "name": "Open Banking Gateway", "scope": "Enable Banking, Salt Edge, finAPI, Yapily"},
+                {"id": "GC-10", "name": "Risk & Fraud Engine", "scope": "Echtzeit-Scoring, Geldwäscheprävention"},
+                {"id": "GC-11", "name": "Compliance & Audit", "scope": "DORA, BaFin/EBA Meldewesen, GDPR"},
+                {"id": "GC-12", "name": "Developer APIs & SDK", "scope": "REST, GraphQL, Webhooks, Sandbox"}
+            ],
+            "spec_available": spec_file.exists(),
+            "spec_size_bytes": spec_file.stat().st_size if spec_file.exists() else 0,
+            "governance": "Daniel Pohl · Royal Kaiser Charter RegSys"
+        }
+
     def get_summary(self) -> Dict[str, Any]:
         return {
             "mapped_central_banks": len(self.central_banks),
@@ -378,6 +482,9 @@ class InstitutionalFinanceRegistry:
             "enable_banking_status": ENABLE_BANKING_APP_SPEC["status"],
             "aspsp_eu_banks": 1128,
             "wish_studio_vps_portals": 34,
+            "master_portal_registry_count": 2361,
+            "partner_application_dossiers": len(self.get_partner_applications()),
+            "globalcards_bank_modules": 12,
             "security_tier": "READ_ONLY_TRANSACTION_SCOPE (G05 Enforced)",
             "sovereign_governance": "Daniel Pohl, Royal Kaiser Charter RegSys"
         }

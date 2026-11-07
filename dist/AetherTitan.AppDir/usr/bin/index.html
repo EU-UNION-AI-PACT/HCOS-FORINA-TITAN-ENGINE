@@ -371,6 +371,27 @@
             </div>
             <div id="aspsp-bank-results" style="margin-top:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1;"></div>
           </div>
+
+          <!-- Fintech Partner-Anträge & GlobalCards Bank (9 Dossiers & 12 GC-Module) -->
+          <div style="margin-top:12px; background:rgba(255,215,0,0.03); border:1px solid rgba(255,215,0,0.25); border-radius:8px; padding:10px;">
+            <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:8px;">
+              <div>
+                <strong style="color:var(--gold); font-size:0.8rem;">💳 GlobalCards Bank & 9 Fintech Partner-Dossiers (PRW-001)</strong>
+                <p style="font-size:0.7rem; color:#94a3b8; margin:2px 0;">
+                  Mastercard · Visa · Solaris · Unit · Synctera · Highnote · Enfuce · ClearBank · EnableBanking · 12 GC-Module
+                </p>
+              </div>
+              <div style="display:flex; gap:6px;">
+                <button class="titan-btn" style="padding:3px 8px; font-size:0.7rem; border-color:var(--gold);" onclick="loadPartnerDossiers()">
+                  📋 9 Dossiers anzeigen
+                </button>
+                <button class="titan-btn" style="padding:3px 8px; font-size:0.7rem; border-color:var(--neon-blue);" onclick="loadGlobalCardsSpec()">
+                  🏛 GlobalCards Architektur
+                </button>
+              </div>
+            </div>
+            <div id="partner-dossiers-results" style="margin-top:8px; font-size:0.72rem; max-height:160px; overflow-y:auto; color:#cbd5e1; display:none;"></div>
+          </div>
         </div>
 
         <!-- TAB 6: BOBA ERROR-CHAIN & STROQ SECURITY SCANNER (M12 & M13) -->

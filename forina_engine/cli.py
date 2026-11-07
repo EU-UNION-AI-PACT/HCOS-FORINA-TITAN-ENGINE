@@ -104,11 +104,12 @@ def main():
 
     # finance (Zentralbanken & Open Banking)
     fin_parser = subparsers.add_parser("finance", help="Zentralbanken, EZB Pontes & Open Banking Schnittstellen (PSD2)")
-    fin_parser.add_argument("action", choices=["summary", "centralbanks", "globalcbs", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp", "vpsportals"], default="summary", nargs="?", help="Aktion: summary, centralbanks, globalcbs, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp, vpsportals")
+    fin_parser.add_argument("action", choices=["summary", "centralbanks", "globalcbs", "openbanking", "schemas", "pontes", "portals", "clevel", "enablebanking", "aspsp", "vpsportals", "portalregistry", "partnerapps", "globalcards"], default="summary", nargs="?", help="Aktion: summary, centralbanks, globalcbs, openbanking, schemas, pontes, portals, clevel, enablebanking, aspsp, vpsportals, portalregistry, partnerapps, globalcards")
     fin_parser.add_argument("--search", type=str, default="", help="Suchbegriff für Portale, C-Level oder ASPSP-Banken")
     fin_parser.add_argument("--country", type=str, default="", help="Länderkürzel für ASPSP-Banken (DE, AT, CH, FR, etc.)")
     fin_parser.add_argument("--category", type=str, default="", help="Kategorie-Filter für Portale")
     fin_parser.add_argument("--company", type=str, default="", help="Unternehmensfilter für C-Level")
+    fin_parser.add_argument("--provider", type=str, default="", help="Fintech-Partner (Mastercard, Visa, Solaris, Unit, etc.)")
     fin_parser.add_argument("--limit", type=int, default=25, help="Maximale Anzahl an Treffern")
 
     # upuia (Universal Project & URL Intelligence Archive)
@@ -747,6 +748,65 @@ def main():
             print("==================================================================")
             for r in results:
                 print(f" #{r.get('nr', '?'):<2} | {r.get('tool', ''):<20} | {r.get('native_api', '')[:25]:<25} | {r.get('url', '')}")
+            print("==================================================================")
+        elif args.action == "portalregistry":
+            results = fin.search_portal_registry_2361(
+                query=getattr(args, "search", ""),
+                category=getattr(args, "category", ""),
+                limit=getattr(args, "limit", 25)
+            )
+            print("==================================================================")
+            print(f" MASTER PORTAL REGISTRY (PRW-001 / {len(results)} Treffer von 2.361)")
+            print("==================================================================")
+            for r in results:
+                print(f" #{r.get('Nr', '?'):<4} | {r.get('Name', ''):<26} | {r.get('Domain', ''):<22} | {r.get('Kategorie', '')[:30]}")
+            print("==================================================================")
+            print(f" [Tipp] Suche: python3 forina.py finance portalregistry --search Visa")
+        elif args.action == "partnerapps":
+            provider = getattr(args, "provider", "")
+            if provider:
+                app_data = fin.get_partner_application(provider)
+                if not app_data:
+                    print(f"[!] Partner-Dossier für '{provider}' nicht gefunden.")
+                else:
+                    print("==================================================================")
+                    print(f" PARTNER-ANTRAG DOSSIER: {app_data['provider'].upper()}")
+                    print("==================================================================")
+                    payload = app_data.get("payload", {})
+                    print(f" Dossier-ID:    {payload.get('application_id', 'N/A')}")
+                    print(f" Programm:      {payload.get('program', 'N/A')}")
+                    print(f" Submission URL: {payload.get('portal_submission_url', 'N/A')}")
+                    print(f" Status:        {payload.get('status', 'N/A')}")
+                    print("------------------------------------------------------------------")
+                    contact = payload.get("fields", {}).get("contact_person", {})
+                    print(f" Ansprechpartner: {contact.get('full_name')} ({contact.get('title')})")
+                    print(f" E-Mail:          {contact.get('email')}")
+                    print(f" Telefon:         {contact.get('phone')}")
+                    print("==================================================================")
+            else:
+                apps = fin.get_partner_applications()
+                print("==================================================================")
+                print(f" FINTECH PARTNER-ANTRÄGE ({len(apps)} Dossiers vorbereitet)")
+                print("==================================================================")
+                for a in apps:
+                    payload = a.get("payload", {})
+                    p_name = a["provider"]
+                    p_prog = payload.get("program", "Standard BaaS Onboarding")
+                    p_id = payload.get("application_id", "APP-N/A")
+                    print(f" * {p_name:<16} | ID: {p_id:<14} | {p_prog}")
+                print("==================================================================")
+                print(" [Tipp] Details abrufen: python3 forina.py finance partnerapps --provider Mastercard")
+        elif args.action == "globalcards":
+            gc = fin.get_globalcards_bank_spec()
+            print("==================================================================")
+            print(f" {gc['title'].upper()}")
+            print("==================================================================")
+            print(f" Governance:   {gc['governance']}")
+            print(f" Spezifikation: {'Verfügbar' if gc['spec_available'] else 'Fehlt'} ({gc['spec_size_bytes']} Bytes)")
+            print("------------------------------------------------------------------")
+            print(" 12 Kernmodule:")
+            for m in gc["modules"]:
+                print(f"   [{m['id']}] {m['name']:<24} | {m['scope']}")
             print("==================================================================")
         else: # summary
             summ = fin.get_summary()

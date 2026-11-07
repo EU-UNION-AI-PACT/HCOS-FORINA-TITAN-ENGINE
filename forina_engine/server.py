@@ -485,6 +485,46 @@ class ForinaEngineHandler(SimpleHTTPRequestHandler):
             self.wfile.write(json.dumps({"count": len(portals), "vps_ip": "82.165.134.41", "portals": portals}, indent=2, ensure_ascii=False).encode("utf-8"))
             return
 
+        if parsed.path == "/api/finance/portalregistry":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            q = qs.get("q", [""])[0]
+            cat = qs.get("category", [""])[0]
+            st = qs.get("status", [""])[0]
+            limit = int(qs.get("limit", [50])[0])
+            portals = fin_reg.search_portal_registry_2361(query=q, category=cat, status=st, limit=limit)
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(portals), "query": q, "category": cat, "status": st, "portals": portals}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path.startswith("/api/finance/partnerapps"):
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            qs = parse_qs(parsed.query)
+            provider = qs.get("provider", [None])[0]
+            if provider:
+                app_data = fin_reg.get_partner_application(provider)
+                if not app_data:
+                    self._set_json_headers(404)
+                    self.wfile.write(json.dumps({"error": f"Provider {provider} not found"}, ensure_ascii=False).encode("utf-8"))
+                    return
+                self._set_json_headers(200)
+                self.wfile.write(json.dumps(app_data, indent=2, ensure_ascii=False).encode("utf-8"))
+                return
+            apps = fin_reg.get_partner_applications()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps({"count": len(apps), "partner_applications": apps}, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
+        if parsed.path == "/api/finance/globalcards":
+            from forina_engine.institutional_finance import InstitutionalFinanceRegistry
+            fin_reg = InstitutionalFinanceRegistry(self.project_root)
+            spec = fin_reg.get_globalcards_bank_spec()
+            self._set_json_headers(200)
+            self.wfile.write(json.dumps(spec, indent=2, ensure_ascii=False).encode("utf-8"))
+            return
+
         # 11e. 3D FLOW ENGINE VISUALISIERUNGEN
         if parsed.path == "/api/flow/list":
             flow_dir = self.project_root / "web" / "flow"

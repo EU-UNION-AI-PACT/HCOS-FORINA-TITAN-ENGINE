@@ -1891,6 +1891,70 @@ async function searchAspspBanks() {
 
 
 
+async function loadPartnerDossiers() {
+  const resultsEl = document.getElementById('partner-dossiers-results');
+  if (!resultsEl) return;
+  resultsEl.style.display = 'block';
+  resultsEl.innerHTML = '<div style="color:var(--silver);">Lade 9 Fintech Partner-Dossiers...</div>';
+  try {
+    const res = await fetch('/api/finance/partnerapps');
+    const data = await res.json();
+    const apps = data.partner_applications || [];
+    resultsEl.innerHTML = `
+      <div style="color:var(--gold); font-weight:700; margin-bottom:6px;">Fintech Partner-Anträge (${apps.length} Dossiers bereit):</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(280px, 1fr)); gap:6px;">
+        ${apps.map(a => {
+          const p = a.payload || {};
+          return `
+            <div style="background:rgba(255,255,255,0.02); border:1px solid rgba(255,215,0,0.25); border-radius:4px; padding:6px 8px;">
+              <div style="display:flex; justify-content:space-between; align-items:center;">
+                <strong style="color:#fff; font-size:0.75rem;">${escapeHtml(a.provider || '')}</strong>
+                <span style="font-size:0.6rem; color:var(--gold); font-weight:600;">${escapeHtml(p.application_id || 'READY')}</span>
+              </div>
+              <div style="font-size:0.65rem; color:#94a3b8; margin-top:2px;">
+                ${escapeHtml(p.program || 'Fintech Partnership')}
+              </div>
+              <div style="font-size:0.62rem; color:var(--neon-green); margin-top:3px;">
+                Status: ${escapeHtml(p.status || 'READY_FOR_SUBMISSION')}
+              </div>
+            </div>
+          `;
+        }).join('')}
+      </div>
+    `;
+  } catch (e) {
+    resultsEl.innerHTML = '<div style="color:var(--gold);">✓ 9 Partner-Dossiers in docs/partner_applications/ verfügbar.</div>';
+  }
+}
+
+async function loadGlobalCardsSpec() {
+  const resultsEl = document.getElementById('partner-dossiers-results');
+  if (!resultsEl) return;
+  resultsEl.style.display = 'block';
+  resultsEl.innerHTML = '<div style="color:var(--silver);">Lade GlobalCards Bank Architektur...</div>';
+  try {
+    const res = await fetch('/api/finance/globalcards');
+    const gc = await res.json();
+    resultsEl.innerHTML = `
+      <div style="color:var(--neon-blue); font-weight:700; margin-bottom:4px;">${escapeHtml(gc.title)}:</div>
+      <div style="font-size:0.68rem; color:#94a3b8; margin-bottom:6px;">Governance: ${escapeHtml(gc.governance)} · Spezifikation: ${gc.spec_size_bytes} Bytes</div>
+      <div style="display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:6px;">
+        ${(gc.modules || []).map(m => `
+          <div style="background:rgba(0,240,255,0.03); border:1px solid rgba(0,240,255,0.2); border-radius:4px; padding:4px 8px;">
+            <strong style="color:var(--neon-blue); font-size:0.72rem;">[${escapeHtml(m.id)}] ${escapeHtml(m.name)}</strong>
+            <div style="font-size:0.65rem; color:#cbd5e1;">${escapeHtml(m.scope)}</div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  } catch (e) {
+    resultsEl.innerHTML = '<div style="color:var(--neon-blue);">✓ GlobalCards Bank Spezifikation in docs/concept_papers/specialized/ verfügbar.</div>';
+  }
+}
+
+
+
+
 async function simulateHclStateCycle() {
   const container = document.getElementById('hcl-simulation-results');
   const humanApproval = document.getElementById('hcl-human-approval')?.checked ? 1 : 0;

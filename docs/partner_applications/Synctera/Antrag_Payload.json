@@ -1,0 +1,39 @@
+{
+  "application_id": "app_3eb5d121be",
+  "provider": "Synctera",
+  "program": "Fintech Builder & Bank Matchmaking Program",
+  "portal_submission_url": "https://synctera.com/get-started",
+  "status": "READY_FOR_SUBMISSION",
+  "fields": {
+    "contact_person": {
+      "full_name": "HolyThreeKingsTreesCrowns Daniel Pohl",
+      "first_name": "Daniel",
+      "last_name": "Pohl",
+      "title": "Founder & Managing Director",
+      "birth_date": "1988-01-06",
+      "email": "world.banks.eyes.aether@globedynamicz.statesflowwishes.eu",
+      "phone": "+4915562233724"
+    },
+    "business_details": {
+      "company_name": "Bra1nKy11 World Bank Eyes AeTHer",
+      "brand_name": "Bra1nKy11 World Bank Eyes AeTHer",
+      "legal_form": "In Gründung / Sole Proprietorship (Einzelunternehmen)",
+      "country": "Germany (Deutschland)",
+      "state_region": "Nordrhein-Westfalen / Ostwestfalen-Lippe",
+      "city": "Detmold",
+      "jurisdiction": "DE / EU"
+    },
+    "technical_integration": {
+      "integration_scope": "Synctera Core API, Multi-Account Ledger, Sponsor Bank Access",
+      "environment_requested": "Sandbox / Developer Access First",
+      "infrastructure_hosting": "High-Performance Cloud & Dedicated VPS Node (Ubuntu 26.04)",
+      "security_standards": "TLS 1.3, mTLS, OAuth 2.0, AES-256 Vault Encryption, Zero-Knowledge Storage"
+    },
+    "project_description": "Integration von Partnerbanken und regulatorischem Rahmenwerk für Ledgering, Deposit Accounts und automatisierte Zahlungsströme.",
+    "required_documents_checklist": [
+      "KYC-Identitätsnachweis des wirtschaftlich Berechtigten",
+      "Nachweis der geschäftlichen Tätigkeit",
+      "Produkt-Roadmap & Volumenprognose"
+    ]
+  }
+}

@@ -1,0 +1,10 @@
+Nr;Portal;Domain;Account_Alias;Environment;Vault_Reference;Status;Hinweis;Antrag_Dossier
+1;Unit Finance;unit.co;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/unit;APPLICATION_PREPARED;Banking-as-a-Service & Partner Bank Sponsorship;Partner-Antraege/Unit/Antrag_Dossier.md
+2;Synctera;synctera.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/synctera;APPLICATION_PREPARED;Fintech Builder & Bank Matchmaking Program;Partner-Antraege/Synctera/Antrag_Dossier.md
+3;Highnote Platform;highnote.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/highnote;APPLICATION_PREPARED;Card Issuing & Modern Payment Infrastructure;Partner-Antraege/Highnote/Antrag_Dossier.md
+4;Enfuce Financial Services;enfuce.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/enfuce;APPLICATION_PREPARED;European Card Issuing & EMI Partnership;Partner-Antraege/Enfuce/Antrag_Dossier.md
+5;Visa Developer Platform;visa.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/visa;APPLICATION_PREPARED;Visa Ready & Fintech Partner Network;Partner-Antraege/Visa/Antrag_Dossier.md
+6;Mastercard Developers;mastercard.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/mastercard;APPLICATION_PREPARED;Mastercard Engage & Fintech Express;Partner-Antraege/Mastercard/Antrag_Dossier.md
+7;Enable Banking;enablebanking.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/enablebanking;APPLICATION_PREPARED;Open Banking ASPSP & PSD2 Integration;Partner-Antraege/EnableBanking/Antrag_Dossier.md
+8;Solaris Group;solarisgroup.com;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/solaris;APPLICATION_PREPARED;BaaS Platform & Vollbank-Infrastruktur;Partner-Antraege/Solaris/Antrag_Dossier.md
+9;ClearBank;clear.bank;bra1nky11_admin;Sandbox / Partner Onboarding;vault://keepass/finance/clearbank;APPLICATION_PREPARED;Clearing & Embedded Banking Core;Partner-Antraege/ClearBank/Antrag_Dossier.md
