@@ -1,0 +1,12 @@
+source_id,source_name,source_type,coverage,source_url,license_or_terms,notes
+SRC-USGS,USGS Mineral Commodity Summaries,government_dataset,"Mineral production, reserves, commodities",https://www.usgs.gov/centers/national-minerals-information-center/mineral-commodity-summaries,check_source_terms,"Official commodity summaries; not a live retail price feed."
+SRC-LBMA,London Bullion Market Association,market_data,"Precious metals benchmark prices",https://www.lbma.org.uk/prices-and-data/precious-metal-prices,check_source_terms,"Check access conditions and redistribution permissions."
+SRC-WORLDBANK,World Bank Commodity Markets,government_dataset,"Historical commodity price series",https://www.worldbank.org/en/research/commodity-markets,check_source_terms,"Use dated series and document units/currency."
+SRC-MATERIALS,Materials Project,scientific_database,"Computed and experimental materials properties",https://materialsproject.org/,check_source_terms,"Materials properties are not commercial valuations."
+SRC-IAEA,IAEA Nuclear Data Services,scientific_database,"Evaluated nuclear and isotope data",https://www-nds.iaea.org/,check_source_terms,"Scientific reference data; not a price catalogue."
+SRC-NNDC,National Nuclear Data Center,scientific_database,"Evaluated nuclear structure data",https://www.nndc.bnl.gov/,check_source_terms,"Scientific reference data; not a price catalogue."
+SRC-CERN,CERN antimatter overview,scientific_reference,"Public background on antimatter research",https://home.cern/science/physics/antimatter,check_source_terms,"Context only; no commercial price series."
+SRC-TREASURY,US Department of the Treasury,government_records,"Official treasury and reserve information",https://home.treasury.gov/,check_source_terms,"Distinguish official reserve data from collectible asset estimates."
+SRC-SMITHSONIAN,Smithsonian Collections Search Center,museum_catalog,"Collection records and object descriptions",https://collections.si.edu/search/,check_source_terms,"Collection records do not imply sale price."
+SRC-ZENODO,Zenodo,research_repository,"Research outputs and deposited datasets",https://zenodo.org/,record_item_license,"License varies by record; inspect item metadata."
+SRC-NASA,NASA Open Data Portal,government_dataset,"Space science and Earth observation datasets",https://data.nasa.gov/,check_source_terms,"Dataset value is not a quoted market valuation."
